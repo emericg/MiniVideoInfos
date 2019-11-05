@@ -29,12 +29,12 @@ print("\n> MiniVideoInfos contribs builder")
 # brew install libtool pkg-config
 # brew install  gettext iconv libudev
 # brew link --force gettext
-# xcode...
+# xcode (10+)
 
 ## Windows:
 # python3 (https://www.python.org/downloads/)
 # cmake (https://cmake.org/download/)
-# MSVC 2017...
+# MSVC (2017+)
 
 ## HOST ########################################################################
 
@@ -293,7 +293,7 @@ for TARGET in TARGETS:
         if OS_TARGET == "android":
             if ARCH_TARGET == "armv7":
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-21"]
-            else if ARCH_TARGET == "armv8":
+            elif ARCH_TARGET == "armv8":
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-21"]
             else:
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86-64", "-DANDROID_PLATFORM=android-21"]
