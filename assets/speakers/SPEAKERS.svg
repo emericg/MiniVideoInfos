@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="1000"
+   height="1000"
+   id="svg2"
+   sodipodi:docname="SPEAKERS.svg"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1593"
+     inkscape:window-height="876"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="0.6675088"
+     inkscape:cx="417.49189"
+     inkscape:cy="558.11581"
+     inkscape:window-x="1578"
+     inkscape:window-y="144"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-page="true" />
+  <defs
+     id="defs4">
+    <rect
+       width="150"
+       height="150"
+       x="0"
+       y="0"
+       style="fill:#000000;stroke:#000000;stroke-width:13"
+       id="small" />
+  </defs>
+  <g
+     transform="translate(80,-478.07647)"
+     id="layer1">
+    <rect
+       width="750"
+       height="750"
+       x="45"
+       y="603.07648"
+       style="fill-opacity:0;stroke:#000000;stroke-width:13;opacity:0.66"
+       id="big" />
+    <use
+       transform="translate(-30,528.07647)"
+       id="use2169"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(720,528.07647)"
+       id="use2171"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(345,528.07647)"
+       id="use2199"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <rect
+       width="150.05965"
+       height="150.05966"
+       x="344.97018"
+       y="903.04663"
+       style="opacity:0.66;fill:none;fill-opacity:0.42763157;stroke:#000000;stroke-width:12.94034386;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3176" />
+    <use
+       transform="translate(-30,903.07648)"
+       id="use3196"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(720,903.07648)"
+       id="use3198"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(-30,1278.0765)"
+       id="use3227"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(720,1278.0765)"
+       id="use3229"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(158,528.07647)"
+       id="use2169-6"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(533,528.07647)"
+       id="use2199-7"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(345,1278.0765)"
+       id="use2199-6"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small" />
+    <use
+       transform="translate(-73.5,484.57647)"
+       id="use2169-3"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small"
+       style="opacity:0.66" />
+    <use
+       transform="translate(763.5,484.57647)"
+       id="use2169-3-6"
+       x="0"
+       y="0"
+       width="744.09448"
+       height="1052.3622"
+       xlink:href="#small"
+       style="opacity:0.66" />
+  </g>
+</svg>

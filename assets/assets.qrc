@@ -1,0 +1,101 @@
+<RCC>
+    <qresource prefix="/assets">
+        <file>logos/logo.svg</file>
+        <file>others/gps_marker.svg</file>
+
+        <file>icons_material/baseline-access_time-24px.svg</file>
+        <file>icons_material/baseline-arrow_back-24px.svg</file>
+        <file>icons_material/baseline-autorenew-24px.svg</file>
+        <file>icons_material/baseline-brightness_4-24px.svg</file>
+        <file>icons_material/baseline-chevron_right-24px.svg</file>
+        <file>icons_material/baseline-close-24px.svg</file>
+        <file>icons_material/baseline-date_range-24px.svg</file>
+        <file>icons_material/baseline-delete-24px.svg</file>
+        <file>icons_material/baseline-edit-24px.svg</file>
+        <file>icons_material/baseline-folder_open-24px.svg</file>
+        <file>icons_material/baseline-hourglass_empty-24px.svg</file>
+        <file>icons_material/baseline-import_contacts-24px.svg</file>
+        <file>icons_material/baseline-insert_link-24px.svg</file>
+        <file>icons_material/baseline-language-24px.svg</file>
+        <file>icons_material/baseline-list-24px.svg</file>
+        <file>icons_material/baseline-map-24px.svg</file>
+        <file>icons_material/baseline-menu-24px.svg</file>
+        <file>icons_material/baseline-more_vert-24px.svg</file>
+        <file>icons_material/baseline-perm_media-24px.svg</file>
+        <file>icons_material/baseline-refresh-24px.svg</file>
+        <file>icons_material/baseline-save-24px.svg</file>
+        <file>icons_material/baseline-search-24px.svg</file>
+        <file>icons_material/baseline-settings-20px.svg</file>
+        <file>icons_material/baseline-smartphone-24px.svg</file>
+        <file>icons_material/baseline-stars-24px.svg</file>
+        <file>icons_material/baseline-subdirectory_arrow_left-24px.svg</file>
+        <file>icons_material/baseline-supervised_user_circle-24px.svg</file>
+        <file>icons_material/baseline-timer-24px.svg</file>
+        <file>icons_material/baseline-warning-24px.svg</file>
+        <file>icons_material/baseline-zoom_in-24px.svg</file>
+        <file>icons_material/baseline-zoom_out-24px.svg</file>
+        <file>icons_material/outline-archive-24px.svg</file>
+        <file>icons_material/outline-folder-24px.svg</file>
+        <file>icons_material/outline-info-24px.svg</file>
+        <file>icons_material/outline-insert_drive_file-24px.svg</file>
+        <file>icons_material/outline-insert_empty-24px.svg</file>
+        <file>icons_material/outline-mail_outline-24px.svg</file>
+        <file>icons_material/outline-save-24px.svg</file>
+        <file>icons_material/outline-settings-24px.svg</file>
+        <file>icons_material/outline-sd_card-24px.svg</file>
+
+        <file>icons_material/duotone-data_usage-24px.svg</file>
+        <file>icons_material/duotone-exit_to_app-24px.svg</file>
+        <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
+        <file>icons_material/duotone-minimize-24px.svg</file>
+        <file>icons_material/duotone-library_add-24px.svg</file>
+        <file>icons_material/duotone-pin_drop-24px.svg</file>
+        <file>icons_material/duotone-style-24px.svg</file>
+        <file>icons_material/duotone-tune-24px.svg</file>
+        <file>icons_material_medias/duotone-av_timer-24px.svg</file>
+        <file>icons_material_medias/duotone-aspect_ratio-24px.svg</file>
+        <file>icons_material_medias/duotone-spherical-24px.svg</file>
+        <file>icons_material_medias/duotone-speaker-24px.svg</file>
+
+        <file>icons_material_medias/baseline-360-24px.svg</file>
+        <file>icons_material_medias/baseline-4k-24px.svg</file>
+        <file>icons_material_medias/baseline-av_timer-24px.svg</file>
+        <file>icons_material_medias/baseline-broken_image-24px.svg</file>
+        <file>icons_material_medias/baseline-camera-24px.svg</file>
+        <file>icons_material_medias/baseline-crop_16_9-24px.svg</file>
+        <file>icons_material_medias/baseline-crop_portrait-24px.svg</file>
+        <file>icons_material_medias/baseline-crop_square-24px.svg</file>
+        <file>icons_material_medias/baseline-exposure-24px.svg</file>
+        <file>icons_material_medias/baseline-gradient-24px.svg</file>
+        <file>icons_material_medias/baseline-hd-24px.svg</file>
+        <file>icons_material_medias/baseline-high_quality-24px.svg</file>
+        <file>icons_material_medias/baseline-iso-24px.svg</file>
+        <file>icons_material_medias/baseline-local_movies-24px.svg</file>
+        <file>icons_material_medias/baseline-photo-24px.svg</file>
+        <file>icons_material_medias/baseline-music-24px.svg</file>
+        <file>icons_material_medias/baseline-photo_camera-24px.svg</file>
+        <file>icons_material_medias/baseline-score-24px.svg</file>
+        <file>icons_material_medias/baseline-settings_overscan-24px.svg</file>
+        <file>icons_material_medias/baseline-slideshow-24px.svg</file>
+        <file>icons_material_medias/baseline-slow_motion_video-24px.svg</file>
+        <file>icons_material_medias/baseline-surround_sound-24px.svg</file>
+        <file>icons_material_medias/baseline-volume_up-24px.svg</file>
+        <file>icons_material_medias/outline-4k-24px.svg</file>
+        <file>icons_material_medias/outline-camera-24px.svg</file>
+        <file>icons_material_medias/outline-insert_music-24px.svg</file>
+        <file>icons_material_medias/outline-insert_photo-24px.svg</file>
+        <file>icons_material_medias/outline-local_movies-24px.svg</file>
+        <file>icons_material_medias/outline-photo_camera-24px.svg</file>
+        <file>icons_material_medias/outline-speaker-24px.svg</file>
+
+        <file>icons_fontawesome/photo-video-duotone.svg</file>
+    </qresource>
+
+    <qresource prefix="/">
+        <file>speakers/LFE.svg</file>
+        <file>speakers/1_0.svg</file>
+        <file>speakers/2_0_stereo.svg</file>
+        <file>speakers/5_0.svg</file>
+        <file>speakers/7_0.svg</file>
+    </qresource>
+</RCC>
