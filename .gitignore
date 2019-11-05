@@ -13,7 +13,7 @@ MiniVideoInfos.config
 MiniVideoInfos.creator*
 MiniVideoInfos.files
 MiniVideoInfos.includes
-MiniVideoInfos.pro*
+MiniVideoInfos.pro.*
 
 # Qt Quick Compiler
 qrc_resources.cpp

@@ -20,9 +20,10 @@ import urllib.request
 print("\n> MiniVideoInfos contribs builder")
 
 ## DEPENDENCIES ################################################################
+# These dependencies are needed for this script to run
 
 ## linux:
-# cmake libtool automake m4 libudev-dev
+# python3 cmake libtool automake m4 libudev-dev
 
 ## macOS:
 # brew install python cmake automake
@@ -95,7 +96,8 @@ if OS_HOST == "Linux":
     if ANDROID_NDK_HOME:
         TARGETS.append(["android", "armv7"])
         TARGETS.append(["android", "armv8"])
-        TARGETS.append(["android", "x86_64"])
+        #TARGETS.append(["android", "x86"])
+        #TARGETS.append(["android", "x86_64"])
     #TARGETS.append(["windows", "x86_64"]) # Windows cross compilation
 
 if OS_HOST == "Darwin":
@@ -199,7 +201,6 @@ if not os.path.exists("src/" + FILE_libexif):
     print("> Downloading " + FILE_libexif + "...")
     urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
-
 ## taglib
 ## version: git (1.12 beta)
 FILE_taglib = "taglib-master.zip"
@@ -208,7 +209,6 @@ DIR_taglib = "taglib-master"
 if not os.path.exists("src/" + FILE_taglib):
     print("> Downloading " + FILE_taglib + "...")
     urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/master.zip", src_dir + FILE_taglib)
-
 
 ## minivideo
 ## version: git (0.10+)
