@@ -121,7 +121,9 @@ bool Media::getMetadatasFromPicture()
     if (ed)
     {
         m_hasEXIF = true;
-        tag_found = 0;
+        m_exif_tag_found = 0;
+
+        //ExifByteOrder byte_order = exif_data_get_byte_order(ed);
 
         // EXIF ////////////////////////////////////////////////////////////////
 
@@ -134,14 +136,14 @@ bool Media::getMetadatasFromPicture()
         {
             exif_entry_get_value(entry, buf, sizeof(buf));
             m_camera_brand = buf;
-            tag_found++;
+            m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_MODEL);
         if (entry)
         {
             exif_entry_get_value(entry, buf, sizeof(buf));
             m_camera_model = buf;
-            tag_found++;
+            m_exif_tag_found++;
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_SOFTWARE);
@@ -149,91 +151,10 @@ bool Media::getMetadatasFromPicture()
         {
             exif_entry_get_value(entry, buf, sizeof(buf));
             m_camera_software = buf;
-            tag_found++;
+            m_exif_tag_found++;
         }
 
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_X_DIMENSION);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            width = QString::fromLatin1(buf).toUInt();
-            tag_found++;
-        }
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_Y_DIMENSION);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            height = QString::fromLatin1(buf).toUInt();
-            tag_found++;
-        }
-
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_ORIENTATION);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            //orientation = buf;
-/*
-            1 = Horizontal (normal)
-            2 = Mirror horizontal
-            3 = Rotate 180
-            4 = Mirror vertical
-            5 = Mirror horizontal and rotate 270 CW
-            6 = Rotate 90 CW
-            7 = Mirror horizontal and rotate 90 CW
-            8 = Rotate 270 CW
-*/
-            if (strncmp(buf, "Top-left", sizeof(buf)) == 0)
-            {
-                // TODO
-            }
-            tag_found++;
-        }
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FNUMBER);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            if (strlen(buf))
-            {
-                focal = buf;
-                focal.replace("f", "ƒ");
-            }
-            tag_found++;
-        }
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FOCAL_LENGTH);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            if (strlen(buf))
-            {
-                if (!focal.isEmpty()) focal += "  ";
-                focal += buf;
-            }
-            tag_found++;
-        }
-
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_ISO_SPEED_RATINGS);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            iso = buf;
-            tag_found++;
-        }
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_EXPOSURE_TIME);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            esposure_time = buf;
-            tag_found++;
-        }
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FLASH);
-        if (entry)
-        {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            int flashvalue = QString::fromLatin1(buf).toInt();
-
-            if (flashvalue > 0) flash = true;
-            tag_found++;
-        }
+        ////////////////
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_DATE_TIME);
         if (entry)
@@ -245,8 +166,185 @@ bool Media::getMetadatasFromPicture()
             // ex: DateTime: 2018:08:10 10:37:08
             exif_entry_get_value(entry, buf, sizeof(buf));
             m_date_metadatas = QDateTime::fromString(buf, "yyyy:MM:dd hh:mm:ss");
-            tag_found++;
         }
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_X_DIMENSION);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            width = QString::fromLatin1(buf).toUInt();
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_Y_DIMENSION);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            height = QString::fromLatin1(buf).toUInt();
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_X_RESOLUTION);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            resolution_x = QString::fromLatin1(buf).toUInt();
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_Y_RESOLUTION);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            resolution_y = QString::fromLatin1(buf).toUInt();
+        }
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_COLOR_SPACE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_COLOR_SPACE" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_1], EXIF_TAG_BITS_PER_SAMPLE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_BITS_PER_SAMPLE" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+
+        //EXIF_TAG_COLOR_SPACE
+        //EXIF_TAG_BITS_PER_SAMPLE
+        //EXIF_TAG_YCBCR_COEFFICIENTS
+        //EXIF_TAG_YCBCR_SUB_SAMPLING
+        //EXIF_TAG_YCBCR_POSITIONING
+        //EXIF_TAG_WHITE_POINT
+        //EXIF_TAG_PRIMARY_CHROMATICITIES
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_ORIENTATION);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_ORIENTATION" << QString::fromLatin1(buf);
+/*
+            1 = Horizontal (normal)
+            2 = Mirror horizontal
+            3 = Rotate 180
+            4 = Mirror vertical
+            5 = Mirror horizontal and rotate 270 CW
+            6 = Rotate 90 CW
+            7 = Mirror horizontal and rotate 90 CW
+            8 = Rotate 270 CW
+*/
+/*
+            if (strncmp(buf, "Top-left", sizeof(buf)) == 0)
+            {
+                //orientation = -90;
+            }
+            if (strncmp(buf, "Right-top", sizeof(buf)) == 0)
+            {
+                //orientation = 90;
+            }
+*/
+        }
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FNUMBER);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            if (strlen(buf))
+            {
+                focal = buf;
+                focal.replace("f", "ƒ");
+            }
+            m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FOCAL_LENGTH);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            if (strlen(buf))
+            {
+                if (!focal.isEmpty()) focal += "  ";
+                focal += buf;
+            }
+            m_exif_tag_found++;
+        }
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_ISO_SPEED_RATINGS);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            iso = buf;
+            m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_EXPOSURE_TIME);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            exposure_time = buf;
+            m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_EXPOSURE_BIAS_VALUE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            exposure_bias = buf;
+            m_exif_tag_found++;
+        }
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_METERING_MODE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            metering_mode = buf;
+            m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_SHARPNESS);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_SHARPNESS" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_SATURATION);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_SATURATION" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_SHUTTER_SPEED_VALUE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_SHUTTER_SPEED_VALUE" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_APERTURE_VALUE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_APERTURE_VALUE" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_MAX_APERTURE_VALUE);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "EXIF_TAG_MAX_APERTURE_VALUE" << QString::fromLatin1(buf);
+            //m_exif_tag_found++;
+        }
+        //EXIF_TAG_BRIGHTNESS_VALUE
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FLASH);
+        if (entry)
+        {
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            int flashvalue = QString::fromLatin1(buf).toInt();
+
+            if (flashvalue > 0) flash = true;
+            m_exif_tag_found++;
+        }
+        //EXIF_TAG_FLASH_ENERGY
+        //EXIF_TAG_FLASH_PIX_VERSION
+
+        // GPS infos ///////////////////////////////////////////////////////////
 
         QDate gpsDate;
         QTime gpsTime;
@@ -257,7 +355,7 @@ bool Media::getMetadatasFromPicture()
             // ex: GPSDateStamp: 2018:08:10
             exif_entry_get_value(entry, buf, sizeof(buf));
             gpsDate = QDate::fromString(buf, "yyyy:MM:dd");
-            tag_found++;
+            m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                        static_cast<ExifTag>(EXIF_TAG_GPS_TIME_STAMP));
@@ -269,17 +367,16 @@ bool Media::getMetadatasFromPicture()
 
             if (!gpsTime.isValid())
                 gpsTime = QTime::fromString(buf, "hh:mm:ss.z");
-            tag_found++;
+            m_exif_tag_found++;
         }
 
         if (gpsDate.isValid() && gpsTime.isValid())
             m_date_gps = QDateTime(gpsDate, gpsTime);
 
-        // GPS infos ///////////////////////////////////////////////////////////////
         if (m_date_gps.isValid())
         {
             m_hasGPS = true;
-            tag_found++;
+            m_exif_tag_found++;
 
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_LATITUDE));
@@ -379,7 +476,6 @@ bool Media::getMetadatasFromPicture()
             qDebug() << "gps_diff:" << m_gps_diff;
             qDebug() << "gps_version:" << m_gps_version;
             qDebug() << "gps_timestamp:" << m_date_gps;
-
 */
         }
 
@@ -425,7 +521,7 @@ bool Media::getMetadatasFromPicture()
         vcodec = img_infos.format();
         width = img_infos.size().rwidth();
         height = img_infos.size().rheight();
-        orientation = img_infos.transformation();
+        orientation = img_infos.transformation(); // FIXME
 
         status = true;
     }
@@ -471,13 +567,41 @@ bool Media::getMetadatasFromAudio()
         status = true;
 
         TagLib::Tag *tag = f.tag();
-        tag_artist = QString::fromStdWString(tag->artist().toCWString());
-        tag_title = QString::fromStdWString(tag->title().toCWString());
-        tag_album = QString::fromStdWString(tag->album().toCWString());
-        tag_track_nb = tag->track();
-        tag_year = tag->year();
-        tag_genre = QString::fromStdWString(tag->genre().toCWString());
-        tag_comment = QString::fromStdWString(tag->comment().toCWString());
+        if (tag->artist().length())
+        {
+            tag_artist = QString::fromStdWString(tag->artist().toCWString());
+            m_audio_tag_found++;
+        }
+        if (tag->title().length())
+        {
+            tag_title = QString::fromStdWString(tag->title().toCWString());
+            m_audio_tag_found++;
+        }
+        if (tag->album().length())
+        {
+            tag_album = QString::fromStdWString(tag->album().toCWString());
+            m_audio_tag_found++;
+        }
+        if (tag->track() > 0)
+        {
+            tag_track_nb = tag->track();
+            m_audio_tag_found++;
+        }
+        if (tag->year() > 0)
+        {
+            tag_year = tag->year();
+            m_audio_tag_found++;
+        }
+        if (tag->genre().length())
+        {
+            tag_genre = QString::fromStdWString(tag->genre().toCWString());
+            m_audio_tag_found++;
+        }
+        if (tag->comment().length())
+        {
+            tag_comment = QString::fromStdWString(tag->comment().toCWString());
+            m_audio_tag_found++;
+        }
 
         //std::cout << "-- TAG (properties) --" << std::endl;
         TagLib::PropertyMap tags = f.file()->properties();

@@ -25,7 +25,10 @@ ScrollView {
         info_iso.text = mediaItem.iso
         info_focal.text = mediaItem.focal
         info_exposure.text = mediaItem.exposure
+        info_exposureBias.text = mediaItem.exposureBias
         info_flash.text = mediaItem.flash
+        info_lightSource.text = mediaItem.lightSource
+        info_meteringMode.text = mediaItem.meteringMode
 
         columnGPS.visible = mediaItem.hasGPS
         info_gps_version.text = mediaItem.gpsVersion
@@ -213,6 +216,7 @@ ScrollView {
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
+                visible: (info_focal.text.length > 0)
 
                 Text {
                     text: qsTr("focal")
@@ -231,6 +235,7 @@ ScrollView {
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
+                visible: (info_exposure.text.length > 0)
 
                 Text {
                     text: qsTr("exposure time")
@@ -244,11 +249,31 @@ ScrollView {
                 }
             }
             Row { ////
+                id: item_exposureBias
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+                visible: (info_exposureBias.text.length > 0)
+
+                Text {
+                    text: qsTr("exposure bias")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_exposureBias
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
                 id: item_iso
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
+                visible: (info_iso.text.length > 0)
 
                 Text {
                     text: qsTr("ISO")
@@ -267,6 +292,7 @@ ScrollView {
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
+                visible: (info_flash.text != "false")
 
                 Text {
                     text: qsTr("flash")
@@ -275,6 +301,44 @@ ScrollView {
                 }
                 Text {
                     id: info_flash
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_lightSource
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+                visible: (info_lightSource.text.length > 0)
+
+                Text {
+                    text: qsTr("light source")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_lightSource
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_meteringMode
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+                visible: (info_meteringMode.text.length > 0)
+
+                Text {
+                    text: qsTr("metering mode")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_meteringMode
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

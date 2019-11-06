@@ -19,13 +19,9 @@ ScrollView {
         info_extension.text = mediaItem.ext
         info_date.text = mediaItem.date.toLocaleDateString()
         info_time.text = mediaItem.date.toLocaleTimeString()
-
         item_duration.visible = (mediaItem.duration > 0)
         info_duration.text = UtilsString.durationToString_short(mediaItem.duration)
-
-        item_size.visible = false
-        info_size.text = UtilsString.bytesToString(mediaItem.size)
-
+        info_size.text = UtilsString.bytesToString(mediaItem.size, settingsManager.unitSizes)
         item_timecode.visible = (mediaItem.timecode.length > 0)
         info_timecode.text = mediaItem.timecode
 
@@ -47,9 +43,11 @@ ScrollView {
             columnImage.visible = true
 
             info_icodec.text = mediaItem.videoCodec
+            info_impix.text = ((mediaItem.width * mediaItem.height) / 1000000).toFixed(1)
             info_idefinition.text = mediaItem.width + " x " + mediaItem.height
             info_iaspectratio.text = UtilsMedia.varToString(mediaItem.width, mediaItem.height)
-            item_iorientation.visible = (mediaItem.orientation > 0)
+            info_iresolution.text = (mediaItem.resolution) ? (mediaItem.resolution + " " + qsTr("dpi")) : ""
+            item_iorientation.visible = (mediaItem.orientation !== 0)
             info_iorientation.text = UtilsMedia.orientationToString(mediaItem.orientation)
             item_iprojection.visible = (mediaItem.projection > 0)
             info_iprojection.text = UtilsMedia.projectionToString(mediaItem.projection)
@@ -271,7 +269,6 @@ ScrollView {
                 }
             }
             Row { ////
-                id: item_size
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24
@@ -468,12 +465,12 @@ ScrollView {
                 spacing: 16
 
                 Text {
-                    text: qsTr("definition")
+                    text: qsTr("megapixel")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_idefinition
+                    id: info_impix
                     color: Theme.colorText
                     font.pixelSize: 15
                 }
@@ -491,6 +488,41 @@ ScrollView {
                 }
                 Text {
                     id: info_iaspectratio
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("definition")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_idefinition
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+                visible: (info_iresolution.text.length > 0)
+
+                Text {
+                    text: qsTr("resolution")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_iresolution
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

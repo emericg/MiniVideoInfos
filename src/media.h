@@ -83,15 +83,19 @@ class Media: public QObject
     Q_PROPERTY(unsigned width READ getWidth NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned height READ getHeight NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned depth READ getDepth NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned resolution READ getResolution NOTIFY mediaUpdated)
     Q_PROPERTY(bool alpha READ getAlpha NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned projection READ getProjection NOTIFY mediaUpdated)
-    Q_PROPERTY(unsigned orientation READ getOrientation NOTIFY mediaUpdated)
+    Q_PROPERTY(int orientation READ getOrientation NOTIFY mediaUpdated)
 
     // image tags
     Q_PROPERTY(QString iso READ getIso NOTIFY mediaUpdated)
     Q_PROPERTY(QString focal READ getFocal NOTIFY mediaUpdated)
     Q_PROPERTY(QString exposure READ getExposure NOTIFY mediaUpdated)
+    Q_PROPERTY(QString exposureBias READ getExposureBias NOTIFY mediaUpdated)
+    Q_PROPERTY(QString meteringMode READ getMeteringMode NOTIFY mediaUpdated)
     Q_PROPERTY(bool flash READ getFlash NOTIFY mediaUpdated)
+    Q_PROPERTY(QString lightSource READ getLightSource NOTIFY mediaUpdated)
 
     // audio tags
     Q_PROPERTY(QString tag_title READ getTagTitle NOTIFY mediaUpdated)
@@ -125,12 +129,20 @@ class Media: public QObject
     Q_PROPERTY(unsigned gpsDiff READ getGpsDiff NOTIFY metadatasUpdated)
     Q_PROPERTY(QString gpsVersion READ getGpsVersion NOTIFY metadatasUpdated)
 
+    ////////
+
     bool m_valid = false;
     Shared::FileType m_type = Shared::FILE_UNKNOWN;
     Shared::ShotType m_stype = Shared::SHOT_UNKNOWN;
     //Shared::ShotState m_state = Shared::SHOT_STATE_DEFAULT;
 
+    // MiniVideo media
     MediaFile_t *m_media = nullptr;
+    // MiniVideo media tracks
+    QList <QObject *> tracksAudio;
+    QList <QObject *> tracksVideo;
+    QList <QObject *> tracksSubtitles;
+    QList <QObject *> tracksOther;
 
     QString m_path;
     QString m_file_folder;
@@ -154,7 +166,7 @@ class Media: public QObject
     QDateTime m_date_gps;
 
     // GLOBAL metadatas
-    unsigned orientation = 0;
+    int orientation = 0;
     unsigned projection = 0;
     unsigned width = 0;
     unsigned height = 0;
@@ -163,12 +175,23 @@ class Media: public QObject
 
     // IMAGE metadatas
     bool m_hasEXIF = false;
-    bool hasEXIF() const { return (m_hasEXIF && tag_found); }
-    unsigned tag_found = 0;
+    unsigned m_exif_tag_found = 0;
+    bool m_hasXMP = false;
+    unsigned m_xmp_tag_found = 0;
+    bool m_hasIIM = false;
+    unsigned m_iim_tag_found = 0;
+    bool m_hasMakerNote = false;
+    QString m_makernote_brand;
+
     QString focal;
     QString iso;
-    QString esposure_time;
+    QString exposure_time;
+    QString exposure_bias;
+    QString metering_mode;
+    unsigned resolution_x = 0;
+    unsigned resolution_y = 0;
     bool flash = false;
+    QString light_source;
 
     // VIDEO metadatas
     QString vcodec;
@@ -185,6 +208,8 @@ class Media: public QObject
     unsigned asamplerate = 0;
 
     bool m_hasAudioTags = false;
+    unsigned m_audio_tag_found = 0;
+
     QString tag_title;
     QString tag_artist;
     QString tag_album;
@@ -196,15 +221,6 @@ class Media: public QObject
     QString tag_comment;
     QString tag_covertart_mime;
     QString tag_transcoded;
-
-    QString getTagTitle() const { return tag_title; }
-    QString getTagArtist() const { return tag_artist; }
-    QString getTagAlbum() const { return tag_album; }
-    unsigned getTagTrackNb() const { return tag_track_nb; }
-    unsigned getTagTrackTotal() const { return tag_track_total; }
-    unsigned getTagYear() const { return tag_year; }
-    QString getTagGenre() const { return tag_genre; }
-    QString getTagComment() const { return tag_comment; }
 
     // GPS metadatas
     bool m_hasGPS = false;
@@ -219,7 +235,7 @@ class Media: public QObject
     unsigned gps_dop = 0;
     unsigned gps_diff = 0;
 
-    bool hasAudioTags() const { return m_hasAudioTags; }
+    ////////
 
     bool hasAudio() const { return (tracksAudio.length() > 0); }
     bool hasVideo() const { return (tracksVideo.length() > 0); }
@@ -228,11 +244,6 @@ class Media: public QObject
     bool getMetadatasFromPicture();
     bool getMetadatasFromVideo();
     bool getMetadatasFromAudio();
-
-    QList <QObject *> tracksAudio;
-    QList <QObject *> tracksVideo;
-    QList <QObject *> tracksSubtitles;
-    QList <QObject *> tracksOther;
 
     QString getName() const { return m_file_name; }
     QString getFolder() const { return m_file_folder; }
@@ -250,21 +261,14 @@ class Media: public QObject
     QDateTime getDateMetadata() const;
     QDateTime getDateGPS() const;
 
-    QString getCameraBrand() const { return m_camera_brand; }
-    QString getCameraModel() const { return m_camera_model; }
-    QString getCameraSoftware() const { return m_camera_software; }
-
     unsigned getWidth() const { return width; }
     unsigned getHeight() const { return height; }
     unsigned getDepth() const { return bpp; }
     bool getAlpha() const { return alpha; }
     unsigned getProjection() const { return projection; }
-    unsigned getOrientation() const { return orientation; }
+    int getOrientation() const { return orientation; }
+    unsigned getResolution() const { return resolution_x; }
 
-    QString getIso() const { return iso; }
-    QString getFocal() const { return focal; }
-    QString getExposure() const { return esposure_time; }
-    bool getFlash() const { return flash; }
 
     QString getVideoCodec() const { return vcodec; }
     QString getTimecode() const { return vtimecode; }
@@ -278,6 +282,29 @@ class Media: public QObject
     unsigned getAudioBitrateMode() const { return abitratemode; }
     unsigned getAudioSamplerate() const { return asamplerate; }
 
+    bool hasAudioTags() const { return m_hasAudioTags && m_audio_tag_found; }
+    QString getTagTitle() const { return tag_title; }
+    QString getTagArtist() const { return tag_artist; }
+    QString getTagAlbum() const { return tag_album; }
+    unsigned getTagTrackNb() const { return tag_track_nb; }
+    unsigned getTagTrackTotal() const { return tag_track_total; }
+    unsigned getTagYear() const { return tag_year; }
+    QString getTagGenre() const { return tag_genre; }
+    QString getTagComment() const { return tag_comment; }
+
+    bool hasEXIF() const { return (m_hasEXIF && m_exif_tag_found); }
+    bool hasXMP() const { return m_hasXMP && m_xmp_tag_found; }
+    bool hasIIM() const { return m_hasIIM && m_iim_tag_found; }
+    QString getCameraBrand() const { return m_camera_brand; }
+    QString getCameraModel() const { return m_camera_model; }
+    QString getCameraSoftware() const { return m_camera_software; }
+    QString getIso() const { return iso; }
+    QString getFocal() const { return focal; }
+    QString getExposure() const { return exposure_time; }
+    QString getExposureBias() const { return exposure_bias; }
+    QString getMeteringMode() const { return metering_mode; }
+    bool getFlash() const { return flash; }
+    QString getLightSource() const { return light_source; }
     QString getLatitudeStr() const { return gps_lat_str; }
     QString getLongitudeStr() const { return gps_long_str; }
     QString getAltitudeStr() const { return gps_alt_str; }
