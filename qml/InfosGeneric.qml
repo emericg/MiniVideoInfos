@@ -113,7 +113,6 @@ ScrollView {
     }
 
     Column {
-        id: columnStuff
         anchors.top: parent.top
         anchors.topMargin: 16
         anchors.right: parent.right

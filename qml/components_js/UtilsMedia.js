@@ -233,6 +233,8 @@ function framerateToString(framerate) {
 
 /*!
  * orientationToString()
+ *
+ * Convert EXIF enumeration to a readable string
  */
 function orientationToString(orientation) {
     var text = '';

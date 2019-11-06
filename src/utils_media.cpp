@@ -135,7 +135,7 @@ QString getTimestampSmtpeString(const uint64_t timestamp, const double framerate
         uint64_t seconds = (timestamp - (hours * 3600000000) - (minutes * 60000000)) / 1000000;
 
         double us = (timestamp - (hours * 3600000000) - (minutes * 60000000) - (seconds * 1000000));
-        uint64_t frames = std::floor(us / std::floor(1000000.0 / framerate));
+        uint64_t frames = static_cast<uint64_t>(std::floor(us / std::floor(1000000.0 / framerate)));
 
         timestamp_qstr = QString::number(hours) + ":" + QString::number(minutes) + ":" + QString::number(seconds) + "-" + QString::number(frames);
         timestamp_qstr = QString("%1:%2:%3-%4")\

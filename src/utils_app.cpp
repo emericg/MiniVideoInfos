@@ -22,7 +22,6 @@
 #include "utils_android.h"
 #include "utils_ios.h"
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 
 #include <QApplication>

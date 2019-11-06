@@ -19,11 +19,6 @@
  * \date      2019
  */
 
-#ifndef _USE_MATH_DEFINES
-#define _USE_MATH_DEFINES
-#endif
-#include <cmath>
-
 #include "media.h"
 #include "utils_media.h"
 #include "minivideo_textexport.h"
@@ -46,6 +41,8 @@
 #include <taglib/id3v1tag.h>
 #include <taglib/apetag.h>
 #endif
+
+#include <cmath>
 
 #include <QDir>
 #include <QUrl>
@@ -98,7 +95,7 @@ Media::~Media()
 
 /* ************************************************************************** */
 /* ************************************************************************** */
-
+/*
 #ifdef ENABLE_LIBEXIF
 static void show_tag(ExifData *d, ExifIfd ifd, ExifTag tag)
 {
@@ -112,7 +109,7 @@ static void show_tag(ExifData *d, ExifIfd ifd, ExifTag tag)
     }
 }
 #endif // ENABLE_LIBEXIF
-
+*/
 bool Media::getMetadatasFromPicture()
 {
     bool status = false;
@@ -386,7 +383,8 @@ bool Media::getMetadatasFromPicture()
 */
         }
 
-        // MAKERNOTE ///////////////////////////////////////////////////////////////
+        // MAKERNOTE ///////////////////////////////////////////////////////////
+
         ExifMnoteData *mn = exif_data_get_mnote_data(ed);
         if (mn)
         {
@@ -499,7 +497,7 @@ bool Media::getMetadatasFromAudio()
                 {
                     std::string a = (*j).to8Bit();
                     a = a.substr(a.rfind('/')+1);
-                    tag_track_total = std::stoul(a);
+                    tag_track_total = std::stoi(a);
                 }
 
                 //qDebug() << key << " - " << QString::fromStdWString((*j).toCWString());
@@ -515,8 +513,8 @@ bool Media::getMetadatasFromAudio()
     {
         TagLib::AudioProperties *properties = f.audioProperties();
 
-        int seconds = properties->length() % 60;
-        int minutes = (properties->length() - seconds) / 60;
+        //int seconds = properties->length() % 60;
+        //int minutes = (properties->length() - seconds) / 60;
 
         if (m_duration <= 0)
            m_duration = properties->lengthInMilliseconds();
@@ -570,7 +568,7 @@ bool Media::getMetadatasFromVideo()
         m_creation_app = QString::fromLocal8Bit(m_media->creation_app);
         m_creation_lib = QString::fromLocal8Bit(m_media->creation_lib);
 
-        m_duration = m_media->duration;
+        m_duration = static_cast<qint64>(m_media->duration);
 
         m_date_metadatas = QDateTime::fromTime_t(m_media->creation_time);
 

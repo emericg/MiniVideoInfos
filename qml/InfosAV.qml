@@ -19,7 +19,7 @@ ScrollView {
 
         // track
         info_id.text = trackItem.id
-        info_size.text = UtilsString.bytesToString_short(trackItem.size)
+        info_size.text = UtilsString.bytesToString_short(trackItem.size, settingsManager.unitSizes)
         info_duration.text = UtilsString.durationToString_short(trackItem.duration)
         item_delay.visible = (trackItem.delay !== 0)
         info_delay.text = UtilsString.durationToString_short(trackItem.delay)

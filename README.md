@@ -17,7 +17,7 @@ Get detailed informations about your audio, video and pictures files!
 ### Dependencies
 
 You will need:
-- a C++14 compiler
+- Any C++11 compiler
 - Android NDK 20
 - Android SDK
 - Qt 5.12 (with Qt Charts)
@@ -29,7 +29,7 @@ You will need:
 
 > $ git clone https://github.com/emericg/MiniVideoInfos.git  
 > $ cd MiniVideoInfos/  
-> $ cd contribs/; python3 contribs.py; cd ..;  
+> $ cd contribs/ && python3 contribs.py && cd ..  
 > $ qmake  
 > $ make  
 

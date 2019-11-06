@@ -1,18 +1,17 @@
 // UtilsPath.js
-// Version 0.2
+// Version 0.3
 .pragma library
 
 /*!
  * Take an url or string, and make sure we output a clean string path.
  */
 function cleanUrl(urlIn) {
-    var pathOut = '';
-
     urlIn = Qt.resolvedUrl(urlIn)
     if (!(typeof urlIn === 'string' || urlIn instanceof String)) {
         urlIn = urlIn.toString();
     }
 
+    var pathOut = '';
     if (typeof urlIn === 'string' || urlIn instanceof String) {
         if (urlIn.slice(0, 8) === "file:///") {
             var k = urlIn.charAt(9) === ':' ? 8 : 7;
@@ -38,12 +37,11 @@ function makeUrl(urlIn) {
  * Take an url or string from a file, return the absolute path of the folder containing that file.
  */
 function fileToFolder(filePath) {
-    var folderPath = '';
-
     if (!(typeof filePath === 'string' || filePath instanceof String)) {
         filePath = filePath.toString();
     }
 
+    var folderPath = '';
     if (typeof filePath === 'string' || filePath instanceof String) {
         folderPath = filePath.substring(0, filePath.lastIndexOf("/"));
     } else {
@@ -60,6 +58,10 @@ function isMediaFile(filePath) {
 }
 
 function isVideoFile(filePath) {
+    if (!(typeof filePath === 'string' || filePath instanceof String)) {
+        filePath = filePath.toString();
+    }
+
     var extension = filePath.split('.').pop().toLowerCase();
     var valid = false;
 
@@ -77,6 +79,10 @@ function isVideoFile(filePath) {
 }
 
 function isPictureFile(filePath) {
+    if (!(typeof filePath === 'string' || filePath instanceof String)) {
+        filePath = filePath.toString();
+    }
+
     var extension = filePath.split('.').pop().toLowerCase();
     var valid = false;
 
@@ -96,14 +102,19 @@ function isPictureFile(filePath) {
 }
 
 function isAudioFile(filePath) {
+    if (!(typeof filePath === 'string' || filePath instanceof String)) {
+        filePath = filePath.toString();
+    }
+
     var extension = filePath.split('.').pop().toLowerCase();
     var valid = false;
 
     if (extension.length !== 0) {
         if (extension === "mp1" || extension === "mp2" || extension === "mp3" ||
-            extension === "m4a" || extension === "mp4a" || extension === "aac" ||
+            extension === "m4a" || extension === "mp4a" ||  extension === "m4r" || extension === "aac" ||
             extension === "mka" ||
-            extension === "wma" || extension === "wav" || extension === "wave" ||
+            extension === "wma" ||
+            extension === "amb" || extension === "wav" || extension === "wave" ||
             extension === "ogg" || extension === "opus" || extension === "vorbis" ) {
             valid = true;
         }

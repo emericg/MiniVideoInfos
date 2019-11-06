@@ -1,5 +1,5 @@
 // UtilsNumber.js
-// Version 0.3
+// Version 0.4
 .pragma library
 
 /*!
@@ -77,20 +77,30 @@ function isFloat(n) {
     return Number(n) === n && n % 1 !== 0;
 }
 
+/*!
+ * Return true if n is an even number
+ */
 function isEven(n) {
     return n % 2 === 0;
 }
 
+/*!
+ * Return true if n is an odd number
+ */
 function isOdd(n) {
     return n % 2 !== 0;
 }
 
-// Fahrenheit to Celsius
+/*!
+ * Fahrenheit to Celsius conversion
+ */
 function tempFahrenheitToCelsius(temp_f) {
     return (temp_f - 32) / 1.8;
 }
 
-// Celsius to Fahrenheit
+/*!
+ * Celsius to Fahrenheit conversion
+ */
 function tempCelsiusToFahrenheit(temp_c) {
     return (temp_c * 1.8 + 32);
 }

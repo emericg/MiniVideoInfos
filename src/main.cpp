@@ -40,20 +40,6 @@
 
 int main(int argc, char *argv[])
 {
-    // Arguments parsing ///////////////////////////////////////////////////////
-
-    bool test = false;
-    for (int i = 1; i < argc; i++)
-    {
-        if (argv[i])
-        {
-            //qDebug() << "> arg >" << argv[i];
-
-            if (QString::fromLocal8Bit(argv[i]) == "--test")
-                test = true;
-        }
-    }
-
     // GUI application /////////////////////////////////////////////////////////
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

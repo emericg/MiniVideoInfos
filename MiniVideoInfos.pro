@@ -21,6 +21,8 @@ ios | android { CONFIG += qtquickcompiler }
 # Use contribs (otherwise use system libs)
 ios | android { DEFINES += USE_CONTRIBS }
 
+win32 { DEFINES += _USE_MATH_DEFINES }
+
 # StatusBar for mobile OS
 include(src/thirdparty/StatusBar/statusbar.pri)
 

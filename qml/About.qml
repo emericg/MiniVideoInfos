@@ -39,7 +39,7 @@ Item {
         Column {
             id: column1
             anchors.left: imageLogo.right
-            anchors.leftMargin: 32
+            anchors.leftMargin: 24
             anchors.verticalCenter: parent.verticalCenter
 
             Text {

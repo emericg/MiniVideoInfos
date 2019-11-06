@@ -338,7 +338,7 @@ Rectangle {
 
                 if (onlyShowMedias)
                     folderListModel.nameFilters = ["*.mov", "*.m4v", "*.mp4", "*.mp4v", "*.3gp", "*.3gpp", "*.mkv", "*.webm", "*.avi", "*.divx", "*.asf", "*.wmv",
-                                                   "*.mp1", "*.mp2", "*.mp3", "*.m4a", "*.mp4a", "*.aac", "*.mka", "*.wma", "*.wav", "*.wave", "*.ogg", "*.opus", "*.vorbis",
+                                                   "*.mp1", "*.mp2", "*.mp3", "*.m4a", "*.mp4a", "*.m4r", "*.aac", "*.mka", "*.wma", "*.amb", "*.wav", "*.wave", "*.ogg", "*.opus", "*.vorbis",
                                                     "*.jpg", "*.jpeg", "*.webp", "*.png", "*.gpr", "*.gif", "*.heif", "*.heic", "*.avif", "*.bmp", "*.tga", "*.tif", "*.tiff", "*.svg"]
                 else
                     folderListModel.nameFilters = []
