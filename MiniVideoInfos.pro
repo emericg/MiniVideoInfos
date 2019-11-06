@@ -1,6 +1,6 @@
 TARGET  = MiniVideoInfos
 
-VERSION = 0.1
+VERSION = 0.2
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
