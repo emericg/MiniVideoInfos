@@ -25,8 +25,6 @@
 
 #include <QObject>
 #include <QString>
-#include <QApplication>
-#include <QQuickWindow>
 
 /* ************************************************************************** */
 
@@ -59,13 +57,13 @@ class SettingsManager: public QObject
     int m_unitSystem = 0;   //!< 0: Metric, 1: ImperialUSSystem, 2: ImperialUKSystem // Or use QLocal::MeasurementSystem
     int m_unitSizes = 0;    //!< 0: KB, 1: KiB, 2: display both
 
-    bool readSettings();
-    bool writeSettings();
-
     static SettingsManager *instance;
 
     SettingsManager();
     ~SettingsManager();
+
+    bool readSettings();
+    bool writeSettings();
 
 Q_SIGNALS:
     void firstLaunchChanged();

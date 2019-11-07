@@ -20,17 +20,14 @@
  */
 
 #include "settingsmanager.h"
+
+#include <QApplication>
 #include <QStandardPaths>
+#include <QSettings>
 #include <QLocale>
 #include <QDir>
-#include <QSettings>
 #include <QDebug>
 
-#if defined(Q_OS_IOS)
-#include <QtGui/qpa/qplatformwindow.h>
-#endif
-
-#include <QScreen>
 #include <cmath>
 
 /* ************************************************************************** */
@@ -69,10 +66,7 @@ bool SettingsManager::readSettings()
     if (settings.status() == QSettings::NoError)
     {
         if (settings.contains("settings/appTheme"))
-        {
-            m_firstlaunch = false;
             m_appTheme = settings.value("settings/appTheme").toString();
-        }
 
         if (settings.contains("settings/autoDark"))
             m_autoDark = settings.value("settings/autoDark").toBool();
@@ -87,7 +81,12 @@ bool SettingsManager::readSettings()
             m_exportEnabled = settings.value("settings/exportEnabled").toBool();
 
         if (settings.contains("settings/unitSystem"))
+        {
             m_unitSystem = settings.value("settings/unitSystem").toInt();
+
+            // Use this setting to check if the settings file exists
+            m_firstlaunch = false;
+        }
         else
         {
             // If we have no measurement system saved, use system's one
@@ -103,6 +102,12 @@ bool SettingsManager::readSettings()
     else
     {
         qWarning() << "SettingsManager::readSettings() error:" << settings.status();
+    }
+
+    if (m_firstlaunch)
+    {
+        // force settings file creation
+        settings.sync();
     }
 
     return status;
