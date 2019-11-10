@@ -6,6 +6,26 @@
 
 Get detailed informations about your audio, video and pictures files!
 
+### Features
+
+- Bitrate graphs
+- Pixel geometry
+- Audio channels mapping
+- Camera EXIF
+- Audio tags
+- GPS location maps
+
+VIDEO file formats:  
+✔ AVI, ASF / WMV, MKV / WEBM, MP4 / MOV, MPEG  
+
+AUDIO file formats:  
+✔ AAC, MP3, WMA, WAVE  
+✔ ID3 v1/v2 and Vorbis comments tags  
+
+PICTURE file formats:  
+✔ GIF, JPG, PNG, SVG  
+✔ EXIF tags  
+
 ### Screenshots
 
 ![triptik1](https://i.imgur.com/4UktjbK.png)
