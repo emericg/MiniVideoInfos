@@ -97,7 +97,15 @@ Item {
                 id: textArea
                 text: ""
                 color: Theme.colorText
-                font.family: "Monospace";
+                font.family: {
+                    if (Qt.platform.os === "android")
+                        return "Droid Sans Mono"
+                    else if (Qt.platform.os === "ios")
+                        return "Monospace"
+                    else
+                        return "Monospace"
+                }
+                readOnly: true
             }
         }
     }

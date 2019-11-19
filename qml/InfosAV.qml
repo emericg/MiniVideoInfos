@@ -660,23 +660,6 @@ ScrollView {
                 spacing: 16
 
                 Text {
-                    text: qsTr("channels")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_achannels
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
                     text: qsTr("samplerate")
                     color: Theme.colorSubText
                     font.pixelSize: 15
@@ -740,13 +723,30 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
-            Item {
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("channels")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_achannels
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Item { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 //anchors.right: parent.right
                 //anchors.rightMargin: 12
-                width: 200
-                height: 200
+                width: 160
+                height: 160
 
                 ImageSvg {
                     id: speakers_lfe

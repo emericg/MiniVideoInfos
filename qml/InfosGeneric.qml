@@ -1045,9 +1045,13 @@ ScrollView {
                     }
                     Text {
                         text: {
-                            var txt =  "/ " + modelData.codec
+                            var txt = ""
+                            if (modelData.codec.length)
+                                txt = "/ " + modelData.codec
                             if (modelData.language.length)
-                                txt +=  " / " + modelData.language
+                                txt += " / " + modelData.language
+                            if (modelData.title.length)
+                                txt += " / " + modelData.title
                             return txt
                         }
                         color: Theme.colorText
@@ -1072,11 +1076,11 @@ ScrollView {
                             if (modelData.type === 4) // stream_MENU
                                 return qsTr("menu track #") + modelData.id
                             if (modelData.type === 5) // stream_TMCD
-                                return qsTr("SMPTE timecode track #") + modelData.id
+                                return qsTr("SMPTE timecode track")
                             if (modelData.type === 6) // stream_META
-                                return qsTr("metadata track #") + modelData.id
+                                return qsTr("metadata track")
                             if (modelData.type === 7) // stream_HINT
-                                return qsTr("hint track #") + modelData.id
+                                return qsTr("hint track")
                         }
                         color: Theme.colorSubText
                         font.pixelSize: 15

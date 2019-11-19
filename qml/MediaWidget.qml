@@ -40,7 +40,6 @@ Item {
     Component.onCompleted: initBoxDatas()
 
     function initBoxDatas() {
-
         if (mediaItem.fileType === 1)
             imageMedia.source = "qrc:/assets/icons_material_medias/outline-insert_music-24px.svg"
         else if (mediaItem.fileType === 2)
