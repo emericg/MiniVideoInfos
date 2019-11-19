@@ -39,7 +39,7 @@ bool android_ask_storage_permissions()
     QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
     if (r == QtAndroid::PermissionResult::Denied)
     {
-        QtAndroid::requestPermissionsSync( QStringList() << "android.permission.READ_EXTERNAL_STORAGE" );
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.READ_EXTERNAL_STORAGE");
         r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
         if (r == QtAndroid::PermissionResult::Denied)
         {
@@ -51,7 +51,7 @@ bool android_ask_storage_permissions()
     QtAndroid::PermissionResult w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
     if (w == QtAndroid::PermissionResult::Denied)
     {
-        QtAndroid::requestPermissionsSync( QStringList() << "android.permission.WRITE_EXTERNAL_STORAGE" );
+        QtAndroid::requestPermissionsSync(QStringList() << "android.permission.WRITE_EXTERNAL_STORAGE");
         w = QtAndroid::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
         if (w == QtAndroid::PermissionResult::Denied)
         {
@@ -170,6 +170,75 @@ QString android_get_external_storage()
 #endif // Q_OS_ANDROID
 
     return external_storage;
+}
+
+/* ************************************************************************** */
+
+QString android_get_device_model()
+{
+    QString device_model;
+
+#ifdef Q_OS_ANDROID
+
+    QAndroidJniObject manufacturerField = QAndroidJniObject::getStaticObjectField<jstring>("android/os/Build", "MANUFACTURER");
+    QAndroidJniObject modelField = QAndroidJniObject::getStaticObjectField<jstring>("android/os/Build", "MODEL");
+    device_model =  manufacturerField.toString() + " " + modelField.toString();
+
+    //qDebug() << "> android_get_device_model()" << device_model;
+
+#endif // Q_OS_ANDROID
+
+    return device_model;
+}
+
+/* ************************************************************************** */
+
+void android_vibrate()
+{
+#ifdef Q_OS_ANDROID
+/*
+    QAndroidJniObject vibvib = QAndroidJniObject::getStaticObjectField("android/os/Vibrator",
+                                                                         "vibrate",
+                                                                         "(I)V;",
+                                                                         1000);
+*/
+   // QAndroidJniObject mediaPath = vibvib.callObjectMethod("getAbsolutePath", "()Ljava/lang/String;");
+
+    //EFFECT_CLICK
+
+#endif // Q_OS_ANDROID
+}
+
+/* ************************************************************************** */
+
+void android_keep_screen_on(bool on)
+{
+#ifdef Q_OS_ANDROID
+    //qDebug() << "> android_keep_screen_on(" << on << ")";
+
+    QtAndroid::runOnAndroidThread([on]{
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    if (activity.isValid())
+    {
+        QAndroidJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
+
+        if (window.isValid())
+        {
+            const int FLAG_KEEP_SCREEN_ON = 128;
+            if (on)
+                window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
+            else
+                window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
+        }
+    }
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck())
+    {
+        env->ExceptionClear();
+    }
+  });
+
+#endif // Q_OS_ANDROID
 }
 
 /* ************************************************************************** */

@@ -79,6 +79,11 @@ QUrl UtilsApp::getStandardPath(const QString type)
 
 /* ************************************************************************** */
 
+bool UtilsApp::getMobileStoragePermission()
+{
+    return android_ask_storage_permissions();
+}
+
 int UtilsApp::getMobileStorageCount()
 {
     QStringList storages = android_get_storages_by_api();

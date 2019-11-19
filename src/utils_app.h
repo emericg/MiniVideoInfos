@@ -29,46 +29,6 @@
 
 /* ************************************************************************** */
 
-#include <QMetaType>
-
-namespace Shared
-{
-    Q_NAMESPACE
-
-    enum FileType
-    {
-        FILE_UNKNOWN    = 0,
-
-        FILE_AUDIO      = 1,
-        FILE_VIDEO      = 2,
-        FILE_PICTURE    = 3,
-    };
-    Q_ENUM_NS(FileType)
-
-    enum ShotType
-    {
-        SHOT_UNKNOWN = 0,
-
-        SHOT_VIDEO = 8,
-        SHOT_VIDEO_LOOPING,
-        SHOT_VIDEO_TIMELAPSE,
-        SHOT_VIDEO_NIGHTLAPSE,
-        SHOT_VIDEO_3D,
-
-        SHOT_PICTURE = 16,
-        SHOT_PICTURE_MULTI,
-        SHOT_PICTURE_BURST,
-        SHOT_PICTURE_TIMELAPSE,
-        SHOT_PICTURE_NIGHTLAPSE,
-
-        SHOT_PICTURE_ANIMATED, // ex: gif?
-    };
-    Q_ENUM_NS(ShotType)
-}
-
-
-/* ************************************************************************** */
-
 class UtilsApp : public QObject
 {
     Q_OBJECT
@@ -81,6 +41,7 @@ public:
 
     static Q_INVOKABLE QUrl getStandardPath(const QString type);
 
+    static Q_INVOKABLE bool getMobileStoragePermission();
     static Q_INVOKABLE int getMobileStorageCount();
     static Q_INVOKABLE QString getMobileStorageInternal();
     static Q_INVOKABLE QString getMobileStorageExternal(int index = 0);

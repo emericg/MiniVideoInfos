@@ -22,6 +22,10 @@
 #define UTILS_ANDROID_H
 /* ************************************************************************** */
 
+#include <QString>
+
+/* ************************************************************************** */
+
 /*!
  * \brief android_ask_storage_permissions
  * \return True if R/W permissions on main storage have been obtained.
@@ -40,17 +44,20 @@ void android_set_statusbar_color(int color);
 
 /* ************************************************************************** */
 
-#include <QString>
-
 /*!
  * \brief android_get_storages_by_api
- * \return Search for storage devices using native API.
+ * \return The path to the external storage.
+ *
+ * Search for storage devices using native API, using:
+ * - https://developer.android.com/reference/android/content/Context.html#getExternalFilesDir(java.lang.String)
  */
 QStringList android_get_storages_by_api();
 
 /*!
  * \brief android_get_storages_by_env
- * \return Search for storage devices in the environment variables.
+ * \return The path to the external storage.
+ *
+ * Search for storage devices in the Android specific environment variables.
  */
 QStringList android_get_storages_by_env();
 
@@ -58,10 +65,37 @@ QStringList android_get_storages_by_env();
  * \brief android_get_external_storage
  * \return The path to the external storage.
  *
- * Read this, it might get complicated...
+ * Search for storage devices using native API, using:
+ * - https://developer.android.com/reference/android/os/Environment#getExternalStorageDirectory()
+ *
+ * It might get complicated:
  * - https://source.android.com/devices/storage/
  */
 QString android_get_external_storage();
+
+/* ************************************************************************** */
+
+/*!
+ * \brief android_get_device_model
+ * \return The device manufacturer + model.
+ *
+ * - https://developer.android.com/reference/android/os/Build.html
+ */
+QString android_get_device_model();
+
+/* ************************************************************************** */
+
+/*!
+ * \brief android_keep_screen_on
+ */
+void android_keep_screen_on(bool on);
+
+/* ************************************************************************** */
+
+/*!
+ * \brief android_vibrate
+ */
+void android_vibrate();
 
 /* ************************************************************************** */
 #endif // UTILS_ANDROID_H
