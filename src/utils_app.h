@@ -24,6 +24,7 @@
 
 #include <QUrl>
 #include <QSize>
+#include <QString>
 #include <QObject>
 #include <QVariantMap>
 
@@ -37,9 +38,9 @@ public:
     explicit UtilsApp(QObject* parent = nullptr);
    ~UtilsApp();
 
-    static Q_INVOKABLE void openWith(const QString path);
+    static Q_INVOKABLE void openWith(const QString &path);
 
-    static Q_INVOKABLE QUrl getStandardPath(const QString type);
+    static Q_INVOKABLE QUrl getStandardPath(const QString &type);
 
     static Q_INVOKABLE bool getMobileStoragePermission();
     static Q_INVOKABLE int getMobileStorageCount();

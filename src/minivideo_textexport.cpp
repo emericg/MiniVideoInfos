@@ -131,15 +131,15 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
         {
             if (t->pixel_aspect_ratio_h || t->pixel_aspect_ratio_v)
             {
-                exportDatas += "\nPixel Aspect ratio   : ";
+                exportDatas += "\nPixel Aspect Ratio   : ";
                 exportDatas += QString::number(t->pixel_aspect_ratio_h) + ":" + QString::number(t->pixel_aspect_ratio_v);
             }
             if (t->video_aspect_ratio > 0.0)
             {
-                exportDatas += "\nVideo Aspect ratio   : ";
+                exportDatas += "\nVideo Aspect Ratio   : ";
                 exportDatas += getAspectRatioString(t->video_aspect_ratio, false);
             }
-            exportDatas += "\nDisplay Aspect ratio : ";
+            exportDatas += "\nDisplay Aspect Ratio : ";
             exportDatas += getAspectRatioString(t->display_aspect_ratio, true);
         }
         else

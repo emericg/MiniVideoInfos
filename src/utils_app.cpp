@@ -42,14 +42,45 @@ UtilsApp::~UtilsApp()
 
 /* ************************************************************************** */
 
-void UtilsApp::openWith(const QString path)
+void UtilsApp::openWith(const QString &path)
 {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    QUrl url;
+
+#if defined (Q_OS_ANDROID)
+    // Starting from API 24, open will only accept path begining by "content://"
+
+    if (path.startsWith("/"))
+    {
+        url = "content://" + path;
+    }
+    else if (path.startsWith("file://"))
+    {
+        QString  newpath = path;
+        newpath = newpath.replace("file://", "content://");
+        url = newpath;
+    }
+    else if (path.startsWith("content://"))
+    {
+        url = path;
+    }
+
+#elif defined (Q_OS_IOS)
+
+    url = QUrl::fromLocalFile(path);
+
+#else // defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+
+    url = QUrl::fromLocalFile(path);
+
+#endif
+
+    //qDebug() << "url:" << url;
+    QDesktopServices::openUrl(url);
 }
 
 /* ************************************************************************** */
 
-QUrl UtilsApp::getStandardPath(const QString type)
+QUrl UtilsApp::getStandardPath(const QString &type)
 {
     android_ask_storage_permissions();
 

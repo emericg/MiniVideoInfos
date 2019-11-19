@@ -80,7 +80,22 @@ Item {
             anchors.topMargin: 8
             anchors.rightMargin: 16
             anchors.leftMargin: 16
+/*
+            ListView {
+                // helper to list available fonts
+                anchors.fill: parent;
+                model: Qt.fontFamilies()
 
+                delegate: Item {
+                    height: 40;
+                    width: ListView.view.width
+                    Text {
+                        anchors.centerIn: parent
+                        text: modelData;
+                    }
+                }
+            }
+*/
             Item {
                 height: 48
                 anchors.left: parent.left

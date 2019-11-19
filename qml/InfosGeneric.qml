@@ -110,6 +110,8 @@ ScrollView {
         repeaterOther.model = mediaItem.getOtherTracks()
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Column {
         anchors.top: parent.top
         anchors.topMargin: 16
@@ -617,6 +619,10 @@ ScrollView {
                     horizontalAlignment: Image.AlignLeft
                     autoTransform: true
                     fillMode: Image.PreserveAspectFit
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onPressAndHold: utils.openWith(mediaItem.fullpath);
                 }
             }
         }

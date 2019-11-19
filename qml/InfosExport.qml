@@ -23,12 +23,11 @@ Item {
 
     Item { ////
         id: titleExport
-        x: 0
-        y: 16
         height: 32
-        anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 16
         anchors.left: parent.left
+        anchors.right: parent.right
 
         ImageSvg {
             width: 32
@@ -54,10 +53,10 @@ Item {
 
         ButtonWireframe {
             id: buttonExport
-            width: 96
+            width: 128
             height: 32
             anchors.right: parent.right
-            anchors.rightMargin: 24
+            anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             text: qsTr("SAVE")
