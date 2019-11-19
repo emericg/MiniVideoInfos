@@ -107,7 +107,7 @@ bool SettingsManager::readSettings()
     if (m_firstlaunch)
     {
         // force settings file creation
-        settings.sync();
+        writeSettings();
     }
 
     return status;
