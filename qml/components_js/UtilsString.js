@@ -198,7 +198,7 @@ function durationToString_ISO8601_regular(duration_ms) {
  * durationToString_ISO8601_full()
  * Format is 'hh:mm:ss.sss' (strict)
  *
- * Note: format used by ffmeg CLI
+ * Note: format used by ffmpeg CLI
  * Ref: https://en.wikipedia.org/wiki/ISO_8601#Times
  */
 function durationToString_ISO8601_full(duration_ms) {

@@ -1,6 +1,8 @@
 // UtilsPath.js
-// Version 0.3
+// Version 0.4
 .pragma library
+
+/* ************************************************************************** */
 
 /*!
  * Take an url or string, and make sure we output a clean string path.
@@ -49,6 +51,10 @@ function fileToFolder(filePath) {
     }
 
     return folderPath;
+}
+
+function openWith(filePath) {
+    Qt.openUrlExternally(filePath)
 }
 
 /* ************************************************************************** */
@@ -122,3 +128,5 @@ function isAudioFile(filePath) {
 
     return valid;
 }
+
+/* ************************************************************************** */

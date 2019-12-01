@@ -517,7 +517,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: utils.appExit()
+                    onClicked: app.appExit()
                 }
 
                 ImageSvg {

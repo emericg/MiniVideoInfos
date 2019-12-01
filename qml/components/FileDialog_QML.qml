@@ -43,7 +43,7 @@ Rectangle {
         folderListModel.folder = fileDialogMobile.folder;
         updateHeaderText()
 /*
-        if (utils.getMobileStorageCount() > 1) {
+        if (app.getMobileStorageCount() > 1) {
             storageChooser.visible = true
             headerText.anchors.leftMargin = 48
         } else {
@@ -103,10 +103,10 @@ Rectangle {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: true //  (utils.getMobileStorageCount() > 1)
+            visible: true // (app.getMobileStorageCount() > 1)
 
             property int storageIndex: 0
-            property int storageCount: utils.getMobileStorageCount()
+            property int storageCount: app.getMobileStorageCount()
 
             ImageSvg {
                 id: storageIconInternal
@@ -140,13 +140,13 @@ Rectangle {
 
                     // change icons and set new storage root
                     if (storageChooser.storageIndex === 0) {
-                        folderListModel.folder = "file://" + utils.getMobileStorageInternal();
-                        folderListModel.rootFolder = "file://" + utils.getMobileStorageInternal();
+                        folderListModel.folder = "file://" + app.getMobileStorageInternal();
+                        folderListModel.rootFolder = "file://" + app.getMobileStorageInternal();
                         storageIconInternal.visible = true
                         storageIconExternal.visible = false
                     } else {
-                        folderListModel.folder = "file://" + utils.getMobileStorageExternal();
-                        folderListModel.rootFolder = "file://" + utils.getMobileStorageExternal();
+                        folderListModel.folder = "file://" + app.getMobileStorageExternal();
+                        folderListModel.rootFolder = "file://" + app.getMobileStorageExternal();
                         storageIconInternal.visible = false
                         storageIconExternal.visible = true
                     }

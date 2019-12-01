@@ -1,6 +1,8 @@
 // UtilsNumber.js
-// Version 0.4
+// Version 0.5
 .pragma library
+
+/* ************************************************************************** */
 
 /*!
  * Pad a number
@@ -63,6 +65,8 @@ function mod(n, modulo) {
     return m < 0 ? m + Math.abs(modulo) : m;
 }
 
+/* ************************************************************************** */
+
 /*!
  * Return true if n is an int
  */
@@ -91,6 +95,8 @@ function isOdd(n) {
     return n % 2 !== 0;
 }
 
+/* ************************************************************************** */
+
 /*!
  * Fahrenheit to Celsius conversion
  */
@@ -104,3 +110,5 @@ function tempFahrenheitToCelsius(temp_f) {
 function tempCelsiusToFahrenheit(temp_c) {
     return (temp_c * 1.8 + 32);
 }
+
+/* ************************************************************************** */

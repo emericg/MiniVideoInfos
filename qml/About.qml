@@ -54,7 +54,7 @@ Item {
                 id: textVersion
 
                 color: Theme.colorSubText
-                text: qsTr("version %1").arg(utils.appVersion())
+                text: qsTr("version %1").arg(app.appVersion())
                 font.pixelSize: 18
             }
         }
@@ -340,7 +340,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
-                    text: qsTr("A couple of neat third party projects are used by this one.")
+                    text: qsTr("This application is made possible thanks to a  couple of third party open source projects:")
                     wrapMode: Text.WordWrap
                     color: Theme.colorText
                     font.pixelSize: 16

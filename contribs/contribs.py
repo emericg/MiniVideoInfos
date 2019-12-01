@@ -117,7 +117,7 @@ parser = argparse.ArgumentParser(prog='contribs.py',
                                  formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument('-c', '--clean', help="clean everything and exit (downloaded files and all temporary directories)", action='store_true')
-parser.add_argument('-r', '--rebuild', help="rebuild the contribs even if already builded", action='store_true')
+parser.add_argument('-r', '--rebuild', help="rebuild the contribs even if already built", action='store_true')
 parser.add_argument('--android-ndk', dest='androidndk', help="specify a custom path to the android-ndk (if ANDROID_NDK_HOME environment variable doesn't exists)")
 
 if len(sys.argv) > 1:

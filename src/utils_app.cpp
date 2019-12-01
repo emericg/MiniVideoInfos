@@ -19,8 +19,11 @@
  */
 
 #include "utils_app.h"
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 #include "utils_android.h"
 #include "utils_ios.h"
+#endif
 
 #include <cmath>
 
@@ -38,6 +41,23 @@ UtilsApp::UtilsApp(QObject* parent) : QObject(parent)
 UtilsApp::~UtilsApp()
 {
     //
+}
+
+/* ************************************************************************** */
+
+QString UtilsApp::appVersion()
+{
+    return QString::fromLatin1(APP_VERSION);
+}
+
+QString UtilsApp::appBuildDate()
+{
+    return QString::fromLatin1(__DATE__);
+}
+
+void UtilsApp::appExit()
+{
+    QApplication::exit();
 }
 
 /* ************************************************************************** */
@@ -82,7 +102,9 @@ void UtilsApp::openWith(const QString &path)
 
 QUrl UtilsApp::getStandardPath(const QString &type)
 {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     android_ask_storage_permissions();
+#endif
 
     QUrl path;
     QStringList paths;
@@ -109,6 +131,8 @@ QUrl UtilsApp::getStandardPath(const QString &type)
 }
 
 /* ************************************************************************** */
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
 bool UtilsApp::getMobileStoragePermission()
 {
@@ -152,21 +176,6 @@ QStringList UtilsApp::getMobileStorageExternals()
     return storages;
 }
 
-/* ************************************************************************** */
-
-QString UtilsApp::appVersion()
-{
-    return QString::fromLatin1(APP_VERSION);
-}
-
-QString UtilsApp::appBuildDate()
-{
-    return QString::fromLatin1(__DATE__);
-}
-
-void UtilsApp::appExit()
-{
-    QApplication::exit();
-}
+#endif // defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
 /* ************************************************************************** */

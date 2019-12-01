@@ -74,11 +74,11 @@ int main(int argc, char *argv[])
     app.installTranslator(&appTranslator);
 */
     // Init MiniVideoInfos components
-    UtilsApp *utils = new UtilsApp();
-    if (!utils) return EXIT_FAILURE;
+    UtilsApp *utilsApp = new UtilsApp();
+    if (!utilsApp) return EXIT_FAILURE;
 
-    UtilsScreen *screen = new UtilsScreen();
-    if (!screen) return EXIT_FAILURE;
+    UtilsScreen *utilsScreen = new UtilsScreen();
+    if (!utilsScreen) return EXIT_FAILURE;
 
     SettingsManager *sm = SettingsManager::getInstance();
     if (!sm) return EXIT_FAILURE;
@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("mediasManager", mm);
-    engine_context->setContextProperty("utils", utils);
-    engine_context->setContextProperty("screen", screen);
+    engine_context->setContextProperty("app", utilsApp);
+    engine_context->setContextProperty("screen", utilsScreen);
     engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
 
     if (engine.rootObjects().isEmpty())
