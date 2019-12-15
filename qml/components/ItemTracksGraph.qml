@@ -19,6 +19,9 @@ Item { ////
         if (typeof mediaItem === "undefined" || !mediaItem) return
         //console.log("elementTracks.(" + mediaItem.name + ")")
 
+        legendVideo.visible = mediaItem.hasVideo
+        legendAudio.visible = mediaItem.hasAudio
+
         var trackCurrent = []
         var trackTable = []
         var dataSize = 0
@@ -94,6 +97,7 @@ Item { ////
         spacing: 24
 
         Text {
+            id: legendVideo
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("video")
             color: Theme.colorMaterialBlue
@@ -101,6 +105,7 @@ Item { ////
             font.bold: true
         }
         Text {
+            id: legendAudio
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("audio")
             color: Theme.colorMaterialOrange
@@ -108,6 +113,7 @@ Item { ////
             font.bold: true
         }
         Text {
+            id: legendOther
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("other")
             color: Theme.colorSubText

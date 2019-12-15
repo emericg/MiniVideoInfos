@@ -30,7 +30,7 @@ ScrollView {
         info_genre.text = mediaItem.tag_genre
         info_comment.text = mediaItem.tag_comment
 
-        //columnThumbnail.visible = false
+        columnThumbnail.visible = false
     }
 
     Column {
@@ -260,6 +260,53 @@ ScrollView {
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: 2
+
+            Item {
+                id: titleThumbnail
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                ImageSvg {
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorPrimary
+                    source: "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg"
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("TUMBNAIL")
+                    color: Theme.colorPrimary
+                    font.pixelSize: 18
+                    font.bold: true
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("size")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_thumb_size
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
         }
 
         ////////////////

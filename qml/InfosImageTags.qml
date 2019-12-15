@@ -521,7 +521,7 @@ ScrollView {
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_acodec
+                    id: info_thumb_compression
                     color: Theme.colorText
                     font.pixelSize: 15
                 }
@@ -538,7 +538,7 @@ ScrollView {
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_achannels
+                    id: info_thumb_orientation
                     color: Theme.colorText
                     font.pixelSize: 15
                 }
@@ -555,24 +555,7 @@ ScrollView {
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_asamplerate
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("size")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_abitrate
+                    id: info_thumb_size
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

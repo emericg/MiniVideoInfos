@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     app.installTranslator(&appTranslator);
 */
     // Init MiniVideoInfos components
-    UtilsApp *utilsApp = new UtilsApp();
+    UtilsApp *utilsApp = UtilsApp::getInstance();
     if (!utilsApp) return EXIT_FAILURE;
 
     UtilsScreen *utilsScreen = new UtilsScreen();

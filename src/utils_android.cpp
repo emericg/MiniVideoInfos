@@ -202,9 +202,6 @@ void android_vibrate()
                                                                          "(I)V;",
                                                                          1000);
 */
-   // QAndroidJniObject mediaPath = vibvib.callObjectMethod("getAbsolutePath", "()Ljava/lang/String;");
-
-    //EFFECT_CLICK
 
 #endif // Q_OS_ANDROID
 }
@@ -214,31 +211,34 @@ void android_vibrate()
 void android_keep_screen_on(bool on)
 {
 #ifdef Q_OS_ANDROID
+/*
     //qDebug() << "> android_keep_screen_on(" << on << ")";
 
     QtAndroid::runOnAndroidThread([on]{
-    QAndroidJniObject activity = QtAndroid::androidActivity();
-    if (activity.isValid())
-    {
-        QAndroidJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
-
-        if (window.isValid())
+        QAndroidJniObject activity = QtAndroid::androidActivity();
+        if (activity.isValid())
         {
-            const int FLAG_KEEP_SCREEN_ON = 128;
-            if (on)
-                window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
-            else
-                window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
-        }
-    }
-    QAndroidJniEnvironment env;
-    if (env->ExceptionCheck())
-    {
-        env->ExceptionClear();
-    }
-  });
+            QAndroidJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
 
-#endif // Q_OS_ANDROID
+            if (window.isValid())
+            {
+                const int FLAG_KEEP_SCREEN_ON = 128;
+                if (on)
+                    window.callMethod<void>("addFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
+                else
+                    window.callMethod<void>("clearFlags", "(I)V", FLAG_KEEP_SCREEN_ON);
+            }
+        }
+        QAndroidJniEnvironment env;
+        if (env->ExceptionCheck())
+        {
+            env->ExceptionClear();
+        }
+    });
+*/
+#else
+    Q_UNUSED(on)
+#endif
 }
 
 /* ************************************************************************** */
