@@ -19,29 +19,28 @@
  * \date      2019
  */
 
-#include <QApplication>
-
-#include <QTranslator>
-#include <QLibraryInfo>
-
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QQuickWindow>
-
 #include "minivideo_qml.h"
 #include "utils_app.h"
 #include "utils_screen.h"
-#include <statusbar.h>
 
 #include "settingsmanager.h"
 #include "mediasmanager.h"
+
+#include <statusbar.h>
+
+#include <QtGlobal>
+#include <QTranslator>
+#include <QLibraryInfo>
+#include <QApplication>
+#include <QIcon>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickWindow>
 
 /* ************************************************************************** */
 
 int main(int argc, char *argv[])
 {
-    // GUI application /////////////////////////////////////////////////////////
-
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
@@ -98,8 +97,8 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("mediasManager", mm);
     engine_context->setContextProperty("app", utilsApp);
     engine_context->setContextProperty("screen", utilsScreen);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
 
+    engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
     if (engine.rootObjects().isEmpty())
         return EXIT_FAILURE;
 

@@ -13,7 +13,7 @@ if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 12)) {
     error("You need AT LEAST Qt 5.12 to build $${TARGET}")
 }
 
-# App features #################################################################
+# Project features #############################################################
 
 # Use Qt Quick compiler
 ios | android { CONFIG += qtquickcompiler }
@@ -28,8 +28,8 @@ include(src/thirdparty/StatusBar/statusbar.pri)
 
 DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_LIBEXIF
-DEFINES += ENABLE_TAGLIB
 #DEFINES += ENABLE_EXIV2
+DEFINES += ENABLE_TAGLIB
 
 # Project files ################################################################
 
@@ -62,7 +62,8 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .gitignore \
-               .travis.yml
+               .travis.yml \
+               contribs/contribs.py
 
 #TRANSLATIONS = i18n/xx_fr.ts
 
@@ -87,9 +88,6 @@ contains(DEFINES, USE_CONTRIBS) {
         PLATFORM = "iOS"
         ARCH = "simulator" # can be simulator, armv7 and armv8
         QMAKE_APPLE_DEVICE_ARCHS = "arm64" # Force 'arm64' and ignore 'armv7'
-
-        #LIBS += -Wl,-framework,VideoToolbox
-        #LIBS += -liconv -lbz2
     }
 
     CONTRIBS_DIR = $${PWD}/contribs/env/$${PLATFORM}_$${ARCH}/usr
@@ -123,6 +121,18 @@ contains(DEFINES, USE_CONTRIBS) {
     #LIBS        += -L../minivideo/build -lminivideo # dynamic linking
 }
 
+# Build settings ###############################################################
+
+unix {
+    # Enables AddressSanitizer
+    #QMAKE_CXXFLAGS += -fsanitize=address,undefined
+    #QMAKE_LFLAGS += -fsanitize=address,undefined
+
+    #QMAKE_CXXFLAGS += -Wno-nullability-completeness
+}
+
+DEFINES += QT_DEPRECATED_WARNINGS
+
 # Build artifacts ##############################################################
 
 OBJECTS_DIR = build/
@@ -139,7 +149,7 @@ DESTDIR     = bin/
 linux:!android {
     TARGET = $$lower($${TARGET})
 
-    # Application packaging # Needs linuxdeployqt installed
+    # Automatic application packaging # Needs linuxdeployqt installed
     #system(linuxdeployqt $${OUT_PWD}/$${DESTDIR}/ -qmldir=qml/)
 
     # Application packaging # Needs linuxdeployqt installed
@@ -149,18 +159,19 @@ linux:!android {
 
     # Installation
     isEmpty(PREFIX) { PREFIX = /usr/local }
-    target_app.files   += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
-    target_app.path     = $${PREFIX}/bin/
-    target_icon.files  += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
-    target_icon.path    = $${PREFIX}/share/pixmaps/
+    target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    target_app.path         = $${PREFIX}/bin/
+    target_icon.files      += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
+    target_icon.path        = $${PREFIX}/share/pixmaps/
     target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications
     target_appdata.files   += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).appdata.xml
     target_appdata.path     = $${PREFIX}/share/appdata
     INSTALLS += target_app target_icon target_appentry target_appdata
 
-    # Clean bin/ directory
+    # Clean appdir/ and bin/ directories
     #QMAKE_CLEAN += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
+    #QMAKE_CLEAN += $${OUT_PWD}/appdir/
 }
 
 android {
@@ -174,13 +185,12 @@ android {
     # org.qtproject.qt5.android.bindings.QtActivity
     OTHER_FILES += assets/android/src/com/minivideo/infos/QShareActivity.java
 
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
     ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so
     include($${PWD}/contribs/env/android_openssl-master/openssl.pri)
-
-    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
 }
 
 macx {
@@ -190,6 +200,7 @@ macx {
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
     QMAKE_BUNDLE = infos
+    CONFIG += app_bundle
 
     # OS icons
     ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
@@ -198,6 +209,11 @@ macx {
 
     # OS infos
     #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
+
+    # macOSDockManager
+    SOURCES += src/macosdockmanager.mm
+    HEADERS += src/macosdockmanager.h
+    LIBS    += -framework AppKit
 
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
@@ -212,6 +228,7 @@ macx {
     QMAKE_EXTRA_TARGETS += install deploy
 
     # Installation step (note: app bundle packaging)
+    isEmpty(PREFIX) { PREFIX = /usr/local }
     target.files += $${OUT_PWD}/${DESTDIR}/${TARGET}.app
     target.path = $$(HOME)/Applications
     INSTALLS += target

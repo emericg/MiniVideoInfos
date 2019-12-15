@@ -118,7 +118,7 @@ Item {
             }
         }
 
-        if (currentTheme === themeIndex) return;
+        if (themeIndex === currentTheme) return;
 
         if (themeIndex === ThemeEngine.THEME_LIGHT) {
 
