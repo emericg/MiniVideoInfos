@@ -294,7 +294,7 @@ Item {
                 ImageSvg {
                     id: image_mediaFilter
                     width: 32
-                    height: 24
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 12

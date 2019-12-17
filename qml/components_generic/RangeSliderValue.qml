@@ -55,13 +55,10 @@ RangeSlider {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: {
-                var vvalue = first.value;
-                return vvalue;
-/*
+                var vvalue = first.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
                 return ((first.value > 999) ? vvalue / 1000 : vvalue) + unit
-*/
             }
             font.pixelSize: 14
             color: colorTxt
@@ -87,13 +84,10 @@ RangeSlider {
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: {
-                var vvalue = second.value;
-                return vvalue;
-/*
+                var vvalue = second.value
                 if (unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(0)
                 return ((second.value > 999) ? vvalue / 1000 : vvalue) + unit
-*/
             }
             font.pixelSize: 14
             color: colorTxt

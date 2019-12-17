@@ -256,25 +256,13 @@ Rectangle {
         }
     }
 
-    PageIndicator {
+    PageIndicatorThemed {
         id: pageIndicator
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16
 
-        count: 3
+        count: tutorialPages.count
         currentIndex: tutorialPages.currentIndex
-
-        delegate: Rectangle {
-            implicitWidth: 12
-            implicitHeight: 12
-
-            radius: (width / 2)
-            color: Theme.colorHeaderContent
-
-            opacity: index === pageIndicator.currentIndex ? 0.95 : pressed ? 0.7 : 0.45
-
-            Behavior on opacity { OpacityAnimator { duration: 100 } }
-        }
     }
 }
