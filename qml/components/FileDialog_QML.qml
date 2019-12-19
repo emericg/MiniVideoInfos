@@ -300,16 +300,20 @@ Rectangle {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: mediaOnlyChooser
         height: 40
-        color: Theme.colorHeader
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
+
+        visible: !selectFolder
+        color: Theme.colorHeader
 
         Text {
             id: rectangleErrorText
@@ -321,6 +325,7 @@ Rectangle {
             color: Theme.colorSubText
             font.pixelSize: 14
         }
+
         SwitchThemedMobile {
             id: switch_mediaonly
             z: 1

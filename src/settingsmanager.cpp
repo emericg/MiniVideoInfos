@@ -123,15 +123,11 @@ bool SettingsManager::writeSettings()
     {
         settings.setValue("settings/appTheme", m_appTheme);
         settings.setValue("settings/autoDark", m_autoDark);
-
         settings.setValue("settings/mediaFilter", m_mediaFilter);
         settings.setValue("settings/mediaPreview", m_mediaPreview);
         settings.setValue("settings/exportEnabled", m_exportEnabled);
-
         settings.setValue("settings/unitSystem", m_unitSystem);
         settings.setValue("settings/unitSizes", m_unitSizes);
-
-        settings.sync();
 
         if (settings.status() == QSettings::NoError)
         {
@@ -141,6 +137,10 @@ bool SettingsManager::writeSettings()
         {
             qWarning() << "SettingsManager::writeSettings() error:" << settings.status();
         }
+    }
+    else
+    {
+        qWarning() << "SettingsManager::writeSettings() error: read only file?";
     }
 
     return status;

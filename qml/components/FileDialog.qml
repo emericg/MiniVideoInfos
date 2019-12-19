@@ -33,7 +33,7 @@ Loader {
 
     function back() {
        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-            fileDialog.item.onBackPressed()
+            fileDialog.item.onBackPressed();
         } else {
             // ?
         }
@@ -42,6 +42,6 @@ Loader {
     function close() {
         fileDialog.item.visible = false;
         fileDialog.focus = false;
-        rejected()
+        rejected();
     }
 }

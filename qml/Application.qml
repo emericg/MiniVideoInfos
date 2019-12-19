@@ -12,9 +12,9 @@ ApplicationWindow {
     minimumWidth: 480
     minimumHeight: 900
 
-    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
-    color: Theme.colorBackground
     visible: true
+    color: Theme.colorBackground
+    flags: Qt.Window
 
     property bool isHdpi: (screen.screenDpi > 128)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
