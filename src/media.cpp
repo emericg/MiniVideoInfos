@@ -83,8 +83,8 @@ Media::Media(const QString &path, QObject *parent)
         m_date_file_m = fi.lastModified();
     }
 
-    if (!m_valid) m_valid = getMetadatasFromPicture();
     if (!m_valid) m_valid = getMetadatasFromVideo();
+    if (!m_valid) m_valid = getMetadatasFromPicture();
     if (!m_valid || (m_valid && tracksVideo.length() == 0 && tracksAudio.length() > 0)) m_valid = getMetadatasFromAudio();
 }
 

@@ -41,7 +41,7 @@ ScrollView {
         else
             imgGeometry.source = "qrc:/assets/icons_material_medias/duotone-aspect_ratio-24px.svg"
 
-        if (mediaItem.fileType === 3) { ////
+        if (mediaItem.fileType === 3) { //// IMAGE
             columnImage.visible = true
 
             info_icodec.text = mediaItem.videoCodec
@@ -74,7 +74,7 @@ ScrollView {
             columnVideo.visible = false
         }
 
-        if (mediaItem.fileType === 2) { ////
+        if (mediaItem.fileType === 2) { //// VIDEO
 
             elementTracks.visible = true
             elementTracks.load(mediaItem)

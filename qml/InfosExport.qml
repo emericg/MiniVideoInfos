@@ -100,7 +100,11 @@ Item {
                     if (Qt.platform.os === "android")
                         return "Droid Sans Mono"
                     else if (Qt.platform.os === "ios")
-                        return "Monospace"
+                        return "Menlo-Regular"
+                    else if (Qt.platform.os === "osx")
+                        return "Andale Mono"
+                    else if (Qt.platform.os === "windows")
+                        return "Lucida Console"
                     else
                         return "Monospace"
                 }
