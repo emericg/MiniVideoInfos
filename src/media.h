@@ -54,6 +54,7 @@ class Media: public QObject
     Q_PROPERTY(QString path READ getFolder NOTIFY mediaUpdated)
     Q_PROPERTY(QString ext READ getExtension NOTIFY mediaUpdated)
     Q_PROPERTY(QString container READ getContainer NOTIFY mediaUpdated)
+    Q_PROPERTY(QString containerProfile READ getContainerProfile NOTIFY mediaUpdated)
     Q_PROPERTY(qint64 size READ getSize NOTIFY mediaUpdated)
 
     Q_PROPERTY(QString creation_app READ getCreationApp NOTIFY mediaUpdated)
@@ -149,6 +150,7 @@ class Media: public QObject
     QString m_file_name;
     QString m_file_extension;
     QString m_file_container;
+    QString m_file_containerprofile;
     qint64 m_file_size = 0;
 
     QString m_creation_app;
@@ -250,6 +252,7 @@ class Media: public QObject
     QString getPath() const { return m_path; }
     QString getExtension() const { return m_file_extension; }
     QString getContainer() const { return m_file_container; }
+    QString getContainerProfile() const { return m_file_containerprofile; }
     qint64 getSize() const { return m_file_size; }
     qint64 getDuration() const { return m_duration; }
 

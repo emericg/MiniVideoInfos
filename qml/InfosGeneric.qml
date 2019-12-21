@@ -33,6 +33,8 @@ ScrollView {
 
         item_container.visible = (mediaItem.container.length > 0)
         info_container.text = mediaItem.container
+        item_containerprofile.visible = (mediaItem.containerProfile.length > 0)
+        info_containerprofile.text = mediaItem.containerProfile
 
         if (mediaItem.projection > 0)
             imgGeometry.source = "qrc:/assets/icons_material_medias/duotone-spherical-24px.svg"
@@ -336,6 +338,24 @@ ScrollView {
                 }
                 Text {
                     id: info_container
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_containerprofile
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("profile")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_containerprofile
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

@@ -688,6 +688,7 @@ bool Media::getMetadatasFromVideo()
 
         m_file_extension = m_media->file_extension;
         m_file_container = getContainerString(m_media->container, true);
+        m_file_containerprofile = getContainerProfileString(m_media->container_profile, true);
 
         m_creation_app = QString::fromLocal8Bit(m_media->creation_app);
         m_creation_lib = QString::fromLocal8Bit(m_media->creation_lib);
