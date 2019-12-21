@@ -62,6 +62,7 @@ class MediaTrackQml: public QObject
 
     Q_PROPERTY(QString codec READ getCodec NOTIFY trackUpdated)
     Q_PROPERTY(QString profile READ getProfile NOTIFY trackUpdated)
+    Q_PROPERTY(double level READ getLevel NOTIFY trackUpdated)
 
     Q_PROPERTY(double frameDuration READ getFrameDuration NOTIFY trackUpdated)
     //Q_PROPERTY(double sampleDuration READ getSampleDuration NOTIFY trackUpdated)
@@ -139,6 +140,7 @@ private:
     int getWidthVisible() const;
     int getHeightVisible() const;
     double getFramerate() const;
+    double getLevel() const;
     //double getAR() const;
     int getProjection() const;
     int getOrientation() const;

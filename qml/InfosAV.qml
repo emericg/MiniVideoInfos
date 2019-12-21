@@ -44,6 +44,8 @@ ScrollView {
             info_vcodec.text = trackItem.codec
             item_vcodecprofile.visible = (trackItem.profile.length > 0)
             info_vcodecprofile.text = trackItem.profile
+            item_vcodeclevel.visible = (trackItem.level > 0)
+            info_vcodeclevel.text = trackItem.level.toFixed(1)
 
             info_vdefinition.text = trackItem.width + " x " + trackItem.height
             item_vdefinition_visible.visible = ((trackItem.width_visible + trackItem.height_visible) > 0 &&
@@ -415,6 +417,24 @@ ScrollView {
                 }
                 Text {
                     id: info_vcodecprofile
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vcodeclevel
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("level")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcodeclevel
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

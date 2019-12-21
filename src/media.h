@@ -27,7 +27,7 @@
 #include "minivideo_qml.h"
 #include "minivideo_track_qml.h"
 
-#include "utils_media.h"
+#include "minivideo_utils_qt.h"
 
 #include <QObject>
 #include <QImage>

@@ -19,13 +19,13 @@
  * \date      2017
  */
 
-#include "minivideo_textexport.h"
+#include "minivideo_textexport_qt.h"
 
 // minivideo library
 #include <minivideo.h>
 
 // minianalyser
-#include "utils_media.h"
+#include "minivideo_utils_qt.h"
 
 #include <QMessageBox>
 #include <QFontDatabase>

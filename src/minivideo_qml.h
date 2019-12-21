@@ -54,7 +54,6 @@ public:
 
     Q_ENUM(StereoMode_e)
     Q_ENUM(ChannelMode_e)
-
 /*
     enum StreamType_qml {
         stream_UNKNOWN

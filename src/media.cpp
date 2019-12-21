@@ -20,8 +20,8 @@
  */
 
 #include "media.h"
-#include "utils_media.h"
-#include "minivideo_textexport.h"
+#include "minivideo_utils_qt.h"
+#include "minivideo_textexport_qt.h"
 
 #ifdef ENABLE_LIBEXIF
 #include <libexif/exif-data.h>

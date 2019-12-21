@@ -22,7 +22,7 @@
 /* ************************************************************************** */
 
 #include "minivideo_track_qml.h"
-#include "utils_media.h"
+#include "minivideo_utils_qt.h"
 
 #include <QObject>
 #include <QString>
@@ -261,6 +261,16 @@ double MediaTrackQml::getFramerate() const
     if (mv_stream)
     {
         return mv_stream->framerate;
+    }
+
+    return -1;
+}
+
+double MediaTrackQml::getLevel() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->video_level;
     }
 
     return -1;

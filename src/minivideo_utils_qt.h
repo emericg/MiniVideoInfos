@@ -18,8 +18,8 @@
  * \date      2019
  */
 
-#ifndef UTILS_MEDIA_H
-#define UTILS_MEDIA_H
+#ifndef MINIVIDEO_UTILS_QT_H
+#define MINIVIDEO_UTILS_QT_H
 /* ************************************************************************** */
 
 #include "minivideo_mediastream.h"
@@ -76,7 +76,7 @@ namespace Shared
  *
  * Prints a duration in hours/min/sec/ms.
  */
-QString getDurationString(const uint32_t duration);
+QString getDurationString(const uint64_t duration);
 
 /*!
  * \brief Get a timestamp string from a duration in milliseconds.
@@ -216,4 +216,4 @@ public:
 };
 
 /* ************************************************************************** */
-#endif // UTILS_MEDIA_H
+#endif // MINIVIDEO_UTILS_QT_H

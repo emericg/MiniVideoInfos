@@ -18,7 +18,7 @@
  * \date      2019
  */
 
-#include "utils_media.h"
+#include "minivideo_utils_qt.h"
 
 #include "minivideo_fourcc.h"
 
@@ -30,16 +30,16 @@
 
 /* ************************************************************************** */
 
-QString getDurationString(const uint32_t duration)
+QString getDurationString(const uint64_t duration)
 {
     QString duration_qstr;
 
     if (duration > 0)
     {
-        unsigned hours = duration / 3600000;
-        unsigned minutes = (duration - (hours * 3600000)) / 60000;
-        unsigned seconds = (duration - (hours * 3600000) - (minutes * 60000)) / 1000;
-        unsigned ms = (duration - (hours * 3600000) - (minutes * 60000)) - (seconds * 1000);
+        uint64_t hours = duration / 3600000;
+        uint64_t minutes = (duration - (hours * 3600000)) / 60000;
+        uint64_t seconds = (duration - (hours * 3600000) - (minutes * 60000)) / 1000;
+        uint64_t ms = (duration - (hours * 3600000) - (minutes * 60000)) - (seconds * 1000);
 
         if (hours > 0)
         {

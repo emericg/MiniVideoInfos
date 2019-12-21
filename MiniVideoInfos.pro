@@ -27,9 +27,9 @@ win32 { DEFINES += _USE_MATH_DEFINES }
 include(src/thirdparty/StatusBar/statusbar.pri)
 
 DEFINES += ENABLE_MINIVIDEO
+DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
-DEFINES += ENABLE_TAGLIB
 
 # Project files ################################################################
 
@@ -37,10 +37,10 @@ SOURCES  += src/main.cpp \
             src/settingsmanager.cpp \
             src/mediasmanager.cpp \
             src/media.cpp \
-            src/minivideo_textexport.cpp \
             src/minivideo_track_qml.cpp \
+            src/minivideo_textexport_qt.cpp \
+            src/minivideo_utils_qt.cpp \
             src/utils_app.cpp \
-            src/utils_media.cpp \
             src/utils_screen.cpp \
             src/utils_android.cpp \
             src/utils_ios.cpp
@@ -49,10 +49,10 @@ HEADERS  += src/settingsmanager.h \
             src/mediasmanager.h \
             src/media.h \
             src/minivideo_qml.h \
-            src/minivideo_textexport.h \
             src/minivideo_track_qml.h \
+            src/minivideo_textexport_qt.h \
+            src/minivideo_utils_qt.h \
             src/utils_app.h \
-            src/utils_media.h \
             src/utils_screen.h \
             src/utils_android.h \
             src/utils_ios.h
