@@ -53,7 +53,7 @@ Item {
             Text {
                 id: textVersion
 
-                text: qsTr("version %1").arg(app.appVersion())
+                text: qsTr("version %1").arg(utilsApp.appVersion())
                 color: Theme.colorSubText
                 font.pixelSize: 18
             }

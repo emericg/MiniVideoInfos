@@ -642,7 +642,7 @@ ScrollView {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    onPressAndHold: app.openWith(mediaItem.fullpath);
+                    onPressAndHold: utilsApp.openWith(mediaItem.fullpath);
                 }
             }
         }

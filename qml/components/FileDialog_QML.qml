@@ -43,7 +43,7 @@ Rectangle {
         folderListModel.folder = fileDialogMobile.folder;
         updateHeaderText()
 /*
-        if (app.getMobileStorageCount() > 1) {
+        if (utilsApp.getMobileStorageCount() > 1) {
             storageChooser.visible = true
             headerText.anchors.leftMargin = 48
         } else {
@@ -103,10 +103,10 @@ Rectangle {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: true // (app.getMobileStorageCount() > 1)
+            visible: true // (utilsApp.getMobileStorageCount() > 1)
 
             property int storageIndex: 0
-            property int storageCount: app.getMobileStorageCount()
+            property int storageCount: utilsApp.getMobileStorageCount()
 
             ImageSvg {
                 id: storageIconInternal
@@ -140,13 +140,13 @@ Rectangle {
 
                     // change icons and set new storage root
                     if (storageChooser.storageIndex === 0) {
-                        folderListModel.folder = "file://" + app.getMobileStorageInternal();
-                        folderListModel.rootFolder = "file://" + app.getMobileStorageInternal();
+                        folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal();
+                        folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal();
                         storageIconInternal.visible = true
                         storageIconExternal.visible = false
                     } else {
-                        folderListModel.folder = "file://" + app.getMobileStorageExternal();
-                        folderListModel.rootFolder = "file://" + app.getMobileStorageExternal();
+                        folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal();
+                        folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal();
                         storageIconInternal.visible = false
                         storageIconExternal.visible = true
                     }

@@ -16,7 +16,7 @@ Loader {
     signal rejected()
 
     function open(filter) {
-        fileDialog.item.folder = app.getStandardPath(filter);
+        fileDialog.item.folder = utilsApp.getStandardPath(filter);
         fileDialog.item.open();
         fileDialog.item.selectFolder = selectFolder;
         fileDialog.item.visible = true;

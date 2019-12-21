@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("mediasManager", mm);
-    engine_context->setContextProperty("app", utilsApp);
-    engine_context->setContextProperty("screen", utilsScreen);
+    engine_context->setContextProperty("utilsApp", utilsApp);
+    engine_context->setContextProperty("utilsScreen", utilsScreen);
 
     engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
     if (engine.rootObjects().isEmpty())
