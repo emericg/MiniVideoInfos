@@ -80,6 +80,7 @@ contains(DEFINES, USE_CONTRIBS) {
 
     android { # ANDROID_TARGET_ARCH available: x86 x86_64 armeabi-v7a arm64-v8a
         PLATFORM = "android"
+        equals(ANDROID_TARGET_ARCH, "x86") { ARCH = "x86" }
         equals(ANDROID_TARGET_ARCH, "x86_64") { ARCH = "x86_64" }
         equals(ANDROID_TARGET_ARCH, "armeabi-v7a") { ARCH = "armv7" }
         equals(ANDROID_TARGET_ARCH, "arm64-v8a") { ARCH = "armv8" }
