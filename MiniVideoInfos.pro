@@ -211,11 +211,6 @@ macx {
     # OS infos
     #QMAKE_INFO_PLIST = $${PWD}/assets/macos/Info.plist
 
-    # macOSDockManager
-    SOURCES += src/macosdockmanager.mm
-    HEADERS += src/macosdockmanager.h
-    LIBS    += -framework AppKit
-
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
     ENTITLEMENTS.value = $${PWD}/assets/macos/$$lower($${TARGET}).entitlements
