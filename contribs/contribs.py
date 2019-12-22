@@ -2,11 +2,6 @@
 
 import os
 import sys
-
-if sys.version_info < (3, 0):
-    print("This script NEEDS Python 3. Run it with 'python3 contribs.py'")
-    sys.exit()
-
 import platform
 import multiprocessing
 import glob
@@ -18,6 +13,10 @@ import subprocess
 import urllib.request
 
 print("\n> MiniVideoInfos contribs builder")
+
+if sys.version_info < (3, 0):
+    print("This script NEEDS Python 3. Run it with 'python3 contribs.py'")
+    sys.exit()
 
 ## DEPENDENCIES ################################################################
 # These software dependencies are needed for this script to run!
