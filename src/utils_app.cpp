@@ -63,12 +63,12 @@ UtilsApp::~UtilsApp()
 
 QString UtilsApp::appVersion()
 {
-    return QString::fromLatin1(APP_VERSION);
+    return QString::fromUtf8(APP_VERSION);
 }
 
 QString UtilsApp::appBuildDate()
 {
-    return QString::fromLatin1(__DATE__);
+    return QString::fromUtf8(__DATE__);
 }
 
 QString UtilsApp::appBuildMode()

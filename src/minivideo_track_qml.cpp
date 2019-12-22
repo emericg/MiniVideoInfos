@@ -45,7 +45,7 @@ MediaTrackQml::~MediaTrackQml()
 
 /* ************************************************************************** */
 
-bool MediaTrackQml::loadMediaStream( MediaStream_t *stream)
+bool MediaTrackQml::loadMediaStream(MediaStream_t *stream)
 {
     bool status = false;
 
@@ -168,7 +168,7 @@ QString MediaTrackQml::getFcc() const
     if (mv_stream)
     {
         char fcc_str[5];
-        return QString::fromLatin1(getFccString_le(mv_stream->stream_fcc, fcc_str), 4);
+        return QString::fromUtf8(getFccString_le(mv_stream->stream_fcc, fcc_str), 4);
     }
 
     return QString();
@@ -178,7 +178,7 @@ QString MediaTrackQml::getTcc() const
     if (mv_stream)
     {
         char tcc_str[3];
-        return QString::fromLatin1(getFccString_le(mv_stream->stream_tcc, tcc_str), 2);
+        return QString::fromUtf8(getFccString_le(mv_stream->stream_tcc, tcc_str), 2);
     }
 */
     return QString();
@@ -188,20 +188,62 @@ QString MediaTrackQml::getCodec() const
 {
     if (mv_stream)
     {
-        return QString::fromLatin1(getCodecString(mv_stream->stream_type, mv_stream->stream_codec, true));
+        return QString::fromUtf8(getCodecString(mv_stream->stream_type, mv_stream->stream_codec, true));
     }
 
     return QString();
 }
 
-QString MediaTrackQml::getProfile() const
+QString MediaTrackQml::getCodecProfile() const
 {
     if (mv_stream)
     {
-        return QString::fromLatin1(getCodecProfileString(mv_stream->stream_codec_profile));
+        return QString::fromUtf8(getCodecProfileString(mv_stream->stream_codec_profile));
     }
 
     return QString();
+}
+
+QString MediaTrackQml::getCodecProfileAndLevel() const
+{
+    QString str;
+
+    if (mv_stream)
+    {
+        str += getCodecProfileString(mv_stream->stream_codec_profile);
+
+        if (mv_stream->video_level > 0)
+        {
+            str += " @ L";
+            str += QString::number(mv_stream->video_level, 'g', 2);
+        }
+    }
+
+    return str;
+}
+
+QString MediaTrackQml::getCodecFeatures() const
+{
+    QString str;
+
+    if (mv_stream)
+    {
+        if (mv_stream->stream_codec == CODEC_H264)
+        {
+            if (mv_stream->use_cabac)
+                str = "CABAC";
+            else
+                str = "CAVLC";
+
+            //if (mv_stream->use8x8)
+            //    str += " / " + tr("8x8 blocks");
+
+            if (mv_stream->max_ref_frames > 0)
+                str += " / " + QString::number(mv_stream->max_ref_frames) + tr(" ref. frames");
+        }
+    }
+
+    return str;
 }
 
 QString MediaTrackQml::getLanguage() const
@@ -266,7 +308,7 @@ double MediaTrackQml::getFramerate() const
     return -1;
 }
 
-double MediaTrackQml::getLevel() const
+double MediaTrackQml::getCodecLevel() const
 {
     if (mv_stream)
     {

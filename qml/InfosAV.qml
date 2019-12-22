@@ -42,10 +42,10 @@ ScrollView {
             columnAudio.visible = false
 
             info_vcodec.text = trackItem.codec
-            item_vcodecprofile.visible = (trackItem.profile.length > 0)
-            info_vcodecprofile.text = trackItem.profile
-            item_vcodeclevel.visible = (trackItem.level > 0)
-            info_vcodeclevel.text = trackItem.level.toFixed(1)
+            item_vcodecprofile.visible = (trackItem.codecProfileAndLevel.length > 0)
+            info_vcodecprofile.text = trackItem.codecProfileAndLevel
+            item_vcodecfeatures.visible = (trackItem.codecFeatures.length > 0)
+            info_vcodecfeatures.text = trackItem.codecFeatures
 
             info_vdefinition.text = trackItem.width + " x " + trackItem.height
             item_vdefinition_visible.visible = ((trackItem.width_visible + trackItem.height_visible) > 0 &&
@@ -74,8 +74,8 @@ ScrollView {
             columnAudio.visible = true
 
             info_acodec.text = trackItem.codec
-            item_acodecprofile.visible = (trackItem.profile.length > 0)
-            info_acodecprofile.text = trackItem.profile
+            item_acodecprofile.visible = (trackItem.codecProfile.length > 0)
+            info_acodecprofile.text = trackItem.codecProfile
 
             info_achannels.text = trackItem.audioChannels
             info_asamplerate.text = trackItem.audioSamplerate + " Hz"
@@ -422,19 +422,19 @@ ScrollView {
                 }
             }
             Row { ////
-                id: item_vcodeclevel
+                id: item_vcodecfeatures
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
 
                 Text {
-                    text: qsTr("level")
+                    text: qsTr("features")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_vcodeclevel
+                    id: info_vcodecfeatures
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

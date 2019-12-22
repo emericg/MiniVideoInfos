@@ -61,8 +61,10 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(QString tcc READ getTcc NOTIFY trackUpdated)
 
     Q_PROPERTY(QString codec READ getCodec NOTIFY trackUpdated)
-    Q_PROPERTY(QString profile READ getProfile NOTIFY trackUpdated)
-    Q_PROPERTY(double level READ getLevel NOTIFY trackUpdated)
+    Q_PROPERTY(QString codecProfile READ getCodecProfile NOTIFY trackUpdated)
+    Q_PROPERTY(double codecLevel READ getCodecLevel NOTIFY trackUpdated)
+    Q_PROPERTY(QString codecProfileAndLevel READ getCodecProfileAndLevel NOTIFY trackUpdated)
+    Q_PROPERTY(QString codecFeatures READ getCodecFeatures NOTIFY trackUpdated)
 
     Q_PROPERTY(double frameDuration READ getFrameDuration NOTIFY trackUpdated)
     //Q_PROPERTY(double sampleDuration READ getSampleDuration NOTIFY trackUpdated)
@@ -131,7 +133,9 @@ private:
     QString getFcc() const;
     QString getTcc() const;
     QString getCodec() const;
-    QString getProfile() const;
+    QString getCodecProfile() const;
+    QString getCodecProfileAndLevel() const;
+    QString getCodecFeatures() const;
     QString getLanguage() const;
 
     //
@@ -140,7 +144,7 @@ private:
     int getWidthVisible() const;
     int getHeightVisible() const;
     double getFramerate() const;
-    double getLevel() const;
+    double getCodecLevel() const;
     //double getAR() const;
     int getProjection() const;
     int getOrientation() const;
