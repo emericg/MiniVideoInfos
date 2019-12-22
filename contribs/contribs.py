@@ -275,7 +275,7 @@ for TARGET in TARGETS:
     elif OS_HOST == "Darwin":
         if OS_TARGET == "iOS":
             CMAKE_gen = "Xcode"
-            #IOS_DEPLOYMENT_TARGET="12.0"
+            #IOS_DEPLOYMENT_TARGET="10.0"
             build_shared = "OFF"
             build_static = "ON"
             if ARCH_TARGET == "simulator":
@@ -283,7 +283,7 @@ for TARGET in TARGETS:
             elif ARCH_TARGET == "armv7":
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DIOS_PLATFORM=OS"]
             else:
-                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DIOS_PLATFORM=OS64", "-DENABLE_BITCODE=0", "-DENABLE_ARC=1"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DIOS_PLATFORM=OS64", "-DENABLE_BITCODE=0"]
     elif OS_HOST == "Windows":
         if ARCH_TARGET == "armv7":
             CMAKE_gen = "Visual Studio 15 2017 ARM"
