@@ -47,7 +47,7 @@ Item {
 
                 text: "MiniVideo Infos"
                 color: Theme.colorText
-                font.pixelSize: 32
+                font.pixelSize: 28
             }
 
             Text {

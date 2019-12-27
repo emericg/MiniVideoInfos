@@ -237,6 +237,7 @@ Item {
 
             color: Theme.colorActionbarContent
             font.pixelSize: 15
+            font.bold: true
         }
 
         Timer {
