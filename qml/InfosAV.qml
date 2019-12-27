@@ -20,7 +20,7 @@ ScrollView {
         // track
         info_id.text = trackItem.id
         info_size.text = UtilsString.bytesToString_short(trackItem.size, settingsManager.unitSizes)
-        info_duration.text = UtilsString.durationToString_short(trackItem.duration)
+        info_duration.text = UtilsString.durationToString_long(trackItem.duration)
         item_delay.visible = (trackItem.delay !== 0)
         info_delay.text = UtilsString.durationToString_short(trackItem.delay)
 
@@ -60,6 +60,15 @@ ScrollView {
             itemPar.visible = false
             itemVar.visible = false
 
+            if (trackItem.colorDepth) {
+            info_vcolordepth.text = trackItem.colorDepth + " bits"
+
+                if (trackItem.colorRange)
+                    info_vcolorrange.text = qsTr("full")
+                else
+                    info_vcolorrange.text = qsTr("limited")
+            }
+
             info_vframerate.text = trackItem.framerate.toFixed(3) + " fps"
             item_vprojection.visible = (trackItem.projection > 0)
             info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
@@ -80,12 +89,12 @@ ScrollView {
             info_achannels.text = trackItem.audioChannels
             info_asamplerate.text = trackItem.audioSamplerate + " Hz"
             info_abpp.text = trackItem.audioBitPerSample + " bpp"
-            //item_aframeduration.visible = (trackItem.frameDuration > 0)
-            //info_aframeduration.text = trackItem.frameDuration.toFixed(2) + " ms"
             item_aframeduration.visible = true
             info_aframeduration.text = (trackItem.duration / trackItem.sampleCount).toFixed(2) + " ms"
             item_asampleduration.visible = true
-            info_asampleduration.text = (1000000 / trackItem.audioSamplerate).toFixed(2) + " µs"
+            info_asampleduration.text = trackItem.sampleDuration.toFixed(2) + " µs"
+            item_asampleperframe.visible = (trackItem.audioSamplePerFrame > 0)
+            info_asampleperframe.text = trackItem.audioSamplePerFrame
 
             speakers.visible = true
             speakers_lfe.visible = trackItem.audioChannels > 5
@@ -572,6 +581,40 @@ ScrollView {
                 spacing: 16
 
                 Text {
+                    text: qsTr("color depth")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolordepth
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("color range")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolorrange
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
                     text: qsTr("framerate")
                     color: Theme.colorSubText
                     font.pixelSize: 15
@@ -739,6 +782,24 @@ ScrollView {
                 }
                 Text {
                     id: info_asampleduration
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_asampleperframe
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("sample per frame")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_asampleperframe
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

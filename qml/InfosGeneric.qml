@@ -20,7 +20,7 @@ ScrollView {
         info_date.text = mediaItem.date.toLocaleDateString()
         info_time.text = mediaItem.date.toLocaleTimeString()
         item_duration.visible = (mediaItem.duration > 0)
-        info_duration.text = UtilsString.durationToString_short(mediaItem.duration)
+        info_duration.text = UtilsString.durationToString_long(mediaItem.duration)
         info_size.text = UtilsString.bytesToString(mediaItem.size, settingsManager.unitSizes)
         item_timecode.visible = (mediaItem.timecode.length > 0)
         info_timecode.text = mediaItem.timecode

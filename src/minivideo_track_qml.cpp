@@ -230,13 +230,13 @@ QString MediaTrackQml::getCodecFeatures() const
     {
         if (mv_stream->stream_codec == CODEC_H264)
         {
-            if (mv_stream->use_cabac)
+            if (mv_stream->h264_feature_cabac)
                 str = "CABAC";
             else
                 str = "CAVLC";
 
-            //if (mv_stream->use8x8)
-            //    str += " / " + tr("8x8 blocks");
+            if (mv_stream->h264_feature_8x8)
+                str += " / " + tr("8x8 blocks");
 
             if (mv_stream->max_ref_frames > 0)
                 str += " / " + QString::number(mv_stream->max_ref_frames) + tr(" ref. frames");
@@ -328,6 +328,16 @@ int MediaTrackQml::getProjection() const
     return -1;
 }
 
+int MediaTrackQml::getStereoMode() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->stereo_mode;
+    }
+
+    return -1;
+}
+
 int MediaTrackQml::getOrientation() const
 {
     if (mv_stream)
@@ -348,6 +358,26 @@ int MediaTrackQml::getScanMode() const
     return -1;
 }
 
+int MediaTrackQml::getColorDepth() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->color_depth;
+    }
+
+    return -1;
+}
+
+bool MediaTrackQml::getColorRange() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->color_range;
+    }
+
+    return -1;
+}
+
 /* ************************************************************************** */
 
 int MediaTrackQml::getAudioChannels() const
@@ -355,6 +385,16 @@ int MediaTrackQml::getAudioChannels() const
     if (mv_stream)
     {
         return mv_stream->channel_count;
+    }
+
+    return -1;
+}
+
+int MediaTrackQml::getAudioChannelsMode() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->channel_mode;
     }
 
     return -1;
@@ -378,6 +418,26 @@ int MediaTrackQml::getAudioBitPerSample() const
     }
 
     return -1;
+}
+
+double MediaTrackQml::getAudioSampleDuration() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->sample_duration;
+    }
+
+    return 0;
+}
+
+int MediaTrackQml::getAudioSamplePerFrame() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->sample_per_frames;
+    }
+
+    return 0;
 }
 
 /* ************************************************************************** */

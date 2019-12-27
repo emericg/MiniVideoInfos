@@ -67,7 +67,7 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(QString codecFeatures READ getCodecFeatures NOTIFY trackUpdated)
 
     Q_PROPERTY(double frameDuration READ getFrameDuration NOTIFY trackUpdated)
-    //Q_PROPERTY(double sampleDuration READ getSampleDuration NOTIFY trackUpdated)
+    Q_PROPERTY(double sampleDuration READ getAudioSampleDuration NOTIFY trackUpdated)
 
     //
     Q_PROPERTY(int width READ getWidth NOTIFY trackUpdated)
@@ -75,15 +75,19 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(int width_visible READ getWidthVisible NOTIFY trackUpdated)
     Q_PROPERTY(int height_visible READ getHeightVisible NOTIFY trackUpdated)
     Q_PROPERTY(double framerate READ getFramerate NOTIFY trackUpdated)
-    //Q_PROPERTY(int depth READ getDepth NOTIFY trackUpdated)
+    Q_PROPERTY(int colorDepth READ getColorDepth NOTIFY trackUpdated)
+    Q_PROPERTY(bool colorRange READ getColorRange NOTIFY trackUpdated)
     //Q_PROPERTY(bool alpha READ getAlpha NOTIFY trackUpdated)
     Q_PROPERTY(int orientation READ getOrientation NOTIFY trackUpdated)
     Q_PROPERTY(int projection READ getProjection NOTIFY trackUpdated)
-    //Q_PROPERTY(int scanmode READ getScanMode NOTIFY trackUpdated)
+    Q_PROPERTY(int stereoMode READ getStereoMode NOTIFY trackUpdated)
+    Q_PROPERTY(int scanMode READ getScanMode NOTIFY trackUpdated)
 
     //
     Q_PROPERTY(int audioChannels READ getAudioChannels NOTIFY trackUpdated)
+    Q_PROPERTY(int audioChannelsMode READ getAudioChannelsMode NOTIFY trackUpdated)
     Q_PROPERTY(int audioSamplerate READ getAudioSamplerate NOTIFY trackUpdated)
+    Q_PROPERTY(int audioSamplePerFrame READ getAudioSamplePerFrame NOTIFY trackUpdated)
     Q_PROPERTY(int audioBitPerSample READ getAudioBitPerSample NOTIFY trackUpdated)
 
     Q_PROPERTY(int bitrateMode READ getBitrateMode NOTIFY trackUpdated)
@@ -149,11 +153,17 @@ private:
     int getProjection() const;
     int getOrientation() const;
     int getScanMode() const;
+    int getStereoMode() const;
+    int getColorDepth() const;
+    bool getColorRange() const;
 
     //
     int getAudioChannels() const;
+    int getAudioChannelsMode() const;
     int getAudioSamplerate() const;
     int getAudioBitPerSample() const;
+    double getAudioSampleDuration() const;
+    int getAudioSamplePerFrame() const;
 
     //
     int getBitrateMode() const;
