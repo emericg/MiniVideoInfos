@@ -170,28 +170,6 @@ if OS_HOST == "Windows":
 
 ## SOFTWARES ###################################################################
 
-## libUSB & libMTP
-## version: git (1.0.22+)
-FILE_libusb = "libusb-master.tar.gz"
-DIR_libusb = "libusb-master"
-## version: git (1.15+)
-FILE_libmtp = "libmtp-master.tar.gz"
-DIR_libmtp = "libmtp-master"
-
-if OS_HOST != "Windows":
-    if not os.path.exists("src/" + FILE_libusb):
-        print("> Downloading " + FILE_libusb)
-        if sys.version_info >= (3, 0):
-            urllib.request.urlretrieve("https://github.com/libusb/libusb/archive/master.zip", src_dir + FILE_libusb)
-        else:
-            urllib.urlretrieve("https://github.com/libusb/libusb/archive/master.zip", src_dir + FILE_libusb)
-    if not os.path.exists("src/" + FILE_libmtp):
-        print("> Downloading " + FILE_libmtp)
-        if sys.version_info >= (3, 0):
-            urllib.request.urlretrieve("https://github.com/libmtp/libmtp/archive/master.zip", src_dir + FILE_libmtp)
-        else:
-            urllib.urlretrieve("https://github.com/libmtp/libmtp/archive/master.zip", src_dir + FILE_libmtp)
-
 ## libexif
 ## version: git (0.6.21+)
 FILE_libexif = "libexif-master.zip"
@@ -296,7 +274,7 @@ for TARGET in TARGETS:
             if ARCH_TARGET == "x86":
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86", "-DANDROID_PLATFORM=android-21"]
             elif ARCH_TARGET == "x86_64":
-                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86-64", "-DANDROID_PLATFORM=android-21"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86_64", "-DANDROID_PLATFORM=android-21"]
             elif ARCH_TARGET == "armv7":
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-21"]
             else:
@@ -305,14 +283,6 @@ for TARGET in TARGETS:
     ############################################################################
 
     ## EXTRACT
-    if OS_HOST != "Windows":
-        if not os.path.isdir(build_dir + DIR_libusb):
-            zipUSB = zipfile.ZipFile(src_dir + FILE_libusb)
-            zipUSB.extractall(build_dir)
-        if not os.path.isdir(build_dir + DIR_libmtp):
-            zipMTP = zipfile.ZipFile(src_dir + FILE_libmtp)
-            zipMTP.extractall(build_dir)
-
     if not os.path.isdir(build_dir + DIR_libexif):
         zipEX = zipfile.ZipFile(src_dir + FILE_libexif)
         zipEX.extractall(build_dir)
@@ -325,23 +295,6 @@ for TARGET in TARGETS:
     if not os.path.isdir(build_dir + DIR_minivideo):
         zipMV = zipfile.ZipFile(src_dir + FILE_minivideo)
         zipMV.extractall(build_dir)
-
-    ## BUILD & INSTALL
-    if OS_HOST != "Windows":
-        # libUSB
-        os.chdir(build_dir + DIR_libusb)
-        os.chmod("bootstrap.sh", 509)
-        os.system("./bootstrap.sh")
-        os.system("./configure --prefix=" + env_dir + "/usr")
-        os.system("make -j" + str(CPU_COUNT))
-        os.system("make install")
-        # libMTP
-        os.chdir(build_dir + DIR_libmtp)
-        os.chmod("autogen.sh", 509)
-        os.system("./autogen.sh << \"y\"")
-        os.system("./configure --disable-mtpz --prefix=" + env_dir + "/usr --with-udev=" + env_dir + "/usr/lib/udev")
-        os.system("make -j" + str(CPU_COUNT))
-        os.system("make install")
 
     # taglib
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
