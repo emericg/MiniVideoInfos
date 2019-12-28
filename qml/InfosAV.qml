@@ -61,7 +61,7 @@ ScrollView {
             itemVar.visible = false
 
             if (trackItem.colorDepth) {
-            info_vcolordepth.text = trackItem.colorDepth + " bits"
+                info_vcolordepth.text = trackItem.colorDepth + " bits"
 
                 if (trackItem.colorRange)
                     info_vcolorrange.text = qsTr("full")

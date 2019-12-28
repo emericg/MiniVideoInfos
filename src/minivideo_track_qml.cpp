@@ -241,6 +241,11 @@ QString MediaTrackQml::getCodecFeatures() const
             if (mv_stream->max_ref_frames > 0)
                 str += " / " + QString::number(mv_stream->max_ref_frames) + tr(" ref. frames");
         }
+        else if (mv_stream->stream_codec == CODEC_H265)
+        {
+            if (mv_stream->max_ref_frames > 0)
+                str = QString::number(mv_stream->max_ref_frames) + tr(" ref. frames");
+        }
     }
 
     return str;
