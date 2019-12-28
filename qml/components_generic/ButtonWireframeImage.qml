@@ -13,10 +13,10 @@ Button {
 
     property bool fullColor: false
     property string primaryColor: Theme.colorPrimary
-    property string secondaryColor: Theme.colorComponentBorder
+    property string secondaryColor: Theme.colorBackground
 
-    font.pixelSize: 16
-    font.bold: false
+    font.pixelSize: isDesktop ? 14 : 15
+    font.bold: isDesktop ? true : false
 
     contentItem: Item {
         ImageSvg {
@@ -53,8 +53,8 @@ Button {
     background: Rectangle {
         radius: Theme.componentRadius
         opacity: enabled ? (control.down ? 0.5 : 1.0) : 0.3
-        color: fullColor ? control.primaryColor : Theme.colorComponentBackground
+        color: fullColor ? control.primaryColor : control.secondaryColor
         border.width: 1
-        border.color: fullColor ? control.primaryColor : control.secondaryColor
+        border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
     }
 }
