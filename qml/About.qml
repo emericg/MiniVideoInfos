@@ -28,7 +28,7 @@ Item {
             id: imageLogo
             width: 64
             height: 64
-            anchors.leftMargin: 32
+            anchors.leftMargin: 24
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
 
@@ -39,7 +39,7 @@ Item {
         Column {
             id: column1
             anchors.left: imageLogo.right
-            anchors.leftMargin: 24
+            anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
