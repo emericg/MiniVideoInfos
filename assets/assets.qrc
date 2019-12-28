@@ -6,7 +6,6 @@
         <file>icons_material/baseline-access_time-24px.svg</file>
         <file>icons_material/baseline-arrow_back-24px.svg</file>
         <file>icons_material/baseline-autorenew-24px.svg</file>
-        <file>icons_material/baseline-brightness_4-24px.svg</file>
         <file>icons_material/baseline-chevron_right-24px.svg</file>
         <file>icons_material/baseline-close-24px.svg</file>
         <file>icons_material/baseline-date_range-24px.svg</file>
@@ -44,6 +43,7 @@
         <file>icons_material/outline-settings-24px.svg</file>
         <file>icons_material/outline-sd_card-24px.svg</file>
 
+        <file>icons_material/duotone-brightness_4-24px.svg</file>
         <file>icons_material/duotone-data_usage-24px.svg</file>
         <file>icons_material/duotone-exit_to_app-24px.svg</file>
         <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
