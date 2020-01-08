@@ -383,6 +383,42 @@ bool MediaTrackQml::getColorRange() const
     return -1;
 }
 
+QString MediaTrackQml::getColorPrimaries() const
+{
+    QString prim;
+
+    if (mv_stream)
+    {
+        prim = getColorPrimariesString(static_cast<ColorPrimaries_e>(mv_stream->color_primaries));
+    }
+
+    return prim;
+}
+
+QString MediaTrackQml::getColorTransfer() const
+{
+    QString trans;
+
+    if (mv_stream)
+    {
+        trans = getColorTransferCharacteristicString(static_cast<ColorTransferCharacteristic_e>(mv_stream->color_transfer));
+    }
+
+    return trans;
+}
+
+QString MediaTrackQml::getColorMatrix() const
+{
+    QString prim;
+
+    if (mv_stream)
+    {
+        prim = getColorMatrixString(static_cast<ColorSpace_e>(mv_stream->color_matrix));
+    }
+
+    return prim;
+}
+
 /* ************************************************************************** */
 
 int MediaTrackQml::getAudioChannels() const

@@ -28,9 +28,9 @@ Item {
             id: imageLogo
             width: 64
             height: 64
+            anchors.left: parent.left
             anchors.leftMargin: 24
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
 
             source: "qrc:/assets/logos/logo.svg"
             sourceSize: Qt.size(width, height)
@@ -41,6 +41,7 @@ Item {
             anchors.left: imageLogo.right
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: 2
 
             Text {
                 id: textName

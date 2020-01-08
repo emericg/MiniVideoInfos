@@ -41,12 +41,14 @@ ScrollView {
             columnVideo.visible = true
             columnAudio.visible = false
 
+            // Codec
             info_vcodec.text = trackItem.codec
             item_vcodecprofile.visible = (trackItem.codecProfileAndLevel.length > 0)
             info_vcodecprofile.text = trackItem.codecProfileAndLevel
             item_vcodecfeatures.visible = (trackItem.codecFeatures.length > 0)
             info_vcodecfeatures.text = trackItem.codecFeatures
 
+            // Geometry
             info_vdefinition.text = trackItem.width + " x " + trackItem.height
             item_vdefinition_visible.visible = ((trackItem.width_visible + trackItem.height_visible) > 0 &&
                                                 (trackItem.width_visible !== trackItem.width || trackItem.height_visible !== trackItem.height))
@@ -56,11 +58,24 @@ ScrollView {
             var ardesc = UtilsMedia.varToDescString(trackItem.width, trackItem.height)
             if (ardesc.length > 0) info_dar.text += "  (" + ardesc + ")"
 
+            item_vprojection.visible = (trackItem.projection > 0)
+            info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
+
+            item_vscan.visible = (trackItem.scanmode > 0)
+            info_vscan.text = UtilsMedia.scanmodeToString(trackItem.scanmode)
+
             itemDar.visible = true
             itemPar.visible = false
             itemVar.visible = false
 
-            if (trackItem.colorDepth) {
+            // Colors
+            item_vcolordepth.visible = (trackItem.colorDepth > 0)
+            item_vcolorrange.visible = (trackItem.colorDepth > 0)
+            item_vcolorprimaries.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+            item_vcolortransfer.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+            item_vcolormatrix.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+
+            if (trackItem.colorDepth > 0) {
                 info_vcolordepth.text = trackItem.colorDepth + " bits"
 
                 if (trackItem.colorRange)
@@ -68,13 +83,15 @@ ScrollView {
                 else
                     info_vcolorrange.text = qsTr("limited")
             }
+            if (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0) {
+                info_vcolorprimaries.text = trackItem.colorPrimaries
+                info_vcolortransfer.text = trackItem.colorTransfer
+                info_vcolormatrix.text = trackItem.colorMatrix
+            }
 
+            // Framerate
             info_vframerate.text = trackItem.framerate.toFixed(3) + " fps"
-            item_vprojection.visible = (trackItem.projection > 0)
-            info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
             info_vframeduration.text = trackItem.frameDuration.toFixed(2) + " ms"
-            item_vscan.visible = (trackItem.scanmode > 0)
-            info_vscan.text = UtilsMedia.scanmodeToString(trackItem.scanmode)
         }
 
         // audio
@@ -581,40 +598,6 @@ ScrollView {
                 spacing: 16
 
                 Text {
-                    text: qsTr("color depth")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vcolordepth
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("color range")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vcolorrange
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
                     text: qsTr("framerate")
                     color: Theme.colorSubText
                     font.pixelSize: 15
@@ -638,6 +621,96 @@ ScrollView {
                 }
                 Text {
                     id: info_vframeduration
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vcolordepth
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("color depth")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolordepth
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vcolorrange
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("color range")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolorrange
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vcolorprimaries
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("color primaries")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolorprimaries
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vcolortransfer
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("transfer characteristics")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolortransfer
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vcolormatrix
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("color matrix")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vcolormatrix
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

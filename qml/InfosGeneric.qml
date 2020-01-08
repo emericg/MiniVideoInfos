@@ -1102,7 +1102,7 @@ ScrollView {
                             if (modelData.type === 4) // stream_MENU
                                 return qsTr("menu track #") + modelData.id
                             if (modelData.type === 5) // stream_TMCD
-                                return qsTr("SMPTE timecode track")
+                                return qsTr("SMPTE timecode")
                             if (modelData.type === 6) // stream_META
                                 return qsTr("metadata track")
                             if (modelData.type === 7) // stream_HINT
@@ -1112,7 +1112,12 @@ ScrollView {
                         font.pixelSize: 15
                     }
                     Text {
-                        text: ""
+                        text: {
+                            if (modelData.type === 5) // stream_TMCD
+                                return mediaItem.timecode
+                            else
+                                return modelData.title
+                        }
                         color: Theme.colorText
                         font.pixelSize: 15
                     }

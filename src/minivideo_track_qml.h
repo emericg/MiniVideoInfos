@@ -77,6 +77,9 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(double framerate READ getFramerate NOTIFY trackUpdated)
     Q_PROPERTY(int colorDepth READ getColorDepth NOTIFY trackUpdated)
     Q_PROPERTY(bool colorRange READ getColorRange NOTIFY trackUpdated)
+    Q_PROPERTY(QString colorPrimaries READ getColorPrimaries NOTIFY trackUpdated)
+    Q_PROPERTY(QString colorTransfer READ getColorTransfer NOTIFY trackUpdated)
+    Q_PROPERTY(QString colorMatrix READ getColorMatrix NOTIFY trackUpdated)
     //Q_PROPERTY(bool alpha READ getAlpha NOTIFY trackUpdated)
     Q_PROPERTY(int orientation READ getOrientation NOTIFY trackUpdated)
     Q_PROPERTY(int projection READ getProjection NOTIFY trackUpdated)
@@ -156,6 +159,9 @@ private:
     int getStereoMode() const;
     int getColorDepth() const;
     bool getColorRange() const;
+    QString getColorPrimaries() const;
+    QString getColorTransfer() const;
+    QString getColorMatrix() const;
 
     //
     int getAudioChannels() const;
