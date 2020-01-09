@@ -465,6 +465,9 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
+
+            Item { width: 4; height: 4; } // spacer
+
             Row { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
@@ -591,6 +594,9 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
+
+            Item { width: 4; height: 4; } // spacer
+
             Row { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
@@ -625,6 +631,9 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
+
+            Item { width: 4; height: 4; } // spacer
+
             Row { ////
                 id: item_vcolordepth
                 anchors.left: parent.left
@@ -789,6 +798,9 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
+
+            Item { width: 4; height: 4; } // spacer
+
             Row { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
@@ -877,6 +889,9 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
+
+            Item { width: 4; height: 4; } // spacer
+
             Row { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
@@ -972,47 +987,6 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
-            Item {
-                id: bitrateGraphItem
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                height: 180
-
-                ChartView {
-                    id: bitrateGraph
-                    anchors.fill: parent
-                    anchors.topMargin: -28
-                    anchors.leftMargin: (isMobile) ? -34 : -38
-                    anchors.rightMargin: -32
-                    anchors.bottomMargin: -24
-
-                    antialiasing: true
-                    legend.visible: false // works only with Qt 5.10+
-
-                    backgroundRoundness: 0
-                    backgroundColor: "transparent"
-                    //animationOptions: ChartView.SeriesAnimations
-                    ValueAxis { id: axisX0; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
-                    ValueAxis { id: axisBitrate; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: "" }
-
-                    LineSeries {
-                        id: bitrateDatas
-                        //useOpenGL: true
-
-                        color: Theme.colorSecondary;
-                        width: 1;
-                        visible: true
-
-                        axisX: axisX0
-                        axisY: axisBitrate
-                    }
-                }
-            }
-
             Row { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
@@ -1058,6 +1032,48 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
+
+            Item {
+                id: bitrateGraphItem
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                height: 180
+
+                ChartView {
+                    id: bitrateGraph
+                    anchors.fill: parent
+                    anchors.topMargin: -28
+                    anchors.leftMargin: (isMobile) ? -34 : -38
+                    anchors.rightMargin: -32
+                    anchors.bottomMargin: -24
+
+                    antialiasing: true
+                    legend.visible: false // works only with Qt 5.10+
+
+                    backgroundRoundness: 0
+                    backgroundColor: "transparent"
+                    //animationOptions: ChartView.SeriesAnimations
+                    ValueAxis { id: axisX0; visible: true; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
+                    ValueAxis { id: axisBitrate; visible: true; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: "" }
+
+                    LineSeries {
+                        id: bitrateDatas
+                        //useOpenGL: true
+
+                        color: Theme.colorSecondary;
+                        width: 1;
+                        visible: true
+
+                        axisX: axisX0
+                        axisY: axisBitrate
+                    }
+                }
+            }
+
             Row { ////
                 id: item_samplecount
                 anchors.left: parent.left
