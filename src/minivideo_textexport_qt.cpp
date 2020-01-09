@@ -53,25 +53,25 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
 {
     int status = 1;
 
-    exportDatas += "Full path     : ";
+    exportDatas += "Full path      : ";
     exportDatas += media.file_path;
 
-    exportDatas += "\n\nTitle         : ";
+    exportDatas += "\n\nTitle          : ";
     exportDatas += media.file_name;
-    exportDatas += "\nDuration      : ";
+    exportDatas += "\nDuration       : ";
     exportDatas += getDurationString(media.duration);
-    exportDatas += "\nSize          : ";
+    exportDatas += "\nSize           : ";
     exportDatas += getSizeString(media.file_size);
-    exportDatas += "\nContainer     : ";
+    exportDatas += "\nContainer      : ";
     exportDatas += getContainerString(media.container, true);
     if (media.creation_app)
     {
-        exportDatas += "\nCreation app  : ";
+        exportDatas += "\nCreation app   : ";
         exportDatas += media.creation_app;
     }
     if (media.creation_lib)
     {
-        exportDatas += "\nCreation lib  : ";
+        exportDatas += "\nCreation lib   : ";
         exportDatas += media.creation_lib;
     }
     if (media.creation_time)
@@ -79,13 +79,12 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
         QDate date(1904, 1, 1);
         QTime time(0, 0, 0, 0);
         QDateTime datetime(date, time);
-        datetime = datetime.addSecs(media.creation_time);
-        exportDatas += "\nCreation time : ";
+        datetime = datetime.addSecs(static_cast<qint64>(media.creation_time));
+        exportDatas += "\nCreation time  : ";
         exportDatas += datetime.toString("dddd d MMMM yyyy, hh:mm:ss");
     }
 
-    // VIDEO TRACKS
-    ////////////////////////////////////////////////////////////////////////
+    // VIDEO TRACKS ////////////////////////////////////////////////////////////
 
     for (unsigned i = 0; i < media.tracks_video_count; i++)
     {
@@ -108,90 +107,114 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
         // Datas
         if (detailed == true)
         {
-            exportDatas += "\nTrack ID      : ";
+            exportDatas += "\nTrack ID       : ";
             exportDatas += QString::number(t->track_id);
 
             if (t->stream_fcc)
             {
-                exportDatas += "\nFourCC        : ";
+                exportDatas += "\nFourCC         : ";
                 exportDatas += getFourccString(t->stream_fcc);
             }
         }
-        exportDatas += "\nCodec         : ";
+        exportDatas += "\nCodec          : ";
         exportDatas += getCodecString(stream_VIDEO, t->stream_codec, true);
-        exportDatas += "\nSize          : ";
+        exportDatas += "\nSize           : ";
         exportDatas += getTrackSizeString(t, media.file_size, detailed);
-        exportDatas += "\nDuration      : ";
+        exportDatas += "\nDuration       : ";
         exportDatas += getDurationString(t->stream_duration_ms);
-        exportDatas += "\nWidth         : ";
+        exportDatas += "\nWidth          : ";
         exportDatas += QString::number(t->width);
-        exportDatas += "\nHeight        : ";
+        exportDatas += "\nHeight         : ";
         exportDatas += QString::number(t->height);
 
         if (detailed == true)
         {
             if (t->pixel_aspect_ratio_h || t->pixel_aspect_ratio_v)
             {
-                exportDatas += "\nPixel Aspect Ratio   : ";
+                exportDatas += "\nPixel Aspect Ratio    : ";
                 exportDatas += QString::number(t->pixel_aspect_ratio_h) + ":" + QString::number(t->pixel_aspect_ratio_v);
             }
             if (t->video_aspect_ratio > 0.0)
             {
-                exportDatas += "\nVideo Aspect Ratio   : ";
+                exportDatas += "\nVideo Aspect Ratio    : ";
                 exportDatas += getAspectRatioString(t->video_aspect_ratio, false);
             }
-            exportDatas += "\nDisplay Aspect Ratio : ";
+            exportDatas += "\nDisplay Aspect Ratio  : ";
             exportDatas += getAspectRatioString(t->display_aspect_ratio, true);
         }
         else
         {
-            exportDatas += "\nAspect ratio  : ";
+            exportDatas += "\nAspect ratio   : ";
             exportDatas += getAspectRatioString(t->display_aspect_ratio, detailed);
         }
 
         if (detailed == true)
         {
-            exportDatas += "\nFramerate     : ";
+            exportDatas += "\nFramerate      : ";
             exportDatas += QString::number(t->framerate) + " fps";
-            exportDatas += "\nFramerate mode: ";
-            exportDatas += getFramerateModeString(t->framerate_mode);
+            if (t->framerate_mode)
+            {
+                exportDatas += "\nFramerate mode : ";
+                exportDatas += getFramerateModeString(t->framerate_mode);
+            }
 
-            exportDatas += "\nBitrate       : ";
+            exportDatas += "\nBitrate        : ";
             exportDatas += getBitrateString(t->bitrate_avg);
-            exportDatas += "\nBitrate mode  : ";
+            exportDatas += "\nBitrate mode   : ";
             exportDatas += getBitrateModeString(t->bitrate_mode);
             if (t->bitrate_mode != BITRATE_CBR)
             {
-                exportDatas += "\nBitrate (min) : ";
+                exportDatas += "\nBitrate (min)  : ";
                 exportDatas += getBitrateString(t->bitrate_min);
-                exportDatas += "\nBitrate (max) : ";
+                exportDatas += "\nBitrate (max)  : ";
                 exportDatas += getBitrateString(t->bitrate_max);
             }
         }
         else
         {
-            exportDatas += "\nFramerate     : ";
-            exportDatas += QString::number(t->framerate) + " fps (";
-            exportDatas += getFramerateModeString(t->framerate_mode) + ")";
-
-            exportDatas += "\nBitrate       : ";
+            exportDatas += "\nFramerate      : ";
+            exportDatas += QString::number(t->framerate) + " fps";
+            if (t->framerate_mode)
+            {
+                exportDatas += " (" + getFramerateModeString(t->framerate_mode) + ")";
+            }
+            exportDatas += "\nBitrate        : ";
             exportDatas += getBitrateString(t->bitrate_avg);
             exportDatas += " (" + getBitrateModeString(t->bitrate_mode) + ")";
         }
 
-        exportDatas += "\nColor depth   : ";
-        exportDatas += QString::number(t->color_depth) + " bits";
-/*
-        exportDatas += "\nColor matrix  : ";
-        if (t->color_range == 0)
-            exportDatas += "\nColor range   : Limited";
-        else
-            exportDatas += "\nColor range   : Full";
-*/
+        if (t->color_depth > 0)
+        {
+            exportDatas += "\nColor depth    : ";
+            exportDatas += QString::number(t->color_depth) + " bits";
+            if (t->color_range == 0)
+                exportDatas += "\nColor range    : Limited";
+            else
+                exportDatas += "\nColor range    : Full";
+        }
+        if (t->color_primaries && t->color_transfer)
+        {
+            QString prim = getColorPrimariesString((ColorPrimaries_e)t->color_primaries);
+            if (!prim.isEmpty())
+            {
+                exportDatas += "\nColor primaries: " + prim;
+            }
+
+            QString tra = getColorTransferCharacteristicString((ColorTransferCharacteristic_e)t->color_transfer);
+            if (!tra.isEmpty())
+            {
+                exportDatas += "\nColor tranfer  : " + tra;
+            }
+
+            QString mat = getColorMatrixString((ColorSpace_e)t->color_matrix);
+            if (!mat.isEmpty())
+            {
+                exportDatas += "\nColor matrix   : " + mat;
+            }
+        }
     }
 
-    // AUDIO TRACKS
-    ////////////////////////////////////////////////////////////////////////
+    // AUDIO TRACKS ////////////////////////////////////////////////////////////
 
     for (unsigned i = 0; i < media.tracks_audio_count; i++)
     {
@@ -209,73 +232,73 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
         {
             exportDatas += "\n\nAUDIO TRACK #" + QString::number(i);
             exportDatas += "\n--------------";
+            if (i > 9) exportDatas += "-";
         }
 
         // Datas
         if (detailed == true)
         {
-            exportDatas += "\nTrack ID      : ";
+            exportDatas += "\nTrack ID       : ";
             exportDatas += QString::number(t->track_id);
 
             if (t->stream_fcc)
             {
-                exportDatas += "\nFourCC        : ";
+                exportDatas += "\nFourCC         : ";
                 exportDatas += getFourccString(t->stream_fcc);
             }
         }
-        exportDatas += "\nCodec         : ";
+        exportDatas += "\nCodec          : ";
         exportDatas += getCodecString(stream_AUDIO, t->stream_codec, true);
-        exportDatas += "\nSize          : ";
+        exportDatas += "\nSize           : ";
         exportDatas += getTrackSizeString(t, media.file_size, detailed);
-        exportDatas += "\nDuration      : ";
+        exportDatas += "\nDuration       : ";
         exportDatas += getDurationString(t->stream_duration_ms);
         if (t->track_title)
         {
-            exportDatas += "\nTitle         : ";
-            exportDatas += QString::fromLocal8Bit(t->track_title);
+            exportDatas += "\nTitle          : ";
+            exportDatas += QString::fromUtf8(t->track_title);
         }
         if (t->track_languagecode && strcmp(t->track_languagecode, "und") != 0)
         {
-            exportDatas += "\nLanguage code : ";
-            exportDatas += QString::fromLocal8Bit(t->track_languagecode);
+            exportDatas += "\nLanguage code  : ";
+            exportDatas += QString::fromUtf8(t->track_languagecode);
 
             QString track_language = getLanguageString(t->track_languagecode);
             if (!track_language.isEmpty())
             {
-                exportDatas += "\nLanguage      : ";
+                exportDatas += "\nLanguage       : ";
                 exportDatas +=  getLanguageString(t->track_languagecode);
             }
         }
-        exportDatas += "\nChannels      : ";
+        exportDatas += "\nChannels       : ";
         exportDatas += QString::number(t->channel_count);
-        exportDatas += "\nBit per sample: ";
+        exportDatas += "\nBit per sample : ";
         exportDatas += QString::number(t->bit_per_sample);
-        exportDatas += "\nSamplerate    : ";
+        exportDatas += "\nSamplerate     : ";
         exportDatas += QString::number(t->sampling_rate) + " Hz";
         if (detailed == true)
         {
-            exportDatas += "\nBitrate       : ";
+            exportDatas += "\nBitrate        : ";
             exportDatas += getBitrateString(t->bitrate_avg);
-            exportDatas += "\nBitrate mode  : ";
+            exportDatas += "\nBitrate mode   : ";
             exportDatas += getBitrateModeString(t->bitrate_mode);
             if (t->bitrate_mode != BITRATE_CBR)
             {
-                exportDatas += "\nBitrate (min) : ";
+                exportDatas += "\nBitrate (min)  : ";
                 exportDatas += getBitrateString(t->bitrate_min);
-                exportDatas += "\nBitrate (max) : ";
+                exportDatas += "\nBitrate (max)  : ";
                 exportDatas += getBitrateString(t->bitrate_max);
             }
         }
         else
         {
-            exportDatas += "\nBitrate       : ";
+            exportDatas += "\nBitrate        : ";
             exportDatas += getBitrateString(t->bitrate_avg);
             exportDatas += " (" + getBitrateModeString(t->bitrate_mode) + ")";
         }
     }
 
-    // SUBTITLES TRACKS
-    ////////////////////////////////////////////////////////////////////////
+    // SUBTITLES TRACKS ////////////////////////////////////////////////////////
 
     for (unsigned i = 0; i < media.tracks_subtitles_count; i++)
     {
@@ -286,38 +309,38 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
         // Section title
         exportDatas += "\n\nSUBTITLES TRACK #"+ QString::number(i);
         exportDatas += "\n------------------";
+        if (i > 9) exportDatas += "-";
 
         // Datas
         if (detailed == true)
         {
-            exportDatas += "\nTrack ID      : ";
+            exportDatas += "\nTrack ID       : ";
             exportDatas += QString::number(t->track_id);
         }
-        exportDatas += "\nFormat        : ";
+        exportDatas += "\nFormat         : ";
         exportDatas += getCodecString(stream_TEXT, t->stream_codec, true);
-        exportDatas += "\nSize          : ";
+        exportDatas += "\nSize           : ";
         exportDatas += getTrackSizeString(t, media.file_size, detailed);
         if (t->track_title)
         {
-            exportDatas += "\nTitle         : ";
-            exportDatas += QString::fromLocal8Bit(t->track_title);
+            exportDatas += "\nTitle          : ";
+            exportDatas += QString::fromUtf8(t->track_title);
         }
         if (t->track_languagecode && strcmp(t->track_languagecode, "und") != 0)
         {
-            exportDatas += "\nLanguage code : ";
-            exportDatas += QString::fromLocal8Bit(t->track_languagecode);
+            exportDatas += "\nLanguage code  : ";
+            exportDatas += QString::fromUtf8(t->track_languagecode);
 
             QString track_language = getLanguageString(t->track_languagecode);
             if (!track_language.isEmpty())
             {
-                exportDatas += "\nLanguage      : ";
+                exportDatas += "\nLanguage       : ";
                 exportDatas +=  getLanguageString(t->track_languagecode);
             }
         }
     }
 
-    // OTHER TRACKS
-    ////////////////////////////////////////////////////////////////////////
+    // OTHER TRACKS ////////////////////////////////////////////////////////////
 
     for (unsigned i = 0; i < media.tracks_others_count; i++)
     {
@@ -339,28 +362,31 @@ int textExport::generateExportDatas_text(MediaFile_t &media, QString &exportData
 
         exportDatas += QString::number(i);
         exportDatas += "\n-------------";
+        if (i > 9) exportDatas += "-";
 
         // Datas
         if (detailed == true)
         {
-            exportDatas += "\nTrack ID      : ";
+            exportDatas += "\nTrack ID       : ";
             exportDatas += QString::number(t->track_id);
         }
-        exportDatas += "\nSize          : ";
+        exportDatas += "\nSize           : ";
         exportDatas += getTrackSizeString(t, media.file_size, detailed);
         if (t->track_title)
         {
-            exportDatas += "\nTitle         : ";
-            exportDatas += QString::fromLocal8Bit(t->track_title);
+            exportDatas += "\nTitle          : ";
+            exportDatas += QString::fromUtf8(t->track_title);
         }
-        exportDatas += "\nLanguage      : ";
-        exportDatas += QString::fromLocal8Bit(t->track_languagecode);
+        exportDatas += "\nLanguage       : ";
+        exportDatas += QString::fromUtf8(t->track_languagecode);
 
         status = 0;
     }
 
     return status;
 }
+
+/* ************************************************************************** */
 
 int textExport::generateExportDatas_json(MediaFile_t &media, QString &exportDatas, bool detailed)
 {
@@ -375,6 +401,8 @@ int textExport::generateExportDatas_json(MediaFile_t &media, QString &exportData
     return status;
 }
 
+/* ************************************************************************** */
+
 int textExport::generateExportDatas_xml(MediaFile_t &media, QString &exportDatas, bool detailed)
 {
     int status = 1;
@@ -387,6 +415,8 @@ int textExport::generateExportDatas_xml(MediaFile_t &media, QString &exportDatas
 
     return status;
 }
+
+/* ************************************************************************** */
 
 int textExport::generateExportMapping_xml(MediaFile_t &media, QString &exportDatas)
 {
@@ -406,7 +436,7 @@ int textExport::generateExportMapping_xml(MediaFile_t &media, QString &exportDat
     // Load XML file (fallback from file path / DEPRECATED)
     if (status == 1)
     {
-        filename = "/tmp/" + QString::fromLocal8Bit(media.file_name) + "_mapped.xml";
+        filename = "/tmp/" + QString::fromUtf8(media.file_name) + "_mapped.xml";
         xmlMapFile.setFileName(filename);
 
         if (xmlMapFile.exists() == false ||
@@ -425,3 +455,5 @@ int textExport::generateExportMapping_xml(MediaFile_t &media, QString &exportDat
 
     return status;
 }
+
+/* ************************************************************************** */

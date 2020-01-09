@@ -22,11 +22,14 @@
 
 #ifndef MINIVIDEO_TEXTEXPORT_H
 #define MINIVIDEO_TEXTEXPORT_H
+/* ************************************************************************** */
 
 // minivideo library
 #include "minivideo_mediafile.h"
 
 #include <QString>
+
+/* ************************************************************************** */
 
 typedef enum TextExportFormat_e
 {
@@ -48,4 +51,5 @@ public:
     static int generateExportMapping_xml(MediaFile_t &media, QString &exportDatas);
 };
 
+/* ************************************************************************** */
 #endif // MINIVIDEO_TEXTEXPORT_H

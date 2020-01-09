@@ -21,7 +21,6 @@
  */
 
 #include "minivideo_utils_qt.h"
-
 #include "minivideo_fourcc.h"
 
 #include <cstdint>
@@ -152,6 +151,8 @@ QString getTimestampSmtpeString(const uint64_t timestamp, const double framerate
     return timestamp_qstr;
 }
 
+/* ************************************************************************** */
+
 QString getSizeString(const int64_t size)
 {
     QString size_qstr;
@@ -164,21 +165,21 @@ QString getSizeString(const int64_t size)
         }
         else if (size < 1048576) // < 1 MiB
         {
-            size_qstr = QString::number(size / 1024.0, 'f', 2) + " KiB  /  "
-                      + QString::number(size / 1000.0, 'f', 2) + " KB  /  "
-                      + QString::number(size) + " bytes";
+            size_qstr = QString::number(size / 1000.0, 'f', 2) + " KB  /  "
+                      + QString::number(size / 1024.0, 'f', 2) + " KiB  ("
+                      + QString::number(size) + " bytes)";
         }
         else if (size < 1073741824) // < 1 GiB
         {
-            size_qstr = QString::number(size / 1024.0 / 1024.0, 'f', 2) + " MiB  /  "
-                      + QString::number(size / 1000.0 / 1000.0, 'f', 2) + " MB  /  "
-                      + QString::number(size) + " bytes";
+            size_qstr = QString::number(size / 1000.0 / 1000.0, 'f', 2) + " MB  /  "
+                      + QString::number(size / 1024.0 / 1024.0, 'f', 2) + " MiB  ("
+                      + QString::number(size) + " bytes)";
         }
         else // < 1 GiB
         {
-            size_qstr = QString::number(size / 1024.0 / 1024.0 / 1024.0, 'f', 2) + " GiB  /  "
-                      + QString::number(size / 1000.0 / 1000.0 / 1000.0, 'f', 2) + " GB  /  "
-                      + QString::number(size) + " bytes";
+            size_qstr = QString::number(size / 1000.0 / 1000.0 / 1000.0, 'f', 2) + " GB  /  "
+                      + QString::number(size / 1024.0 / 1024.0 / 1024.0, 'f', 2) + " GiB  ("
+                      + QString::number(size) + " bytes)";
         }
     }
     else
@@ -190,6 +191,87 @@ QString getSizeString(const int64_t size)
 
     return size_qstr;
 }
+
+QString getTrackSizeString(const MediaStream_t *track, const int64_t file_size, const bool detailed)
+{
+    QString size_qstr;
+
+    if (track)
+    {
+        quint64 size_int = track->stream_size;
+
+        if (track->stream_size > 0)
+        {
+            if (track->stream_size < 1024) // < 1 KiB
+            {
+                size_qstr = QString::number(track->stream_size) + " bytes";
+            }
+            else if (track->stream_size < 1048576) // < 1 MiB
+            {
+                if (detailed)
+                {
+                    size_qstr = QString::number(size_int / 1000.0, 'f', 2) + " KB  /  "
+                              + QString::number(size_int / 1024.0, 'f', 2) + " KiB  ("
+                              + QString::number(size_int) + " bytes)";
+                }
+                else
+                {
+                    size_qstr = QString::number(size_int / 1000.0, 'f', 2) + " KB";
+                }
+            }
+            else if (track->stream_size < 1073741824) // < 1 GiB
+            {
+                if (detailed)
+                {
+                    size_qstr = QString::number(size_int / 1000.0 / 1000.0, 'f', 2) + " MB  /  "
+                              + QString::number(size_int / 1024.0 / 1024.0, 'f', 2) + " MiB  ("
+                              + QString::number(size_int) + " bytes)";
+                }
+                else
+                {
+                    size_qstr = QString::number(size_int / 1000.0 / 1000.0, 'f', 2) + " MB";
+                }
+            }
+            else // > 1 GiB
+            {
+                if (detailed)
+                {
+                    size_qstr = QString::number(size_int / 1000.0 / 1000.0 / 1000.0, 'f', 2) + " GB  /  "
+                              + QString::number(size_int / 1024.0 / 1024.0 / 1024.0, 'f', 2) + " GiB  ("
+                              + QString::number(size_int) + " bytes)";
+                }
+                else
+                {
+                    size_qstr = QString::number(size_int / 1000.0 / 1000.0 / 1000.0, 'f', 2) + " GB";
+                }
+            }
+
+            // Percentage
+            double sizepercent = (static_cast<double>(size_int) / static_cast<double>(file_size)) * 100.0;
+
+            if (sizepercent > 100)
+                size_qstr += " (ERR)";
+            else if (sizepercent < 0.01)
+                size_qstr += " (~0.01%)";
+            else
+                size_qstr += " (" + QString::number(sizepercent, 'g', 3) + " %)";
+        }
+        else
+        {
+            size_qstr += "0 bytes";
+        }
+
+        //qDebug() << "getTrackSizeString(" << size_int << ") >" << size_qstr;
+    }
+    else
+    {
+        size_qstr = QObject::tr("NULL track size");
+    }
+
+    return size_qstr;
+}
+
+/* ************************************************************************** */
 
 QString getTrackTypeString(const MediaStream_t *track)
 {
@@ -235,77 +317,34 @@ QString getTrackTypeString(const MediaStream_t *track)
     return type_qstr;
 }
 
-QString getTrackSizeString(const MediaStream_t *track, const int64_t file_size, const bool detailed)
+QString getSampleTypeString(const unsigned sampleType)
 {
-    QString size_qstr;
+    QString sample_type_qstr;
 
-    if (track)
-    {
-        quint64 size_int = track->stream_size;
-
-        if (track->stream_size > 0)
-        {
-            if (track->stream_size < 1024) // < 1 KiB
-            {
-                size_qstr = QString::number(track->stream_size) + " bytes";
-            }
-            else if (track->stream_size < 1048576) // < 1 MiB
-            {
-                if (detailed)
-                {
-                    size_qstr = QString::number(size_int / 1024.0, 'f', 2) + " KiB  /  "
-                              + QString::number(size_int / 1000.0, 'f', 2) + " KB  ("
-                              + QString::number(size_int) + " bytes)";
-                }
-                else
-                    size_qstr = QString::number(size_int / 1024.0, 'f', 2) + " KiB";
-            }
-            else if (track->stream_size < 1073741824) // < 1 GiB
-            {
-                if (detailed)
-                {
-                    size_qstr = QString::number(size_int / 1024.0 / 1024.0, 'f', 2) + " MiB  /  "
-                              + QString::number(size_int / 1000.0 / 1000.0, 'f', 2) + " MB  ("
-                              + QString::number(size_int) + " bytes)";
-                }
-                else
-                    size_qstr = QString::number(size_int / 1024.0 / 1024.0, 'f', 2) + " MiB";
-            }
-            else // > 1 GiB
-            {
-                if (detailed)
-                {
-                    size_qstr = QString::number(size_int / 1024.0 / 1024.0 / 1024.0, 'f', 2) + " GiB  /  "
-                              + QString::number(size_int / 1000.0 / 1000.0 / 1000.0, 'f', 2) + " GB  ("
-                              + QString::number(size_int) + " bytes)";
-                }
-                else
-                    size_qstr = QString::number(size_int / 1024.0 / 1024.0 / 1024.0, 'f', 2) + " GiB";
-            }
-
-            // Percentage
-            double sizepercent = (static_cast<double>(size_int) / static_cast<double>(file_size)) * 100.0;
-
-            if (sizepercent > 100)
-                size_qstr += " (ERR)";
-            else if (sizepercent < 0.01)
-                size_qstr += " (~0.01%)";
-            else
-                size_qstr += " (" + QString::number(sizepercent, 'g', 3) + " %)";
-        }
-        else
-        {
-            size_qstr += "0 bytes";
-        }
-
-        //qDebug() << "getTrackSizeString(" << size_int << ") >" << size_qstr;
-    }
+    if (sampleType == sample_AUDIO)
+        sample_type_qstr = QObject::tr("Audio sample");
+    else if (sampleType == sample_AUDIO_TAG)
+        sample_type_qstr = QObject::tr("Audio tag");
+    else if (sampleType == sample_VIDEO)
+        sample_type_qstr = QObject::tr("Video sample");
+    else if (sampleType == sample_VIDEO_SYNC)
+        sample_type_qstr = QObject::tr("Video sync sample");
+    else if (sampleType == sample_VIDEO_PARAM)
+        sample_type_qstr = QObject::tr("Video parameter");
+    else if (sampleType == sample_TEXT)
+        sample_type_qstr = QObject::tr("Text sample");
+    else if (sampleType == sample_TEXT_FILE)
+        sample_type_qstr = QObject::tr("Text file");
+    else if (sampleType == sample_RAW_DATA)
+        sample_type_qstr = QObject::tr("RAW datas");
+    else if (sampleType == sample_TMCD)
+        sample_type_qstr = QObject::tr("TimeCode Reference");
+    else if (sampleType == sample_OTHER)
+        sample_type_qstr = QObject::tr("Other sample");
     else
-    {
-        size_qstr = QObject::tr("NULL track size");
-    }
+        sample_type_qstr = QObject::tr("Unknown sample type");
 
-    return size_qstr;
+    return sample_type_qstr;
 }
 
 QString getAspectRatioString(const unsigned x, const unsigned y, const bool detailed)
@@ -463,8 +502,6 @@ QString getBitrateModeString(const BitrateMode_e bitrateMode)
         bitrate_mode_qstr = "ABR";
     else if (bitrateMode == BITRATE_CVBR)
         bitrate_mode_qstr = "CVBR";
-    else
-        bitrate_mode_qstr = QObject::tr("Unknown");
 
     return bitrate_mode_qstr;
 }
@@ -477,8 +514,6 @@ QString getFramerateModeString(const FramerateMode_e framerateMode)
         framerate_mode_qstr = "CFR";
     else if (framerateMode == FRAMERATE_VFR)
         framerate_mode_qstr = "VFR";
-    else
-        framerate_mode_qstr = QObject::tr("Unknown");
 
     return framerate_mode_qstr;
 }
@@ -597,11 +632,15 @@ QString getStereoModeString(const StereoMode_e stereoMode)
     return channel_mode_qstr;
 }
 
+/* ************************************************************************** */
+
 QString getFourccString(const unsigned fourcc)
 {
     char fcc_str[5];
     return QString::fromUtf8(getFccString_le(fourcc, fcc_str));
 }
+
+/* ************************************************************************** */
 
 QString getLanguageString(const char *languageCode)
 {
@@ -753,36 +792,6 @@ QString getLanguageString(const char *languageCode)
     }
 
     return langage_qstr;
-}
-
-QString getSampleTypeString(const unsigned sampleType)
-{
-    QString sample_type_qstr;
-
-    if (sampleType == sample_AUDIO)
-        sample_type_qstr = QObject::tr("Audio sample");
-    else if (sampleType == sample_AUDIO_TAG)
-        sample_type_qstr = QObject::tr("Audio tag");
-    else if (sampleType == sample_VIDEO)
-        sample_type_qstr = QObject::tr("Video sample");
-    else if (sampleType == sample_VIDEO_SYNC)
-        sample_type_qstr = QObject::tr("Video sync sample");
-    else if (sampleType == sample_VIDEO_PARAM)
-        sample_type_qstr = QObject::tr("Video parameter");
-    else if (sampleType == sample_TEXT)
-        sample_type_qstr = QObject::tr("Text sample");
-    else if (sampleType == sample_TEXT_FILE)
-        sample_type_qstr = QObject::tr("Text file");
-    else if (sampleType == sample_RAW_DATA)
-        sample_type_qstr = QObject::tr("RAW datas");
-    else if (sampleType == sample_TMCD)
-        sample_type_qstr = QObject::tr("TimeCode Reference");
-    else if (sampleType == sample_OTHER)
-        sample_type_qstr = QObject::tr("Other sample");
-    else
-        sample_type_qstr = QObject::tr("Unknown sample type");
-
-    return sample_type_qstr;
 }
 
 /* ************************************************************************** */
