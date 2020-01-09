@@ -4,7 +4,7 @@
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
 
-Get detailed informations about your audio, video and pictures files!
+Get detailed informations about your audio, video and pictures files with MiniVideo Infos!
 
 ### Features
 
