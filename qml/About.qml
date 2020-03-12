@@ -97,50 +97,46 @@ Item {
                 }
             }
 */
-            Item {
-                height: 48
+            Row {
+                id: websiteANDgithub
+                height: 56
+
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                Row {
-                    id: websiteANDgithub
-                    anchors.horizontalCenter: parent.horizontalCenter
+                //visible: isMobile
+                spacing: 16
+
+                onWidthChanged: {
+                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
+                    if (ww > 0) { websiteBtn.width = ww ; supportBtn.width = ww }
+                }
+
+                ButtonWireframeImage {
+                    id: websiteBtn
+                    width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    spacing: 16
+                    text: qsTr("WEBSITE")
+                    imgSize: 26
+                    fullColor: true
+                    primaryColor: Theme.colorHeaderContent
+                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                    onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
+                }
+                ButtonWireframeImage {
+                    id: supportBtn
+                    width: 180
+                    anchors.verticalCenter: parent.verticalCenter
 
-                    Component.onCompleted: {
-                        var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
-                        if (ww > 0) {
-                            websiteBtn.width = ww
-                            supportBtn.width = ww
-                        }
-                    }
-
-                    ButtonWireframeImage {
-                        id: websiteBtn
-                        width: 180
-
-                        imgSize: 26
-                        fullColor: true
-                        primaryColor: Theme.colorHeaderContent
-                        text: qsTr("WEBSITE")
-                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
-                        onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
-                    }
-                    ButtonWireframeImage {
-                        id: supportBtn
-                        width: 180
-
-                        imgSize: 20
-                        fullColor: true
-                        primaryColor: Theme.colorHeaderContent
-                        text: qsTr("SUPPORT")
-                        source: "qrc:/assets/icons_material/outline-mail_outline-24px.svg"
-                        onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
-                    }
+                    text: qsTr("SUPPORT")
+                    imgSize: 20
+                    fullColor: true
+                    primaryColor: Theme.colorHeaderContent
+                    source: "qrc:/assets/icons_material/outline-mail_outline-24px.svg"
+                    onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
                 }
             }
 
@@ -158,7 +154,7 @@ Item {
                     height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.verticalCenter: description.verticalCenter
+                    anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorText
@@ -166,12 +162,11 @@ Item {
 
                 TextArea {
                     id: description
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
                     anchors.left: parent.left
                     anchors.leftMargin: 40
                     anchors.right: parent.right
                     anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     text: qsTr("Get detailed informations about all kind of multimedia files!")

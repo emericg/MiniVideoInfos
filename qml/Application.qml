@@ -396,7 +396,7 @@ ApplicationWindow {
             color: Theme.colorTabletmenuContent
         }
 
-        visible: isTablet && (appContent.state != "Tutorial" && appContent.state != "DeviceThermo")
+        visible: isTablet && (appContent.state != "Tutorial" && appContent.state != "MediaInfos")
 
         Row {
             id: tabletMenuScreen
@@ -418,7 +418,7 @@ ApplicationWindow {
 
                 menuText: qsTr("Medias")
                 selected: (appContent.state === "MediaList")
-                source: "qrc:/assets/logos/logo.svg"
+                source: "qrc:/assets/icons_fontawesome/photo-video-duotone"
                 onClicked: appContent.state = "MediaList"
             }
             ItemMenuButton {
@@ -448,76 +448,6 @@ ApplicationWindow {
                 onClicked: appContent.state = "About"
             }
         }
-/*
-        Row {
-            id: tabletMenuDevice
-            spacing: 24
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-
-            signal deviceDatasButtonClicked()
-            signal deviceHistoryButtonClicked()
-            signal deviceSettingsButtonClicked()
-
-            visible: (appContent.state === "DeviceSensor")
-
-            function setActiveDeviceDatas() {
-                menuDeviceDatas.selected = true
-                menuDeviceHistory.selected = false
-                menuDeviceSettings.selected = false
-            }
-            function setActiveDeviceHistory() {
-                menuDeviceDatas.selected = false
-                menuDeviceHistory.selected = true
-                menuDeviceSettings.selected = false
-            }
-            function setActiveDeviceSettings() {
-                menuDeviceDatas.selected = false
-                menuDeviceHistory.selected = false
-                menuDeviceSettings.selected = true
-            }
-
-            ItemMenuButton {
-                id: menuDeviceDatas
-                imgSize: 24
-
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("My plants")
-                selected: (appContent.state === "DeviceSensor" && appContent.state === "MediaList")
-                source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
-                onClicked: tabletMenuDevice.deviceDatasButtonClicked()
-            }
-            ItemMenuButton {
-                id: menuDeviceHistory
-                imgSize: 24
-
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("History")
-                selected: (appContent.state === "About")
-                source: "qrc:/assets/icons_material/baseline-date_range-24px.svg"
-                onClicked: tabletMenuDevice.deviceHistoryButtonClicked()
-            }
-            ItemMenuButton {
-                id: menuDeviceSettings
-                imgSize: 24
-
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
-
-                menuText: qsTr("Settings")
-                selected: (appContent.state === "About")
-                source: "qrc:/assets/icons_material_medias/baseline-iso-24px.svg"
-                onClicked: tabletMenuDevice.deviceSettingsButtonClicked()
-            }
-        }
-*/
     }
 
     ////////////////
