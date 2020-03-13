@@ -85,8 +85,10 @@ Item {
 
             visible: (limitMin > 0 && limitMin > valueMin)
             x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
-            color: Theme.colorHighContrast
-            opacity: 0.5
+            color: (limitMin < value) ? "white" : "black"
+            opacity: (limitMin < value) ? 0.66 : 0.33
+
+            Behavior on x { NumberAnimation { duration: 333 } }
         }
         Rectangle {
             id: item_limit_high
@@ -96,8 +98,10 @@ Item {
 
             visible: (limitMax > 0 && limitMax < valueMax)
             x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
-            color: Theme.colorHighContrast
-            opacity: 0.5
+            color: (limitMin < value) ? "white" : "black"
+            opacity: (limitMax < value) ? 0.66 : 0.33
+
+            Behavior on x { NumberAnimation { duration: 333 } }
         }
 
         Text {
