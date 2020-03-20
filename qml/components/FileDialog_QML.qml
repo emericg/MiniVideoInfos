@@ -247,7 +247,7 @@ Rectangle {
                     if (fileIsDir) {
                         if (fileName === "DCIM" || fileName === "Download" ||
                             fileName === "Movies" || fileName === "Pictures" || fileName === "Music")
-                            source = "qrc:/assets/icons_material/baseline-folder_open-24px.svg"
+                            source = "qrc:/assets/icons_material/baseline-folder-24px.svg"
                         else
                             source = "qrc:/assets/icons_material/outline-folder-24px.svg"
                     } else {
