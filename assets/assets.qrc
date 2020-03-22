@@ -53,41 +53,41 @@
         <file>icons_material/duotone-pin_drop-24px.svg</file>
         <file>icons_material/duotone-style-24px.svg</file>
         <file>icons_material/duotone-tune-24px.svg</file>
-        <file>icons_material_medias/duotone-av_timer-24px.svg</file>
-        <file>icons_material_medias/duotone-aspect_ratio-24px.svg</file>
-        <file>icons_material_medias/duotone-spherical-24px.svg</file>
-        <file>icons_material_medias/duotone-speaker-24px.svg</file>
+        <file>icons_material_media/duotone-av_timer-24px.svg</file>
+        <file>icons_material_media/duotone-aspect_ratio-24px.svg</file>
+        <file>icons_material_media/duotone-spherical-24px.svg</file>
+        <file>icons_material_media/duotone-speaker-24px.svg</file>
 
-        <file>icons_material_medias/baseline-360-24px.svg</file>
-        <file>icons_material_medias/baseline-4k-24px.svg</file>
-        <file>icons_material_medias/baseline-av_timer-24px.svg</file>
-        <file>icons_material_medias/baseline-broken_image-24px.svg</file>
-        <file>icons_material_medias/baseline-camera-24px.svg</file>
-        <file>icons_material_medias/baseline-crop_16_9-24px.svg</file>
-        <file>icons_material_medias/baseline-crop_portrait-24px.svg</file>
-        <file>icons_material_medias/baseline-crop_square-24px.svg</file>
-        <file>icons_material_medias/baseline-exposure-24px.svg</file>
-        <file>icons_material_medias/baseline-gradient-24px.svg</file>
-        <file>icons_material_medias/baseline-hd-24px.svg</file>
-        <file>icons_material_medias/baseline-high_quality-24px.svg</file>
-        <file>icons_material_medias/baseline-iso-24px.svg</file>
-        <file>icons_material_medias/baseline-local_movies-24px.svg</file>
-        <file>icons_material_medias/baseline-photo-24px.svg</file>
-        <file>icons_material_medias/baseline-music-24px.svg</file>
-        <file>icons_material_medias/baseline-photo_camera-24px.svg</file>
-        <file>icons_material_medias/baseline-score-24px.svg</file>
-        <file>icons_material_medias/baseline-settings_overscan-24px.svg</file>
-        <file>icons_material_medias/baseline-slideshow-24px.svg</file>
-        <file>icons_material_medias/baseline-slow_motion_video-24px.svg</file>
-        <file>icons_material_medias/baseline-surround_sound-24px.svg</file>
-        <file>icons_material_medias/baseline-volume_up-24px.svg</file>
-        <file>icons_material_medias/outline-4k-24px.svg</file>
-        <file>icons_material_medias/outline-camera-24px.svg</file>
-        <file>icons_material_medias/outline-insert_music-24px.svg</file>
-        <file>icons_material_medias/outline-insert_photo-24px.svg</file>
-        <file>icons_material_medias/outline-local_movies-24px.svg</file>
-        <file>icons_material_medias/outline-photo_camera-24px.svg</file>
-        <file>icons_material_medias/outline-speaker-24px.svg</file>
+        <file>icons_material_media/baseline-360-24px.svg</file>
+        <file>icons_material_media/baseline-4k-24px.svg</file>
+        <file>icons_material_media/baseline-av_timer-24px.svg</file>
+        <file>icons_material_media/baseline-broken_image-24px.svg</file>
+        <file>icons_material_media/baseline-camera-24px.svg</file>
+        <file>icons_material_media/baseline-crop_16_9-24px.svg</file>
+        <file>icons_material_media/baseline-crop_portrait-24px.svg</file>
+        <file>icons_material_media/baseline-crop_square-24px.svg</file>
+        <file>icons_material_media/baseline-exposure-24px.svg</file>
+        <file>icons_material_media/baseline-gradient-24px.svg</file>
+        <file>icons_material_media/baseline-hd-24px.svg</file>
+        <file>icons_material_media/baseline-high_quality-24px.svg</file>
+        <file>icons_material_media/baseline-iso-24px.svg</file>
+        <file>icons_material_media/baseline-local_movies-24px.svg</file>
+        <file>icons_material_media/baseline-photo-24px.svg</file>
+        <file>icons_material_media/baseline-music-24px.svg</file>
+        <file>icons_material_media/baseline-photo_camera-24px.svg</file>
+        <file>icons_material_media/baseline-score-24px.svg</file>
+        <file>icons_material_media/baseline-settings_overscan-24px.svg</file>
+        <file>icons_material_media/baseline-slideshow-24px.svg</file>
+        <file>icons_material_media/baseline-slow_motion_video-24px.svg</file>
+        <file>icons_material_media/baseline-surround_sound-24px.svg</file>
+        <file>icons_material_media/baseline-volume_up-24px.svg</file>
+        <file>icons_material_media/outline-4k-24px.svg</file>
+        <file>icons_material_media/outline-camera-24px.svg</file>
+        <file>icons_material_media/outline-insert_music-24px.svg</file>
+        <file>icons_material_media/outline-insert_photo-24px.svg</file>
+        <file>icons_material_media/outline-local_movies-24px.svg</file>
+        <file>icons_material_media/outline-photo_camera-24px.svg</file>
+        <file>icons_material_media/outline-speaker-24px.svg</file>
 
         <file>icons_fontawesome/photo-video-duotone.svg</file>
     </qresource>

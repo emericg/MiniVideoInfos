@@ -71,7 +71,7 @@ ScrollView {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_medias/outline-photo_camera-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-photo_camera-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -179,7 +179,7 @@ ScrollView {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_medias/baseline-exposure-24px.svg"
+                    source: "qrc:/assets/icons_material_media/baseline-exposure-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -496,7 +496,7 @@ ScrollView {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left

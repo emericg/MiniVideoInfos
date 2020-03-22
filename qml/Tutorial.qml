@@ -50,7 +50,7 @@ Rectangle {
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
-                    text: qsTr("<b>MiniVideo Infos</b> extract a maximum of informations and metadatas from <b>multimedia files</b>.")
+                    text: qsTr("<b>MiniVideo Infos</b> extract a maximum of informations and metadata from <b>multimedia files</b>.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     font.pixelSize: 18
                     color: Theme.colorIcon
@@ -172,7 +172,7 @@ Rectangle {
                     ImageSvg {
                         width: 40
                         height: width
-                        source: "qrc:/assets/icons_material_medias/outline-speaker-24px.svg"
+                        source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
                         color: Theme.colorIcon
                     }
                     Text {

@@ -323,7 +323,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Preview medias")
+                    text: qsTr("Preview media")
                     font.pixelSize: 16
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -350,7 +350,7 @@ Item {
                     anchors.leftMargin: 16
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
                 }
             }
 

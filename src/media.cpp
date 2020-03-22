@@ -84,9 +84,9 @@ Media::Media(const QString &path, QObject *parent)
         m_date_file_m = fi.lastModified();
     }
 
-    if (!m_valid) m_valid = getMetadatasFromVideo();
-    if (!m_valid) m_valid = getMetadatasFromPicture();
-    if (!m_valid || (m_valid && tracksVideo.length() == 0 && tracksAudio.length() > 0)) m_valid = getMetadatasFromAudio();
+    if (!m_valid) m_valid = getMetadataFromVideo();
+    if (!m_valid) m_valid = getMetadataFromPicture();
+    if (!m_valid || (m_valid && tracksVideo.length() == 0 && tracksAudio.length() > 0)) m_valid = getMetadataFromAudio();
 }
 
 Media::~Media()
@@ -111,7 +111,7 @@ static void show_tag(ExifData *d, ExifIfd ifd, ExifTag tag)
 }
 #endif // ENABLE_LIBEXIF
 */
-bool Media::getMetadatasFromPicture()
+bool Media::getMetadataFromPicture()
 {
     bool status = false;
 
@@ -166,7 +166,7 @@ bool Media::getMetadatasFromPicture()
 
             // ex: DateTime: 2018:08:10 10:37:08
             exif_entry_get_value(entry, buf, sizeof(buf));
-            m_date_metadatas = QDateTime::fromString(buf, "yyyy:MM:dd hh:mm:ss");
+            m_date_metadata = QDateTime::fromString(buf, "yyyy:MM:dd hh:mm:ss");
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_X_DIMENSION);
@@ -552,9 +552,9 @@ bool Media::getMetadatasFromPicture()
     return status;
 }
 
-bool Media::getMetadatasFromAudio()
+bool Media::getMetadataFromAudio()
 {
-    //qDebug() << "Media::getMetadatasFromAudio()";
+    //qDebug() << "Media::getMetadataFromAudio()";
     bool status = false;
 
     if (m_path.isEmpty())
@@ -656,9 +656,9 @@ bool Media::getMetadatasFromAudio()
     return status;
 }
 
-bool Media::getMetadatasFromVideo()
+bool Media::getMetadataFromVideo()
 {
-    //qDebug() << "Media::getMetadatasFromVideo()";
+    //qDebug() << "Media::getMetadataFromVideo()";
     bool status = false;
 
     if (m_path.isEmpty())
@@ -696,7 +696,7 @@ bool Media::getMetadatasFromVideo()
 
         m_duration = static_cast<qint64>(m_media->duration);
 
-        m_date_metadatas = QDateTime::fromTime_t(m_media->creation_time);
+        m_date_metadata = QDateTime::fromTime_t(m_media->creation_time);
 
         for (unsigned i = 0; i < m_media->tracks_audio_count; i++)
         {
@@ -898,7 +898,7 @@ QDateTime Media::getDateFile() const
 
 QDateTime Media::getDateMetadata() const
 {
-    return m_date_metadatas;
+    return m_date_metadata;
 }
 
 QDateTime Media::getDateGPS() const
@@ -911,14 +911,14 @@ QDateTime Media::getDateGPS() const
 
 QString Media::getExportString()
 {
-    QString exportDatas;
+    QString exportData;
 
     if (m_media)
     {
-        textExport::generateExportDatas_text(*m_media, exportDatas, true);
+        textExport::generateExportData_text(*m_media, exportData, true);
     }
 
-    return exportDatas;
+    return exportData;
 }
 
 bool Media::saveExportString()
@@ -927,9 +927,9 @@ bool Media::saveExportString()
 
     if (m_media)
     {
-        QString exportDatas;
-        textExport::generateExportDatas_text(*m_media, exportDatas, true);
-        if (!exportDatas.isEmpty())
+        QString exportData;
+        textExport::generateExportData_text(*m_media, exportData, true);
+        if (!exportData.isEmpty())
         {
             QString ppp = m_file_folder + m_file_name + "_infos.txt";
             QFile exportFile;
@@ -939,7 +939,7 @@ bool Media::saveExportString()
                 if (exportFile.open(QIODevice::WriteOnly) == true &&
                     exportFile.isWritable() == true)
                 {
-                    if (exportFile.write(exportDatas.toLocal8Bit()) == exportDatas.toLocal8Bit().size())
+                    if (exportFile.write(exportData.toLocal8Bit()) == exportData.toLocal8Bit().size())
                     {
                         status = true;
                     }

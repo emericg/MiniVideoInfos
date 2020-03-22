@@ -601,7 +601,7 @@ double MediaTrackQml::getFrameDuration() const
 
 /* ************************************************************************** */
 
-Q_INVOKABLE void MediaTrackQml::getBitrateDatas(QLineSeries *bitrateData)
+Q_INVOKABLE void MediaTrackQml::getBitrateData(QLineSeries *bitrateData)
 {
     if (!bitrateData) return;
 
@@ -621,7 +621,7 @@ Q_INVOKABLE void MediaTrackQml::getBitrateDatas(QLineSeries *bitrateData)
     }
 }
 
-Q_INVOKABLE void MediaTrackQml::getBitrateDatasFps(QLineSeries *bitrateData, float fpfs)
+Q_INVOKABLE void MediaTrackQml::getBitrateDataFps(QLineSeries *bitrateData, float fpfs)
 {
     Q_UNUSED(fpfs)
     if (!bitrateData) return;

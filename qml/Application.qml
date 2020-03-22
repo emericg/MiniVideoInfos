@@ -319,7 +319,7 @@ ApplicationWindow {
         onEntered: {
             if (drag.hasUrls) {
                 dropAreaIndicator.color = Theme.colorRed
-                dropAreaImage.source = "qrc:/assets/icons_material_medias/baseline-broken_image-24px.svg"
+                dropAreaImage.source = "qrc:/assets/icons_material_media/baseline-broken_image-24px.svg"
                 dropAreaIndicator.visible = true
                 dropAreaIndicator.opacity = 1
 
@@ -409,14 +409,14 @@ ApplicationWindow {
                       appContent.state === "About")
 
             ItemMenuButton {
-                id: menuMedias
+                id: menuMedia
                 imgSize: 24
 
                 colorBackground: Theme.colorTabletmenuContent
                 colorContent: Theme.colorTabletmenuHighlight
                 highlightMode: "text"
 
-                menuText: qsTr("Medias")
+                menuText: qsTr("Media")
                 selected: (appContent.state === "MediaList")
                 source: "qrc:/assets/icons_fontawesome/photo-video-duotone"
                 onClicked: appContent.state = "MediaList"

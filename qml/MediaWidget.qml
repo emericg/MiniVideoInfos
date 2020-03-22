@@ -14,40 +14,18 @@ Item {
 
     property bool singleColumn: true
     property bool selected: false
-    /*
-    Connections {
-        target: mediaItem
-        onStatusUpdated: updateBoxDatas()
-        onSensorUpdated: updateSensorDatas()
-        onDatasUpdated: updateBoxDatas()
-        onLimitsUpdated: updateBoxDatas()
-    }
-    Connections {
-        target: Theme
-         onCurrentThemeChanged: {
-             updateSensorDatas()
-             updateBoxDatas()
-         }
-    }
-    Connections {
-        target: settingsManager
-        onBigWidgetChanged: {
-            updateSensorDatas()
-            updateBoxDatas()
-        }
-    }
-*/
-    Component.onCompleted: initBoxDatas()
 
-    function initBoxDatas() {
+    Component.onCompleted: initBoxData()
+
+    function initBoxData() {
         if (mediaItem.fileType === 1)
-            imageMedia.source = "qrc:/assets/icons_material_medias/outline-insert_music-24px.svg"
+            imageMedia.source = "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
         else if (mediaItem.fileType === 2)
-            imageMedia.source = "qrc:/assets/icons_material_medias/outline-local_movies-24px.svg"
+            imageMedia.source = "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
         else if (mediaItem.fileType === 3)
-            imageMedia.source = "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg" // icons_material_medias/baseline-photo-24px.svg
+            imageMedia.source = "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg" // icons_material_media/baseline-photo-24px.svg
         else
-            imageMedia.source = "qrc:/assets/icons_material_medias/baseline-broken_image-24px.svg"
+            imageMedia.source = "qrc:/assets/icons_material_media/baseline-broken_image-24px.svg"
 
         mediaFilename.text = mediaItem.name + "." + mediaItem.ext
         mediaPath.text = mediaItem.path

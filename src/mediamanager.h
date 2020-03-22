@@ -1,7 +1,7 @@
 /*!
  * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
  *
- * This file is part of MiniVideo.
+ * This file is part of MiniVideoInfos.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,39 +17,59 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \author    Emeric Grange <emeric.grange@gmail.com>
- * \date      2017
+ * \date      2019
  */
 
-#ifndef MINIVIDEO_TEXTEXPORT_H
-#define MINIVIDEO_TEXTEXPORT_H
+#ifndef MEDIA_MANAGER_H
+#define MEDIA_MANAGER_H
 /* ************************************************************************** */
 
-// minivideo library
-#include "minivideo_mediafile.h"
+#include "settingsmanager.h"
 
-#include <QString>
+class Media;
+
+#include <QObject>
+#include <QVariant>
+#include <QList>
 
 /* ************************************************************************** */
 
-typedef enum TextExportFormat_e
+/*!
+ * \brief The MediaManager class
+ */
+class MediaManager: public QObject
 {
-    EXPORT_TEXT  = 0,
-    EXPORT_XML   = 1,
-    EXPORT_JSON  = 2,
+    Q_OBJECT
 
-} TextExportFormat_e;
+    Q_PROPERTY(bool media READ areMediaAvailable NOTIFY mediaUpdated)
+    Q_PROPERTY(QVariant mediaList READ getMedia NOTIFY mediaUpdated)
 
-class textExport
-{
+    //Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
+
+    bool m_scanning = false;
+
+    QList<QObject*> m_media;
+
+    bool isScanning() const;
+
 public:
-    textExport();
-    ~textExport();
+    MediaManager();
+    ~MediaManager();
 
-    static int generateExportData_text(MediaFile_t &media, QString &exportData, bool detailed);
-    static int generateExportData_json(MediaFile_t &media, QString &exportData, bool detailed);
-    static int generateExportData_xml(MediaFile_t &media, QString &exportData, bool detailed);
-    static int generateExportMapping_xml(MediaFile_t &media, QString &exportData);
+    Q_INVOKABLE bool areMediaAvailable() const { return !m_media.empty(); }
+
+    QVariant getMedia() const { return QVariant::fromValue(m_media); }
+
+public slots:
+    bool openMedia(const QString &path);
+    void closeMedia(const QString &path);
+
+private slots:
+    //
+
+Q_SIGNALS:
+    void mediaUpdated();
 };
 
 /* ************************************************************************** */
-#endif // MINIVIDEO_TEXTEXPORT_H
+#endif // MEDIA_MANAGER_H

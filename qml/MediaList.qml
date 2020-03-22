@@ -13,18 +13,18 @@ Item {
     anchors.rightMargin: screenRightPadding
 
     Connections {
-        target: mediasManager
-        onMediasUpdated: {
-            if (mediasManager.areMediasAvailable()) {
+        target: mediaManager
+        onMediaUpdated: {
+            if (mediaManager.areMediaAvailable()) {
                 rectangleHeader.visible = true
                 rectangleHeader.height = 96
                 itemNoFile.visible = false
-                mediasView.visible = true
+                mediaView.visible = true
             } else {
                 rectangleHeader.visible = false
                 rectangleHeader.height = 0
                 itemNoFile.visible = true
-                mediasView.visible = false
+                mediaView.visible = false
             }
         }
     }
@@ -46,9 +46,9 @@ Item {
     function exitSelectionMode() {
         if (selectionList.length === 0) return;
 
-        for (var child in mediasView.contentItem.children) {
-            if (mediasView.contentItem.children[child].selected) {
-                mediasView.contentItem.children[child].selected = false;
+        for (var child in mediaView.contentItem.children) {
+            if (mediaView.contentItem.children[child].selected) {
+                mediaView.contentItem.children[child].selected = false;
             }
         }
 
@@ -58,18 +58,18 @@ Item {
     }
 /*
     function updateSelectedMedia() {
-        for (var child in mediasView.contentItem.children) {
-            if (mediasView.contentItem.children[child].selected) {
-                deviceManager.updateMedia(mediasView.contentItem.children[child].boxDevice.deviceAddress)
+        for (var child in mediaView.contentItem.children) {
+            if (mediaView.contentItem.children[child].selected) {
+                deviceManager.updateMedia(mediaView.contentItem.children[child].boxDevice.deviceAddress)
             }
         }
         exitSelectionMode()
     }
     function removeSelectedMedia() {
         var devicesAddr = [];
-        for (var child in mediasView.contentItem.children) {
-            if (mediasView.contentItem.children[child].selected) {
-                devicesAddr.push(mediasView.contentItem.children[child].boxDevice.deviceAddress)
+        for (var child in mediaView.contentItem.children) {
+            if (mediaView.contentItem.children[child].selected) {
+                devicesAddr.push(mediaView.contentItem.children[child].boxDevice.deviceAddress)
             }
         }
         for (var count = 0; count < devicesAddr.length; count++) {
@@ -95,9 +95,9 @@ Item {
     }
     function loadMedia2() {
         //console.log("loadMedia2() << " + pathToLoad)
-        if (mediasManager.openMedia(pathToLoad) === true) {
+        if (mediaManager.openMedia(pathToLoad) === true) {
             rectangleError.hideError()
-            screenMediaInfos.loadMediaInfos(mediasManager.mediasList[0])
+            screenMediaInfos.loadMediaInfos(mediaManager.mediaList[0])
             appContent.state = "MediaInfos"
             itemLoading.close()
         } else {
@@ -279,7 +279,7 @@ Item {
     ////////
 
     ListView {
-        id: mediasView
+        id: mediaView
         anchors.top: rectangleError.bottom
         anchors.topMargin: 0
         anchors.left: parent.left
@@ -290,7 +290,7 @@ Item {
         anchors.bottomMargin: 0
 
         visible: false
-        model: mediasManager.mediasList
+        model: mediaManager.mediaList
         delegate: MediaWidget { mediaItem: modelData; }
     }
 }

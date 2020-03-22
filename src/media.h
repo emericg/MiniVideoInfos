@@ -81,7 +81,7 @@ class Media: public QObject
     Q_PROPERTY(QDateTime dateMetadata READ getDateMetadata NOTIFY mediaUpdated)
     Q_PROPERTY(QDateTime dateGPS READ getDateGPS NOTIFY mediaUpdated)
 
-    // image/video metadatas
+    // image/video metadata
     Q_PROPERTY(unsigned width READ getWidth NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned height READ getHeight NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned depth READ getDepth NOTIFY mediaUpdated)
@@ -121,15 +121,15 @@ class Media: public QObject
     Q_PROPERTY(unsigned audioBitrate READ getAudioBitrate NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned audioSamplerate READ getAudioSamplerate NOTIFY mediaUpdated)
 
-    Q_PROPERTY(QString latitudeString READ getLatitudeStr NOTIFY metadatasUpdated)
-    Q_PROPERTY(QString longitudeString READ getLongitudeStr NOTIFY metadatasUpdated)
-    Q_PROPERTY(QString altitudeString READ getAltitudeStr NOTIFY metadatasUpdated)
-    Q_PROPERTY(double latitude READ getLatitude NOTIFY metadatasUpdated)
-    Q_PROPERTY(double longitude READ getLongitude NOTIFY metadatasUpdated)
-    Q_PROPERTY(double altitude READ getAltitude NOTIFY metadatasUpdated)
-    Q_PROPERTY(unsigned gpsDop READ getGpsDop NOTIFY metadatasUpdated)
-    Q_PROPERTY(unsigned gpsDiff READ getGpsDiff NOTIFY metadatasUpdated)
-    Q_PROPERTY(QString gpsVersion READ getGpsVersion NOTIFY metadatasUpdated)
+    Q_PROPERTY(QString latitudeString READ getLatitudeStr NOTIFY metadataUpdated)
+    Q_PROPERTY(QString longitudeString READ getLongitudeStr NOTIFY metadataUpdated)
+    Q_PROPERTY(QString altitudeString READ getAltitudeStr NOTIFY metadataUpdated)
+    Q_PROPERTY(double latitude READ getLatitude NOTIFY metadataUpdated)
+    Q_PROPERTY(double longitude READ getLongitude NOTIFY metadataUpdated)
+    Q_PROPERTY(double altitude READ getAltitude NOTIFY metadataUpdated)
+    Q_PROPERTY(unsigned gpsDop READ getGpsDop NOTIFY metadataUpdated)
+    Q_PROPERTY(unsigned gpsDiff READ getGpsDiff NOTIFY metadataUpdated)
+    Q_PROPERTY(QString gpsVersion READ getGpsVersion NOTIFY metadataUpdated)
 
     ////////
 
@@ -165,10 +165,10 @@ class Media: public QObject
 
     QDateTime m_date_file_c;
     QDateTime m_date_file_m;
-    QDateTime m_date_metadatas;
+    QDateTime m_date_metadata;
     QDateTime m_date_gps;
 
-    // GLOBAL metadatas
+    // GLOBAL metadata
     int orientation = 0;
     unsigned projection = 0;
     unsigned width = 0;
@@ -176,7 +176,7 @@ class Media: public QObject
     unsigned bpp = 0;
     bool alpha = false;
 
-    // IMAGE metadatas
+    // IMAGE metadata
     bool m_hasEXIF = false;
     unsigned m_exif_tag_found = 0;
     bool m_hasXMP = false;
@@ -196,14 +196,14 @@ class Media: public QObject
     bool flash = false;
     QString light_source;
 
-    // VIDEO metadatas
+    // VIDEO metadata
     QString vcodec;
     QString vtimecode;
     double vframerate = 0.0;
     unsigned vbitrate = 0;
     unsigned vbitratemode = 0;
 
-    // AUDIO metadatas
+    // AUDIO metadata
     QString acodec;
     unsigned achannels = 0;
     unsigned abitrate = 0;
@@ -225,7 +225,7 @@ class Media: public QObject
     QString tag_covertart_mime;
     QString tag_transcoded;
 
-    // GPS metadatas
+    // GPS metadata
     bool m_hasGPS = false;
     bool hasGPS() const { return m_hasGPS; }
     QString gps_version;
@@ -244,9 +244,9 @@ class Media: public QObject
     bool hasVideo() const { return (tracksVideo.length() > 0); }
     bool hasImage() const { return (m_type == Shared::FILE_PICTURE); }
 
-    bool getMetadatasFromPicture();
-    bool getMetadatasFromVideo();
-    bool getMetadatasFromAudio();
+    bool getMetadataFromPicture();
+    bool getMetadataFromVideo();
+    bool getMetadataFromAudio();
 
     QString getName() const { return m_file_name; }
     QString getFolder() const { return m_file_folder; }
@@ -325,7 +325,7 @@ class Media: public QObject
 */
 Q_SIGNALS:
     void mediaUpdated();
-    void metadatasUpdated();
+    void metadataUpdated();
 
 public:
     Media(const QString &path, QObject *parent = nullptr);

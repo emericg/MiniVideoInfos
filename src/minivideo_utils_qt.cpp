@@ -336,7 +336,7 @@ QString getSampleTypeString(const unsigned sampleType)
     else if (sampleType == sample_TEXT_FILE)
         sample_type_qstr = QObject::tr("Text file");
     else if (sampleType == sample_RAW_DATA)
-        sample_type_qstr = QObject::tr("RAW datas");
+        sample_type_qstr = QObject::tr("RAW data");
     else if (sampleType == sample_TMCD)
         sample_type_qstr = QObject::tr("TimeCode Reference");
     else if (sampleType == sample_OTHER)

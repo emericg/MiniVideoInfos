@@ -154,14 +154,14 @@ Rectangle {
                 }
 
                 ImageSvg {
-                    id: buttonMediasImg
+                    id: buttonMediaImg
                     width: 24
                     height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: screenLeftPadding + 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
                     color: Theme.colorText
                 }
                 Label {
@@ -169,7 +169,7 @@ Rectangle {
                     anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Medias")
+                    text: qsTr("Media")
                     font.pixelSize: 13
                     font.bold: true
                     color: Theme.colorText
@@ -430,7 +430,7 @@ Rectangle {
                     anchors.leftMargin: screenLeftPadding + 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Refresh sensors datas")
+                    text: qsTr("Refresh sensors data")
                     font.pixelSize: 13
                     font.bold: true
                     color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText

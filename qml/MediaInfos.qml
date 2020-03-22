@@ -8,7 +8,7 @@ import "qrc:/js/UtilsMedia.js" as UtilsMedia
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: screenMediasInfos
+    id: screenMediaInfos
     width: 480
     height: 720
     anchors.fill: parent
@@ -24,7 +24,7 @@ Item {
         mediaPages.currentIndex = 0
         mediaItem = newmedia
 
-        //console.log("screenMediasInfos.loadMediaInfos(" + mediaItem.name + ")")
+        //console.log("screenMediaInfos.loadMediaInfos(" + mediaItem.name + ")")
 
         // Title
         if (mediaItem.name.length < 24)
@@ -151,7 +151,7 @@ Item {
 
                         color: Theme.colorIcon
                         fillMode: Image.PreserveAspectFit
-                        source: "qrc:/assets/icons_material_medias/duotone-av_timer-24px.svg"
+                        source: "qrc:/assets/icons_material_media/duotone-av_timer-24px.svg"
                     }
                     Text {
                         id: textDuration
@@ -206,7 +206,7 @@ Item {
 
                         color: Theme.colorIcon
                         fillMode: Image.PreserveAspectFit
-                        source: "qrc:/assets/icons_material_medias/duotone-aspect_ratio-24px.svg"
+                        source: "qrc:/assets/icons_material_media/duotone-aspect_ratio-24px.svg"
                     }
                     Text {
                         id: textGeometry
@@ -233,7 +233,7 @@ Item {
 
                         color: Theme.colorIcon
                         fillMode: Image.PreserveAspectFit
-                        source: "qrc:/assets/icons_material_medias/duotone-speaker-24px.svg"
+                        source: "qrc:/assets/icons_material_media/duotone-speaker-24px.svg"
                     }
                     Text {
                         id: textChannels
@@ -456,7 +456,7 @@ Item {
                     height: 26
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    source: "qrc:/assets/icons_material_medias/outline-local_movies-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
                     color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
                 }
                 Text {
@@ -488,7 +488,7 @@ Item {
                     height: 26
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    source: "qrc:/assets/icons_material_medias/outline-speaker-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
                     color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
                 }
 
@@ -521,7 +521,7 @@ Item {
                     height: 26
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    source: "qrc:/assets/icons_material_medias/outline-insert_music-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
                     color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
                 }
 
@@ -554,7 +554,7 @@ Item {
                     height: 26
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    source: "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
                     color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
                 }
 

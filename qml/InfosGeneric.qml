@@ -37,9 +37,9 @@ ScrollView {
         info_containerprofile.text = mediaItem.containerProfile
 
         if (mediaItem.projection > 0)
-            imgGeometry.source = "qrc:/assets/icons_material_medias/duotone-spherical-24px.svg"
+            imgGeometry.source = "qrc:/assets/icons_material_media/duotone-spherical-24px.svg"
         else
-            imgGeometry.source = "qrc:/assets/icons_material_medias/duotone-aspect_ratio-24px.svg"
+            imgGeometry.source = "qrc:/assets/icons_material_media/duotone-aspect_ratio-24px.svg"
 
         if (mediaItem.fileType === 3) { //// IMAGE
             columnImage.visible = true
@@ -449,7 +449,7 @@ ScrollView {
 
                     color: Theme.colorPrimary
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material_medias/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -670,7 +670,7 @@ ScrollView {
 
                     color: Theme.colorPrimary
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material_medias/outline-local_movies-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -814,7 +814,7 @@ ScrollView {
 
                     color: Theme.colorPrimary
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material_medias/outline-speaker-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -924,7 +924,7 @@ ScrollView {
 
                         color: Theme.colorPrimary
                         fillMode: Image.PreserveAspectFit
-                        source: "qrc:/assets/icons_material_medias/outline-speaker-24px.svg"
+                        source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
                     }
                     Text {
                         anchors.left: parent.left

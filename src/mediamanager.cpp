@@ -20,56 +20,45 @@
  * \date      2019
  */
 
-#ifndef MEDIAS_MANAGER_H
-#define MEDIAS_MANAGER_H
-/* ************************************************************************** */
+#include "mediamanager.h"
+#include "media.h"
 
-#include "settingsmanager.h"
-
-class Media;
-
-#include <QObject>
-#include <QVariant>
+#include <QStandardPaths>
 #include <QList>
+#include <QDir>
+#include <QDebug>
 
 /* ************************************************************************** */
 
-/*!
- * \brief The MediasManager class
- */
-class MediasManager: public QObject
+MediaManager::MediaManager()
 {
-    Q_OBJECT
-
-    Q_PROPERTY(bool medias READ areMediasAvailable NOTIFY mediasUpdated)
-    Q_PROPERTY(QVariant mediasList READ getMedias NOTIFY mediasUpdated)
-
-    //Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
-
-    bool m_scanning = false;
-
-    QList<QObject*> m_medias;
-
-    bool isScanning() const;
-
-public:
-    MediasManager();
-    ~MediasManager();
-
-    Q_INVOKABLE bool areMediasAvailable() const { return !m_medias.empty(); }
-
-    QVariant getMedias() const { return QVariant::fromValue(m_medias); }
-
-public slots:
-    bool openMedia(const QString &path);
-    void closeMedia(const QString &path);
-
-private slots:
     //
+}
 
-Q_SIGNALS:
-    void mediasUpdated();
-};
+MediaManager::~MediaManager()
+{
+    //
+}
 
 /* ************************************************************************** */
-#endif // MEDIAS_MANAGER_H
+
+bool MediaManager::openMedia(const QString &path)
+{
+    qDebug() << "MediaManager::openMedia()" << path;
+    bool status = false;
+
+    Media *mf = new Media(path);
+    if (mf && mf->isValid())
+    {
+        m_media.push_front(mf);
+        status = true;
+        Q_EMIT mediaUpdated();
+    }
+
+    return status;
+}
+
+void MediaManager::closeMedia(const QString &path)
+{
+    Q_UNUSED(path)
+}

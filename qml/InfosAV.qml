@@ -128,16 +128,16 @@ ScrollView {
         // Graph (if VBR stream)
         bitrateGraphItem.visible = (trackItem.bitrateMode > 1)
         if (trackItem.bitrateMode > 1) {
-            bitrateDatas.clear()
-            trackItem.getBitrateDatasFps(bitrateDatas, 96);
+            bitrateData.clear()
+            trackItem.getBitrateDataFps(bitrateData, 96);
 
             // Axis
             axisX0.min = 0;
-            axisX0.max = bitrateDatas.count
+            axisX0.max = bitrateData.count
             var minmax_of_array = 0
-            for (var i = 0; i < bitrateDatas.count; i++)
-                if (bitrateDatas.at(i).y > minmax_of_array)
-                    minmax_of_array = bitrateDatas.at(i).y
+            for (var i = 0; i < bitrateData.count; i++)
+                if (bitrateData.at(i).y > minmax_of_array)
+                    minmax_of_array = bitrateData.at(i).y
             if (trackItem.type === 1) { // audio
                 axisBitrate.min = 0;
                 axisBitrate.max = minmax_of_array * 1.0;
@@ -147,7 +147,7 @@ ScrollView {
             }
         }
 
-        // datas
+        // data
         item_bitrate_minmax.visible = (trackItem.bitrateMode > 1)
         info_bitrate.text = UtilsMedia.bitrateToString(trackItem.bitrate_avg)
         info_bitrate.text += "  (" + UtilsMedia.bitrateModeToString(trackItem.bitrateMode) + ")"
@@ -245,7 +245,7 @@ ScrollView {
                 spacing: 16
 
                 Text {
-                    text: qsTr("datas size")
+                    text: qsTr("data size")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -398,7 +398,7 @@ ScrollView {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_medias/outline-local_movies-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -750,7 +750,7 @@ ScrollView {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_medias/outline-speaker-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -935,13 +935,13 @@ ScrollView {
         ////////////////
 
         Column {
-            id: columnDatas
+            id: columnData
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: 2
 
             Item {
-                id: titleDatas
+                id: titleData
                 height: 32
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -963,7 +963,7 @@ ScrollView {
                     anchors.leftMargin: 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("DATAS")
+                    text: qsTr("DATA")
                     color: Theme.colorPrimary
                     font.pixelSize: 18
                     font.bold: true
@@ -1061,7 +1061,7 @@ ScrollView {
                         labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: "" }
 
                     LineSeries {
-                        id: bitrateDatas
+                        id: bitrateData
                         //useOpenGL: true
 
                         color: Theme.colorSecondary;

@@ -25,7 +25,7 @@
 #include "utils_screen.h"
 
 #include "settingsmanager.h"
-#include "mediasmanager.h"
+#include "mediamanager.h"
 
 #include <statusbar.h>
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     SettingsManager *sm = SettingsManager::getInstance();
     if (!sm) return EXIT_FAILURE;
 
-    MediasManager *mm = new MediasManager();
+    MediaManager *mm = new MediaManager();
     if (!mm) return EXIT_FAILURE;
 
     MiniVideoQML::declareQML();
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("settingsManager", sm);
-    engine_context->setContextProperty("mediasManager", mm);
+    engine_context->setContextProperty("mediaManager", mm);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
 

@@ -34,8 +34,8 @@ DEFINES += ENABLE_LIBEXIF
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \
+            src/mediamanager.cpp \
             src/settingsmanager.cpp \
-            src/mediasmanager.cpp \
             src/media.cpp \
             src/minivideo_track_qml.cpp \
             src/minivideo_textexport_qt.cpp \
@@ -46,8 +46,8 @@ SOURCES  += src/main.cpp \
             src/utils_ios.cpp
 
 HEADERS  += src/settingsmanager.h \
-            src/mediasmanager.h \
             src/media.h \
+            src/mediamanager.h \
             src/minivideo_qml.h \
             src/minivideo_track_qml.h \
             src/minivideo_textexport_qt.h \

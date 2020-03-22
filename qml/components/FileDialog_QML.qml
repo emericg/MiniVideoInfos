@@ -16,7 +16,7 @@ Rectangle {
     property string title: ""
     property url folder: ""
 
-    property bool onlyShowMedias: settingsManager.mediaFilter
+    property bool onlyShowMedia: settingsManager.mediaFilter
 
     function updateHeaderText() {
         if (folderListModel.folder === folderListModel.rootFolder) {
@@ -252,13 +252,13 @@ Rectangle {
                             source = "qrc:/assets/icons_material/outline-folder-24px.svg"
                     } else {
                         if (UtilsPath.isVideoFile(fileName)) {
-                            source = "qrc:/assets/icons_material_medias/baseline-slideshow-24px.svg"
+                            source = "qrc:/assets/icons_material_media/baseline-slideshow-24px.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
-                            source = "qrc:/assets/icons_material_medias/baseline-music-24px.svg"
+                            source = "qrc:/assets/icons_material_media/baseline-music-24px.svg"
                         } else if (UtilsPath.isPictureFile(fileName, )) {
-                            source = "qrc:/assets/icons_material_medias/baseline-photo-24px.svg"
+                            source = "qrc:/assets/icons_material_media/baseline-photo-24px.svg"
                         } else {
-                            if (onlyShowMedias) {
+                            if (onlyShowMedia) {
                                 iii.visible = false
                                 iii.height = 0
                             } else {
@@ -321,7 +321,7 @@ Rectangle {
             anchors.leftMargin: 32
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr("Only shows medias files")
+            text: qsTr("Only shows media files")
             color: Theme.colorSubText
             font.pixelSize: 14
         }
@@ -333,15 +333,15 @@ Rectangle {
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
-            Component.onCompleted: checked = onlyShowMedias
+            Component.onCompleted: checked = onlyShowMedia
             onCheckedChanged: {
-                onlyShowMedias = checked
+                onlyShowMedia = checked
 
                 //var f = folderListModel.folder
                 //folderListModel.folder = folderListModel.parentFolder
                 //folderListModel.folder = f
 
-                if (onlyShowMedias)
+                if (onlyShowMedia)
                     folderListModel.nameFilters = ["*.mov", "*.m4v", "*.mp4", "*.mp4v", "*.3gp", "*.3gpp", "*.mkv", "*.webm", "*.avi", "*.divx", "*.asf", "*.wmv",
                                                    "*.mp1", "*.mp2", "*.mp3", "*.m4a", "*.mp4a", "*.m4r", "*.aac", "*.mka", "*.wma", "*.amb", "*.wav", "*.wave", "*.ogg", "*.opus", "*.vorbis",
                                                     "*.jpg", "*.jpeg", "*.webp", "*.png", "*.gpr", "*.gif", "*.heif", "*.heic", "*.avif", "*.bmp", "*.tga", "*.tif", "*.tiff", "*.svg"]
