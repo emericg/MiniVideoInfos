@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick 2.9
+import QtQuick.Controls.Material 2.0
 
 Item {
     enum ThemeNames {
@@ -12,10 +13,13 @@ Item {
 
     ////////////////
 
+    property int themeStatusbar
+    property string colorStatusbar
+
     // Header
     property string colorHeader
+    property string colorHeaderHighlight
     property string colorHeaderContent
-    property string colorHeaderStatusbar
 
     // Sidebar
     property string colorSidebar
@@ -23,6 +27,7 @@ Item {
 
     // Action bar
     property string colorActionbar
+    property string colorActionbarHighlight
     property string colorActionbarContent
 
     // Tablet bar
@@ -43,6 +48,8 @@ Item {
     property string colorSubText
     property string colorIcon
     property string colorSeparator
+
+    property string colorLowContrast
     property string colorHighContrast
 
     // Qt Quick controls & theming
@@ -67,7 +74,7 @@ Item {
     property string colorGrey: "#555151" // unused
     property string colorLightGrey: "#a9bcb8" // unused
 
-    // Fixed palette
+    // Fixed colors
     readonly property string colorMaterialBlue: "#2196f3" // colorMaterialThisblue
     readonly property string colorMaterialIndigo: "#3f51b5"
     readonly property string colorMaterialPurple: "#9c27b0"
@@ -92,6 +99,7 @@ Item {
     readonly property int fontSizeTitle: 24
     readonly property int fontSizeContentBig: 18
     readonly property int fontSizeContent: 16
+    readonly property int fontSizeComponent: 14
     readonly property int fontSizeContentSmall: 14
 
     ////////////////////////////////////////////////////////////////////////////
@@ -106,8 +114,7 @@ Item {
         //console.log("ThemeEngine.loadTheme(" + themeIndex + ")")
 
         if (themeIndex === "light") themeIndex = ThemeEngine.THEME_LIGHT
-        else if (themeIndex === "dark") themeIndex = ThemeEngine.THEME_DARK
-        else themeIndex = 0
+        if (themeIndex === "dark") themeIndex = ThemeEngine.THEME_DARK
         if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
 
         if (settingsManager.autoDark) {
@@ -127,11 +134,15 @@ Item {
             colorYellow = "#ffba5a"
             colorRed = "#ff7657"
 
+            themeStatusbar = Material.Dark
+            colorStatusbar = colorMaterialDarkGrey
+
             colorHeader = colorMaterialGrey
-            colorHeaderStatusbar = colorMaterialDarkGrey
+            colorHeaderHighlight = ""
             colorHeaderContent = "#5483EF" // colorMaterialBlue
 
             colorActionbar = colorRed
+            colorActionbarHighlight = ""
             colorActionbarContent = "white"
 
             colorTabletmenu = "#f3f3f3"
@@ -148,6 +159,7 @@ Item {
             colorSubText = "#666666"
             colorIcon = "#494949"
             colorSeparator = colorMaterialGrey
+            colorLowContrast = "white"
             colorHighContrast = "black"
 
             colorComponent = "#eaeaea"
@@ -165,11 +177,15 @@ Item {
             colorYellow = "#fcc632"
             colorRed = "#e8635a"
 
+            themeStatusbar = Material.Dark
+            colorStatusbar = "#292929"
+
             colorHeader = "#292929"
-            colorHeaderStatusbar = "#292929"
+            colorHeaderHighlight = ""
             colorHeaderContent = "#ee8c21"
 
             colorActionbar = colorRed
+            colorActionbarHighlight = ""
             colorActionbarContent = "white"
 
             colorTabletmenu = "#292929"
@@ -186,6 +202,7 @@ Item {
             colorSubText = "#AAAAAA"
             colorIcon = "#cccccc"
             colorSeparator = "#404040"
+            colorLowContrast = "black"
             colorHighContrast = "white"
 
             colorComponent = "#666666"

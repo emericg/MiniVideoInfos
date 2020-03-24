@@ -17,8 +17,8 @@ Item {
     property bool highlighted: false
 
     property string colorBackground: Theme.colorForeground
-    property string colorContent: Theme.colorHeaderContent
     property string colorHighlight: Theme.colorBackground
+    property string colorContent: Theme.colorHeaderContent
 
     property string highlightMode: "background" // available: background & text
 

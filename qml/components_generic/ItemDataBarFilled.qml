@@ -10,8 +10,8 @@ Item {
 
     property string legend: ""
     property string prefix: ""
-    property int floatprecision: 0
     property string suffix: ""
+    property int floatprecision: 0
     property bool warning: false
 
     property string colorText: Theme.colorText
@@ -31,12 +31,12 @@ Item {
 
     Row {
         anchors.fill: parent
-        spacing: 8
+        spacing: 12
 
         Text {
             id: item_legend
             anchors.verticalCenter: parent.verticalCenter
-            width: 80
+            width: isPhone ? 80 : 96
 
             visible: (legend.length)
             text: legend
@@ -52,7 +52,7 @@ Item {
         Rectangle {
             id: item_bg
             anchors.verticalCenter: parent.verticalCenter
-            width: itemDataBar.width - (item_legend.visible ? /*item_legend.width + row.spacing*/ 56 : 0)
+            width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             height: hhh
 
             radius: hhh
@@ -85,9 +85,9 @@ Item {
 
                 text: qsTr("min")
                 font.pixelSize: 12
-                visible: (limitMin > 0 && limitMin > valueMin)
-                color: (limitMin < value) ? "white" : "black"
-                opacity: (limitMin < value) ? 0.75 : 0.25
+                visible: (limitMin > 0 && limitMin > valueMin) && (x + width + 4 <= item_data.width)
+                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin <= value) ? 0.75 : 0.25
             }
             Rectangle {
                 id: item_limit_low
@@ -97,8 +97,8 @@ Item {
 
                 visible: (limitMin > 0 && limitMin > valueMin)
                 x: UtilsNumber.normalize(limitMin, valueMin, valueMax) * item_bg.width
-                color: (limitMin < value) ? "white" : "black"
-                opacity: (limitMin < value) ? 0.75 : 0.25
+                color: (limitMin <= value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                opacity: (limitMin <= value) ? 0.75 : 0.25
 
                 Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
             }
@@ -110,7 +110,7 @@ Item {
 
                 visible: (limitMax > 0 && limitMax < valueMax)
                 x: UtilsNumber.normalize(limitMax, valueMin, valueMax) * item_bg.width
-                color: (limitMax < value) ? "white" : "black"
+                color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMax < value) ? 0.75 : 0.25
 
                 Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
@@ -124,7 +124,7 @@ Item {
                 text: qsTr("max")
                 font.pixelSize: 12
                 visible: (limitMax > 0 && limitMax < valueMax)
-                color: (limitMax < value) ? "white" : "black"
+                color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                 opacity: (limitMax < value) ? 0.75 : 0.25
             }
 
