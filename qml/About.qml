@@ -11,18 +11,17 @@ Item {
     anchors.leftMargin: screenLeftPadding
     anchors.rightMargin: screenRightPadding
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
         height: 96
         z: 5
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         Image {
             id: imageLogo
@@ -37,7 +36,6 @@ Item {
         }
 
         Column {
-            id: column1
             anchors.left: imageLogo.right
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter

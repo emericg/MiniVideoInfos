@@ -133,7 +133,6 @@ Item {
                         }
 
                         Text {
-                            id: element1
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -161,7 +160,6 @@ Item {
                         }
 
                         Text {
-                            id: element
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -185,6 +183,18 @@ Item {
 
                 visible: (settingsManager.appTheme !== "night")
 
+                ImageSvg {
+                    id: image_autoDarkmode
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
+                }
+
                 Text {
                     id: text_autoDarkmode
                     height: 40
@@ -194,7 +204,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Automatique dark mode")
+                    text: qsTr("Automatic dark mode")
                     font.pixelSize: 16
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
@@ -212,18 +222,6 @@ Item {
                         settingsManager.autoDark = checked
                         Theme.loadTheme(settingsManager.appTheme)
                     }
-                }
-
-                ImageSvg {
-                    id: image_autoDarkmode
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
                 }
             }
             Text {
@@ -264,6 +262,18 @@ Item {
 
                 visible: (Qt.platform.os !== "ios")
 
+                ImageSvg {
+                    id: image_mediaFilter
+                    width: 32
+                    height: 32
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                }
+
                 Text {
                     id: text_mediaFilter
                     height: 40
@@ -289,18 +299,6 @@ Item {
 
                     Component.onCompleted: checked = settingsManager.mediaFilter
                     onCheckedChanged: settingsManager.mediaFilter = checked
-                }
-
-                ImageSvg {
-                    id: image_mediaFilter
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                 }
             }
 
@@ -364,6 +362,18 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
+                ImageSvg {
+                    id: image_mediaExport
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/outline-archive-24px.svg"
+                }
+
                 Text {
                     id: text_mediaExport
                     height: 40
@@ -390,18 +400,6 @@ Item {
                     Component.onCompleted: checked = settingsManager.exportEnabled
                     onCheckedChanged: settingsManager.exportEnabled = checked
                 }
-
-                ImageSvg {
-                    id: image_mediaExport
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/outline-archive-24px.svg"
-                }
             }
 
             ////////
@@ -413,6 +411,18 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
+
+                ImageSvg {
+                    id: image_unit
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                }
 
                 Text {
                     id: text_unit
@@ -478,18 +488,6 @@ Item {
                         if (checked === true) settingsManager.unitSystem = 2
                     }
                 }
-
-                ImageSvg {
-                    id: image_unit
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
-                    anchors.left: parent.left
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
-                }
             }
 
             ////////
@@ -524,6 +522,18 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
+
+                    ImageSvg {
+                        id: image_sizes
+                        width: 24
+                        height: 24
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.leftMargin: 16
+                        anchors.left: parent.left
+
+                        color: Theme.colorText
+                        source: "qrc:/assets/icons_material/outline-save-24px.svg"
+                    }
 
                     RadioButtonThemed {
                         id: radioDelegateKB
@@ -586,18 +596,6 @@ Item {
                             if (checked === true) settingsManager.unitSizes = 2
                         }
                     }
-                }
-
-                ImageSvg {
-                    id: image_sizes
-                    width: 24
-                    height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
-                    anchors.left: parent.left
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/outline-save-24px.svg"
                 }
             }
             Text {

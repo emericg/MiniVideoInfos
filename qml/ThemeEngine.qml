@@ -1,4 +1,5 @@
 pragma Singleton
+
 import QtQuick 2.9
 import QtQuick.Controls.Material 2.0
 
@@ -18,17 +19,19 @@ Item {
 
     // Header
     property string colorHeader
-    property string colorHeaderHighlight
     property string colorHeaderContent
+    property string colorHeaderHighlight
 
     // Sidebar
     property string colorSidebar
     property string colorSidebarContent
+    property string colorSidebarHighlight
+
 
     // Action bar
     property string colorActionbar
-    property string colorActionbarHighlight
     property string colorActionbarContent
+    property string colorActionbarHighlight
 
     // Tablet bar
     property string colorTabletmenu
@@ -59,7 +62,7 @@ Item {
     property string colorComponentBorder
     property string colorComponentDown
     property string colorComponentBackground
-    property int componentRadius: 3
+    property int componentRadius: 4
     property int componentHeight: 40
 
     ////////////////
@@ -97,10 +100,10 @@ Item {
     // Fonts (sizes in pixel) (WIP)
     readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 24 : 26
     readonly property int fontSizeTitle: 24
-    readonly property int fontSizeContentBig: 18
-    readonly property int fontSizeContent: 16
-    readonly property int fontSizeComponent: 14
     readonly property int fontSizeContentSmall: 14
+    readonly property int fontSizeContent: 16
+    readonly property int fontSizeContentBig: 18
+    readonly property int fontSizeComponent: 14
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -138,12 +141,12 @@ Item {
             colorStatusbar = colorMaterialDarkGrey
 
             colorHeader = colorMaterialGrey
-            colorHeaderHighlight = ""
             colorHeaderContent = "#5483EF" // colorMaterialBlue
+            colorHeaderHighlight = ""
 
             colorActionbar = colorRed
-            colorActionbarHighlight = ""
             colorActionbarContent = "white"
+            colorActionbarHighlight = ""
 
             colorTabletmenu = "#f3f3f3"
             colorTabletmenuContent = "#9d9d9d"
@@ -168,7 +171,6 @@ Item {
             colorComponentBorder = "#b3b3b3"
             colorComponentDown = "#cacaca"
             colorComponentBackground = colorBackground
-            componentRadius = 4
 
         } else if (themeIndex === ThemeEngine.THEME_DARK) {
 
@@ -181,12 +183,12 @@ Item {
             colorStatusbar = "#292929"
 
             colorHeader = "#292929"
-            colorHeaderHighlight = ""
             colorHeaderContent = "#ee8c21"
+            colorHeaderHighlight = ""
 
             colorActionbar = colorRed
-            colorActionbarHighlight = ""
             colorActionbarContent = "white"
+            colorActionbarHighlight = ""
 
             colorTabletmenu = "#292929"
             colorTabletmenuContent = "#808080"
@@ -211,7 +213,6 @@ Item {
             colorComponentBorder = "#666666"
             colorComponentDown = "#444444"
             colorComponentBackground = "#505050"
-            componentRadius = 4
 
         }
 
