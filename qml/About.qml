@@ -305,6 +305,8 @@ Item {
                 color: Theme.colorSeparator
             }
 
+            ////////
+
             Item {
                 id: dependencies
                 height: 96

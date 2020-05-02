@@ -132,7 +132,7 @@ ApplicationWindow {
 
     Connections {
         target: Qt.application
-        function onStateChanged(newstate) {
+        onStateChanged: {
             switch (Qt.application.state) {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")
