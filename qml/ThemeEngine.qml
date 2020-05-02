@@ -27,7 +27,6 @@ Item {
     property string colorSidebarContent
     property string colorSidebarHighlight
 
-
     // Action bar
     property string colorActionbar
     property string colorActionbarContent
@@ -110,7 +109,7 @@ Item {
     Component.onCompleted: loadTheme(settingsManager.appTheme)
     Connections {
         target: settingsManager
-        onAppthemeChanged: loadTheme(settingsManager.appTheme)
+        onAppThemeChanged: { loadTheme(settingsManager.appTheme) }
     }
 
     function loadTheme(themeIndex) {
@@ -137,7 +136,7 @@ Item {
             colorYellow = "#ffba5a"
             colorRed = "#ff7657"
 
-            themeStatusbar = Material.Dark
+            themeStatusbar = Material.Light
             colorStatusbar = colorMaterialDarkGrey
 
             colorHeader = colorMaterialGrey

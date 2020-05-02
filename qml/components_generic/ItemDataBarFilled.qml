@@ -55,6 +55,7 @@ Item {
             width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             height: hhh
 
+            clip: true
             radius: hhh
             color: itemDataBar.colorBackground
 
@@ -83,6 +84,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: 0
 
+                //: Short for minimum
                 text: qsTr("min")
                 font.pixelSize: 12
                 visible: (limitMin > 0 && limitMin > valueMin) && (x + width + 4 <= item_data.width)
@@ -121,6 +123,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: 0
 
+                //: Short for maximum
                 text: qsTr("max")
                 font.pixelSize: 12
                 visible: (limitMax > 0 && limitMax < valueMax)

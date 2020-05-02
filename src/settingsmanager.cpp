@@ -151,9 +151,9 @@ void SettingsManager::resetSettings()
 {
     // Settings
     m_appTheme= "light";
-    Q_EMIT appthemeChanged();
+    Q_EMIT appThemeChanged();
     m_autoDark = false;
-    Q_EMIT autodarkChanged();
+    Q_EMIT autoDarkChanged();
     m_mediaFilter = true;
     Q_EMIT mediaFilterChanged();
     m_mediaPreview = true;
@@ -176,7 +176,7 @@ void SettingsManager::setAppTheme(const QString &value)
     {
         m_appTheme = value;
         writeSettings();
-        Q_EMIT appthemeChanged();
+        Q_EMIT appThemeChanged();
     }
 }
 
@@ -186,7 +186,7 @@ void SettingsManager::setAutoDark(const bool value)
     {
         m_autoDark = value;
         writeSettings();
-        Q_EMIT autodarkChanged();
+        Q_EMIT autoDarkChanged();
     }
 }
 

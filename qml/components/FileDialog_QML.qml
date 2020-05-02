@@ -321,7 +321,7 @@ Rectangle {
             anchors.leftMargin: 32
             anchors.verticalCenter: parent.verticalCenter
 
-            text: qsTr("Only shows media files")
+            text: qsTr("Show media files only")
             color: Theme.colorSubText
             font.pixelSize: 14
         }

@@ -50,7 +50,8 @@ UtilsApp *UtilsApp::getInstance()
 
 UtilsApp::UtilsApp()
 {
-    //
+    // Set default application path
+    m_appPath = QApplication::applicationDirPath();
 }
 
 UtilsApp::~UtilsApp()
@@ -63,17 +64,17 @@ UtilsApp::~UtilsApp()
 
 QString UtilsApp::appVersion()
 {
-    return QString::fromUtf8(APP_VERSION);
+    return QString::fromLatin1(APP_VERSION);
 }
 
 QString UtilsApp::appBuildDate()
 {
-    return QString::fromUtf8(__DATE__);
+    return QString::fromLatin1(__DATE__);
 }
 
 QString UtilsApp::appBuildDateTime()
 {
-    return QString::fromUtf8(__DATE__) + " " + QString::fromUtf8(__TIME__);
+    return QString::fromLatin1(__DATE__) + " " + QString::fromLatin1(__TIME__);
 }
 
 QString UtilsApp::appBuildMode()

@@ -500,6 +500,18 @@ Item {
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
 
+                ImageSvg {
+                    id: image_sizes
+                    width: 24
+                    height: 24
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 16
+                    anchors.left: parent.left
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/outline-save-24px.svg"
+                }
+
                 Text {
                     id: text_sizes
                     height: 40
@@ -522,18 +534,6 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
-
-                    ImageSvg {
-                        id: image_sizes
-                        width: 24
-                        height: 24
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: 16
-                        anchors.left: parent.left
-
-                        color: Theme.colorText
-                        source: "qrc:/assets/icons_material/outline-save-24px.svg"
-                    }
 
                     RadioButtonThemed {
                         id: radioDelegateKB

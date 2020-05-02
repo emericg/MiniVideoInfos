@@ -9,12 +9,12 @@ import "qrc:/js/UtilsPath.js" as UtilsPath
 
 ApplicationWindow {
     id: applicationWindow
-    minimumWidth: 480
-    minimumHeight: 900
+    minimumWidth: 400
+    minimumHeight: 800
 
-    visible: true
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
-    flags: Qt.Window
+    visible: true
 
     property bool isHdpi: (utilsScreen.screenDpi > 128)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
@@ -33,7 +33,6 @@ ApplicationWindow {
     property int screenRightPadding: 0
 
     onScreenOrientationChanged: handleNotches()
-
     Component.onCompleted: firstHandleNotches.restart()
     Timer {
         id: firstHandleNotches
@@ -87,9 +86,8 @@ ApplicationWindow {
     }
 
     StatusBar {
-        id: statusbar
-        theme: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Material.Dark : Material.Light
-        color: Theme.colorHeaderStatusbar
+        theme: Theme.themeStatusbar
+        color: Theme.colorStatusbar
     }
 
     MobileHeader {
@@ -134,7 +132,7 @@ ApplicationWindow {
 
     Connections {
         target: Qt.application
-        onStateChanged: {
+        function onStateChanged(newstate) {
             switch (Qt.application.state) {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")

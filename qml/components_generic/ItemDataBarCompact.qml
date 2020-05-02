@@ -5,7 +5,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: itemDataBar
-    height: 36
+    height: 24
     implicitWidth: 128
 
     property string legend: "legend"
@@ -48,15 +48,12 @@ Item {
 
         Rectangle {
             id: item_bg
-            color: itemDataBar.colorBackground
             height: 8
-            radius: 3
+            width: itemDataBar.width - (item_legend.visible ? (item_legend.width + parent.spacing) : 0)
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.left: item_legend.right
-            anchors.leftMargin: 12
-            anchors.right: parent.right
-            anchors.rightMargin: 20
+
+            radius: 4
+            color: itemDataBar.colorBackground
 
             Rectangle {
                 id: item_data
@@ -118,21 +115,21 @@ Item {
                 height: 15
                 y: -22
                 x: {
-                    if (item_data.width < (width/2 + 8)) { // left
+                    if (item_data.width < ((width / 2) + 8)) { // left
                         if (item_data.width > 12)
-                            item_indicator_triangle.anchors.horizontalCenterOffset = (item_data.width - (width/2 + 8))
+                            item_indicator_triangle.anchors.horizontalCenterOffset = (item_data.width - ((width / 2) + 8))
                         else
-                            item_indicator_triangle.anchors.horizontalCenterOffset = -(width/2 - 4)
+                            item_indicator_triangle.anchors.horizontalCenterOffset = -((width / 2) - 4)
 
                         return 4
-                    } else if ((item_bg.width - item_data.width) < (width/2)) { // right
-                        item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width/2)) - 4
+                    } else if ((item_bg.width - item_data.width) < (width / 2)) { // right
+                        item_indicator_triangle.anchors.horizontalCenterOffset = -((item_bg.width - item_data.width) - (width / 2)) - 4
 
                         return item_bg.width - width - 4
                     } else { // whatever
                         item_indicator_triangle.anchors.horizontalCenterOffset = 0
 
-                        return item_data.width - width/2 - 4
+                        return item_data.width - (width / 2) - 4
                     }
                 }
 

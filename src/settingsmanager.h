@@ -38,8 +38,8 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(bool firstLaunch READ isFirstLaunch NOTIFY firstLaunchChanged)
 
-    Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appthemeChanged)
-    Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autodarkChanged)
+    Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
+    Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autoDarkChanged)
 
     Q_PROPERTY(bool mediaFilter READ getMediaFilter WRITE setMediaFilter NOTIFY mediaFilterChanged)
     Q_PROPERTY(bool mediaPreview READ getMediaPreview WRITE setMediaPreview NOTIFY mediaPreviewChanged)
@@ -68,8 +68,8 @@ class SettingsManager: public QObject
 
 Q_SIGNALS:
     void firstLaunchChanged();
-    void appthemeChanged();
-    void autodarkChanged();
+    void appThemeChanged();
+    void autoDarkChanged();
     void mediaFilterChanged();
     void mediaPreviewChanged();
     void exportEnabledChanged();
