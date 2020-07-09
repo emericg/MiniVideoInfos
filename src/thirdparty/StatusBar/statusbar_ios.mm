@@ -34,19 +34,26 @@
 @property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyle;
 @end
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 bool StatusBarPrivate::isAvailable_sys()
 {
     return true;
 }
 
-void StatusBarPrivate::setColor_sys(const QColor &color)
+void StatusBarPrivate::setColor_sb(const QColor &color)
 {
     Q_UNUSED(color)
 }
 
 static UIStatusBarStyle statusBarStyle(StatusBar::Theme theme)
 {
-    return theme == StatusBar::Light ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+    if (theme == StatusBar::Dark)
+        return UIStatusBarStyleLightContent;
+    else if (@available(iOS 13.0, *))
+        return UIStatusBarStyleDarkContent;
+    else
+        return UIStatusBarStyleDefault;
 }
 
 static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
@@ -62,14 +69,14 @@ static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
 void togglePreferredStatusBarStyle()
 {
     UIStatusBarStyle style = statusBarStyle(StatusBar::Light);
-    if(StatusBarPrivate::theme == StatusBar::Light) {
+    if(StatusBarPrivate::sbTheme == StatusBar::Light) {
         style = statusBarStyle(StatusBar::Dark);
     }
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
     QTimer::singleShot(200, []() {
-        UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::theme);
+        UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         if (keyWindow)
             setPreferredStatusBarStyle(keyWindow, style);
@@ -78,13 +85,13 @@ void togglePreferredStatusBarStyle()
 
 static void updatePreferredStatusBarStyle()
 {
-    UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::theme);
+    UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
 }
 
-void StatusBarPrivate::setTheme_sys(StatusBar::Theme)
+void StatusBarPrivate::setTheme_sb(StatusBar::Theme)
 {
     updatePreferredStatusBarStyle();
 
@@ -98,4 +105,14 @@ void StatusBarPrivate::setTheme_sys(StatusBar::Theme)
     QObject::connect(screen, &QScreen::orientationChanged, qApp, [](Qt::ScreenOrientation) {
         togglePreferredStatusBarStyle();
     }, Qt::UniqueConnection);
+}
+
+void StatusBarPrivate::setColor_nav(const QColor &color)
+{
+    Q_UNUSED(color)
+}
+
+void StatusBarPrivate::setTheme_nav(StatusBar::Theme theme)
+{
+    Q_UNUSED(theme)
 }

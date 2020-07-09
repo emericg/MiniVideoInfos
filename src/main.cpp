@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     // Keep the StatusBar the same color as the splashscreen until UI starts
     StatusBar sb;
-    sb.setColor("#fff");
+    sb.setSbColor("#fff");
     qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
 /*
     // i18n

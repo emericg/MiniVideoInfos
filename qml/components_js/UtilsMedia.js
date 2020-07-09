@@ -1,5 +1,5 @@
 // UtilsMedia.js
-// Version 0.1
+// Version 1
 .pragma library
 
 /* ************************************************************************** */
@@ -41,7 +41,7 @@ function darToString(width, height) {
     } else if (ar_float > 3.5 && ar_float < 3.6) { // 3.555
         ar_string = "32:9";
     }
-    // mobile display // add more as we go...
+    // mobile displays // add more as we go...
     else if (ar_float === 2) { // 2
         ar_string = "18:9";
     } else if (ar_float > 2 && ar_float < 2.1) { // 2,0555

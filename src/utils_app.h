@@ -55,12 +55,16 @@ public:
     static Q_INVOKABLE void openWith(const QString &path);
     static Q_INVOKABLE QUrl getStandardPath(const QString &type);
 
+    static Q_INVOKABLE bool checkMobileLocationPermission();
+    static Q_INVOKABLE bool getMobileLocationPermission();
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();
     static Q_INVOKABLE bool checkMobilePhoneStatePermission();
     static Q_INVOKABLE bool getMobilePhoneStatePermission();
     static Q_INVOKABLE QString getMobileDeviceModel();
     static Q_INVOKABLE QString getMobileDeviceSerial();
+
+    static Q_INVOKABLE void vibrate(int ms);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     static Q_INVOKABLE int getMobileStorageCount();
