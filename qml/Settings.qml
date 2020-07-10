@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
@@ -17,12 +17,9 @@ Item {
         height: 80
         z: 5
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         Text {
             id: textTitle
@@ -56,15 +53,16 @@ Item {
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 12
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottom: parent.bottom
 
         Column {
             id: column
             anchors.fill: parent
+
+            topPadding: 12
+            bottomPadding: 12
             spacing: 8
 
             ////////
@@ -81,9 +79,9 @@ Item {
                     id: image_theme
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-style-24px.svg"
@@ -217,6 +215,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+
                     Component.onCompleted: checked = settingsManager.autoDark
                     onCheckedChanged: {
                         settingsManager.autoDark = checked
@@ -260,15 +259,13 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
 
-                visible: (Qt.platform.os !== "ios")
-
                 ImageSvg {
                     id: image_mediaFilter
-                    width: 32
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
@@ -277,10 +274,10 @@ Item {
                 Text {
                     id: text_mediaFilter
                     height: 40
+                    anchors.left: image_mediaFilter.right
+                    anchors.leftMargin: 16
                     anchors.right: switch_mediaFilter.left
                     anchors.rightMargin: 16
-                    anchors.left: image_mediaFilter.right
-                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Filter media in file chooser")
@@ -315,10 +312,10 @@ Item {
                 Text {
                     id: text_mediaPreview
                     height: 40
-                    anchors.right: switch_mediaPreview.left
-                    anchors.rightMargin: 16
                     anchors.left: image_mediaPreview.right
                     anchors.leftMargin: 16
+                    anchors.right: switch_mediaPreview.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Preview media")
@@ -366,9 +363,9 @@ Item {
                     id: image_mediaExport
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/outline-archive-24px.svg"
@@ -443,8 +440,8 @@ Item {
                 RadioButtonThemed {
                     id: radioDelegateMetric
                     height: 40
-                    anchors.verticalCenter: text_unit.verticalCenter
                     anchors.right: radioDelegateImperial.left
+                    anchors.verticalCenter: text_unit.verticalCenter
 
                     z: 1
                     text: qsTr("Metric")
@@ -467,9 +464,9 @@ Item {
                 RadioButtonThemed {
                     id: radioDelegateImperial
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
 
                     z: 1
                     text: qsTr("Imperial")

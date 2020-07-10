@@ -1,12 +1,13 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
-Rectangle {
+Item {
     width: parent.width
     height: parent.height
-    color: Theme.colorBackground
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Column {
         id: rectangleHeader
@@ -16,7 +17,7 @@ Rectangle {
         z: 5
 
         Connections {
-            target: applicationWindow
+            target: appWindow
             onScreenStatusbarPaddingChanged: rectangleHeader.updateIOSHeader()
         }
         Connections {
@@ -32,6 +33,8 @@ Rectangle {
                     rectangleStatusbar.height = 0
             }
         }
+
+        ////////
 
         Rectangle {
             id: rectangleStatusbar
@@ -81,22 +84,21 @@ Rectangle {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.bottom: parent.bottom
 
         Column {
-            id: row
             anchors.fill: parent
+
+            ////////
 
             Rectangle {
                 id: rectangleLoad
@@ -137,6 +139,8 @@ Rectangle {
                 }
             }
 
+            ////////
+
             Rectangle {
                 id: rectangleHome
                 height: 48
@@ -176,22 +180,26 @@ Rectangle {
                 }
             }
 
+            ////////
+
             Item { // spacer
                 height: 8
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
             }
             Rectangle {
                 height: 1
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 color: Theme.colorSeparator
             }
             Item {
                 height: 8
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
             }
+
+            ////////
 /*
             Rectangle {
                 id: rectangleTool1
@@ -284,6 +292,8 @@ Rectangle {
                 anchors.left: parent.left
             }
 */
+            ////////
+
             Rectangle {
                 id: rectangleSettings
                 height: 48
@@ -321,11 +331,13 @@ Rectangle {
                 }
             }
 
+            ////////
+
             Rectangle {
                 id: rectangleAbout
                 height: 48
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 color: (appContent.state === "About") ? Theme.colorForeground : "transparent"
 
                 MouseArea {
@@ -357,163 +369,37 @@ Rectangle {
                     color: Theme.colorText
                 }
             }
-/*
+
+            ////////
+
             Item { // spacer
                 height: 8
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
+                visible: isDesktop
             }
             Rectangle {
                 height: 1
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
                 color: Theme.colorSeparator
+                visible: isDesktop
             }
             Item {
                 height: 8
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
+                visible: isDesktop
             }
 
-            Item {
-                id: rectangleRefresh
-                height: 48
-                anchors.right: parent.right
-                anchors.left: parent.left
-
-                enabled: deviceManager.bluetooth
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if (!deviceManager.scanning) {
-                            if (deviceManager.refreshing) {
-                                deviceManager.refreshDevices_stop()
-                            } else {
-                                deviceManager.refreshDevices_start()
-                            }
-                            appDrawer.close()
-                        }
-                    }
-                }
-
-                ImageSvg {
-                    id: buttonRefresh
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenLeftPadding + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
-
-                    NumberAnimation on rotation {
-                        id: refreshAnimation
-                        duration: 2000
-                        from: 0
-                        to: 360
-                        loops: Animation.Infinite
-                        running: deviceManager.refreshing
-                        onStopped: refreshAnimationStop.start()
-                    }
-                    NumberAnimation on rotation {
-                        id: refreshAnimationStop
-                        duration: 1000;
-                        to: 360;
-                        easing.type: Easing.Linear
-                        running: false
-                    }
-                }
-                Label {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenLeftPadding + 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Refresh sensors data")
-                    font.pixelSize: 13
-                    font.bold: true
-                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
-                }
-            }
-
-            Item {
-                id: rectangleScan
-                height: 48
-                anchors.right: parent.right
-                anchors.left: parent.left
-
-                enabled: deviceManager.bluetooth
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if (!deviceManager.scanning && !deviceManager.refreshing) {
-                            deviceManager.scanDevices()
-                            appDrawer.close()
-                        }
-                    }
-                }
-
-                ImageSvg {
-                    id: buttonRescan
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenLeftPadding + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
-
-                    SequentialAnimation on opacity {
-                        id: rescanAnimation
-                        loops: Animation.Infinite
-                        running: deviceManager.scanning
-                        onStopped: buttonRescan.opacity = 1;
-
-                        PropertyAnimation { to: 0.33; duration: 750; }
-                        PropertyAnimation { to: 1; duration: 750; }
-                    }
-                }
-                Label {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenLeftPadding + 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Search for new devices")
-                    font.pixelSize: 13
-                    font.bold: true
-                    color: deviceManager.bluetooth ? Theme.colorText : Theme.colorSubText
-                }
-            }
-*/
-            Item { // spacer
-                height: 8
-                anchors.right: parent.right
-                anchors.left: parent.left
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-            }
-            Rectangle {
-                height: 1
-                anchors.right: parent.right
-                anchors.left: parent.left
-                color: Theme.colorSeparator
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-            }
-            Item {
-                height: 8
-                anchors.right: parent.right
-                anchors.left: parent.left
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-            }
+            ////////
 
             Item {
                 id: rectangleExit
                 height: 48
                 anchors.right: parent.right
                 anchors.left: parent.left
-                visible: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
+                visible: isDesktop
 
                 MouseArea {
                     anchors.fill: parent

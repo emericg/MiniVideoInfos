@@ -1,6 +1,7 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
+
 import ThemeEngine 1.0
 
 Rectangle {
@@ -11,12 +12,12 @@ Rectangle {
     color: Theme.colorHeader
 
     property int lastPage: 2
-    property string goBackTo: "MediaList"
+    property string exitTo: "MediaList"
 
-    function reopen(goBackScreen) {
+    function reopen() {
+        exitTo = "About"
         tutorialPages.currentIndex = 0
         appContent.state = "Tutorial"
-        goBackTo = goBackScreen
     }
 
     SwipeView {
@@ -29,7 +30,7 @@ Rectangle {
             if (currentIndex < 0) currentIndex = 0
             if (currentIndex > lastPage) {
                 currentIndex = 0 // reset
-                appContent.state = goBackTo
+                appContent.state = exitTo
             }
         }
 

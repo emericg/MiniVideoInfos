@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
@@ -66,19 +66,20 @@ Item {
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 8
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottom: parent.bottom
 
         Column {
-            id: column
-            spacing: 8
             anchors.fill: parent
-            anchors.topMargin: 8
             anchors.rightMargin: 16
             anchors.leftMargin: 16
+
+            topPadding: 8
+            bottomPadding: 8
+            spacing: 8
+
+            ////////
 /*
             ListView {
                 // helper to list available fonts
@@ -95,8 +96,10 @@ Item {
                 }
             }
 */
+            ////////
+
             Row {
-                id: websiteANDgithub
+                id: buttonsRow
                 height: 56
 
                 anchors.left: parent.left
@@ -108,8 +111,8 @@ Item {
                 spacing: 16
 
                 onWidthChanged: {
-                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2
-                    if (ww > 0) { websiteBtn.width = ww ; supportBtn.width = ww }
+                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2;
+                    if (ww > 0) { websiteBtn.width = ww; supportBtn.width = ww; }
                 }
 
                 ButtonWireframeImage {
@@ -117,10 +120,11 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("WEBSITE")
                     imgSize: 26
                     fullColor: true
                     primaryColor: Theme.colorHeaderContent
+
+                    text: qsTr("WEBSITE")
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
                 }
@@ -129,14 +133,17 @@ Item {
                     width: 180
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("SUPPORT")
                     imgSize: 20
                     fullColor: true
                     primaryColor: Theme.colorHeaderContent
+
+                    text: qsTr("SUPPORT")
                     source: "qrc:/assets/icons_material/outline-mail_outline-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
                 }
             }
+
+            ////////
 
             Item {
                 id: desc
@@ -174,6 +181,8 @@ Item {
                 }
             }
 
+            ////////
+
             Item {
                 id: authors
                 height: 48
@@ -209,11 +218,14 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         acceptedButtons: Qt.NoButton
                         cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
                 }
             }
+
+            ////////
 
             Item {
                 id: rate
@@ -248,6 +260,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -8
                         onClicked: {
                             if (Qt.platform.os === "android")
                                 Qt.openUrlExternally("market://details?id=com.minivideo.infos")
@@ -259,6 +272,8 @@ Item {
                     }
                 }
             }
+
+            ////////
 
             Item {
                 id: tuto
@@ -291,25 +306,100 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: screenTutorial.reopen("About")
+                        anchors.margins: -8
+                        onClicked: screenTutorial.reopen()
                     }
                 }
             }
 
             ////////
 
-            Rectangle {
-                height: 1
-                anchors.right: parent.right
+            Item {
+                height: 16
                 anchors.left: parent.left
-                color: Theme.colorSeparator
+                anchors.right: parent.right
+
+                //visible: (Qt.platform.os === "android")
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                id: permissions
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                //visible: (Qt.platform.os === "android")
+
+                ImageSvg {
+                    id: permissionsImg
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+                    color: Theme.colorText
+                }
+
+                Text {
+                    id: permissionsTxt
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    text: qsTr("About permissions")
+                    font.pixelSize: 16
+                }
+
+                ImageSvg {
+                    width: 24
+                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                    color: Theme.colorText
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    anchors.margins: -8
+                    onClicked: appContent.state = "Permissions"
+                }
             }
 
             ////////
 
             Item {
+                height: 16
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
                 id: dependencies
-                height: 96
+                height: 24 + dependenciesLabel.height + dependenciesColumn.height
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -317,16 +407,17 @@ Item {
 
                 ImageSvg {
                     id: dependenciesImg
-                    width: 27
-                    height: 27
-                    anchors.left: parent.left
-                    anchors.leftMargin: 2
+                    width: 24
+                    height: 24
                     anchors.top: parent.top
                     anchors.topMargin: 12
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                     color: Theme.colorText
                 }
+
                 Text {
                     id: dependenciesLabel
                     anchors.top: parent.top
@@ -343,6 +434,7 @@ Item {
                 }
 
                 Column {
+                    id: dependenciesColumn
                     anchors.top: dependenciesLabel.bottom
                     anchors.topMargin: 8
                     anchors.left: parent.left

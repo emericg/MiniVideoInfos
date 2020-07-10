@@ -8,6 +8,7 @@
         <file>MediaInfos.qml</file>
         <file>MediaWidget.qml</file>
         <file>About.qml</file>
+        <file>Permissions.qml</file>
         <file>Settings.qml</file>
         <file>ThemeEngine.qml</file>
 

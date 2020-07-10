@@ -1,14 +1,13 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.0
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
 import StatusBar 0.1
 import "qrc:/js/UtilsPath.js" as UtilsPath
 
 ApplicationWindow {
-    id: applicationWindow
+    id: appWindow
     minimumWidth: 400
     minimumHeight: 800
 
@@ -26,14 +25,13 @@ ApplicationWindow {
 
     // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
+    onScreenOrientationChanged: handleNotches()
 
     property int screenStatusbarPadding: 0
     property int screenNotchPadding: 0
     property int screenLeftPadding: 0
     property int screenRightPadding: 0
 
-    onScreenOrientationChanged: handleNotches()
-    Component.onCompleted: firstHandleNotches.restart()
     Timer {
         id: firstHandleNotches
         interval: 100
@@ -88,6 +86,7 @@ ApplicationWindow {
     StatusBar {
         sbTheme: Theme.themeStatusbar
         sbColor: Theme.colorStatusbar
+        //navColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
     }
 
     MobileHeader {
@@ -98,10 +97,12 @@ ApplicationWindow {
 
     Drawer {
         id: appDrawer
-        width: (Screen.primaryOrientation === 1) ? 0.80 * applicationWindow.width : 0.60 * applicationWindow.width
-        height: applicationWindow.height
+        width: (Screen.primaryOrientation === 1) ? 0.80 * appWindow.width : 0.60 * appWindow.width
+        height: appWindow.height
 
         background: Rectangle {
+            color: Theme.colorBackground
+
             Rectangle {
                 x: parent.width - 1
                 width: 1
@@ -115,19 +116,44 @@ ApplicationWindow {
 
     // Events handling /////////////////////////////////////////////////////////
 
+    Component.onCompleted: {
+        firstHandleNotches.restart()
+    }
+
     Connections {
         target: appHeader
         onLeftMenuClicked: {
-            if (appHeader.leftMenuMode === "drawer")
+            if (appHeader.leftMenuMode === "drawer") {
                 appDrawer.open()
-            else {
-                appContent.state = "MediaList"
-                screenMediaList.closeDialog()
+            } else {
+                backAction()
             }
         }
         onRightMenuClicked: {
             //
         }
+    }
+
+    function backAction() {
+        if (appContent.state === "Tutorial" && screenTutorial.exitTo === "MediaList") return; // do nothing
+
+        if (appContent.state === "Tutorial") {
+            appContent.state = screenTutorial.exitTo
+        } else if (appContent.state === "Permissions") {
+            appContent.state = "About"
+        } else {
+            appContent.state = "MediaList"
+            screenMediaList.closeDialog()
+        }
+    }
+    function forwardAction() {
+/*
+        if (appContent.state === "MediaList") {
+            if (media) {
+                appContent.state = "MediaInfos"
+             }
+        }
+*/
     }
 
     Connections {
@@ -154,6 +180,15 @@ ApplicationWindow {
         }
     }
 
+    Shortcut {
+        sequence: StandardKey.Back
+        onActivated: backAction()
+    }
+    Shortcut {
+        sequence: StandardKey.Forward
+        onActivated: forwardAction()
+    }
+
     Timer {
         id: exitTimer
         interval: 3000
@@ -173,19 +208,17 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
-                if (appContent.state === "MediaList") {
-                    if (screenMediaList.selectionList.length !== 0) {
-                        screenMediaList.exitSelectionMode()
-                    } else {
-                        if (exitTimer.running)
-                            Qt.quit()
-                        else
-                            exitTimer.start()
-                    }
+            if (appContent.state === "MediaList") {
+                if (screenMediaList.selectionList.length !== 0) {
+                    screenMediaList.exitSelectionMode()
                 } else {
-                    appContent.state = "MediaList"
+                    if (exitTimer.running)
+                        Qt.quit()
+                    else
+                        exitTimer.start()
                 }
+            } else {
+                backAction()
             }
         }
 
@@ -204,6 +237,10 @@ ApplicationWindow {
         Settings {
             anchors.fill: parent
             id: screenSettings
+        }
+        Permissions {
+            anchors.fill: parent
+            id: screenPermissions
         }
         About {
             anchors.fill: parent
@@ -235,6 +272,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -244,6 +282,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -252,6 +291,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: true; visible: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -261,6 +301,17 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+            },
+            State {
+                name: "Permissions"
+                PropertyChanges { target: appHeader; title: qsTr("Permissions"); }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
+                PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: true; enabled: true; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -270,44 +321,13 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; }
             }
         ]
     }
 
-    ////////////////
-
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: {
-            if (appContent.state === "Tutorial") return;
-
-            if (mouse.button === Qt.BackButton) {
-                appContent.state = "MediaList"
-            } else if (mouse.button === Qt.ForwardButton) {
-                if (appContent.state === "MediaList")
-                    //if (currentDevice)
-                        appContent.state = "MediaInfos"
-            }
-        }
-    }
-    Shortcut {
-        sequence: StandardKey.Back
-        onActivated: {
-            if (appContent.state === "Tutorial" || appContent.state === "MediaList") return;
-            appContent.state = "MediaList"
-        }
-    }
-    Shortcut {
-        sequence: StandardKey.Forward
-        onActivated: {
-            if (appContent.state !== "MediaList") return;
-            appContent.state = "MediaInfos"
-        }
-    }
-
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
     DropArea {
         id: dropArea
@@ -318,7 +338,6 @@ ApplicationWindow {
             if (drag.hasUrls) {
                 dropAreaIndicator.color = Theme.colorRed
                 dropAreaImage.source = "qrc:/assets/icons_material_media/baseline-broken_image-24px.svg"
-                dropAreaIndicator.visible = true
                 dropAreaIndicator.opacity = 1
 
                 for (var i = 0; i < drag.urls.length; i++) {
@@ -334,14 +353,15 @@ ApplicationWindow {
             dropAreaIndicator.opacity = 0
         }
         onDropped: {
-            dropAreaIndicator.visible = false
             dropAreaIndicator.opacity = 0
 
             if (drop.hasUrls) {
                 for (var i = 0; i < drop.urls.length; i++) {
-                    if (UtilsPath.isMediaFile(drop.urls[i])) {
-                        //console.log("DropArea::onDropped() << " + drop.urls[i])
-                        screenMediaList.loadMedia(UtilsPath.cleanUrl(drop.urls[i]))
+                    //console.log("dropped URL: " + drop.urls[i])
+                    var fp = UtilsPath.cleanUrl(drop.urls[i]);
+
+                    if (UtilsPath.isMediaFile(fp)) {
+                        screenMediaList.loadMedia(fp)
                         break;
                     }
                 }
@@ -355,11 +375,11 @@ ApplicationWindow {
             radius: 320
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            //anchors.verticalCenterOffset: 0
+            anchors.verticalCenterOffset: 0
 
             color: Theme.colorForeground
             opacity: 0
-            Behavior on opacity { OpacityAnimator { duration: 333 } }
+            Behavior on opacity { OpacityAnimator { duration: 200 } }
 
             ImageSvg {
                 id: dropAreaImage
@@ -374,7 +394,19 @@ ApplicationWindow {
         }
     }
 
-    ////////////////
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.BackButton | Qt.ForwardButton
+        onClicked: {
+            if (mouse.button === Qt.BackButton) {
+                backAction()
+            } else if (mouse.button === Qt.ForwardButton) {
+                forwardAction()
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
         id: appTabletMenu

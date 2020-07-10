@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.9
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 import Qt.labs.folderlistmodel 2.12
 
@@ -8,6 +8,7 @@ import "qrc:/js/UtilsPath.js" as UtilsPath
 
 Rectangle {
     id: fileDialogMobile
+
     anchors.fill: parent
     visible: false
     color: Theme.colorBackground
@@ -203,7 +204,7 @@ Rectangle {
 
         Rectangle {
             height: 1
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+            color: Theme.colorSeparator
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -283,10 +284,10 @@ Rectangle {
             }
 
             //Rectangle { width: parent.width; height: 1; color: Theme.colorHeader; visible: index == 0; }
-            Rectangle { width: parent.width; height: 1; anchors.bottom: parent.bottom; color: Theme.colorHeader; }
+            Rectangle { width: parent.width; height: 1; anchors.bottom: parent.bottom; color: Theme.colorSeparator; opacity: 0.66; }
             MouseArea { anchors.fill: parent; onClicked: fileDialogMobile.onRowClick(index, fileURL); }
 
-            Button {
+            ButtonWireframe {
                 width: 72
                 height: 28
                 anchors.right: parent.right
