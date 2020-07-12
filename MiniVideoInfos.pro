@@ -26,6 +26,9 @@ win32 { DEFINES += _USE_MATH_DEFINES }
 # UI utils for mobile OS
 include(src/thirdparty/MobileUI/MobileUI.pri)
 
+# Sharing utils for mobile OS
+include(src/thirdparty/MobileSharing/MobileSharing.pri)
+
 DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
@@ -183,11 +186,15 @@ android {
     QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
     QMAKE_BUNDLE = infos
 
-    # org.qtproject.qt5.android.bindings.QtActivity
-    OTHER_FILES += assets/android/src/com/minivideo/infos/QShareActivity.java
+    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
+
+    OTHER_FILES += assets/android/src/com/minivideo/infos/QShareActivity.java \
+                   assets/android/src/com/minivideo/utils/QShareUtils.java \
+                   assets/android/src/com/minivideo/utils/QSharePathResolver.java
 
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
-    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
+    #DISTFILES += android/build.gradle
+
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so

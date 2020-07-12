@@ -114,6 +114,23 @@ ApplicationWindow {
         MobileDrawer { id: drawerscreen }
     }
 
+    // Sharing handling /////////////////////////////////////////////////////////
+
+    Connections {
+        target: utilsShare
+        onFileUrlReceived: {
+            console.log("onFileUrlReceived + " + url)
+            screenMediaList.loadMedia(url)
+        }
+    }
+    Connections {
+        target: utilsShare
+        onFileReceivedAndSaved: {
+            console.log("onFileReceivedAndSaved + " + url)
+            screenMediaList.loadMedia(url)
+        }
+    }
+
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {

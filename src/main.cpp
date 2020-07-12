@@ -28,11 +28,12 @@
 #include "mediamanager.h"
 
 #include <MobileUI.h>
+#include <SharingApplication.h>
 
+#include "stdlib.h"
 #include <QtGlobal>
 #include <QTranslator>
 #include <QLibraryInfo>
-#include <QApplication>
 #include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 
-    QApplication app(argc, argv);
+    SharingApplication app(argc, argv);
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     QIcon appIcon(":/assets/logos/logo.svg");
@@ -86,8 +87,7 @@ int main(int argc, char *argv[])
     MediaManager *mm = new MediaManager();
     if (!mm) return EXIT_FAILURE;
 
-    qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"),
-                             "ThemeEngine", 1, 0, "Theme");
+    qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
 
     // Then we start the UI
     QQmlApplicationEngine engine;
@@ -98,6 +98,8 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsScreen", utilsScreen);
 
     MiniVideoQML::registerQML();
+    app.registerQML(engine_context);
+
     engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
     if (engine.rootObjects().isEmpty()) return EXIT_FAILURE;
 

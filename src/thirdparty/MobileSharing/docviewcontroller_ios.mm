@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2016 J-P Nurmi
+ * Copyright (c) 2017 Ekkehard Gentz (ekke)
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,43 +19,31 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
-*/
+ */
 
-#ifndef STATUSBAR_H
-#define STATUSBAR_H
+#import "DocViewController.hpp"
 
-#include <QObject>
-#include <QColor>
+/* ************************************************************************** */
 
-class StatusBar : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(bool available READ isAvailable CONSTANT)
+@interface DocViewController ()
+@end
+@implementation DocViewController
+#pragma mark -
+#pragma mark View Life Cycle
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+#pragma mark -
+#pragma mark Document Interaction Controller Delegate Methods
+- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller {
+#pragma unused (controller)
+    return self;
+}
+- (void)documentInteractionControllerDidEndPreview: (UIDocumentInteractionController *) controller {
+#pragma unused (controller)
+    self.mIosShareUtils->handleDocumentPreviewDone(self.requestId);
+    [self removeFromParentViewController];
+}
+@end
 
-    Q_PROPERTY(QColor sbColor READ sbColor WRITE setSbColor)
-    Q_PROPERTY(Theme sbTheme READ sbTheme WRITE setSbTheme)
-
-    Q_PROPERTY(QColor navColor READ navColor WRITE setNavColor)
-    Q_PROPERTY(Theme navTheme READ navTheme WRITE setNavTheme)
-
-public:
-    explicit StatusBar(QObject *parent = nullptr);
-    static bool isAvailable();
-
-    enum Theme { Light, Dark };
-    Q_ENUM(Theme)
-
-    static QColor sbColor();
-    static void setSbColor(const QColor &color);
-
-    static Theme sbTheme();
-    static void setSbTheme(Theme theme);
-
-    static QColor navColor();
-    static void setNavColor(const QColor &color);
-
-    static Theme navTheme();
-    static void setNavTheme(Theme theme);
-};
-
-#endif // STATUSBAR_H
+/* ************************************************************************** */
