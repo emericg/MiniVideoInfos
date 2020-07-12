@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 
 import ThemeEngine 1.0
-import StatusBar 0.1
+import MobileUI 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
 
 ApplicationWindow {
@@ -83,10 +83,10 @@ ApplicationWindow {
 */
     }
 
-    StatusBar {
-        sbTheme: Theme.themeStatusbar
-        sbColor: Theme.colorStatusbar
-        //navColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
+    MobileUI {
+        statusbarColor: Theme.colorStatusbar
+        statusbarTheme: Theme.themeStatusbar
+        //navbarColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
     }
 
     MobileHeader {

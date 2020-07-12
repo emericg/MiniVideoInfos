@@ -27,7 +27,7 @@
 #include "settingsmanager.h"
 #include "mediamanager.h"
 
-#include <statusbar.h>
+#include <MobileUI.h>
 
 #include <QtGlobal>
 #include <QTranslator>
@@ -60,9 +60,9 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("MiniVideo");
 
     // Keep the StatusBar the same color as the splashscreen until UI starts
-    StatusBar sb;
-    sb.setSbColor("#fff");
-    qmlRegisterType<StatusBar>("StatusBar", 0, 1, "StatusBar");
+    MobileUI ui;
+    ui.setStatusbarColor("#fff");
+    qmlRegisterType<MobileUI>("MobileUI", 1, 0, "MobileUI");
 /*
     // i18n
     QTranslator qtTranslator;

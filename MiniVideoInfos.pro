@@ -23,8 +23,8 @@ ios | android { DEFINES += USE_CONTRIBS }
 
 win32 { DEFINES += _USE_MATH_DEFINES }
 
-# StatusBar for mobile OS
-include(src/thirdparty/StatusBar/statusbar.pri)
+# UI utils for mobile OS
+include(src/thirdparty/MobileUI/MobileUI.pri)
 
 DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_TAGLIB
