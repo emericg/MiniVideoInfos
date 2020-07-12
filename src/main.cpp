@@ -20,9 +20,9 @@
  * \date      2019
  */
 
-#include "minivideo_qml.h"
 #include "utils_app.h"
 #include "utils_screen.h"
+#include "minivideo_qml.h"
 
 #include "settingsmanager.h"
 #include "mediamanager.h"
@@ -86,8 +86,6 @@ int main(int argc, char *argv[])
     MediaManager *mm = new MediaManager();
     if (!mm) return EXIT_FAILURE;
 
-    MiniVideoQML::declareQML();
-
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"),
                              "ThemeEngine", 1, 0, "Theme");
 
@@ -99,9 +97,9 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
 
+    MiniVideoQML::registerQML();
     engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
-    if (engine.rootObjects().isEmpty())
-        return EXIT_FAILURE;
+    if (engine.rootObjects().isEmpty()) return EXIT_FAILURE;
 
     // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));

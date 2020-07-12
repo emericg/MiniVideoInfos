@@ -40,9 +40,9 @@ public:
     MiniVideoQML() = default;
    ~MiniVideoQML() = default;
 
-    static void declareQML()
+    static void registerQML()
     {
-        qmlRegisterType<MiniVideoQML>("MiniVideo", 0, 10, "MiniVideo");
+        qmlRegisterType<MiniVideoQML>("MiniVideo", 0, 12, "MiniVideo");
     }
 
     Q_ENUM(StreamType_e)

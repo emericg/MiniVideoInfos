@@ -131,6 +131,9 @@ void android_screen_keep_on(bool on);
  *
  * Lock screen orientation, using:
  * - https://developer.android.com/reference/android/app/Activity.html#setRequestedOrientation(int)
+ *
+ * You can achieve similar functionality through application manifest:
+ * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
  */
 void android_screen_lock_orientation(int orientation);
 
@@ -142,8 +145,8 @@ void android_screen_lock_orientation(int orientation);
  *
  * Need VIBRATE permission.
  *
- * - 25 is a small keyboard like vibration
- * - 100 is a
+ * - 25 is a small 'keyboard like' vibration
+ * - 100 is a regular 'notification' vibration
  */
 void android_vibrate(int milliseconds);
 

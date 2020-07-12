@@ -562,7 +562,7 @@ bool Media::getMetadataFromAudio()
 
 #ifdef ENABLE_TAGLIB
     TagLib::FileRef f(m_path.toLocal8Bit());
-    if(!f.isNull() && f.tag())
+    if (!f.isNull() && f.tag())
     {
         m_hasAudioTags = true;
         status = true;
@@ -634,7 +634,7 @@ bool Media::getMetadataFromAudio()
         //TagLib::ID3v2::Tag *id32 = f.();
     }
 
-    if(!f.isNull() && f.audioProperties())
+    if (!f.isNull() && f.audioProperties())
     {
         TagLib::AudioProperties *properties = f.audioProperties();
 

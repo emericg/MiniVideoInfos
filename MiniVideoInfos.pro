@@ -34,9 +34,9 @@ DEFINES += ENABLE_LIBEXIF
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \
+            src/media.cpp \
             src/mediamanager.cpp \
             src/settingsmanager.cpp \
-            src/media.cpp \
             src/minivideo_track_qml.cpp \
             src/minivideo_textexport_qt.cpp \
             src/minivideo_utils_qt.cpp \
@@ -45,9 +45,9 @@ SOURCES  += src/main.cpp \
             src/utils_android.cpp \
             src/utils_ios.cpp
 
-HEADERS  += src/settingsmanager.h \
-            src/media.h \
+HEADERS  += src/media.h \
             src/mediamanager.h \
+            src/settingsmanager.h \
             src/minivideo_qml.h \
             src/minivideo_track_qml.h \
             src/minivideo_textexport_qt.h \
