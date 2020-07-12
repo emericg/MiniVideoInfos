@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-#import "DocViewController.hpp"
+#import "docviewcontroller_ios.h"
 
 /* ************************************************************************** */
 

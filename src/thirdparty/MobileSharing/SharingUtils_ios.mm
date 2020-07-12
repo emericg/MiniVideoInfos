@@ -21,8 +21,8 @@
  * SOFTWARE.
  */
 
-#import "SharingUtils_ios.hpp"
-#import "docviewcontroller.hpp"
+#import "SharingUtils_ios.h"
+#import "docviewcontroller_ios.h"
 
 #import <UIKit/UIKit.h>
 #import <QGuiApplication>

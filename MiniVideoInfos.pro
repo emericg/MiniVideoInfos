@@ -90,7 +90,7 @@ contains(DEFINES, USE_CONTRIBS) {
     }
     ios { # QMAKE_APPLE_DEVICE_ARCHS available: armv7 arm64
         PLATFORM = "iOS"
-        ARCH = "simulator" # can be simulator, armv7 and armv8
+        ARCH = "armv8" # can be simulator, armv7 and armv8
         QMAKE_APPLE_DEVICE_ARCHS = "arm64" # Force 'arm64' and ignore 'armv7'
     }
 
@@ -271,8 +271,8 @@ ios {
     QMAKE_BUNDLE = infos
 
     # OS icons
-    QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
-    QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
+    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist

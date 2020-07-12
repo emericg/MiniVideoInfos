@@ -27,7 +27,7 @@ Item {
 
         function updateIOSHeader() {
             if (Qt.platform.os === "ios") {
-                if (screenStatusbarPadding != 0 && Theme.currentTheme === ThemeEngine.THEME_DARK)
+                if (screenStatusbarPadding != 0)
                     rectangleStatusbar.height = screenStatusbarPadding
                 else
                     rectangleStatusbar.height = 0

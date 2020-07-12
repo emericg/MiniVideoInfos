@@ -9,13 +9,11 @@ Rectangle {
     z: 10
 
     property int headerHeight: 52
-
     property string title: "MiniVideo Infos"
     property string leftMenuMode: "drawer" // drawer / back / close
 
     signal leftMenuClicked()
     signal rightMenuClicked()
-    signal deviceRefreshButtonClicked()
 
     onLeftMenuModeChanged: {
         if (leftMenuMode === "drawer")
@@ -25,6 +23,11 @@ Rectangle {
         else // back
             leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // prevent clicks into this area
+    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
     Item {
         anchors.fill: parent
@@ -46,9 +49,11 @@ Rectangle {
             id: leftArea
             width: headerHeight
             height: headerHeight
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
             anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+
+            visible: true
             onClicked: leftMenuClicked()
 
             ImageSvg {

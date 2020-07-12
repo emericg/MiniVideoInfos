@@ -39,9 +39,9 @@
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-static UIStatusBarStyle statusBarStyle(StatusBar::Theme theme)
+static UIStatusBarStyle statusBarStyle(MobileUI::Theme theme)
 {
-    if (theme == StatusBar::Dark)
+    if (theme == MobileUI::Dark)
         return UIStatusBarStyleLightContent;
     else if (@available(iOS 13.0, *))
         return UIStatusBarStyleDarkContent;
@@ -61,15 +61,15 @@ static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
 
 void togglePreferredStatusBarStyle()
 {
-    UIStatusBarStyle style = statusBarStyle(StatusBar::Light);
-    if(StatusBarPrivate::sbTheme == StatusBar::Light) {
-        style = statusBarStyle(StatusBar::Dark);
+    UIStatusBarStyle style = statusBarStyle(MobileUI::Light);
+    if(MobileUIPrivate::statusbarTheme == MobileUI::Light) {
+        style = statusBarStyle(MobileUI::Dark);
     }
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
     QTimer::singleShot(200, []() {
-        UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
+        UIStatusBarStyle style = statusBarStyle(MobileUIPrivate::statusbarTheme);
         UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
         if (keyWindow)
             setPreferredStatusBarStyle(keyWindow, style);
@@ -78,7 +78,7 @@ void togglePreferredStatusBarStyle()
 
 static void updatePreferredStatusBarStyle()
 {
-    UIStatusBarStyle style = statusBarStyle(StatusBarPrivate::sbTheme);
+    UIStatusBarStyle style = statusBarStyle(MobileUIPrivate::statusbarTheme);
     UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     if (keyWindow)
         setPreferredStatusBarStyle(keyWindow, style);
@@ -86,17 +86,17 @@ static void updatePreferredStatusBarStyle()
 
 /* ************************************************************************** */
 
-bool StatusBarPrivate::isAvailable_sys()
+bool MobileUIPrivate::isAvailable_sys()
 {
     return true;
 }
 
-void StatusBarPrivate::setColor_statusbar(const QColor &color)
+void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
     Q_UNUSED(color)
 }
 
-void StatusBarPrivate::setTheme_statusbar(StatusBar::Theme)
+void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme)
 {
     updatePreferredStatusBarStyle();
 
@@ -110,12 +110,12 @@ void StatusBarPrivate::setTheme_statusbar(StatusBar::Theme)
     QObject::connect(screen, &QScreen::orientationChanged, qApp, [](Qt::ScreenOrientation) { togglePreferredStatusBarStyle(); }, Qt::UniqueConnection);
 }
 
-void StatusBarPrivate::setColor_navbar(const QColor &color)
+void MobileUIPrivate::setColor_navbar(const QColor &color)
 {
     Q_UNUSED(color)
 }
 
-void StatusBarPrivate::setTheme_navbar(StatusBar::Theme theme)
+void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 {
     Q_UNUSED(theme)
 }

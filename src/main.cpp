@@ -22,6 +22,7 @@
 
 #include "utils_app.h"
 #include "utils_screen.h"
+#include "utils_language.h"
 #include "minivideo_qml.h"
 
 #include "settingsmanager.h"
@@ -75,17 +76,21 @@ int main(int argc, char *argv[])
     app.installTranslator(&appTranslator);
 */
     // Init MiniVideoInfos components
+    SettingsManager *sm = SettingsManager::getInstance();
+    if (!sm) return EXIT_FAILURE;
+
+    MediaManager *mm = new MediaManager();
+    if (!mm) return EXIT_FAILURE;
+
+    // Init MiniVideoInfos utils
     UtilsApp *utilsApp = UtilsApp::getInstance();
     if (!utilsApp) return EXIT_FAILURE;
 
     UtilsScreen *utilsScreen = new UtilsScreen();
     if (!utilsScreen) return EXIT_FAILURE;
 
-    SettingsManager *sm = SettingsManager::getInstance();
-    if (!sm) return EXIT_FAILURE;
-
-    MediaManager *mm = new MediaManager();
-    if (!mm) return EXIT_FAILURE;
+    //UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
+    //if (!utilsLanguage) return EXIT_FAILURE;
 
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
 
@@ -96,12 +101,16 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("mediaManager", mm);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
+    //engine_context->setContextProperty("utilsLanguage", utilsLanguage);
 
     MiniVideoQML::registerQML();
     app.registerQML(engine_context);
 
     engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
     if (engine.rootObjects().isEmpty()) return EXIT_FAILURE;
+
+    // For i18n retranslate
+    //utilsLanguage->setQmlEngine(&engine);
 
     // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
