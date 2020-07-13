@@ -165,7 +165,7 @@ ScrollView {
 
             Item { ////
                 id: item_name
-                height: (info_name.height > 24) ? (info_name.height + 4) : 24
+                height: Math.max(UtilsNumber.alignTo(info_name.contentHeight + 4, 4), 24)
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
@@ -195,7 +195,7 @@ ScrollView {
             }
             Item { ////
                 id: item_path
-                height: (info_path.height > 24) ? (info_path.height + 4) : 24
+                height: Math.max(UtilsNumber.alignTo(info_path.contentHeight + 4, 4), 24)
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
@@ -327,22 +327,32 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
-            Row { ////
+            Item { ////
                 id: item_container
+                height: Math.max(UtilsNumber.alignTo(info_container.contentHeight + 4, 4), 24)
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                anchors.right: parent.right
 
                 Text {
+                    id: legend_container
+                    height: 24
+                    anchors.left: parent.left
+
                     text: qsTr("container")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
                     id: info_container
+                    anchors.left: legend_container.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
                     color: Theme.colorText
                     font.pixelSize: 15
+                    wrapMode: Text.WordWrap
                 }
             }
             Row { ////
@@ -365,7 +375,7 @@ ScrollView {
             }
             Item { ////
                 id: item_capp
-                height: (info_capp.height > 24) ? (info_capp.height + 4) : 24
+                height: Math.max(UtilsNumber.alignTo(info_capp.contentHeight + 4, 4), 24)
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
@@ -395,7 +405,7 @@ ScrollView {
             }
             Item { ////
                 id: item_clib
-                height: (info_clib.height > 24) ? (info_clib.height + 4) : 24
+                height: Math.max(UtilsNumber.alignTo(info_clib.contentHeight + 4, 4), 24)
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
@@ -1008,7 +1018,8 @@ ScrollView {
                         font.pixelSize: 15
                     }
                     Text {
-                        text: UtilsMedia.bitrateToString(modelData.bitrate_avg) + "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
+                        text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
+                              "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
                         color: Theme.colorText
                         font.pixelSize: 15
                     }

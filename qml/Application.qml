@@ -97,7 +97,7 @@ ApplicationWindow {
 
     Drawer {
         id: appDrawer
-        width: (Screen.primaryOrientation === 1) ? 0.80 * appWindow.width : 0.60 * appWindow.width
+        width: (Screen.primaryOrientation === 1 || appWindow.width < 480) ? 0.80 * appWindow.width : 0.50 * appWindow.width
         height: appWindow.height
 
         background: Rectangle {

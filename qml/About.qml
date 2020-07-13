@@ -220,7 +220,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         acceptedButtons: Qt.NoButton
                         cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
@@ -262,7 +262,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         onClicked: {
                             if (Qt.platform.os === "android")
                                 Qt.openUrlExternally("market://details?id=com.minivideo.infos")
@@ -308,7 +308,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.margins: -8
+                        anchors.margins: -12
                         onClicked: screenTutorial.reopen()
                     }
                 }
@@ -378,7 +378,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    anchors.margins: -8
+                    anchors.margins: -12
                     onClicked: appContent.state = "Permissions"
                 }
             }
