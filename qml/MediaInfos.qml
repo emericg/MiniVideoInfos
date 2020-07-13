@@ -27,7 +27,7 @@ Item {
         //console.log("screenMediaInfos.loadMediaInfos(" + mediaItem.name + ")")
 
         // Title
-        if (mediaItem.name.length < 24)
+        if (!isPhone || mediaItem.name.length < 24)
             appHeader.title = mediaItem.name + "." + mediaItem.ext
         else
             appHeader.title = "MiniVideo Infos"
@@ -129,10 +129,10 @@ Item {
 
         Column {
             id: column
-            anchors.verticalCenterOffset: -4
-            anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -4
             spacing: 10
 
             Row {
@@ -293,7 +293,8 @@ Item {
     SwipeView {
         id: mediaPages
 
-        anchors.top: rectangleHeader.bottom
+        anchors.top: parent.top
+        anchors.topMargin: rectangleHeader.visible ? rectangleHeader.height : 0
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

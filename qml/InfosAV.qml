@@ -10,8 +10,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 ScrollView {
     id: scrollView_av
-    width: 480
-    height: 720
+    implicitWidth: 480
+    implicitHeight: 720
     contentWidth: -1
 
     function loadTrack(trackItem) {
@@ -172,15 +172,16 @@ ScrollView {
         }
     }
 
-    Column {
-        id: columnStuff
-        anchors.top: parent.top
-        anchors.topMargin: 16
-        anchors.right: parent.right
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
+    ////////////////////////////////////////////////////////////////////////////
 
+    Column {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        topPadding: 16
+        bottomPadding: 16 + rectangleMenus.height
         spacing: 8
 
         ////////////////
@@ -1128,11 +1129,6 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
-        }
-
-        Item { // HACK
-            width: 24
-            height: 24 + rectangleMenus.height
         }
     }
 }

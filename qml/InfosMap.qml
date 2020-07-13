@@ -9,8 +9,8 @@ import "qrc:/js/UtilsString.js" as UtilsString
 
 Item {
     id: infos_maps
-    width: 480
-    height: 720
+    implicitWidth: 480
+    implicitHeight: 720
 
     property var center: QtPositioning.coordinate(45.5, 6)
 
@@ -18,7 +18,6 @@ Item {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
         if (mediaItem.latitude !== 0.0) {
-
             center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
 
             mapPointGPS.center = center
@@ -43,10 +42,9 @@ Item {
     Map {
         id: mapPointGPS
         anchors.top: parent.top
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.topMargin: 0
         //z: parent.z + 1
 
         tilt: 0

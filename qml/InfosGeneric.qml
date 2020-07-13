@@ -9,8 +9,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 ScrollView {
     id: scrollView_generic
-    width: 480
-    height: 720
+    implicitWidth: 480
+    implicitHeight: 720
     contentWidth: -1
 
     function loadGeneric() {
@@ -27,8 +27,7 @@ ScrollView {
 
         item_capp.visible = (mediaItem.creation_app.length > 0)
         info_capp.text = mediaItem.creation_app
-        item_clib.visible = (mediaItem.creation_lib.length > 0 &&
-                             mediaItem.creation_lib !== mediaItem.creation_app)
+        item_clib.visible = (mediaItem.creation_lib.length > 0 && mediaItem.creation_lib !== mediaItem.creation_app)
         info_clib.text = mediaItem.creation_lib
 
         item_container.visible = (mediaItem.container.length > 0)
@@ -116,11 +115,12 @@ ScrollView {
 
     Column {
         anchors.top: parent.top
-        anchors.topMargin: 16
-        anchors.right: parent.right
         anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
 
+        topPadding: 16
+        bottomPadding: 16 + rectangleMenus.height
         spacing: 8
 
         ////////////////
@@ -1123,11 +1123,6 @@ ScrollView {
                     }
                 }
             }
-        }
-
-        Item { // HACK
-            width: 24
-            height: 24 + rectangleMenus.height
         }
     }
 }

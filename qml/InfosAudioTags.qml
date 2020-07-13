@@ -9,8 +9,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 ScrollView {
     id: scrollView_audio_tags
-    width: 480
-    height: 720
+    implicitWidth: 480
+    implicitHeight: 720
     contentWidth: -1
 
     function loadTags(mediaItem) {
@@ -33,14 +33,17 @@ ScrollView {
         columnThumbnail.visible = false
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Column {
-        id: columnStuff
-        spacing: 8
         anchors.top: parent.top
-        anchors.topMargin: 16
-        anchors.right: parent.right
         anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
+
+        topPadding: 16
+        bottomPadding: 16 + rectangleMenus.height
+        spacing: 8
 
         ////////////////
 
@@ -307,13 +310,6 @@ ScrollView {
                     font.pixelSize: 15
                 }
             }
-        }
-
-        ////////////////
-
-        Item { // HACK
-            width: 24
-            height: 24 + rectangleMenus.height
         }
     }
 }

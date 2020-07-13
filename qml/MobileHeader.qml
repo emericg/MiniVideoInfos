@@ -26,6 +26,15 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    Rectangle {
+        height: 1
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        visible: (!isPhone && appContent.state === "MediaInfos")
+        color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+    }
+
     // prevent clicks into this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
@@ -63,80 +72,34 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
+
                 source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
                 color: Theme.colorHeaderContent
             }
         }
 
-        Row {
-            id: menu
+        ////////////
+
+        MouseArea {
+            id: rightArea
+            width: headerHeight
+            height: headerHeight
             anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.bottom: parent.bottom
 
-            spacing: 0
-            visible: true
+            visible: false
+            onClicked: rightMenuClicked()
 
-            ////////////
-/*
-            MouseArea {
-                id: refreshButton
-                width: headerHeight
-                height: headerHeight
+            ImageSvg {
+                id: rightMenuImg
+                width: headerHeight/2
+                height: headerHeight/2
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
 
-                visible: (deviceManager.bluetooth && ((appContent.state === "DeviceSensor") || (appContent.state === "DeviceThermo")))
-                onClicked: deviceRefreshButtonClicked()
-
-                ImageSvg {
-                    id: refreshButtonImg
-                    width: headerHeight/2
-                    height: headerHeight/2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                    color: Theme.colorHeaderContent
-
-                    NumberAnimation on rotation {
-                        id: refreshAnimation
-                        duration: 2000
-                        from: 0
-                        to: 360
-                        loops: Animation.Infinite
-                        running: currentDevice.updating
-                        onStopped: refreshAnimationStop.start()
-                    }
-                    NumberAnimation on rotation {
-                        id: refreshAnimationStop
-                        duration: 1000;
-                        to: 360;
-                        easing.type: Easing.Linear
-                        running: false
-                    }
-                }
-            }
-*/
-            MouseArea {
-                id: rightMenu
-                width: headerHeight
-                height: headerHeight
-
-                visible: false
-                onClicked: rightMenuClicked()
-
-                ImageSvg {
-                    id: rightMenuImg
-                    width: headerHeight/2
-                    height: headerHeight/2
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-                    color: Theme.colorHeaderContent
-                }
+                source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                color: Theme.colorHeaderContent
             }
         }
     }

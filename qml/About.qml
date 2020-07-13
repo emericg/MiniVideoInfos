@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: aboutScreen
@@ -138,16 +139,18 @@ Item {
                     primaryColor: Theme.colorHeaderContent
 
                     text: qsTr("SUPPORT")
-                    source: "qrc:/assets/icons_material/outline-mail_outline-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-support-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
                 }
             }
 
             ////////
 
+            Item { height: 1; width: 1; visible: isDesktop; } // spacer
+
             Item {
                 id: desc
-                height: 48
+                height: Math.max(UtilsNumber.alignTo(description.contentHeight, 8), 48)
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -159,24 +162,23 @@ Item {
                     height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: desc.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorText
                 }
 
-                TextArea {
+                Text {
                     id: description
                     anchors.left: parent.left
-                    anchors.leftMargin: 40
+                    anchors.leftMargin: 48
                     anchors.right: parent.right
                     anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: desc.verticalCenter
 
-                    color: Theme.colorText
                     text: qsTr("Get detailed informations about all kind of multimedia files!")
                     wrapMode: Text.WordWrap
-                    readOnly: true
+                    color: Theme.colorText
                     font.pixelSize: 16
                 }
             }
@@ -319,7 +321,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                //visible: (Qt.platform.os === "android")
+                visible: (Qt.platform.os === "android")
 
                 Rectangle {
                     height: 1
@@ -338,7 +340,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                //visible: (Qt.platform.os === "android")
+                visible: (Qt.platform.os === "android")
 
                 ImageSvg {
                     id: permissionsImg

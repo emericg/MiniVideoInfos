@@ -164,13 +164,11 @@ ApplicationWindow {
         }
     }
     function forwardAction() {
-/*
         if (appContent.state === "MediaList") {
-            if (media) {
+            if (screenMediaInfos.mediaItem != null) {
                 appContent.state = "MediaInfos"
              }
         }
-*/
     }
 
     Connections {
@@ -269,11 +267,11 @@ ApplicationWindow {
 
         onStateChanged: {
             if (state === "MediaList")
-                appHeader.leftMenuMode = "drawer"
+                appHeader.leftMenuMode = "drawer";
             else if (state === "Tutorial")
-                appHeader.leftMenuMode = "close"
+                appHeader.leftMenuMode = "close";
             else
-                appHeader.leftMenuMode = "back"
+                appHeader.leftMenuMode = "back";
 
             if (state === "Tutorial")
                 appDrawer.interactive = false;

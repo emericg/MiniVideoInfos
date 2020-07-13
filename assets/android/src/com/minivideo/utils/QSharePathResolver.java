@@ -47,7 +47,7 @@ public class QSharePathResolver {
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
             if (isExternalStorageDocument(uri)) {
-                Log.d("QSharePathResolver"," isExternalStorageDocument");
+                Log.d("QSharePathResolver", " isExternalStorageDocument");
 
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -58,10 +58,10 @@ public class QSharePathResolver {
                 }
                 // TODO handle non-primary volumes
             } else if (isDownloadsDocument(uri)) {
-                Log.d("QSharePathResolver"," isDownloadsDocument");
+                Log.d("QSharePathResolver", " isDownloadsDocument");
 
                 final String id = DocumentsContract.getDocumentId(uri);
-                Log.d("QSharePathResolver"," getDocumentId "+id);
+                Log.d("QSharePathResolver", " getDocumentId "+id);
                 long longId = 0;
 
                 try {
@@ -75,7 +75,7 @@ public class QSharePathResolver {
 
                 return getDataColumn(context, contentUri, null, null);
             } else if (isMediaDocument(uri)) {
-                Log.d("QSharePathResolver"," isMediaDocument");
+                Log.d("QSharePathResolver", " isMediaDocument");
 
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -95,7 +95,7 @@ public class QSharePathResolver {
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-                Log.d("QSharePathResolver"," is uri.getScheme()");
+                Log.d("QSharePathResolver", " is uri.getScheme()");
 
                 // Return the remote address
                 if (isGooglePhotosUri(uri))
@@ -103,7 +103,7 @@ public class QSharePathResolver {
 
                 return getDataColumn(context, uri, null, null);
             } else {
-                Log.d("QSharePathResolver"," is Other Provider");
+                Log.d("QSharePathResolver", " is Other Provider");
 
                 try {
                     InputStream attachment = context.getContentResolver().openInputStream(uri);

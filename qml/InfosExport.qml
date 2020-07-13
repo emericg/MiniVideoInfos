@@ -9,8 +9,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: infos_export
-    width: 480
-    height: 720
+    implicitWidth: 480
+    implicitHeight: 720
 
     function loadExport(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
@@ -20,6 +20,8 @@ Item {
 
         textArea.text = mediaItem.getExportString()
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Item { ////
         id: titleExport
