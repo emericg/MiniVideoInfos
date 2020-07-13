@@ -274,6 +274,10 @@ ios {
     #QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
     #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
 
+    #Q_ENABLE_BITCODE.name = ENABLE_BITCODE
+    #Q_ENABLE_BITCODE.value = NO
+    #QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
+
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
     QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal

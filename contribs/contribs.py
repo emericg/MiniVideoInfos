@@ -214,15 +214,18 @@ if not os.path.exists("src/" + FILE_minivideo):
     urllib.request.urlretrieve("https://github.com/emericg/MiniVideo/archive/master.zip", src_dir + FILE_minivideo)
 
 ## Android OpenSSL
-FILE_androidopenssl = "android_openssl-master.zip"
-DIR_androidopenssl = "android_openssl"
+for TARGET in TARGETS:
+    if OS_TARGET == "android":
+        FILE_androidopenssl = "android_openssl-master.zip"
+        DIR_androidopenssl = "android_openssl"
 
-if not os.path.exists("src/" + FILE_androidopenssl):
-    print("> Downloading " + FILE_androidopenssl + "...")
-    urllib.request.urlretrieve("https://github.com/KDAB/android_openssl/archive/master.zip", src_dir + FILE_androidopenssl)
-if not os.path.isdir("env/" + DIR_androidopenssl):
-    zipSSL = zipfile.ZipFile(src_dir + FILE_androidopenssl)
-    zipSSL.extractall("env/")
+        if not os.path.exists("src/" + FILE_androidopenssl):
+            print("> Downloading " + FILE_androidopenssl + "...")
+            urllib.request.urlretrieve("https://github.com/KDAB/android_openssl/archive/master.zip", src_dir + FILE_androidopenssl)
+        if not os.path.isdir("env/" + DIR_androidopenssl):
+            zipSSL = zipfile.ZipFile(src_dir + FILE_androidopenssl)
+            zipSSL.extractall("env/")
+        break
 
 ## linuxdeployqt
 ## version: git
@@ -268,15 +271,18 @@ for TARGET in TARGETS:
     elif OS_HOST == "Darwin":
         if OS_TARGET == "iOS":
             CMAKE_gen = "Xcode"
-            #IOS_DEPLOYMENT_TARGET="10.0"
+            #IOS_DEPLOYMENT_TARGET="10"
             build_shared = "OFF"
             build_static = "ON"
             if ARCH_TARGET == "simulator":
-                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DIOS_PLATFORM=SIMULATOR64"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DPLATFORM=SIMULATOR64"]
             elif ARCH_TARGET == "armv7":
-                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DIOS_PLATFORM=OS"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DPLATFORM=OS"]
+            elif ARCH_TARGET == "armv8":
+                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DPLATFORM=OS64"]
             else:
-                CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DIOS_PLATFORM=OS64", "-DENABLE_BITCODE=0"]
+                # Without custom toolchain
+                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=arm64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10"]
     elif OS_HOST == "Windows":
         CMAKE_gen = MSVC_GEN_VER
         if ARCH_TARGET == "armv7":
