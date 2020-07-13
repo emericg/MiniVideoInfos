@@ -108,13 +108,13 @@ Item {
 
         Column {
             id: columnCoordinates
-            spacing: 2
             anchors.top: parent.top
             anchors.topMargin: 12
-            anchors.right: parent.right
             anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 2
 
-            Item {
+            Item { ////
                 id: item_lat
                 height: 20
                 anchors.left: parent.left
@@ -123,9 +123,9 @@ Item {
                 anchors.rightMargin: 0
 
                 Row {
-                    anchors.verticalCenter: parent.verticalCenter ////
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
                     spacing: 16
 
                     Text {
@@ -142,7 +142,7 @@ Item {
                     }
                 }
             }
-            Item {
+            Item { ////
                 id: item_long
                 height: 20
                 anchors.left: parent.left
@@ -151,9 +151,9 @@ Item {
                 anchors.rightMargin: 0
 
                 Row {
-                    anchors.verticalCenter: parent.verticalCenter ////
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
                     spacing: 16
 
                     Text {
@@ -170,7 +170,7 @@ Item {
                     }
                 }
             }
-            Item {
+            Item { ////
                 id: item_altitude
                 height: 20
                 anchors.left: parent.left
@@ -179,10 +179,10 @@ Item {
                 anchors.rightMargin: 0
 
                 Row {
-                    id: row1
-                    anchors.verticalCenter: parent.verticalCenter ////
+                    id: row_altitude
                     anchors.left: parent.left
                     anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
                     spacing: 16
 
                     Text {
@@ -200,33 +200,33 @@ Item {
                     }
                 }
             }
-            Item {
+            Item { ////
                 id: item_track
-                anchors.rightMargin: 0
-                anchors.leftMargin: 56
-                anchors.left: parent.left
-                anchors.right: parent.right
                 height: 20
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 0
 
                 Row {
-                    id: row
-                    anchors.verticalCenter: parent.verticalCenter ////
+                    id: row_track
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 16
+
                     Text {
                         color: Theme.colorSubText
                         text: qsTr("track")
                         font.pixelSize: 15
                         wrapMode: Text.WordWrap
                     }
-
                     Text {
                         id: info_track
                         color: Theme.colorText
                         font.pixelSize: 15
                         wrapMode: Text.WordWrap
                     }
-                    anchors.leftMargin: 0
-                    anchors.left: parent.left
-                    spacing: 16
                 }
             }
         }

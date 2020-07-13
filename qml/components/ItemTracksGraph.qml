@@ -90,7 +90,7 @@ Item { ////
     }
 
     Row {
-        id: row ////
+        id: rowTrackSize ////
         anchors.top: rectangleTracks.bottom
         anchors.topMargin: 4
         anchors.horizontalCenter: parent.horizontalCenter

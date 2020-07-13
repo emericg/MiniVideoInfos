@@ -23,7 +23,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item { ////
+    Item {
         id: titleExport
         height: 32
         anchors.top: parent.top
@@ -76,6 +76,8 @@ Item {
         }
     }
 
+    ////////////////
+
     Rectangle {
         id: scrollArea
         anchors.top: titleExport.bottom
@@ -85,7 +87,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 68
+        anchors.bottomMargin: 12 + rectangleMenus.height
 
         color: "transparent"
         border.color: Theme.colorSeparator
@@ -96,6 +98,8 @@ Item {
 
             TextArea {
                 id: textArea
+                readOnly: true
+                clip: true
                 text: ""
                 color: Theme.colorText
                 font.family: {
@@ -110,7 +114,6 @@ Item {
                     else
                         return "Monospace"
                 }
-                readOnly: true
             }
         }
     }

@@ -14,6 +14,9 @@ ScrollView {
     implicitHeight: 720
     contentWidth: -1
 
+    ScrollBar.vertical.policy: ScrollBar.AsNeeded
+    ScrollBar.vertical.interactive: true
+
     function loadTrack(trackItem) {
         if (typeof trackItem === "undefined" || !trackItem) return
 

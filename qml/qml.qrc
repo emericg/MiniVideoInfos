@@ -6,6 +6,8 @@
         <file>Tutorial.qml</file>
         <file>MediaList.qml</file>
         <file>MediaInfos.qml</file>
+        <file>MediaInfos_row.qml</file>
+        <file>MediaInfos_swipeview.qml</file>
         <file>MediaWidget.qml</file>
         <file>About.qml</file>
         <file>Permissions.qml</file>
