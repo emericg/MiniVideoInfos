@@ -57,36 +57,102 @@ Item {
     ////////
 
     function loadSwipeView() {
+        mediaPages.interactive = false
         mediaPages.currentIndex = 0
+
+        mediaPages.removePage(pageVideo1)
+        mediaPages.removePage(pageVideo2)
+        mediaPages.removePage(pageAudio1)
+        mediaPages.removePage(pageAudio2)
+        mediaPages.removePage(pageAudio3)
+        mediaPages.removePage(pageAudio4)
+        mediaPages.removePage(pageAudioTags)
+        mediaPages.removePage(pageImageTags)
+        mapLoader.source = ""
+        mediaPages.removePage(pageMap)
+        mediaPages.removePage(pageExport)
+        menuVideo1.index = -1
+        menuVideo2.index = -1
+        menuAudio1.index = -1
+        menuAudio2.index = -1
+        menuAudio3.index = -1
+        menuAudio4.index = -1
+        menuAudioTags.index = -1
+        menuImageTags.index = -1
+        menuMap.index = -1
+        menuExport.index = -1
+
         content_generic.loadGeneric()
 
-        pageVideo.visible = mediaItem.hasVideo
-        menuVideo.visible = mediaItem.hasVideo
-        if (mediaItem.hasVideo) content_video.loadTrack(mediaItem.getVideoTrack(0))
+        if (mediaItem.hasVideo) {
+            if (mediaItem.getVideoTrackCount() >= 1) {
+                content_video1.loadTrack(mediaItem.getVideoTrack(0))
+                mediaPages.addPage(pageVideo1)
+                menuVideo1.index = mediaPages.count-1
+            }
+            if (mediaItem.getVideoTrackCount() >= 2) {
+                content_video2.loadTrack(mediaItem.getVideoTrack(1))
+                mediaPages.addPage(pageVideo2)
+                menuVideo2.index = mediaPages.count-1
+            }
+        }
 
-        pageAudio.visible = mediaItem.hasAudio
-        menuAudio.visible = mediaItem.hasAudio
-        if (mediaItem.hasAudio) content_audio.loadTrack(mediaItem.getAudioTrack(0))
+        if (mediaItem.hasAudio) {
+            if (mediaItem.getAudioTrackCount() >= 1) {
+                content_audio1.loadTrack(mediaItem.getAudioTrack(0))
+                mediaPages.addPage(pageAudio1)
+                menuAudio1.index = mediaPages.count-1
+            }
+            if (mediaItem.getAudioTrackCount() >= 2) {
+                content_audio2.loadTrack(mediaItem.getAudioTrack(1))
+                mediaPages.addPage(pageAudio2)
+                menuAudio2.index = mediaPages.count-1
+            }
+            if (mediaItem.getAudioTrackCount() >= 3) {
+                content_audio3.loadTrack(mediaItem.getAudioTrack(1))
+                mediaPages.addPage(pageAudio3)
+                menuAudio3.index = mediaPages.count-1
+            }
+            if (mediaItem.getAudioTrackCount() >= 4) {
+                content_audio4.loadTrack(mediaItem.getAudioTrack(1))
+                mediaPages.addPage(pageAudio4)
+                menuAudio4.index = mediaPages.count-1
+            }
+        }
 
-        pageAudioTags.visible = mediaItem.hasAudioTags
-        menuAudioTags.visible = mediaItem.hasAudioTags
-        if (mediaItem.hasAudioTags) content_audio_tags.loadTags(mediaItem)
+        if (mediaItem.hasAudioTags) {
+            content_audio_tags.loadTags(mediaItem)
+            mediaPages.addPage(pageAudioTags)
+            menuAudioTags.index = mediaPages.count-1
+        }
 
-        pageImageTags.visible = mediaItem.hasEXIF
-        menuImageTags.visible = mediaItem.hasEXIF
-        if (mediaItem.hasEXIF) content_image_tags.loadTags(mediaItem)
+        if (mediaItem.hasEXIF) {
+            content_image_tags.loadTags(mediaItem)
+            mediaPages.addPage(pageImageTags)
+            menuImageTags.index = mediaPages.count-1
+        }
 
-        pageMap.visible = mediaItem.hasGPS
-        menuMap.visible = mediaItem.hasGPS
-        if (mediaItem.hasGPS) content_map.loadGps(mediaItem)
+        if (mediaItem.hasGPS) {
+            if (mapLoader.status != Loader.Ready) {
+                mapLoader.source = "InfosMap.qml"
+            }
 
-        pageExport.visible = (settingsManager.exportEnabled && mediaItem.hasVideo)
-        menuExport.visible = (settingsManager.exportEnabled && mediaItem.hasVideo)
-        if (settingsManager.exportEnabled && mediaItem.hasVideo) content_export.loadExport(mediaItem)
+            content_map.loadGps(mediaItem)
+            mediaPages.addPage(pageMap)
+            menuMap.index = mediaPages.count-1
+        }
 
-        rectangleMenus.visible = (mediaItem.hasVideo || mediaItem.hasVideo ||
+        if (settingsManager.exportEnabled && mediaItem.hasVideo) {
+            content_export.loadExport(mediaItem)
+            mediaPages.addPage(pageExport)
+            menuExport.index = mediaPages.count-1
+        }
+
+        rectangleMenus.visible = (mediaItem.hasVideo || mediaItem.hasAudio ||
                                   mediaItem.hasAudioTags || mediaItem.hasEXIF ||
                                   mediaItem.hasGPS)
+
+        mediaPages.interactive = true
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -274,16 +340,12 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0 // (rectangleMenus.visible) ? rectangleMenus.height : 0
 
-        interactive: false
-        currentIndex: 0
-        onCurrentIndexChanged: {
-            //
-        }
+        interactive: true
 
         Item {
             id: pageGeneric
+            visible: true
             clip: true
 
             InfosGeneric {
@@ -292,64 +354,132 @@ Item {
             }
         }
 
-        Item {
-            id: pageVideo
-            clip: true
-            //visible: false
-
-            InfosAV {
-                id: content_video
-                anchors.fill: parent
-            }
+        function addPage(page) {
+            addItem(page)
+            page.visible = true
         }
 
-        Item {
-            id: pageAudio
-            clip: true
-
-            InfosAV {
-                id: content_audio
-                anchors.fill: parent
-            }
-        }
-        Item {
-            id: pageAudioTags
-            clip: true
-
-            InfosAudioTags {
-                id: content_audio_tags
-                anchors.fill: parent
-            }
+        function removePage(page) {
+            for (var n = 0; n < count; n++) { if (page === itemAt(n)) { removeItem(n) } }
+            page.visible = false
         }
 
-        Item {
-            id: pageImageTags
-            clip: true
-
-            InfosImageTags {
-                id: content_image_tags
-                anchors.fill: parent
+        function removePages() {
+            console.log("we have pages: " + count)
+            for (var n = 0; n < count; n++) {
+                itemAt(0).visible = false;
+                removeItem(0);
             }
+            console.log("now we have: " + mediaPages.count)
         }
+    }
 
-        Item {
-            id: pageMap
-            clip: true
+    ////////
 
-            InfosMap {
-                id: content_map
-                anchors.fill: parent
-            }
+    Item {
+        id: pageVideo1
+        visible: false
+        clip: true
+
+        InfosAV {
+            id: content_video1
+            anchors.fill: parent
         }
+    }
+    Item {
+        id: pageVideo2
+        visible: false
+        clip: true
 
-        Item {
-            id: pageExport
-            clip: true
+        InfosAV {
+            id: content_video2
+            anchors.fill: parent
+        }
+    }
 
-            InfosExport {
-                id: content_export
-                anchors.fill: parent
-            }
+    Item {
+        id: pageAudio1
+        visible: false
+        clip: true
+
+        InfosAV {
+            id: content_audio1
+            anchors.fill: parent
+        }
+    }
+    Item {
+        id: pageAudio2
+        visible: false
+        clip: true
+
+        InfosAV {
+            id: content_audio2
+            anchors.fill: parent
+        }
+    }
+    Item {
+        id: pageAudio3
+        visible: false
+        clip: true
+
+        InfosAV {
+            id: content_audio3
+            anchors.fill: parent
+        }
+    }
+    Item {
+        id: pageAudio4
+        visible: false
+        clip: true
+
+        InfosAV {
+            id: content_audio4
+            anchors.fill: parent
+        }
+    }
+
+    Item {
+        id: pageAudioTags
+        visible: false
+        clip: true
+
+        InfosAudioTags {
+            id: content_audio_tags
+            anchors.fill: parent
+        }
+    }
+
+    Item {
+        id: pageImageTags
+        visible: false
+        clip: true
+
+        InfosImageTags {
+            id: content_image_tags
+            anchors.fill: parent
+        }
+    }
+
+    property alias content_map: mapLoader.item
+    Item {
+        id: pageMap
+        visible: false
+        clip: true
+
+        Loader {
+            id: mapLoader
+            anchors.fill: parent
+        }
+    }
+
+    Item {
+        id: pageExport
+        visible: false
+        clip: true
+
+        InfosExport {
+            id: content_export
+            anchors.fill: parent
         }
     }
 
@@ -383,233 +513,61 @@ Item {
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
 
-            Item {
+            ItemSwipeMenu {
                 id: menuInfos
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 0)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 0
-                }
-
-                ImageSvg {
-                    id: imageI
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: imageI.bottom
-                    anchors.topMargin: 0
-
-                    text: qsTr("file")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+                title: qsTr("file")
+                icon: "file"
+                index: 0
             }
-
-            Item {
-                id: menuVideo
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 1)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 1
-                }
-
-                ImageSvg {
-                    id: imageV
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-                Text {
-                    anchors.top: imageV.bottom
-                    anchors.topMargin: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("video")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+            ItemSwipeMenu {
+                id: menuVideo1
+                title: qsTr("video")
+                icon: "video"
             }
-
-            Item {
-                id: menuAudio
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 2)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 2
-                }
-
-                ImageSvg {
-                    id: imageA
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-
-                Text {
-                    anchors.top: imageA.bottom
-                    anchors.topMargin: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("audio")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+            ItemSwipeMenu {
+                id: menuVideo2
+                title: qsTr("video")
+                icon: "video"
             }
-
-            Item {
+            ItemSwipeMenu {
+                id: menuAudio1
+                title: qsTr("audio")
+                icon: "audio"
+            }
+            ItemSwipeMenu {
+                id: menuAudio2
+                title: qsTr("audio")
+                icon: "audio"
+            }
+            ItemSwipeMenu {
+                id: menuAudio3
+                title: qsTr("audio")
+                icon: "audio"
+            }
+            ItemSwipeMenu {
+                id: menuAudio4
+                title: qsTr("audio")
+                icon: "audio"
+            }
+            ItemSwipeMenu {
                 id: menuAudioTags
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 3)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 3
-                }
-
-                ImageSvg {
-                    id: imageAT
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-
-                Text {
-                    anchors.top: imageAT.bottom
-                    anchors.topMargin: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("tags")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+                title: qsTr("tags")
+                icon: "audio_tags"
             }
-
-            Item {
+            ItemSwipeMenu {
                 id: menuImageTags
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 4)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 4
-                }
-
-                ImageSvg {
-                    id: imageIT
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-
-                Text {
-                    anchors.top: imageIT.bottom
-                    anchors.topMargin: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("tags")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+                title: qsTr("tags")
+                icon: "image_tags"
             }
-
-            Item {
+            ItemSwipeMenu {
                 id: menuMap
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 5)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 5
-                }
-
-                ImageSvg {
-                    id: imageMap
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-map-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-
-                Text {
-                    anchors.top: imageMap.bottom
-                    anchors.topMargin: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("map")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+                title: qsTr("map")
+                icon: "map"
             }
-
-            Item {
+            ItemSwipeMenu {
                 id: menuExport
-                width: 64
-                height: 48
-
-                property bool selected: (mediaPages.currentIndex === 6)
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mediaPages.currentIndex = 6
-                }
-
-                ImageSvg {
-                    id: imageExp
-                    width: 26
-                    height: 26
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    source: "qrc:/assets/icons_material/outline-archive-24px.svg"
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
-
-                Text {
-                    anchors.top: imageExp.bottom
-                    anchors.topMargin: 0
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    text: qsTr("export")
-                    font.pixelSize: 12
-                    color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
-                }
+                title: qsTr("export")
+                icon: "export"
             }
         }
     }

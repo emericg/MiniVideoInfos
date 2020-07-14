@@ -24,6 +24,7 @@
         <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
         <file alias="ItemLoading.qml">components/ItemLoading.qml</file>
+        <file alias="ItemSwipeMenu.qml">components/ItemSwipeMenu.qml</file>
         <file alias="FileDialog.qml">components/FileDialog.qml</file>
         <file alias="FileDialog_Native.qml">components/FileDialog_Native.qml</file>
         <file alias="FileDialog_QML.qml">components/FileDialog_QML.qml</file>
