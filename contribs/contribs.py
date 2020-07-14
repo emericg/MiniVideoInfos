@@ -187,7 +187,7 @@ if OS_HOST == "Windows":
 ## SOFTWARES ###################################################################
 
 ## libexif
-## version: git (0.6.21+)
+## version: git (0.6.22+)
 FILE_libexif = "libexif-master.zip"
 DIR_libexif = "libexif-master"
 
@@ -215,7 +215,7 @@ if not os.path.exists("src/" + FILE_minivideo):
 
 ## Android OpenSSL
 for TARGET in TARGETS:
-    if OS_TARGET == "android":
+    if TARGET[0] == "android":
         FILE_androidopenssl = "android_openssl-master.zip"
         DIR_androidopenssl = "android_openssl"
 
@@ -271,7 +271,7 @@ for TARGET in TARGETS:
     elif OS_HOST == "Darwin":
         if OS_TARGET == "iOS":
             CMAKE_gen = "Xcode"
-            #IOS_DEPLOYMENT_TARGET="10"
+            #IOS_DEPLOYMENT_TARGET="10.0"
             build_shared = "OFF"
             build_static = "ON"
             if ARCH_TARGET == "simulator":
@@ -282,7 +282,7 @@ for TARGET in TARGETS:
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DPLATFORM=OS64"]
             else:
                 # Without custom toolchain
-                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=arm64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=arm64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10.0"]
     elif OS_HOST == "Windows":
         CMAKE_gen = MSVC_GEN_VER
         if ARCH_TARGET == "armv7":
