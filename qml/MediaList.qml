@@ -17,12 +17,10 @@ Item {
         onMediaUpdated: {
             if (mediaManager.areMediaAvailable()) {
                 rectangleHeader.visible = true
-                rectangleHeader.height = 96
                 itemNoFile.visible = false
                 mediaView.visible = true
             } else {
                 rectangleHeader.visible = false
-                rectangleHeader.height = 0
                 itemNoFile.visible = true
                 mediaView.visible = false
             }
@@ -96,12 +94,12 @@ Item {
     function loadMedia2() {
         //console.log("loadMedia2() << " + pathToLoad)
         if (mediaManager.openMedia(pathToLoad) === true) {
-            rectangleError.hideError()
+            errorBar.hideError()
             screenMediaInfos.loadMediaInfos(mediaManager.mediaList[0])
             appContent.state = "MediaInfos"
             itemLoading.close()
         } else {
-            rectangleError.showError(pathToLoad)
+            errorBar.showError(pathToLoad)
             itemLoading.close()
         }
         pathToLoad = ""
@@ -154,112 +152,193 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangleHeader
-        height: 0 // 96
-
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
+    Column {
+        id: bars
         anchors.top: parent.top
-        anchors.topMargin: 0
-
+        anchors.left: parent.left
+        anchors.right: parent.right
         z: 5
-        visible: false
-        color: Theme.colorForeground
 
-        ImageSvg {
-            id: image
-            width: 64
-            height: 64
+        Rectangle {
+            id: rectangleHeader
             anchors.left: parent.left
-            anchors.leftMargin: 32
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
 
-            color: Theme.colorIcon
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
-        }
+            height: 80
+            visible: false
+            color: Theme.colorForeground
 
-        ButtonWireframe {
-            height: 40
-            anchors.left: image.right
-            anchors.leftMargin: 32
-            anchors.verticalCenter: parent.verticalCenter
+            // prevent clicks into this area
+            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-            primaryColor: Theme.colorPrimary
-            text: qsTr("LOAD ANOTHER MEDIA")
-            onClicked: openDialog()
+            ImageSvg {
+                id: image
+                width: 64
+                height: 64
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+
+                color: Theme.colorIcon
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+            }
+
+            ButtonWireframe {
+                height: 40
+                anchors.left: image.right
+                anchors.leftMargin: 32
+                anchors.verticalCenter: parent.verticalCenter
+
+                primaryColor: Theme.colorPrimary
+                text: qsTr("LOAD ANOTHER MEDIA")
+                onClicked: openDialog()
+            }
+
+            Rectangle {
+                height: 1
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+            }
         }
 
         Rectangle {
-            height: 1
+            id: actionBar
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+
+            height: 48
+            color: Theme.colorActionbar
+            visible: (screenMediaList.selectionCount)
+
+            // prevent clicks into this area
+            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
+
+                ItemImageButton {
+                    id: buttonClear
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
+                    onClicked: screenMediaList.exitSelectionMode()
+                }
+
+                Text {
+                    id: textActions
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("%n media(s) selected", "", screenMediaList.selectionCount)
+                    color: Theme.colorActionbarContent
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    font.bold: isDesktop ? true : false
+                    font.pixelSize: 16
+                }
+            }
+
+            Row {
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
+
+                property bool useBigButtons: (!isPhone && actionBar.width >= 560)
+
+                ItemImageButton {
+                    id: buttonClose1
+                    width: 36
+                    height: 36
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: !parent.useBigButtons
+                    iconColor: Theme.colorActionbarContent
+                    backgroundColor: Theme.colorActionbarHighlight
+                    //onClicked:
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                }
+                ButtonWireframeImage {
+                    id: buttonClose2
+                    height: 32
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: parent.useBigButtons
+                    fullColor: true
+                    primaryColor: Theme.colorActionbarHighlight
+                    text: qsTr("Close")
+                    //onClicked:
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                }
+            }
         }
-    }
 
-    Rectangle {
-        id: rectangleError
-        height: 0 // 48
-        anchors.top: rectangleHeader.bottom
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        z: 5
-        visible: false
-        color: Theme.colorActionbar
-
-        ImageSvg {
-            id: rectangleErrorImage
-            width: 28
-            height: 28
+        Rectangle {
+            id: errorBar
             anchors.left: parent.left
-            anchors.leftMargin: 24
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
 
-            color: Theme.colorActionbarContent
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-        }
+            height: 48
+            visible: false
+            color: Theme.colorError
 
-        Text {
-            id: rectangleErrorText
-            anchors.left: rectangleErrorImage.right
-            anchors.leftMargin: 24
-            anchors.verticalCenter: parent.verticalCenter
+            // prevent clicks into this area
+            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-            color: Theme.colorActionbarContent
-            font.pixelSize: 15
-            font.bold: true
-        }
+            ImageSvg {
+                id: rectangleErrorImage
+                width: 28
+                height: 28
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
 
-        Timer {
-            id: rectangleErrorTimer
-            interval: 8000 // 8s
-            repeat: false
-            onTriggered: rectangleError.hideError()
-        }
+                color: Theme.colorActionbarContent
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+            }
 
-        function showError(filename) {
-            if (filename.length > 24)
-                rectangleErrorText.text = qsTr("Cannot open this file :(")
-            else
-                rectangleErrorText.text = qsTr("Cannot open '%1'").arg(filename)
+            Text {
+                id: rectangleErrorText
+                anchors.left: rectangleErrorImage.right
+                anchors.leftMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
 
-            rectangleError.visible = true
-            rectangleError.height = 48
-            rectangleErrorTimer.start()
-        }
-        function hideError() {
-            rectangleError.visible = false
-            rectangleError.height = 0
+                color: Theme.colorActionbarContent
+                font.pixelSize: 15
+                font.bold: true
+            }
+
+            Timer {
+                id: rectangleErrorTimer
+                interval: 8000 // 8s
+                repeat: false
+                onTriggered: errorBar.hideError()
+            }
+
+            function showError(filename) {
+                if (filename.length > 24)
+                    rectangleErrorText.text = qsTr("Cannot open this file :(")
+                else
+                    rectangleErrorText.text = qsTr("Cannot open '%1'").arg(filename)
+
+                errorBar.visible = true
+                errorBar.height = 48
+                rectangleErrorTimer.start()
+            }
+            function hideError() {
+                errorBar.visible = false
+                errorBar.height = 0
+            }
         }
     }
 
@@ -280,7 +359,7 @@ Item {
 
     ListView {
         id: mediaView
-        anchors.top: rectangleError.bottom
+        anchors.top: bars.bottom
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0

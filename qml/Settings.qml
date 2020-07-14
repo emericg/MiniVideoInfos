@@ -38,7 +38,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 14
+            anchors.bottomMargin: 16
 
             text: qsTr("Because everyone love settings...")
             font.pixelSize: 16

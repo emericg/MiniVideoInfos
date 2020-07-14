@@ -21,7 +21,7 @@ Item {
 
         if (mediaItem.fileType === 2 || mediaItem.fileType === 3) {
             columnGeometry.visible = true
-            textGeometry.text = mediaItem.width + " x " + mediaItem.height
+            textGeometry.text = mediaItem.width + "x" + mediaItem.height
         } else {
             columnGeometry.visible = false
         }
@@ -46,22 +46,22 @@ Item {
     function loadRowView() {
         content_generic.loadGeneric()
 
-        content_video.visible = mediaItem.hasVideo
+        item_video.visible = mediaItem.hasVideo
         if (mediaItem.hasVideo) content_video.loadTrack(mediaItem.getVideoTrack(0))
 
-        content_audio.visible = mediaItem.hasAudio
+        item_audio.visible = mediaItem.hasAudio
         if (mediaItem.hasAudio) content_audio.loadTrack(mediaItem.getAudioTrack(0))
 
-        content_audio_tags.visible = mediaItem.hasAudioTags
+        item_audio_tags.visible = mediaItem.hasAudioTags
         if (mediaItem.hasAudioTags) content_audio_tags.loadTags(mediaItem)
 
-        content_image_tags.visible = mediaItem.hasEXIF
+        item_image_tags.visible = mediaItem.hasEXIF
         if (mediaItem.hasEXIF) content_image_tags.loadTags(mediaItem)
 
-        content_map.visible = mediaItem.hasGPS
+        item_map.visible = mediaItem.hasGPS
         if (mediaItem.hasGPS) content_map.loadGps(mediaItem)
 
-        content_export.visible = (settingsManager.exportEnabled && mediaItem.hasVideo)
+        item_export.visible = (settingsManager.exportEnabled && mediaItem.hasVideo)
         if (settingsManager.exportEnabled && mediaItem.hasVideo) content_export.loadExport(mediaItem)
     }
 
@@ -84,9 +84,9 @@ Item {
 
             topPadding: 0
             bottomPadding: 0
-            spacing: 8
+            spacing: 0
 
-            property int colsize: 440
+            property int colsize: 480
             property int mapsize: 720
 
             ////////
@@ -248,7 +248,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////////////////////////////////////////////////////////
 
             InfosGeneric {
                 id: content_generic
@@ -258,73 +258,113 @@ Item {
 
             ////////
 
-            InfosAV {
-                id: content_video
+            Item {
+                id: item_video
                 width: row.colsize
                 height: parent.height
-/*
+
                 Rectangle {
                     id: content_video_bg
                     anchors.fill: parent
-                    z: -1
-                    opacity: 0.5
+                    opacity: 0.4
                     color: Theme.colorForeground
-                    visible: content_video.visible
-                }*/
+                    visible: item_video.visible
+                }
+                InfosAV {
+                    id: content_video
+                    anchors.fill: parent
+                }
             }
 
             ////////
 
-            InfosAV {
-                id: content_audio
+            Item {
+                id: item_audio
                 width: row.colsize
                 height: parent.height
-/*
+
                 Rectangle {
                     id: content_audio_bg
                     anchors.fill: parent
-                    z: -1
-                    opacity: 0.5
+                    opacity: 0.4
                     color: Theme.colorForeground
-                    visible: !content_video.visible
-                }*/
+                    visible: item_audio.visible && !item_video.visible
+                }
+                InfosAV {
+                    id: content_audio
+                    anchors.fill: parent
+                }
             }
 
             ////////
 
-            InfosAudioTags {
-                id: content_audio_tags
+            Item {
+                id: item_audio_tags
                 width: row.colsize
                 height: parent.height
+
+                InfosAudioTags {
+                    id: content_audio_tags
+                    anchors.fill: parent
+                }
             }
 
             ////////
 
-            InfosImageTags {
-                id: content_image_tags
+            Item {
+                id: item_image_tags
                 width: row.colsize
                 height: parent.height
+
+                Rectangle {
+                    id: content_image_tags_bg
+                    anchors.fill: parent
+                    opacity: 0.4
+                    color: Theme.colorForeground
+                    //visible: item_image_tags.visible
+                }
+                InfosImageTags {
+                    id: content_image_tags
+                    anchors.fill: parent
+                }
             }
 
             ////////
 
-            InfosExport {
-                id: content_export
+            Item {
+                id: item_export
                 width: row.mapsize
                 height: parent.height
+
+                Rectangle {
+                    id: content_export_bg
+                    anchors.fill: parent
+                    opacity: 0.4
+                    color: Theme.colorForeground
+                    //visible: item_export.visible
+                }
+                InfosExport {
+                    id: content_export
+                    anchors.fill: parent
+                }
             }
 
             ////////
 
-            InfosMap {
-                id: content_map
+            Item {
+                id: item_map
                 width: row.mapsize
                 height: parent.height
+
+                InfosMap {
+                    id: content_map
+                    anchors.fill: parent
+                }
             }
         }
     }
 
-    Item {
+    Item { // compatibility
         id: rectangleMenus
         height: 0
     }

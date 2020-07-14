@@ -35,16 +35,14 @@ Item {
 
     Rectangle {
         id: deviceWidgetRectangle
-        anchors.rightMargin: 6
-        anchors.leftMargin: 6
-        anchors.bottomMargin: 6
-        anchors.topMargin: 6
         anchors.fill: parent
+        anchors.topMargin: 6
+        anchors.bottomMargin: 6
 
-        color: mediaWidget.selected ? Theme.colorSeparator : "transparent"
+        radius: 2
         border.width: 2
         border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
-        radius: 2
+        color: mediaWidget.selected ? Theme.colorSeparator : "transparent"
 
         MouseArea {
             anchors.fill: parent
@@ -66,7 +64,6 @@ Item {
                 }
 
                 if (mouse.button === Qt.LeftButton) {
-
                     // multi selection
                     if ((mouse.modifiers & Qt.ControlModifier) ||
                             (screenMediaList.selectionMode)) {
@@ -87,7 +84,7 @@ Item {
                     }
                 }
             }
-/*
+
             onPressAndHold: {
                 // multi selection
                 if (!selected) {
@@ -98,7 +95,6 @@ Item {
                     screenMediaList.deselectMedia(index);
                 }
             }
-*/
         }
 
         ////////////////
@@ -111,9 +107,9 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
             anchors.left: parent.left
-            anchors.leftMargin: (singleColumn ? 6 : 14)
+            anchors.leftMargin: (singleColumn ? 8 : 16)
             anchors.right: parent.right
-            anchors.rightMargin: 6
+            anchors.rightMargin: 8
 
             //spacing: (singleColumn ? 12 : 10)
 
@@ -121,11 +117,11 @@ Item {
                 id: imageMedia
                 width: 40
                 height: 40
+                anchors.left: parent.left
+                anchors.leftMargin: 4
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorIcon
-                anchors.left: parent.left
-                anchors.leftMargin: 6
                 fillMode: Image.PreserveAspectFit
             }
 
@@ -218,8 +214,8 @@ Item {
 
             ImageSvg {
                 id: imageGo
-                width: 40
-                height: 40
+                width: 32
+                height: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter

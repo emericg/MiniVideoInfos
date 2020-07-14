@@ -43,8 +43,8 @@ Item {
 
     property string colorPrimary
     property string colorSecondary
-    property string colorWarning // todo
-    property string colorError // todo
+    property string colorWarning
+    property string colorError
 
     property string colorText
     property string colorSubText
@@ -72,6 +72,7 @@ Item {
     property string colorDarkGreen: "#1ea892" // unused
     property string colorBlue
     property string colorYellow
+    property string colorOrange
     property string colorRed
     property string colorGrey: "#555151" // unused
     property string colorLightGrey: "#a9bcb8" // unused
@@ -134,6 +135,7 @@ Item {
             colorGreen = "#07bf97"
             colorBlue = "#4CA1D5"
             colorYellow = "#ffba5a"
+            colorOrange = "#ff7657"
             colorRed = "#ff7657"
 
             themeStatusbar = Material.Light
@@ -143,9 +145,9 @@ Item {
             colorHeaderContent = "#5483EF" // colorMaterialBlue
             colorHeaderHighlight = ""
 
-            colorActionbar = colorRed
+            colorActionbar = colorGreen
             colorActionbarContent = "white"
-            colorActionbarHighlight = ""
+            colorActionbarHighlight = "#00a27d"
 
             colorTabletmenu = "#f3f3f3"
             colorTabletmenuContent = "#9d9d9d"
@@ -154,8 +156,10 @@ Item {
             colorBackground = colorMaterialLightGrey
             colorForeground = colorMaterialGrey
 
-            colorPrimary = colorMaterialRed
+            colorPrimary = colorRed
             colorSecondary = "#ff7b36" // colorMaterialOrange
+            colorWarning = colorOrange
+            colorError = colorRed
 
             colorText = "#303030"
             colorSubText = "#666666"
@@ -176,6 +180,7 @@ Item {
             colorGreen = "#58CF77"
             colorBlue = "#4dceeb"
             colorYellow = "#fcc632"
+            colorOrange = "#ff7657"
             colorRed = "#e8635a"
 
             themeStatusbar = Material.Dark
@@ -185,9 +190,9 @@ Item {
             colorHeaderContent = "#ee8c21"
             colorHeaderHighlight = ""
 
-            colorActionbar = colorRed
+            colorActionbar = colorGreen
             colorActionbarContent = "white"
-            colorActionbarHighlight = ""
+            colorActionbarHighlight = "#00a27d"
 
             colorTabletmenu = "#292929"
             colorTabletmenuContent = "#808080"
@@ -198,6 +203,8 @@ Item {
 
             colorPrimary = "#ff9f1a"
             colorSecondary = "#ffb81a"
+            colorWarning = colorOrange
+            colorError = colorRed
 
             colorText = "white"
             colorSubText = "#AAAAAA"

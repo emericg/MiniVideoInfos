@@ -17,7 +17,7 @@ Item {
     Rectangle {
         id: rectangleHeader
         color: Theme.colorForeground
-        height: 96
+        height: 80
         z: 5
 
         anchors.top: parent.top
@@ -29,7 +29,7 @@ Item {
             width: 64
             height: 64
             anchors.left: parent.left
-            anchors.leftMargin: 24
+            anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/logos/logo.svg"
@@ -40,19 +40,14 @@ Item {
             anchors.left: imageLogo.right
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 2
 
             Text {
-                id: textName
-
                 text: "MiniVideo Infos"
                 color: Theme.colorText
                 font.pixelSize: 28
             }
 
             Text {
-                id: textVersion
-
                 text: qsTr("version %1").arg(utilsApp.appVersion())
                 color: Theme.colorSubText
                 font.pixelSize: 18

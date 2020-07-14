@@ -86,7 +86,14 @@ ApplicationWindow {
     MobileUI {
         statusbarColor: Theme.colorStatusbar
         statusbarTheme: Theme.themeStatusbar
-        //navbarColor: (appContent.state === "Tutorial") ? Theme.colorHeader : Theme.colorBackground
+        navbarColor: {
+            if (appContent.state === "Tutorial")
+                return Theme.colorHeader
+            else if (appContent.state === "MediaInfos" && isPhone)
+                return Theme.colorForeground
+            else
+                return Theme.colorBackground
+        }
     }
 
     MobileHeader {
@@ -351,7 +358,7 @@ ApplicationWindow {
 
         onEntered: {
             if (drag.hasUrls) {
-                dropAreaIndicator.color = Theme.colorRed
+                dropAreaIndicator.color = Theme.colorError
                 dropAreaImage.source = "qrc:/assets/icons_material_media/baseline-broken_image-24px.svg"
                 dropAreaIndicator.opacity = 1
 

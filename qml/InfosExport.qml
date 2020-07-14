@@ -66,10 +66,10 @@ Item {
             onClicked: {
                 if (mediaItem.saveExportString() === true) {
                     buttonExport.primaryColor = Theme.colorGreen
-                    buttonExport.text =  qsTr("SAVED")
+                    buttonExport.text = qsTr("SAVED")
                 } else {
                     buttonExport.primaryColor = Theme.colorRed
-                    buttonExport.text =  qsTr("ERROR")
+                    buttonExport.text = qsTr("ERROR")
                 }
                 buttonExport.fullColor = true
             }
@@ -89,6 +89,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 12 + rectangleMenus.height
 
+        clip: true
         color: "transparent"
         border.color: Theme.colorSeparator
 
@@ -99,7 +100,6 @@ Item {
             TextArea {
                 id: textArea
                 readOnly: true
-                clip: true
                 text: ""
                 color: Theme.colorText
                 font.family: {
