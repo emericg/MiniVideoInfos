@@ -65,6 +65,7 @@ class Media: public QObject
     Q_PROPERTY(bool hasVideo READ hasVideo NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasAudio READ hasAudio NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasAudioTags READ hasAudioTags NOTIFY mediaUpdated)
+    Q_PROPERTY(bool hasSubtitles READ hasSubtitles NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasEXIF READ hasEXIF NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasGPS READ hasGPS NOTIFY mediaUpdated)
 
@@ -243,6 +244,7 @@ class Media: public QObject
     bool hasAudio() const { return (tracksAudio.length() > 0); }
     bool hasVideo() const { return (tracksVideo.length() > 0); }
     bool hasImage() const { return (m_type == Shared::FILE_PICTURE); }
+    bool hasSubtitles() const { return (tracksSubtitles.length() > 0); }
 
     bool getMetadataFromPicture();
     bool getMetadataFromVideo();

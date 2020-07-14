@@ -437,6 +437,13 @@ QString getAspectRatioString(double ar_d, const bool detailed)
         if (detailed)
             aspectratio_qstr += " (35 mm modern anamorphic)";
     }
+    else if (ar_d < 2.41)
+    {
+        aspectratio_qstr = "2.4:1";
+
+        if (detailed)
+            aspectratio_qstr += " (35 mm modern anamorphic)";
+    }
     else if (ar_d > 2.54 && ar_d < 2.56)
     {
         aspectratio_qstr = "2.55:1";

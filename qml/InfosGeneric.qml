@@ -76,39 +76,21 @@ ScrollView {
             columnVideo.visible = false
         }
 
-        if (mediaItem.fileType === 2) { //// VIDEO
-
+        // Track sizes graph
+        if (mediaItem.getVideoTracks() + mediaItem.getAudioTracks() > 0) {
             elementTracks.visible = true
             elementTracks.load(mediaItem)
-
-            columnVideo.visible = true
-
-            info_vcodec.text = mediaItem.videoCodec
-            info_vdefinition.text = mediaItem.width + " x " + mediaItem.height
-            info_vaspectratio.text = UtilsMedia.varToString(mediaItem.width, mediaItem.height)
-
-            var ardesc = UtilsMedia.varToDescString(mediaItem.width, mediaItem.height)
-            if (ardesc.length > 0) info_vaspectratio.text += "  (" + ardesc + ")"
-
-            if (mediaItem.projection > 0) {
-                item_vprojection.visible = true
-                info_vprojection.text = UtilsMedia.projectionToString(mediaItem.projection)
-            } else {
-                item_vprojection.visible = false
-            }
-
-            info_vframerate.text = UtilsMedia.framerateToString(mediaItem.vframerate)
-            info_vbitrate.text = UtilsMedia.bitrateToString(mediaItem.vbitrate)
-            info_vbitrate.text += "  (" + UtilsMedia.bitrateModeToString(mediaItem.vbitratemode) + ")"
         } else {
-            columnVideo.visible = false
             elementTracks.visible = false
         }
 
-        //
+        // VIDEO tracks
+        columnVideo.model = mediaItem.getVideoTracks()
+
+        // Audio tracks
         columnAudio.model = mediaItem.getAudioTracks()
 
-        //
+        // Other tracks
         columnOther.visible = (mediaItem.getSubtitlesTrackCount() || mediaItem.getOtherTrackCount())
         repeaterSubtitles.model = mediaItem.getSubtitlesTracks()
         repeaterOther.model = mediaItem.getOtherTracks()
@@ -662,259 +644,173 @@ ScrollView {
 
         ////////////////
 
-        Column {
+        Repeater {
             id: columnVideo
             anchors.left: parent.left
             anchors.right: parent.right
-            spacing: 2
+            //model: mediaItem.getVideoTracks()
 
-            Item { ////
-                id: titleVideo
-                height: 32
+            Column {
                 anchors.left: parent.left
                 anchors.right: parent.right
+                spacing: 2
 
-                ImageSvg {
-                    width: 32
+                Item { ////
+                    id: titleVideo
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
 
-                    color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
+                    ImageSvg {
+                        width: 32
+                        height: 32
+                        anchors.left: parent.left
+                        anchors.leftMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorPrimary
+                        fillMode: Image.PreserveAspectFit
+                        source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
+                    }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 56
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("VIDEO")
+                        color: Theme.colorPrimary
+                        font.pixelSize: 18
+                        font.bold: true
+                    }
                 }
-                Text {
+
+                Row { ////
                     anchors.left: parent.left
                     anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    height: Math.max(UtilsNumber.alignTo(videoCodecText.height + 4, 4), 24)
+                    spacing: 16
 
-                    text: qsTr("VIDEO")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
+                    Text {
+                        id: videoCodecLegend
+                        text: qsTr("codec")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        id: videoCodecText
+                        width: parent.width - parent.spacing - videoCodecLegend.width
+                        text: modelData.codec
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                        wrapMode: Text.WrapAnywhere
+                    }
                 }
-            }
+                Row { ////
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    height: 24
+                    spacing: 16
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                    Text {
+                        text: qsTr("definition")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        text: modelData.width + " x " + modelData.height
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
+                }
+                Row { ////
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    height: 24
+                    spacing: 16
 
-                Text {
-                    text: qsTr("codec")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
+                    Text {
+                        text: qsTr("aspect ratio")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        text: {
+                            var txt = UtilsMedia.varToString(modelData.width, modelData.height)
+                            var ardesc = UtilsMedia.varToDescString(modelData.width, modelData.height)
+                            if (ardesc.length > 0) txt += "  (" + ardesc + ")"
+                            return txt
+                        }
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
                 }
-                Text {
-                    id: info_vcodec
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                Row { ////
+                    id: item_vprojection
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    height: 24
+                    spacing: 16
 
-                Text {
-                    text: qsTr("definition")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vdefinition
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                    visible: (modelData.projection > 0)
 
-                Text {
-                    text: qsTr("aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
+                    Text {
+                        text: qsTr("projection")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        text: UtilsMedia.projectionToString(modelData.projection)
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
                 }
-                Text {
-                    id: info_vaspectratio
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                id: item_vprojection
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                Row { ////
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    height: 24
+                    spacing: 16
 
-                Text {
-                    text: qsTr("projection")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
+                    Text {
+                        text: qsTr("framerate")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        text: UtilsMedia.framerateToString(modelData.framerate)
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
                 }
-                Text {
-                    id: info_vprojection
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                Row { ////
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    height: 24
+                    spacing: 16
 
-                Text {
-                    text: qsTr("framerate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vframerate
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("bitrate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vbitrate
-                    color: Theme.colorText
-                    font.pixelSize: 15
+                    Text {
+                        text: qsTr("bitrate")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
+                              "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
                 }
             }
         }
 
-        ////////////////
-/*
-        Column {
-            id: columnAudio
-            anchors.left: parent.left
-            anchors.right: parent.right
-            spacing: 2
+        ////////
 
-            Item {
-                id: titleAudio
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                ImageSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("AUDIO")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("codec")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_acodec
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("channels")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_achannels
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("samplerate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_asamplerate
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("bitrate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_abitrate
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-        }
-*/
         Repeater {
             id: columnAudio
             anchors.left: parent.left
             anchors.right: parent.right
-            //model: tracksAudio
+            //model: mediaItem.getAudioTracks()
 
             Column {
                 anchors.left: parent.left
@@ -958,18 +854,25 @@ ScrollView {
                 Row { ////
                     anchors.left: parent.left
                     anchors.leftMargin: 56
-                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    height: Math.max(UtilsNumber.alignTo(audioCodecText.height + 4, 4), 24)
                     spacing: 16
 
                     Text {
+                        id: audioCodecLegend
                         text: qsTr("codec")
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
                     Text {
+                        id: audioCodecText
+                        width: parent.width - parent.spacing - audioCodecLegend.width
+
                         text: modelData.codec
                         color: Theme.colorText
                         font.pixelSize: 15
+                        wrapMode: Text.WrapAnywhere
                     }
                 }
                 Row { ////
@@ -1070,20 +973,27 @@ ScrollView {
                 id: repeaterSubtitles
                 anchors.left: parent.left
                 anchors.right: parent.right
-                //model: tracksSubtitles
+                //model: mediaItem.getSubtitlesTracks()
 
                 Row { ////
                     anchors.left: parent.left
                     anchors.leftMargin: 56
-                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    height: Math.max(UtilsNumber.alignTo(trackSubtitleTitle.contentHeight + 4, 4), 24)
                     spacing: 8
 
                     Text {
+                        id: trackSubtitleId
                         text: qsTr("subtitles track #") + (index + 1)
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
                     Text {
+                        id: trackSubtitleTitle
+                        width: parent.width - parent.spacing - trackSubtitleId.contentWidth
+
                         text: {
                             var txt = ""
                             if (modelData.codec.length)
@@ -1096,6 +1006,7 @@ ScrollView {
                         }
                         color: Theme.colorText
                         font.pixelSize: 15
+                        wrapMode: Text.WordWrap
                     }
                 }
             }
@@ -1103,29 +1014,38 @@ ScrollView {
                 id: repeaterOther
                 anchors.left: parent.left
                 anchors.right: parent.right
-                //model: tracksOther
+                //model: mediaItem.getOtherTracks()
 
                 Row { ////
                     anchors.left: parent.left
                     anchors.leftMargin: 56
-                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    height: Math.max(UtilsNumber.alignTo(trackOtherTitle.contentHeight + 4, 4), 24)
                     spacing: 16
 
                     Text {
+                        id: trackOtherId
                         text: {
                             if (modelData.type === 4) // stream_MENU
                                 return qsTr("menu track #") + modelData.id
-                            if (modelData.type === 5) // stream_TMCD
+                            else if (modelData.type === 5) // stream_TMCD
                                 return qsTr("SMPTE timecode")
-                            if (modelData.type === 6) // stream_META
+                            else if (modelData.type === 6) // stream_META
                                 return qsTr("metadata track")
-                            if (modelData.type === 7) // stream_HINT
+                            else if (modelData.type === 7) // stream_HINT
                                 return qsTr("hint track")
+                            else
+                                return qsTr("Unknown track type")
                         }
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
                     Text {
+                        id: trackOtherTitle
+                        width: parent.width - parent.spacing - trackOtherId.contentWidth
+
                         text: {
                             if (modelData.type === 5) // stream_TMCD
                                 return mediaItem.timecode
@@ -1134,6 +1054,7 @@ ScrollView {
                         }
                         color: Theme.colorText
                         font.pixelSize: 15
+                        wrapMode: Text.WrapAnywhere
                     }
                 }
             }

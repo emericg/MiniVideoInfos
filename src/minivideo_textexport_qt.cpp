@@ -359,6 +359,8 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
             exportData += "\n\nMETA TRACK #";
         else if (t->stream_type == stream_HINT)
             exportData += "\n\nHINT TRACK #";
+        else
+            exportData += "\n\nUNKNOWN TRACK #";
 
         exportData += QString::number(i);
         exportData += "\n-------------";

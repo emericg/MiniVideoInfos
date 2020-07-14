@@ -46,11 +46,11 @@ Item {
     function loadRowView() {
         content_generic.loadGeneric()
 
-        item_video.visible = mediaItem.hasVideo
-        if (mediaItem.hasVideo) content_video.loadTrack(mediaItem.getVideoTrack(0))
+        videoRepeater.model = mediaItem.getVideoTrackCount()
+        audioRepeater.model = mediaItem.getAudioTrackCount()
 
-        item_audio.visible = mediaItem.hasAudio
-        if (mediaItem.hasAudio) content_audio.loadTrack(mediaItem.getAudioTrack(0))
+        //item_subtitles_tags.visible = mediaItem.hasSubtitles
+        //if (mediaItem.hasSubtitles) content_subtitles.loadSubtitles(mediaItem)
 
         item_audio_tags.visible = mediaItem.hasAudioTags
         if (mediaItem.hasAudioTags) content_audio_tags.loadTags(mediaItem)
@@ -58,11 +58,16 @@ Item {
         item_image_tags.visible = mediaItem.hasEXIF
         if (mediaItem.hasEXIF) content_image_tags.loadTags(mediaItem)
 
-        item_map.visible = mediaItem.hasGPS
-        if (mediaItem.hasGPS) content_map.loadGps(mediaItem)
-
         item_export.visible = (settingsManager.exportEnabled && mediaItem.hasVideo)
         if (settingsManager.exportEnabled && mediaItem.hasVideo) content_export.loadExport(mediaItem)
+
+        item_map.visible = mediaItem.hasGPS
+        if (mediaItem.hasGPS) {
+            if (mapLoader.status != Loader.Ready) {
+                mapLoader.source = "InfosMap.qml"
+            }
+            item_map.content_map.loadGps(mediaItem)
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -258,44 +263,73 @@ Item {
 
             ////////
 
-            Item {
-                id: item_video
-                width: row.colsize
+            Repeater {
+                id: videoRepeater
                 height: parent.height
 
-                Rectangle {
-                    id: content_video_bg
-                    anchors.fill: parent
-                    opacity: 0.4
-                    color: Theme.colorForeground
-                    visible: item_video.visible
-                }
-                InfosAV {
-                    id: content_video
-                    anchors.fill: parent
+                Item {
+                    id: item_video
+                    width: row.colsize
+                    height: parent.height
+
+                    Rectangle {
+                        anchors.fill: parent
+                        opacity: 0.4
+                        color: Theme.colorForeground
+                        visible: (index % 2 === 0)
+                    }
+                    InfosAV {
+                        id: content_video
+                        anchors.fill: parent
+                        Component.onCompleted: loadTrack(mediaItem.getVideoTrack(index))
+                    }
                 }
             }
 
             ////////
 
+            Repeater {
+                id: audioRepeater
+                height: parent.height
+
+                Item {
+                    id: item_audio
+                    width: row.colsize
+                    height: parent.height
+
+                    Rectangle {
+                        anchors.fill: parent
+                        opacity: 0.4
+                        color: Theme.colorForeground
+                        visible: ((mediaItem.getVideoTrackCount() + index) % 2 === 0)
+                    }
+                    InfosAV {
+                        id: content_audio
+                        anchors.fill: parent
+                        Component.onCompleted: loadTrack(mediaItem.getAudioTrack(index))
+                    }
+                }
+            }
+
+            ////////
+/*
             Item {
-                id: item_audio
+                id: item_subtitles
                 width: row.colsize
                 height: parent.height
 
                 Rectangle {
-                    id: content_audio_bg
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: item_audio.visible && !item_video.visible
+                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosAV {
-                    id: content_audio
+                    id: content_subtitles
                     anchors.fill: parent
                 }
             }
-
+*/
             ////////
 
             Item {
@@ -303,6 +337,13 @@ Item {
                 width: row.colsize
                 height: parent.height
 
+                Rectangle {
+                    id: content_audio_tags_bg
+                    anchors.fill: parent
+                    opacity: 0.4
+                    color: Theme.colorForeground
+                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                }
                 InfosAudioTags {
                     id: content_audio_tags
                     anchors.fill: parent
@@ -321,7 +362,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    //visible: item_image_tags.visible
+                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosImageTags {
                     id: content_image_tags
@@ -341,7 +382,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    //visible: item_export.visible
+                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosExport {
                     id: content_export
@@ -356,8 +397,10 @@ Item {
                 width: row.mapsize
                 height: parent.height
 
-                InfosMap {
-                    id: content_map
+                property alias content_map: mapLoader.item
+
+                Loader {
+                    id: mapLoader
                     anchors.fill: parent
                 }
             }

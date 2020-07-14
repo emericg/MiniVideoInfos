@@ -160,7 +160,7 @@ function varToDescString(width, height) {
         ar_string = qsTr("70 mm film");
     } else if (ar_float > 2.34 && ar_float < 2.36) {
         ar_string = qsTr("35 mm anamorphic");
-    } else if (ar_float > 2.38 && ar_float < 2.40) {
+    } else if (ar_float > 2.38 && ar_float < 2.41) {
         ar_string = qsTr("35 mm modern anamorphic");
     } else if (ar_float > 2.54 && ar_float < 2.56) {
         ar_string = "Cinemascope";

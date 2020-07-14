@@ -21,6 +21,7 @@ ScrollView {
         if (typeof trackItem === "undefined" || !trackItem) return
 
         // track
+        titleTrackText.text = (trackItem.type === 1 ? qsTr("AUDIO") : qsTr("VIDEO")) + " " + qsTr("TRACK")
         info_id.text = trackItem.id
         info_size.text = UtilsString.bytesToString_short(trackItem.size, settingsManager.unitSizes)
         info_duration.text = UtilsString.durationToString_long(trackItem.duration)
@@ -40,7 +41,7 @@ ScrollView {
         info_forced.text = trackItem.forced
 
         // video
-        if (trackItem.type === 2) { // stream_VIDEO) {
+        if (trackItem.type === 2) { // stream_VIDEO
             columnVideo.visible = true
             columnAudio.visible = false
 
@@ -98,7 +99,7 @@ ScrollView {
         }
 
         // audio
-        if (trackItem.type === 1) { // stream_AUDIO) {
+        if (trackItem.type === 1) { // stream_AUDIO
             columnVideo.visible = false
             columnAudio.visible = true
 
@@ -212,11 +213,11 @@ ScrollView {
                     source: "qrc:/assets/icons_material/baseline-list-24px.svg"
                 }
                 Text {
+                    id: titleTrackText
                     anchors.left: parent.left
                     anchors.leftMargin: 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("TRACK")
                     color: Theme.colorPrimary
                     font.pixelSize: 18
                     font.bold: true
