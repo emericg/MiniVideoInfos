@@ -121,7 +121,7 @@ Item {
                         radius: 2
                         color: (Theme.currentTheme === ThemeEngine.THEME_LIGHT) ? Theme.colorForeground : "#dddddd"
                         border.color: Theme.colorSecondary
-                        border.width: (Theme.currentTheme === ThemeEngine.THEME_LIGHT) ? 2 : 0
+                        border.width: (settingsManager.appTheme === "light") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent
@@ -148,7 +148,7 @@ Item {
                         radius: 2
                         color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorForeground : "#313236"
                         border.color: Theme.colorSecondary
-                        border.width: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? 2 : 0
+                        border.width: (settingsManager.appTheme === "dark") ? 2 : 0
 
                         MouseArea {
                             anchors.fill: parent

@@ -635,10 +635,10 @@ ScrollView {
                     autoTransform: true
                     fillMode: Image.PreserveAspectFit
                 }
-                MouseArea {
+                /*MouseArea {
                     anchors.fill: parent
                     onPressAndHold: utilsApp.openWith(mediaItem.fullpath);
-                }
+                }*/
             }
         }
 

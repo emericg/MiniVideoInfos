@@ -28,9 +28,6 @@
 // minianalyser
 #include "minivideo_utils_qt.h"
 
-#include <QMessageBox>
-#include <QFontDatabase>
-#include <QFileDialog>
 #include <QDateTime>
 #include <QFile>
 #include <QDebug>

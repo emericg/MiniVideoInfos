@@ -98,7 +98,7 @@ Item {
     ////////////////
 
     // Fonts (sizes in pixel) (WIP)
-    readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 24 : 26
+    readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 22 : 24
     readonly property int fontSizeTitle: 24
     readonly property int fontSizeContentSmall: 14
     readonly property int fontSizeContent: 16
@@ -135,8 +135,8 @@ Item {
             colorGreen = "#07bf97"
             colorBlue = "#4CA1D5"
             colorYellow = "#ffba5a"
-            colorOrange = "#ff7657"
-            colorRed = "#ff7657"
+            colorOrange = "#ff7b45"
+            colorRed = "#ff443a"
 
             themeStatusbar = Material.Light
             colorStatusbar = colorMaterialDarkGrey

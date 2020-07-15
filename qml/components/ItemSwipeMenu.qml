@@ -25,6 +25,8 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
+        Behavior on color { ColorAnimation { duration: 133 } }
+
         source: {
             if (icon === "file")
                 return "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
@@ -54,5 +56,6 @@ Item {
         text: parent.title
         font.pixelSize: 12
         color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
+        Behavior on color { ColorAnimation { duration: 133 } }
     }
 }
