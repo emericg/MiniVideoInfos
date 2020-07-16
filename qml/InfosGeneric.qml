@@ -997,12 +997,9 @@ ScrollView {
 
                         text: {
                             var txt = ""
-                            if (modelData.codec.length)
-                                txt = "/ " + modelData.codec
-                            if (modelData.language.length)
-                                txt += " / " + modelData.language
-                            if (modelData.title.length)
-                                txt += " / " + modelData.title
+                            if (modelData.codec.length) txt += "/ " + modelData.codec
+                            if (modelData.language.length) txt += " / " + modelData.language
+                            if (modelData.title.length) txt += " / " + modelData.title
                             return txt
                         }
                         color: Theme.colorText

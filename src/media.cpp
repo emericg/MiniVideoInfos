@@ -959,3 +959,61 @@ bool Media::saveExportString()
 
     return status;
 }
+
+/* ************************************************************************** */
+
+QString Media::getSubtitlesString(int track)
+{
+    QString subtitlesData;
+
+    if (m_media)
+    {
+        textExport::generateSubtitlesData_text(*m_media, subtitlesData, track);
+    }
+
+    return subtitlesData;
+}
+
+bool Media::saveSubtitlesString(int track)
+{
+    bool status = false;
+
+    if (m_media)
+    {
+        QString subtitlesData;
+        textExport::generateSubtitlesData_text(*m_media, subtitlesData, track);
+        if (!subtitlesData.isEmpty())
+        {
+            QString lng = m_media->tracks_subt[track]->track_languagecode;
+            if (lng.size()) lng.prepend("_");
+
+            QString ppp = m_file_folder + m_file_name + lng + ".srt";
+            QFile exportFile;
+            exportFile.setFileName(ppp);
+            if (exportFile.exists() == false)
+            {
+                if (exportFile.open(QIODevice::WriteOnly) == true &&
+                    exportFile.isWritable() == true)
+                {
+                    if (exportFile.write(subtitlesData.toLocal8Bit()) == subtitlesData.toLocal8Bit().size())
+                    {
+                        status = true;
+                    }
+                    exportFile.close();
+                }
+                else
+                {
+                    qDebug() << "saveExportString() not writable: " << ppp;
+                }
+            }
+            else
+            {
+                qDebug() << "saveExportString() already exists: " << ppp;
+            }
+        }
+    }
+
+    return status;
+}
+
+/* ************************************************************************** */

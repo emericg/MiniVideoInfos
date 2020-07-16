@@ -66,6 +66,7 @@ Item {
         mediaPages.removePage(pageAudio2)
         mediaPages.removePage(pageAudio3)
         mediaPages.removePage(pageAudio4)
+        mediaPages.removePage(pageSubtitles)
         mediaPages.removePage(pageAudioTags)
         mediaPages.removePage(pageImageTags)
         mapLoader.source = ""
@@ -77,6 +78,7 @@ Item {
         menuAudio2.index = -1
         menuAudio3.index = -1
         menuAudio4.index = -1
+        menuSubtitles.index = -1
         menuAudioTags.index = -1
         menuImageTags.index = -1
         menuMap.index = -1
@@ -118,6 +120,12 @@ Item {
                 mediaPages.addPage(pageAudio4)
                 menuAudio4.index = mediaPages.count-1
             }
+        }
+
+        if (mediaItem.hasSubtitles) {
+            content_subtitles.loadSubtitles(mediaItem)
+            mediaPages.addPage(pageSubtitles)
+            menuSubtitles.index = mediaPages.count-1
         }
 
         if (mediaItem.hasAudioTags) {
@@ -439,6 +447,17 @@ Item {
     }
 
     Item {
+        id: pageSubtitles
+        visible: false
+        clip: true
+
+        InfosSubtitles {
+            id: content_subtitles
+            anchors.fill: parent
+        }
+    }
+
+    Item {
         id: pageAudioTags
         visible: false
         clip: true
@@ -548,6 +567,11 @@ Item {
                 id: menuAudio4
                 title: qsTr("audio")
                 icon: "audio"
+            }
+            ItemSwipeMenu {
+                id: menuSubtitles
+                title: qsTr("subtitles")
+                icon: "subtitles"
             }
             ItemSwipeMenu {
                 id: menuAudioTags

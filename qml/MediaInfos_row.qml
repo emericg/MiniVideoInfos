@@ -49,8 +49,8 @@ Item {
         videoRepeater.model = mediaItem.getVideoTrackCount()
         audioRepeater.model = mediaItem.getAudioTrackCount()
 
-        //item_subtitles_tags.visible = mediaItem.hasSubtitles
-        //if (mediaItem.hasSubtitles) content_subtitles.loadSubtitles(mediaItem)
+        item_subtitles.visible = mediaItem.hasSubtitles
+        if (mediaItem.hasSubtitles) content_subtitles.loadSubtitles(mediaItem)
 
         item_audio_tags.visible = mediaItem.hasAudioTags
         if (mediaItem.hasAudioTags) content_audio_tags.loadTags(mediaItem)
@@ -312,7 +312,7 @@ Item {
             }
 
             ////////
-/*
+
             Item {
                 id: item_subtitles
                 width: row.colsize
@@ -324,12 +324,12 @@ Item {
                     color: Theme.colorForeground
                     visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
-                InfosAV {
+                InfosSubtitles {
                     id: content_subtitles
                     anchors.fill: parent
                 }
             }
-*/
+
             ////////
 
             Item {

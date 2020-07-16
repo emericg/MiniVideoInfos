@@ -34,6 +34,8 @@ Item {
                 return "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
             else if (icon === "audio")
                 return "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
+            else if (icon === "subtitles")
+                return "qrc:/assets/icons_material_media/outline-closed_caption-24px.svg"
             else if (icon === "audio_tags")
                 return "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
             else if (icon === "image_tags")
