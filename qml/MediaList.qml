@@ -121,33 +121,42 @@ Item {
         onAccepted: {
             //console.log("FileDialog::onAccepted() << " + fileUrl)
             loadMedia(UtilsPath.cleanUrl(fileUrl))
-            appHeader.title = dialogHeaderSaved
-            appHeader.leftMenuMode = "drawer"
-            dialogIsOpen = false
+
+            if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
+                appHeader.title = dialogHeaderSaved
+                appHeader.leftMenuMode = "drawer"
+                dialogIsOpen = false
+            }
         }
         onRejected: {
             //console.log("FileDialog::onRejected()")
-            appHeader.title = dialogHeaderSaved
-            appHeader.leftMenuMode = "drawer"
-            dialogIsOpen = false
+            if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
+                appHeader.title = dialogHeaderSaved
+                appHeader.leftMenuMode = "drawer"
+                dialogIsOpen = false
+            }
         }
     }
     function openDialog() {
         if (!dialogIsOpen) {
-            dialogHeaderSaved = appHeader.title
-            appHeader.title = qsTr("Media file selection")
-            appHeader.leftMenuMode = "back"
-            dialogIsOpen = true
+            if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
+                dialogHeaderSaved = appHeader.title
+                appHeader.title = qsTr("Media file selection")
+                appHeader.leftMenuMode = "back"
+                dialogIsOpen = true
+            }
             fileDialog.open()
         }
     }
     function closeDialog() {
         if (dialogIsOpen) {
-            appHeader.title = dialogHeaderSaved
-            appHeader.leftMenuMode = "drawer"
-            dialogIsOpen = false
-            fileDialog.close()
+            if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
+                appHeader.title = dialogHeaderSaved
+                appHeader.leftMenuMode = "drawer"
+                dialogIsOpen = false
+            }
         }
+        fileDialog.close()
     }
 
     ////////////////////////////////////////////////////////////////////////////

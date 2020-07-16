@@ -13,9 +13,13 @@ Rectangle {
     visible: false
     color: Theme.colorBackground
 
-    property bool selectFolder: false
-    property string title: ""
+    // compatibility
+    property string title: "" // not supported
     property url folder: ""
+    property bool sidebarVisible: false // not supported
+    property bool selectExisting: true // not supported
+    property bool selectFolder: false
+    property bool selectMultiple: false // not supported
 
     property bool onlyShowMedia: settingsManager.mediaFilter
 
