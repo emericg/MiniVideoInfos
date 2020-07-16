@@ -39,7 +39,7 @@ Loader {
         }
     }
 
-    //Keys.onBackPressed: (source === "FileDialog_QML.qml") ? back() : close()
+    Keys.onBackPressed: (source === "FileDialog_QML.qml") ? back() : close()
 
     ////////
 

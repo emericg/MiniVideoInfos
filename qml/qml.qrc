@@ -37,7 +37,6 @@
         <file alias="ItemMenuVerticalButton.qml">components_generic/ItemMenuVerticalButton.qml</file>
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
-        <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="SwitchThemedMobile.qml">components_themed/SwitchThemed_mobile.qml</file>
