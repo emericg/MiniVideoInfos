@@ -239,7 +239,13 @@ class Media: public QObject
     unsigned gps_dop = 0;
     unsigned gps_diff = 0;
 
-    ////////
+Q_SIGNALS:
+    void mediaUpdated();
+    void metadataUpdated();
+
+public:
+    Media(const QString &path, QObject *parent = nullptr);
+    ~Media();
 
     bool hasAudio() const { return (tracksAudio.length() > 0); }
     bool hasVideo() const { return (tracksVideo.length() > 0); }
@@ -325,17 +331,9 @@ class Media: public QObject
     int getHighlightCount() const { return m_highlights.size(); }
     int getGpsPointCount() const { return m_gps.size(); }
 */
-Q_SIGNALS:
-    void mediaUpdated();
-    void metadataUpdated();
-
-public:
-    Media(const QString &path, QObject *parent = nullptr);
-    ~Media();
-
-    bool isValid() { return m_valid; }
 
 public slots:
+    bool isValid() { return m_valid; }
     unsigned getFileType() const {
 /*
         if (m_type >= Shared::SHOT_VIDEO && m_type <= Shared::SHOT_VIDEO_3D)
@@ -351,23 +349,26 @@ public slots:
         return Shared::SHOT_UNKNOWN;
     }
 
-    Q_INVOKABLE QString getExportString();
-    Q_INVOKABLE bool saveExportString();
+    QString getExportString();
+    bool saveExportString();
 
-    Q_INVOKABLE QVariant getVideoTracks() const { if (tracksVideo.empty()) return QVariant(); return QVariant::fromValue(tracksVideo); }
-    Q_INVOKABLE QVariant getAudioTracks() const { if (tracksAudio.empty()) return QVariant(); return QVariant::fromValue(tracksAudio); }
-    Q_INVOKABLE QVariant getSubtitlesTracks() const { if (tracksSubtitles.empty()) return QVariant(); return QVariant::fromValue(tracksSubtitles); }
-    Q_INVOKABLE QVariant getOtherTracks() const { if (tracksOther.empty()) return QVariant(); return QVariant::fromValue(tracksOther); }
+    QString getSubtitlesString(int track);
+    bool saveSubtitlesString(int track);
 
-    Q_INVOKABLE QVariant getVideoTrack(int tid = 0);
-    Q_INVOKABLE QVariant getAudioTrack(int tid = 0);
-    Q_INVOKABLE QVariant getSubtitlesTrack(int tid = 0);
-    Q_INVOKABLE QVariant getOtherTrack(int tid = 0);
+    QVariant getVideoTracks() const { if (tracksVideo.empty()) return QVariant(); return QVariant::fromValue(tracksVideo); }
+    QVariant getAudioTracks() const { if (tracksAudio.empty()) return QVariant(); return QVariant::fromValue(tracksAudio); }
+    QVariant getSubtitlesTracks() const { if (tracksSubtitles.empty()) return QVariant(); return QVariant::fromValue(tracksSubtitles); }
+    QVariant getOtherTracks() const { if (tracksOther.empty()) return QVariant(); return QVariant::fromValue(tracksOther); }
 
-    Q_INVOKABLE int getVideoTrackCount() const { return tracksVideo.size(); }
-    Q_INVOKABLE int getAudioTrackCount() const { return tracksAudio.size(); }
-    Q_INVOKABLE int getSubtitlesTrackCount() const { return tracksSubtitles.size(); }
-    Q_INVOKABLE int getOtherTrackCount() const { return tracksOther.size(); }
+    QVariant getVideoTrack(int tid = 0);
+    QVariant getAudioTrack(int tid = 0);
+    QVariant getSubtitlesTrack(int tid = 0);
+    QVariant getOtherTrack(int tid = 0);
+
+    int getVideoTrackCount() const { return tracksVideo.size(); }
+    int getAudioTrackCount() const { return tracksAudio.size(); }
+    int getSubtitlesTrackCount() const { return tracksSubtitles.size(); }
+    int getOtherTrackCount() const { return tracksOther.size(); }
 };
 
 /* ************************************************************************** */
