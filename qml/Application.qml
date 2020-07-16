@@ -89,7 +89,9 @@ ApplicationWindow {
         navbarColor: {
             if (appContent.state === "Tutorial")
                 return Theme.colorHeader
-            else if (appContent.state === "MediaInfos" && isPhone)
+            else if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
+                     (appContent.state === "MediaInfos" && isPhone) ||
+                      tabletMenuScreen.visible)
                 return Theme.colorForeground
             else
                 return Theme.colorBackground

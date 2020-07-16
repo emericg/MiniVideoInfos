@@ -11,7 +11,7 @@
 
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="MiniVideo Infos" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="com.minivideo.infos.QShareActivity"
-                    android:label="MiniVideo Infos" android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleInstance">
+                  android:label="MiniVideo Infos" android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleInstance">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

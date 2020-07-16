@@ -58,7 +58,7 @@ Item {
     function updateSelectedMedia() {
         for (var child in mediaView.contentItem.children) {
             if (mediaView.contentItem.children[child].selected) {
-                deviceManager.updateMedia(mediaView.contentItem.children[child].boxDevice.deviceAddress)
+                mediaManager.updateMedia(mediaView.contentItem.children[child].boxDevice.deviceAddress)
             }
         }
         exitSelectionMode()
@@ -71,7 +71,7 @@ Item {
             }
         }
         for (var count = 0; count < devicesAddr.length; count++) {
-            deviceManager.removeDevice(devicesAddr[count])
+            mediaManager.removeDevice(devicesAddr[count])
         }
         exitSelectionMode()
     }

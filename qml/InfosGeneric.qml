@@ -146,36 +146,6 @@ ScrollView {
             }
 
             Item { ////
-                id: item_name
-                height: Math.max(UtilsNumber.alignTo(info_name.contentHeight + 4, 4), 24)
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: legend_name
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("name")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_name
-                    anchors.left: legend_name.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
-                }
-            }
-            Item { ////
                 id: item_path
                 height: Math.max(UtilsNumber.alignTo(info_path.contentHeight + 4, 4), 24)
                 anchors.left: parent.left
@@ -205,6 +175,54 @@ ScrollView {
                     wrapMode: Text.WrapAnywhere
                 }
             }
+            Item { ////
+                id: item_name
+                height: Math.max(UtilsNumber.alignTo(info_name.contentHeight + 4, 4), 24)
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                Text {
+                    id: legend_name
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+
+                    text: qsTr("name")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_name
+                    anchors.left: legend_name.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                    wrapMode: Text.WrapAnywhere
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("extension")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_extension
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+
             Row { ////
                 anchors.left: parent.left
                 anchors.leftMargin: 56
@@ -288,23 +306,6 @@ ScrollView {
                 }
                 Text {
                     id: info_timecode
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("extension")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_extension
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

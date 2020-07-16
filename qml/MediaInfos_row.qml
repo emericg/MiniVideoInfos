@@ -412,5 +412,6 @@ Item {
     Item { // compatibility
         id: rectangleMenus
         height: 0
+        visible: false
     }
 }
