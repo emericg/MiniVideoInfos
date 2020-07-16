@@ -47,12 +47,19 @@ bool MediaManager::openMedia(const QString &path)
     qDebug() << "MediaManager::openMedia()" << path;
     bool status = false;
 
-    Media *mf = new Media(path);
-    if (mf && mf->isValid())
+    if (!path.isEmpty())
     {
-        m_media.push_front(mf);
-        status = true;
-        Q_EMIT mediaUpdated();
+        // Already opened?
+        closeMedia(path);
+
+        // Now open it up
+        Media *mf = new Media(path);
+        if (mf && mf->isValid())
+        {
+            m_media.push_front(mf);
+            status = true;
+            Q_EMIT mediaUpdated();
+        }
     }
 
     return status;
@@ -60,5 +67,16 @@ bool MediaManager::openMedia(const QString &path)
 
 void MediaManager::closeMedia(const QString &path)
 {
-    Q_UNUSED(path)
+    if (!path.isEmpty())
+    {
+        for (auto m: m_media)
+        {
+            Media *mm = static_cast<Media *>(m);
+            if (mm->getPath() == path)
+            {
+                delete mm;
+                m_media.removeOne(m);
+            }
+        }
+    }
 }
