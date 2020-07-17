@@ -54,28 +54,28 @@ Item {
         selectionList = [];
         selectionCount = 0;
     }
-/*
+
     function updateSelectedMedia() {
         for (var child in mediaView.contentItem.children) {
             if (mediaView.contentItem.children[child].selected) {
-                mediaManager.updateMedia(mediaView.contentItem.children[child].boxDevice.deviceAddress)
+                mediaManager.openMedia(mediaView.contentItem.children[child].mediaItem.fullpath)
             }
         }
         exitSelectionMode()
     }
     function removeSelectedMedia() {
-        var devicesAddr = [];
+        var mediaPaths = [];
         for (var child in mediaView.contentItem.children) {
             if (mediaView.contentItem.children[child].selected) {
-                devicesAddr.push(mediaView.contentItem.children[child].boxDevice.deviceAddress)
+                mediaPaths.push(mediaView.contentItem.children[child].mediaItem.fullpath)
             }
         }
-        for (var count = 0; count < devicesAddr.length; count++) {
-            mediaManager.removeDevice(devicesAddr[count])
+        for (var count = 0; count < mediaPaths.length; count++) {
+            mediaManager.closeMedia(mediaPaths[count])
         }
         exitSelectionMode()
     }
-*/
+
     property string pathToLoad: ""
     Timer {
         id: ttt
@@ -227,27 +227,48 @@ Item {
             // prevent clicks into this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
+
             Row {
                 anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
+                spacing: 16
 
-                ItemImageButton {
-                    id: buttonClear
-                    width: 36
-                    height: 36
+
+                ButtonWireframeImage {
+                    id: buttonUpdate2
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: screenMediaList.exitSelectionMode()
+                    fullColor: true
+                    primaryColor: Theme.colorActionbarHighlight
+                    text: qsTr("Update")
+                    onClicked: updateSelectedMedia()
+                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                 }
+                ButtonWireframeImage {
+                    id: buttonClose2
+                    height: 32
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    fullColor: true
+                    primaryColor: Theme.colorActionbarHighlight
+                    text: qsTr("Close")
+                    onClicked: removeSelectedMedia()
+                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                }
+            }
+
+            Row {
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 16
 
                 Text {
                     id: textActions
                     anchors.verticalCenter: parent.verticalCenter
+                    visible: (actionBar.width >= 560)
 
                     text: qsTr("%n media(s) selected", "", screenMediaList.selectionCount)
                     color: Theme.colorActionbarContent
@@ -256,39 +277,16 @@ Item {
                     font.bold: isDesktop ? true : false
                     font.pixelSize: 16
                 }
-            }
-
-            Row {
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
-
-                property bool useBigButtons: (!isPhone && actionBar.width >= 560)
-
                 ItemImageButton {
-                    id: buttonClose1
+                    id: buttonClear
                     width: 36
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    visible: !parent.useBigButtons
+                    source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
-                    //onClicked:
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
-                }
-                ButtonWireframeImage {
-                    id: buttonClose2
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: parent.useBigButtons
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
-                    text: qsTr("Close")
-                    //onClicked:
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    onClicked: screenMediaList.exitSelectionMode()
                 }
             }
         }

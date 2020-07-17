@@ -67,6 +67,8 @@ bool MediaManager::openMedia(const QString &path)
 
 void MediaManager::closeMedia(const QString &path)
 {
+    qDebug() << "MediaManager::closeMedia()" << path;
+
     if (!path.isEmpty())
     {
         for (auto m: m_media)
@@ -76,6 +78,7 @@ void MediaManager::closeMedia(const QString &path)
             {
                 delete mm;
                 m_media.removeOne(m);
+                Q_EMIT mediaUpdated();
             }
         }
     }
