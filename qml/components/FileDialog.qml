@@ -39,7 +39,7 @@ Loader {
         }
     }
 
-    Keys.onBackPressed: (source === "FileDialog_QML.qml") ? back() : close()
+    Keys.onBackPressed: back()
 
     ////////
 
@@ -89,7 +89,7 @@ Loader {
        if (Qt.platform.os === "android" && !usePlatformDialog) {
             fileDialog.item.onBackPressed();
         } else {
-            // ?
+            close();
         }
     }
 }

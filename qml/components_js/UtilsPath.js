@@ -134,6 +134,7 @@ function isAudioFile(filePath) {
             extension === "m4a" || extension === "mp4a" ||  extension === "m4r" || extension === "aac" ||
             extension === "mka" ||
             extension === "wma" ||
+            extension === "flac" ||
             extension === "amb" || extension === "wav" || extension === "wave" ||
             extension === "ogg" || extension === "opus" || extension === "vorbis") {
             valid = true;

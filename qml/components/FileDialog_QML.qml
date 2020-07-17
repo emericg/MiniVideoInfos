@@ -22,13 +22,34 @@ Rectangle {
     property bool selectMultiple: false // not supported
 
     property bool onlyShowMedia: settingsManager.mediaFilter
+    property bool inited: false
+
+    function open() {
+        if (!inited) {
+            folderListModel.rootFolder = fileDialogMobile.folder
+            folderListModel.folder = fileDialogMobile.folder
+
+            storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
+            updateHeaderText()
+            inited = true
+        }
+/*
+        if (utilsApp.getMobileStorageCount() > 1) {
+            storageChooser.visible = true
+            headerText.anchors.leftMargin = 48
+        } else {
+            storageChooser.visible = false
+            headerText.anchors.leftMargin = 0
+        }
+*/
+    }
 
     function updateHeaderText() {
         if (folderListModel.folder === folderListModel.rootFolder) {
             headerText.text = "/"
             upButton.visible = false
         } else {
-            headerText.text = folderListModel.folder.toString();
+            headerText.text = folderListModel.folder.toString()
             upButton.visible = true
         }
 
@@ -43,21 +64,6 @@ Rectangle {
             headerText.text = headerText.text.slice(2)
     }
 
-    function open() {
-        folderListModel.rootFolder = fileDialogMobile.folder
-        folderListModel.folder = fileDialogMobile.folder;
-        updateHeaderText()
-/*
-        if (utilsApp.getMobileStorageCount() > 1) {
-            storageChooser.visible = true
-            headerText.anchors.leftMargin = 48
-        } else {
-            storageChooser.visible = false
-            headerText.anchors.leftMargin = 0
-        }
-*/
-    }
-
     function onRowChoose(index, folderURL) {
         if (folderListModel.isFolder(index)) {
             parent.accepted(folderURL);
@@ -67,7 +73,7 @@ Rectangle {
     function onRowClick(index, fileURL) {
         if (folderListModel.isFolder(index)) {
             folderListModel.folder = fileURL;
-            updateHeaderText()
+            updateHeaderText();
         } else {
             parent.accepted(fileURL);
             parent.close();
@@ -76,10 +82,10 @@ Rectangle {
 
     function onBackPressed() {
         if (folderListModel.folder === folderListModel.rootFolder) {
-            close()
+            close();
         } else {
             folderListModel.folder = folderListModel.parentFolder;
-            updateHeaderText()
+            updateHeaderText();
         }
     }
 
@@ -88,18 +94,14 @@ Rectangle {
     Rectangle {
         id: header
         height: 48
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.top: parent.top
-        anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
 
         color: Theme.colorHeader
 
-        MouseArea {
-            anchors.fill: parent
-        }
+        // prevent clicks into this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         Item {
             id: storageChooser
@@ -114,24 +116,13 @@ Rectangle {
             property int storageCount: utilsApp.getMobileStorageCount()
 
             ImageSvg {
-                id: storageIconInternal
+                id: storageIcon
                 width: 24
                 height: 24
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
                 source: "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
-                color: Theme.colorIcon
-            }
-            ImageSvg {
-                id: storageIconExternal
-                width: 24
-                height: 24
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: false
-                source: "qrc:/assets/icons_material/outline-sd_card-24px.svg"
                 color: Theme.colorIcon
             }
 
@@ -147,13 +138,11 @@ Rectangle {
                     if (storageChooser.storageIndex === 0) {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal();
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal();
-                        storageIconInternal.visible = true
-                        storageIconExternal.visible = false
+                        storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg";
                     } else {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal();
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal();
-                        storageIconInternal.visible = false
-                        storageIconExternal.visible = true
+                        storageIcon.source = "qrc:/assets/icons_material/outline-sd_card-24px.svg";
                     }
 
                     updateHeaderText();
@@ -348,7 +337,7 @@ Rectangle {
 
                 if (onlyShowMedia)
                     folderListModel.nameFilters = ["*.mov", "*.m4v", "*.mp4", "*.mp4v", "*.3gp", "*.3gpp", "*.mkv", "*.webm", "*.avi", "*.divx", "*.asf", "*.wmv",
-                                                   "*.mp1", "*.mp2", "*.mp3", "*.m4a", "*.mp4a", "*.m4r", "*.aac", "*.mka", "*.wma", "*.amb", "*.wav", "*.wave", "*.ogg", "*.opus", "*.vorbis",
+                                                   "*.mp1", "*.mp2", "*.mp3", "*.m4a", "*.mp4a", "*.m4r", "*.aac", "*.mka", "*.wma", "*.amb", "*.wav", "*.wave", "*.flac", "*.ogg", "*.opus", "*.vorbis",
                                                     "*.jpg", "*.jpeg", "*.webp", "*.png", "*.gpr", "*.gif", "*.heif", "*.heic", "*.avif", "*.bmp", "*.tga", "*.tif", "*.tiff", "*.svg"]
                 else
                     folderListModel.nameFilters = []
