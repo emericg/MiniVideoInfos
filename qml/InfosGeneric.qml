@@ -768,6 +768,26 @@ ScrollView {
                     }
                 }
                 Row { ////
+                    id: item_vorientation
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    height: 24
+                    spacing: 16
+
+                    visible: (modelData.orientation > 0)
+
+                    Text {
+                        text: qsTr("orientation")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        text: UtilsMedia.rotationToString(modelData.orientation)
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
+                }
+                Row { ////
                     anchors.left: parent.left
                     anchors.leftMargin: 56
                     height: 24

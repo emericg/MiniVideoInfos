@@ -64,6 +64,8 @@ ScrollView {
 
             item_vprojection.visible = (trackItem.projection > 0)
             info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
+            info_vorientation.visible = (trackItem.orientation > 0)
+            info_vorientation.text = UtilsMedia.rotationToString(trackItem.orientation)
 
             item_vscan.visible = (trackItem.scanmode > 0)
             info_vscan.text = UtilsMedia.scanmodeToString(trackItem.scanmode)
@@ -577,6 +579,24 @@ ScrollView {
                 }
                 Text {
                     id: info_vprojection
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_vorientation
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("orientation")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vorientation
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

@@ -328,7 +328,7 @@ int MediaTrackQml::getProjection() const
 {
     if (mv_stream)
     {
-        return mv_stream->video_rotation;
+        return mv_stream->video_projection;
     }
 
     return -1;

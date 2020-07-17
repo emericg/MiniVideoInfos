@@ -50,7 +50,7 @@ int textExport::generateSubtitlesData_text(MediaFile_t &media, QString &exportDa
 {
     int status = 1;
 
-    if (media.tracks_subtitles_count < track) return status;
+    if (media.tracks_subtitles_count <= track) return status;
 
     MediaStream_t *t = media.tracks_subt[track];
 

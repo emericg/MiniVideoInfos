@@ -282,7 +282,7 @@ for TARGET in TARGETS:
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DPLATFORM=OS64"]
             else:
                 # Without custom toolchain
-                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=arm64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10.0"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=armv7;armv7s;arm64;i386;x86_64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10.0"]
     elif OS_HOST == "Windows":
         CMAKE_gen = MSVC_GEN_VER
         if ARCH_TARGET == "armv7":

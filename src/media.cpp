@@ -733,6 +733,7 @@ bool Media::getMetadataFromVideo()
                     height = m_media->tracks_video[0]->height;
                     //m_duration = m_media->tracks_video[0]->stream_duration_ms;
                     projection = m_media->tracks_video[0]->video_projection;
+                    orientation = m_media->tracks_video[0]->video_rotation;
 
                     vcodec = QString::fromLocal8Bit(getCodecString(stream_VIDEO, m_media->tracks_video[0]->stream_codec, true));
                     vframerate = m_media->tracks_video[0]->framerate;
@@ -982,8 +983,11 @@ bool Media::saveSubtitlesString(int track)
     {
         QString subtitlesData;
         textExport::generateSubtitlesData_text(*m_media, subtitlesData, track);
+
         if (!subtitlesData.isEmpty())
         {
+            if (m_media->tracks_subtitles_count <= track) return status;
+
             QString lng = m_media->tracks_subt[track]->track_languagecode;
             if (lng.size()) lng.prepend("_");
 

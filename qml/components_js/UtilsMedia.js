@@ -262,6 +262,30 @@ function orientationToString(orientation) {
 }
 
 /*!
+ * rotationToString()
+ *
+ * Convert MP4 enumeration to a readable string
+ */
+function rotationToString(rotation) {
+    var text = '';
+
+    if (rotation > 0) {
+        if (rotation === 1)
+            text = qsTr("Rotate 90°");
+        else if (rotation === 2)
+            text = qsTr("Rotate 180°");
+        else if (rotation === 3)
+            text = qsTr("Rotate 270°");
+        else
+            text = qsTr("Unknown rotation");
+    } else {
+        text = qsTr("No rotation");
+    }
+
+    return text;
+}
+
+/*!
  * projectionToString()
  */
 function projectionToString(proj) {
