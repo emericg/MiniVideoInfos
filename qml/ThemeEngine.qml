@@ -195,8 +195,8 @@ Item {
             colorActionbarHighlight = "#00a27d"
 
             colorTabletmenu = "#292929"
-            colorTabletmenuContent = "#ff9f1a"
-            colorTabletmenuHighlight = "#bb86fc"
+            colorTabletmenuContent = "#808080"
+            colorTabletmenuHighlight = "#ff9f1a"
 
             colorBackground = "#313236"
             colorForeground = "#292929"
