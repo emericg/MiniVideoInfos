@@ -31,6 +31,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -4
 
             source: "qrc:/assets/logos/logo.svg"
             sourceSize: Qt.size(width, height)
@@ -40,6 +41,7 @@ Item {
             anchors.left: imageLogo.right
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -4
 
             Text {
                 text: "MiniVideo Infos"

@@ -135,14 +135,14 @@ Item {
             colorGreen = "#07bf97"
             colorBlue = "#4CA1D5"
             colorYellow = "#ffba5a"
-            colorOrange = "#ff7b45"
-            colorRed = "#ff443a"
+            colorOrange = "#ff863a"
+            colorRed = "#ff523a"
 
             themeStatusbar = Material.Light
             colorStatusbar = colorMaterialDarkGrey
 
             colorHeader = colorMaterialGrey
-            colorHeaderContent = "#5483EF" // colorMaterialBlue
+            colorHeaderContent = "#0079fe"
             colorHeaderHighlight = ""
 
             colorActionbar = colorGreen
@@ -157,7 +157,7 @@ Item {
             colorForeground = colorMaterialGrey
 
             colorPrimary = colorRed
-            colorSecondary = "#ff7b36" // colorMaterialOrange
+            colorSecondary = "#ff7b36"
             colorWarning = colorOrange
             colorError = colorRed
 
@@ -195,7 +195,7 @@ Item {
             colorActionbarHighlight = "#00a27d"
 
             colorTabletmenu = "#292929"
-            colorTabletmenuContent = "#808080"
+            colorTabletmenuContent = "#ff9f1a"
             colorTabletmenuHighlight = "#bb86fc"
 
             colorBackground = "#313236"

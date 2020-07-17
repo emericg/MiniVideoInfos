@@ -26,7 +26,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.top: parent.top
-            anchors.topMargin: 12
+            anchors.topMargin: 8
 
             text: qsTr("Change persistent settings here!")
             font.pixelSize: 18
@@ -38,7 +38,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 16
+            anchors.bottomMargin: 20
 
             text: qsTr("Because everyone love settings...")
             font.pixelSize: 16

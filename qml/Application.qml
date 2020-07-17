@@ -359,7 +359,7 @@ ApplicationWindow {
 
         onEntered: {
             if (drag.hasUrls) {
-                dropAreaIndicator.color = Theme.colorError
+                dropAreaIndicator.color = Theme.colorWarning
                 dropAreaImage.source = "qrc:/assets/icons_material_media/baseline-broken_image-24px.svg"
                 dropAreaIndicator.opacity = 1
 

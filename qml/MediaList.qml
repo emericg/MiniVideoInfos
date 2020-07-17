@@ -187,6 +187,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: -4
 
                 color: Theme.colorIcon
                 fillMode: Image.PreserveAspectFit
@@ -198,6 +199,7 @@ Item {
                 anchors.left: image.right
                 anchors.leftMargin: 32
                 anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: -4
 
                 primaryColor: Theme.colorPrimary
                 text: qsTr("LOAD ANOTHER MEDIA")

@@ -28,7 +28,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.top: parent.top
-            anchors.topMargin: 12
+            anchors.topMargin: 8
 
             text: qsTr("Permissions")
             font.bold: true
@@ -41,7 +41,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 14
+            anchors.bottomMargin: 20
 
             text: qsTr("Why are we using these permissions?")
             color: Theme.colorSubText

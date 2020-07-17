@@ -8,6 +8,8 @@ Item {
     id: screenMediaInfos_swipeview
     anchors.fill: parent
 
+    ////////
+
     function loadHeader() {
         if (mediaItem.fileType === 1 || mediaItem.fileType === 2) {
             columnDuration.visible = true
@@ -40,11 +42,17 @@ Item {
 
         columnGPS.visible = mediaItem.hasGPS
 
+        computeColumnsSize()
+    }
+
+    onWidthChanged: computeColumnsSize()
+    function computeColumnsSize() {
         var headercolumncount = 1
         if (mediaItem.fileType === 1 || mediaItem.fileType === 2) headercolumncount++;
         if (mediaItem.fileType === 2 || mediaItem.fileType === 3) headercolumncount++;
         if (mediaItem.fileType === 1 || mediaItem.audioCodec.length) headercolumncount++;
         if (mediaItem.hasGPS) headercolumncount++;
+
         var headercolumnwidth = ((rectangleHeader.width - 48) / headercolumncount)
         if (headercolumnwidth > 128) headercolumnwidth = 128
         columnDuration.width = headercolumnwidth
@@ -156,10 +164,6 @@ Item {
             menuExport.index = mediaPages.count-1
         }
 
-        rectangleMenus.visible = (mediaItem.hasVideo || mediaItem.hasAudio ||
-                                  mediaItem.hasAudioTags || mediaItem.hasEXIF ||
-                                  mediaItem.hasGPS)
-
         mediaPages.interactive = true
     }
 
@@ -167,20 +171,22 @@ Item {
 
     Rectangle {
         id: rectangleHeader
-        color: Theme.colorForeground
-        height: 72
-        z: 5
 
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
+        z: 5
+        height: 72
+        color: Theme.colorForeground
+        visible: !(isPhone && screenOrientation == 2)
+
         anchors.top: parent.top
         anchors.topMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
 
         Column {
-            anchors.right: parent.right
             anchors.left: parent.left
+            anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -4
             spacing: 10
@@ -506,17 +512,18 @@ Item {
 
     Rectangle {
         id: rectangleMenus
-        height: 56
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
 
         z: 5
-        color: Theme.colorForeground
+        height: 56
         opacity: 0.9
+        color: Theme.colorForeground
+        visible: !(isPhone && screenOrientation == 2) && (mediaPages.count > 1)
 
         Rectangle {
             height: 1

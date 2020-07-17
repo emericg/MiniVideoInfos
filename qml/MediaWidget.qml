@@ -104,12 +104,12 @@ Item {
 
             anchors.top: parent.top
             anchors.topMargin: 8
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
             anchors.left: parent.left
             anchors.leftMargin: (singleColumn ? 8 : 16)
             anchors.right: parent.right
             anchors.rightMargin: 8
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
 
             //spacing: (singleColumn ? 12 : 10)
 
@@ -235,11 +235,10 @@ Item {
         visible: singleColumn
         height: 1
 
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.right: parent.right
-        anchors.leftMargin: -6
-        anchors.rightMargin: -6
         anchors.left: parent.left
+        anchors.leftMargin: -6
+        anchors.right: parent.right
+        anchors.rightMargin: -6
+        anchors.bottom: parent.bottom
     }
 }

@@ -182,6 +182,15 @@ Item {
 
             ////////
 
+            Loader {
+                id: miniList
+                anchors.left: parent.left
+                anchors.right: parent.right
+                source: isPhone ? "" : "MiniList.qml"
+            }
+
+            ////////
+
             Item { // spacer
                 height: 8
                 anchors.left: parent.left
