@@ -352,8 +352,8 @@ public slots:
     QString getExportString();
     bool saveExportString();
 
-    QString getSubtitlesString(int track);
-    bool saveSubtitlesString(int track);
+    QString getSubtitlesString(unsigned track);
+    bool saveSubtitlesString(unsigned track);
 
     QVariant getVideoTracks() const { if (tracksVideo.empty()) return QVariant(); return QVariant::fromValue(tracksVideo); }
     QVariant getAudioTracks() const { if (tracksAudio.empty()) return QVariant(); return QVariant::fromValue(tracksAudio); }

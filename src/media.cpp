@@ -963,7 +963,7 @@ bool Media::saveExportString()
 
 /* ************************************************************************** */
 
-QString Media::getSubtitlesString(int track)
+QString Media::getSubtitlesString(unsigned track)
 {
     QString subtitlesData;
 
@@ -975,19 +975,19 @@ QString Media::getSubtitlesString(int track)
     return subtitlesData;
 }
 
-bool Media::saveSubtitlesString(int track)
+bool Media::saveSubtitlesString(unsigned track)
 {
     bool status = false;
 
     if (m_media)
     {
+        if (m_media->tracks_subtitles_count <= track) return status;
+
         QString subtitlesData;
         textExport::generateSubtitlesData_text(*m_media, subtitlesData, track);
 
         if (!subtitlesData.isEmpty())
         {
-            if (m_media->tracks_subtitles_count <= track) return status;
-
             QString lng = m_media->tracks_subt[track]->track_languagecode;
             if (lng.size()) lng.prepend("_");
 

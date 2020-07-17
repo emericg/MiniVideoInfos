@@ -44,7 +44,7 @@ public:
     textExport();
     ~textExport();
 
-    static int generateSubtitlesData_text(MediaFile_t &media, QString &exportData, int track);
+    static int generateSubtitlesData_text(MediaFile_t &media, QString &exportData, unsigned track);
 
     static int generateExportData_text(MediaFile_t &media, QString &exportData, bool detailed);
     static int generateExportData_json(MediaFile_t &media, QString &exportData, bool detailed);

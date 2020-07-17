@@ -301,7 +301,6 @@ ApplicationWindow {
             },
             State {
                 name: "MediaList"
-                PropertyChanges { target: appHeader; title: "MiniVideo Infos"; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }

@@ -46,7 +46,7 @@ textExport::~textExport()
 
 /* ************************************************************************** */
 
-int textExport::generateSubtitlesData_text(MediaFile_t &media, QString &exportData, int track)
+int textExport::generateSubtitlesData_text(MediaFile_t &media, QString &exportData, unsigned track)
 {
     int status = 1;
 

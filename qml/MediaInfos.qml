@@ -14,18 +14,28 @@ Item {
     property var mediaItem: null
     property var content: null
 
+    Connections {
+        target: appContent
+        onStateChanged: {
+            // Set title
+            if (appContent.state === "MediaInfos") {
+                if (!isPhone || mediaItem.name.length < 24) {
+                    appHeader.title = mediaItem.name + "." + mediaItem.ext
+                } else {
+                    appHeader.title = "MiniVideo Infos"
+                }
+            } else if (appContent.state === "MediaList") {
+                appHeader.title = "MiniVideo Infos"
+            }
+        }
+    }
+
     function loadMediaInfos(newmedia) {
         if (typeof newmedia === "undefined" || !newmedia) return
         if (newmedia === mediaItem) return
 
         mediaItem = newmedia
         //console.log("screenMediaInfos.loadMediaInfos(" + mediaItem.name + ")")
-
-        // Title
-        if (!isPhone || mediaItem.name.length < 24)
-            appHeader.title = mediaItem.name + "." + mediaItem.ext
-        else
-            appHeader.title = "MiniVideo Infos"
 
         if (contentLoader.status != Loader.Ready) {
             if (isPhone)
