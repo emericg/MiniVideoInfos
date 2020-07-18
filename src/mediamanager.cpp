@@ -44,11 +44,12 @@ MediaManager::~MediaManager()
 
 bool MediaManager::openMedia(const QString &path)
 {
-    qDebug() << "MediaManager::openMedia()" << path;
     bool status = false;
 
     if (!path.isEmpty())
     {
+        //qDebug() << "MediaManager::openMedia()" << path;
+
         // Already opened?
         closeMedia(path);
 
@@ -67,10 +68,10 @@ bool MediaManager::openMedia(const QString &path)
 
 void MediaManager::closeMedia(const QString &path)
 {
-    qDebug() << "MediaManager::closeMedia()" << path;
-
     if (!path.isEmpty())
     {
+        //qDebug() << "MediaManager::closeMedia()" << path;
+
         for (auto m: m_media)
         {
             Media *mm = static_cast<Media *>(m);

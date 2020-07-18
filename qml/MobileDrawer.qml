@@ -98,6 +98,7 @@ Drawer {
                 }
             }
         }
+        MouseArea { anchors.fill: rectangleHeader; acceptedButtons: Qt.AllButtons; }
 
         ////////////////
 

@@ -355,10 +355,8 @@ Item {
 
     ItemNoFile {
         id: itemNoFile
-        width: 200
-        height: 200
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: (isDesktop) ? -26 : -13
 
         visible: true
         onClicked: openDialog()

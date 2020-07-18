@@ -14,8 +14,7 @@ ScrollView {
     implicitHeight: 720
     contentWidth: -1
 
-    ScrollBar.vertical.policy: ScrollBar.AsNeeded
-    ScrollBar.vertical.interactive: true
+    //ScrollBar.vertical: ScrollBarThemedV { z: 1; policy: ScrollBar.AsNeeded; }
 
     function loadTrack(trackItem) {
         if (typeof trackItem === "undefined" || !trackItem) return

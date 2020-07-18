@@ -77,10 +77,7 @@ Item {
         anchors.fill: parent
         contentHeight: -1
 
-        ScrollBar.horizontal.policy: ScrollBar.AsNeeded
-        ScrollBar.horizontal.interactive: true
-        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.interactive: false
+        //ScrollBar.horizontal: ScrollBarThemedH { z: 1; policy: ScrollBar.AsNeeded; }
 
         Row {
             id: row

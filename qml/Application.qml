@@ -342,6 +342,8 @@ ApplicationWindow {
     DropArea {
         id: dropArea
         anchors.fill: parent
+
+        enabled: isDesktop
         //keys: ["text/plain"]
 
         onEntered: {
@@ -383,9 +385,7 @@ ApplicationWindow {
             width: 320
             height: 320
             radius: 320
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: 0
+            anchors.centerIn: parent
 
             color: Theme.colorForeground
             opacity: 0
@@ -406,6 +406,8 @@ ApplicationWindow {
 
     MouseArea {
         anchors.fill: parent
+
+        enabled: isDesktop
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
         onClicked: {
             if (mouse.button === Qt.BackButton) {

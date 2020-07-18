@@ -13,9 +13,6 @@ ScrollView {
     implicitHeight: 720
     contentWidth: -1
 
-    ScrollBar.vertical.policy: ScrollBar.AsNeeded
-    ScrollBar.vertical.interactive: true
-
     function loadGeneric() {
         info_name.text = mediaItem.name
         info_path.text = mediaItem.path

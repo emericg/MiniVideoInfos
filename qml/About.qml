@@ -24,6 +24,9 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
+        // prevent clicks into this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
         Image {
             id: imageLogo
             width: 64
