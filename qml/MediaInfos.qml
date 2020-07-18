@@ -17,15 +17,13 @@ Item {
     Connections {
         target: appContent
         onStateChanged: {
-            // Set title
             if (appContent.state === "MediaInfos") {
+                // Set header title
                 if (!isPhone || mediaItem.name.length < 24) {
                     appHeader.title = mediaItem.name + "." + mediaItem.ext
                 } else {
-                    appHeader.title = "MiniVideo Infos"
+                    appHeader.title = appHeader.appName
                 }
-            } else if (appContent.state === "MediaList") {
-                appHeader.title = "MiniVideo Infos"
             }
         }
     }

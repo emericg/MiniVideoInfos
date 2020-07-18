@@ -9,6 +9,7 @@ Rectangle {
     z: 10
 
     property int headerHeight: 52
+    property string appName: "MiniVideo Infos"
     property string title: "MiniVideo Infos"
     property string leftMenuMode: "drawer" // drawer / back / close
 

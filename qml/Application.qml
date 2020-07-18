@@ -134,6 +134,30 @@ ApplicationWindow {
     }
 
     Connections {
+        target: Qt.application
+        onStateChanged: {
+            switch (Qt.application.state) {
+            case Qt.ApplicationSuspended:
+                //console.log("Qt.ApplicationSuspended")
+                break
+            case Qt.ApplicationHidden:
+                //console.log("Qt.ApplicationHidden")
+                break
+            case Qt.ApplicationInactive:
+                //console.log("Qt.ApplicationInactive")
+                break
+            case Qt.ApplicationActive:
+                //console.log("Qt.ApplicationActive")
+
+                // Check if we need an 'automatic' theme change
+                Theme.loadTheme(settingsManager.appTheme);
+
+                break
+            }
+        }
+    }
+
+    Connections {
         target: appHeader
         onLeftMenuClicked: {
             if (appHeader.leftMenuMode === "drawer") {
@@ -163,30 +187,6 @@ ApplicationWindow {
         if (appContent.state === "MediaList") {
             if (screenMediaInfos.mediaItem != null) {
                 appContent.state = "MediaInfos"
-             }
-        }
-    }
-
-    Connections {
-        target: Qt.application
-        onStateChanged: {
-            switch (Qt.application.state) {
-            case Qt.ApplicationSuspended:
-                //console.log("Qt.ApplicationSuspended")
-                break
-            case Qt.ApplicationHidden:
-                //console.log("Qt.ApplicationHidden")
-                break
-            case Qt.ApplicationInactive:
-                //console.log("Qt.ApplicationInactive")
-                break
-            case Qt.ApplicationActive:
-                //console.log("Qt.ApplicationActive")
-
-                // Check if we need an 'automatic' theme change
-                Theme.loadTheme(settingsManager.appTheme);
-
-                break
             }
         }
     }
@@ -262,9 +262,9 @@ ApplicationWindow {
         state: settingsManager.firstLaunch ? "Tutorial" : "MediaList"
 
         onStateChanged: {
-            if (state === "MediaList")
+            if (state === "MediaList") {
                 appHeader.leftMenuMode = "drawer";
-            else if (state === "Tutorial")
+            } else if (state === "Tutorial")
                 appHeader.leftMenuMode = "close";
             else
                 appHeader.leftMenuMode = "back";
@@ -288,6 +288,7 @@ ApplicationWindow {
             },
             State {
                 name: "MediaList"
+                PropertyChanges { target: appHeader; title: appHeader.appName; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }

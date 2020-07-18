@@ -112,7 +112,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     property bool dialogIsOpen: false
-    property string dialogHeaderSaved: ""
+    property string dialogHeaderSaved: appHeader.appName
     FileDialog {
         id: fileDialog
         title: qsTr("Media file selection")
