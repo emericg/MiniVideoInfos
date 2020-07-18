@@ -64,7 +64,6 @@ Item {
         anchors.bottom: parent.bottom
 
         Column {
-            id: column
             anchors.fill: parent
             anchors.leftMargin: 8
             anchors.rightMargin: 8
@@ -74,77 +73,6 @@ Item {
             spacing: 8
 
             ////////
-
-            Item {
-                id: element_storage
-                height: 24
-                anchors.right: parent.right
-                anchors.left: parent.left
-
-                Text {
-                    id: text_storage
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Storage write")
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 18
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                ItemImageButton {
-                    id: button_storage_test
-                    width: 28
-                    height: 28
-                    anchors.left: parent.left
-                    anchors.leftMargin: 4
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    property bool validperm: false
-
-                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
-                    background: true
-
-                    Component.onCompleted: validperm = utilsApp.checkMobileStoragePermissions();
-                    onClicked: validperm = utilsApp.getMobileStoragePermissions();
-                }
-            }
-            Text {
-                id: legend_storage
-                anchors.left: parent.left
-                anchors.leftMargin: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 4
-
-                text: qsTr("Storage write permission can be needed for exporting metadata overview to the SD card.")
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: 14
-            }
-
-            ////////
-
-            Item {
-                height: 16
-                anchors.right: parent.right
-                anchors.left: parent.left
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
 
             Item {
                 id: element_network
@@ -158,7 +86,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Network access")
@@ -181,7 +109,7 @@ Item {
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorPrimary : Theme.colorSubText
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
                 }
             }
@@ -190,9 +118,151 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 48
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: 8
 
-                text: qsTr("Used to get GPS maps.")
+                text: qsTr("Network state and internet permissions are used get load GPS maps.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                id: element_storage_read
+                height: 24
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                Text {
+                    id: text_storage_read
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Storage read")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 18
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                ItemImageButton {
+                    id: button_storage_read_test
+                    width: 28
+                    height: 28
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    property bool validperm: false
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorError
+                    background: true
+
+                    Component.onCompleted: validperm = utilsApp.checkMobileStorageReadPermission();
+                    onClicked: validperm = utilsApp.getMobileStorageReadPermission();
+                }
+            }
+            Text {
+                id: legend_storage_read
+                anchors.left: parent.left
+                anchors.leftMargin: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+
+                text: qsTr("Storage read permission is needed to read and analyze media files. The software won't work without it.")
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: 14
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                id: element_storage_write
+                height: 24
+                anchors.right: parent.right
+                anchors.left: parent.left
+
+                Text {
+                    id: text_storage_write
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Storage write")
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 18
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                ItemImageButton {
+                    id: button_storage_write_test
+                    width: 28
+                    height: 28
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    property bool validperm: false
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
+                    background: true
+
+                    Component.onCompleted: validperm = utilsApp.checkMobileStorageWritePermission();
+                    onClicked: validperm = utilsApp.getMobileStorageWritePermission();
+                }
+            }
+            Text {
+                id: legend_storage_write
+                anchors.left: parent.left
+                anchors.leftMargin: 48
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+
+                text: qsTr("Storage write permission is only needed to export subtitles file or metadata overview.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

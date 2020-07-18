@@ -43,13 +43,15 @@ Item {
 
     property string colorPrimary
     property string colorSecondary
-    property string colorWarning
-    property string colorError
 
     property string colorText
     property string colorSubText
     property string colorIcon
     property string colorSeparator
+
+    property string colorSuccess
+    property string colorWarning
+    property string colorError
 
     property string colorLowContrast
     property string colorHighContrast
@@ -158,13 +160,16 @@ Item {
 
             colorPrimary = colorRed
             colorSecondary = "#ff7b36"
-            colorWarning = colorOrange
-            colorError = colorRed
 
             colorText = "#303030"
             colorSubText = "#666666"
             colorIcon = "#494949"
             colorSeparator = colorMaterialGrey
+
+            colorSuccess = colorGreen
+            colorWarning = colorOrange
+            colorError = colorRed
+
             colorLowContrast = "white"
             colorHighContrast = "black"
 
@@ -203,13 +208,16 @@ Item {
 
             colorPrimary = "#ff9f1a"
             colorSecondary = "#ffb81a"
-            colorWarning = colorOrange
-            colorError = colorRed
 
             colorText = "white"
             colorSubText = "#AAAAAA"
             colorIcon = "#cccccc"
             colorSeparator = "#404040"
+
+            colorSuccess = colorGreen
+            colorWarning = colorOrange
+            colorError = colorRed
+
             colorLowContrast = "black"
             colorHighContrast = "white"
 
