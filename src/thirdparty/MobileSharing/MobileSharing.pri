@@ -15,6 +15,9 @@ android {
     SOURCES += $${PWD}/SharingUtils_android.cpp
     HEADERS += $${PWD}/SharingUtils_android.h
 
+    # Add this line to the dependencies {} section of build.gradle file
+    #compile 'com.android.support:support-v4:25.3.1'
+
     # These files are from the parent project:
     #ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/android
     #OTHER_FILES += $${PWD}/src/com/minivideo/infos/QShareActivity.java \
