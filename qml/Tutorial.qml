@@ -40,7 +40,6 @@ Rectangle {
             id: page1
 
             Column {
-                id: column
                 anchors.right: parent.right
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -151,7 +150,47 @@ Rectangle {
                     spacing: 16
 
                     ImageSvg {
-                        width: 40
+                        width: 32
+                        height: width
+                        source: "qrc:/assets/icons_material_media/baseline-4k-24px.svg"
+                        color: Theme.colorIcon
+                    }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Codec parameters")
+                        color: Theme.colorIcon
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        horizontalAlignment: Text.AlignHCenter
+                        font.pixelSize: 18
+                    }
+                }
+                Row {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 40
+                    spacing: 16
+
+                    ImageSvg {
+                        width: 32
+                        height: width
+                        source: "qrc:/assets/icons_material_media/duotone-aspect_ratio-24px.svg"
+                        color: Theme.colorIcon
+                    }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Image geometry")
+                        color: Theme.colorIcon
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        horizontalAlignment: Text.AlignHCenter
+                        font.pixelSize: 18
+                    }
+                }
+                Row {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 40
+                    spacing: 16
+
+                    ImageSvg {
+                        width: 32
                         height: width
                         source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
                         color: Theme.colorIcon
@@ -162,7 +201,7 @@ Rectangle {
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: 20
+                        font.pixelSize: 18
                     }
                 }
                 Row {
@@ -171,7 +210,7 @@ Rectangle {
                     spacing: 16
 
                     ImageSvg {
-                        width: 40
+                        width: 32
                         height: width
                         source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
                         color: Theme.colorIcon
@@ -182,7 +221,7 @@ Rectangle {
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: 20
+                        font.pixelSize: 18
                     }
                 }
                 Row {
@@ -191,7 +230,27 @@ Rectangle {
                     spacing: 16
 
                     ImageSvg {
-                        width: 40
+                        width: 32
+                        height: width
+                        source: "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
+                        color: Theme.colorIcon
+                    }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Audio tags")
+                        color: Theme.colorIcon
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        horizontalAlignment: Text.AlignHCenter
+                        font.pixelSize: 18
+                    }
+                }
+                Row {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 40
+                    spacing: 16
+
+                    ImageSvg {
+                        width: 32
                         height: width
                         source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
                         color: Theme.colorIcon
@@ -202,7 +261,7 @@ Rectangle {
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: 20
+                        font.pixelSize: 18
                     }
                 }
             }
