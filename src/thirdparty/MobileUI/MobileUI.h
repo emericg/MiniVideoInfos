@@ -36,11 +36,15 @@ class MobileUI : public QObject
     Q_OBJECT
     Q_PROPERTY(bool available READ isAvailable CONSTANT)
 
-    Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor)
-    Q_PROPERTY(Theme statusbarTheme READ statusbarTheme WRITE setStatusbarTheme)
+    Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
+    Q_PROPERTY(Theme statusbarTheme READ statusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated)
 
-    Q_PROPERTY(QColor navbarColor READ navbarColor WRITE setNavbarColor)
-    Q_PROPERTY(Theme navbarTheme READ navbarTheme WRITE setNavbarTheme)
+    Q_PROPERTY(QColor navbarColor READ navbarColor WRITE setNavbarColor NOTIFY navbarUpdated)
+    Q_PROPERTY(Theme navbarTheme READ navbarTheme WRITE setNavbarTheme NOTIFY navbarUpdated)
+
+Q_SIGNALS:
+    void statusbarUpdated();
+    void navbarUpdated();
 
 public:
     explicit MobileUI(QObject *parent = nullptr);

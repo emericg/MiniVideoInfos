@@ -40,7 +40,7 @@ You will need:
 - Any C++11 compiler
 - Android NDK 20
 - Android SDK
-- Qt 5.12 (with Qt Charts)
+- Qt 5.12+ (with Qt Charts)
 - MiniVideo
 - TagLib
 - libexif
