@@ -20,9 +20,9 @@
  * \date      2019
  */
 
-#include "utils_app.h"
-#include "utils_screen.h"
-#include "utils_language.h"
+#include "utils/utils_app.h"
+#include "utils/utils_screen.h"
+#include "utils/utils_language.h"
 #include "minivideo_qml.h"
 
 #include "settingsmanager.h"
@@ -31,7 +31,8 @@
 #include <MobileUI.h>
 #include <SharingApplication.h>
 
-#include "stdlib.h"
+#include <cstdlib>
+
 #include <QtGlobal>
 #include <QTranslator>
 #include <QLibraryInfo>

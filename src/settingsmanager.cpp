@@ -22,7 +22,7 @@
 
 #include "settingsmanager.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QStandardPaths>
 #include <QSettings>
 #include <QLocale>
@@ -62,7 +62,7 @@ bool SettingsManager::readSettings()
 {
     bool status = false;
 
-    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     if (settings.status() == QSettings::NoError)
     {
@@ -118,7 +118,7 @@ bool SettingsManager::writeSettings()
 {
     bool status = false;
 
-    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     if (settings.isWritable())
     {

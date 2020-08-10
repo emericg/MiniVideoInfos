@@ -4,7 +4,7 @@ VERSION = 0.4
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++11
-QT     += core qml quickcontrols2 svg charts location
+QT     += core qml quickcontrols2 svg widgets charts location
 android { QT += androidextras }
 ios { QT += gui-private }
 
@@ -43,10 +43,10 @@ SOURCES  += src/main.cpp \
             src/minivideo_track_qml.cpp \
             src/minivideo_textexport_qt.cpp \
             src/minivideo_utils_qt.cpp \
-            src/utils_app.cpp \
-            src/utils_screen.cpp \
-            src/utils_android.cpp \
-            src/utils_ios.cpp
+            src/utils/utils_app.cpp \
+            src/utils/utils_screen.cpp \
+            src/utils/utils_android.cpp \
+            src/utils/utils_ios.cpp
 
 HEADERS  += src/media.h \
             src/mediamanager.h \
@@ -55,10 +55,10 @@ HEADERS  += src/media.h \
             src/minivideo_track_qml.h \
             src/minivideo_textexport_qt.h \
             src/minivideo_utils_qt.h \
-            src/utils_app.h \
-            src/utils_screen.h \
-            src/utils_android.h \
-            src/utils_ios.h
+            src/utils/utils_app.h \
+            src/utils/utils_screen.h \
+            src/utils/utils_android.h \
+            src/utils/utils_ios.h
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \

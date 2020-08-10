@@ -119,8 +119,8 @@ Drawer {
                 Rectangle {
                     id: rectangleLoad
                     height: 48
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     color: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ? Theme.colorForeground : "transparent"
 
                     MouseArea {
@@ -160,8 +160,8 @@ Drawer {
                 Rectangle {
                     id: rectangleHome
                     height: 48
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     color: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen) ? Theme.colorForeground : "transparent"
 
                     MouseArea {
@@ -266,8 +266,8 @@ Drawer {
                 Rectangle {
                     id: rectangleTool2
                     height: 48
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     color: (appContent.state === "Tool2") ? Theme.colorForeground : "transparent"
 
                     MouseArea {
