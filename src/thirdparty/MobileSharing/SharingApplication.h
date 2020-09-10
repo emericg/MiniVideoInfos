@@ -42,16 +42,11 @@ class SharingApplication : public QApplication
      QString mAppDataFilesPath;
      QString mDocumentsWorkPath;
 
-     bool copyAssetFile(const QString sourceFilePath, const QString destinationFilePath);
-
 public:
     explicit SharingApplication(int &argc, char **argv);
     ~SharingApplication();
 
      void registerQML(QQmlContext *context);
-     //Q_INVOKABLE QString filePathDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool deleteFromDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool updateFileFromDocumentsLocation(const int requestId);
 
 signals:
      void noDocumentsWorkLocation();

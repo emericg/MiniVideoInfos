@@ -63,19 +63,19 @@ public class QShareActivity extends QtActivity
     // more details: my blog at Qt
     @Override
     public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-          Log.d("QShareActivity", "onCreate() QShareActivity");
-          // now we're checking if the App was started from another Android App via Intent
-          Intent theIntent = getIntent();
-          if (theIntent != null) {
-              String theAction = theIntent.getAction();
-              if (theAction != null) {
-                  Log.d("QShareActivity", " onCreate()" + theAction);
-                  // QML UI not ready yet, delay processIntent();
-                  isIntentPending = true;
-              }
-          }
-    } // onCreate
+        super.onCreate(savedInstanceState);
+        Log.d("QShareActivity", "onCreate() QShareActivity");
+        // now we're checking if the App was started from another Android App via Intent
+        Intent theIntent = getIntent();
+        if (theIntent != null) {
+            String theAction = theIntent.getAction();
+            if (theAction != null) {
+                Log.d("QShareActivity", " onCreate()" + theAction);
+                // QML UI not ready yet, delay processIntent();
+                isIntentPending = true;
+            }
+        }
+    }
 
     // WIP - trying to find a solution to survive a 2nd onCreate
     // ongoing discussion in QtMob (Slack)
@@ -99,7 +99,7 @@ public class QShareActivity extends QtActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        Log.d("QShareActivity", " onActivityResult() requestCode: "+requestCode);
+        Log.d("QShareActivity", " onActivityResult() requestCode: " + requestCode);
         if (resultCode == RESULT_OK) {
             Log.d("QShareActivity", " onActivityResult() requestCode SUCCESS");
         } else {
@@ -116,16 +116,16 @@ public class QShareActivity extends QtActivity
     // if we are opened from other apps:
     @Override
     public void onNewIntent(Intent intent) {
-      Log.d("QShareActivity", " onNewIntent()");
-      super.onNewIntent(intent);
-      setIntent(intent);
-      // Intent will be processed, if all is initialized and Qt / QML can handle the event
-      if (isInitialized) {
-          processIntent();
-      } else {
-          isIntentPending = true;
-      }
-    } // onNewIntent
+        Log.d("QShareActivity", " onNewIntent()");
+        super.onNewIntent(intent);
+        setIntent(intent);
+        // Intent will be processed, if all is initialized and Qt / QML can handle the event
+        if (isInitialized) {
+            processIntent();
+        } else {
+            isIntentPending = true;
+        }
+    }
 
     public void checkPendingIntents(String workingDir) {
         isInitialized = true;
@@ -138,7 +138,7 @@ public class QShareActivity extends QtActivity
         } else {
             Log.d("QShareActivity", " checkPendingIntents() nothingPending");
         }
-    } // checkPendingIntents
+    }
 
     // process the Intent if Action is SEND or VIEW
     private void processIntent() {
@@ -228,6 +228,5 @@ public class QShareActivity extends QtActivity
              return;
         }
         setFileReceivedAndSaved(filePath);
-    } // processIntent
-
-} // class QShareActivity
+    }
+}

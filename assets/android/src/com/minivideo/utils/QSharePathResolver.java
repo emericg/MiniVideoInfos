@@ -39,13 +39,13 @@ import java.io.FileOutputStream;
 import android.util.Log;
 import java.lang.NumberFormatException;
 
-public class QSharePathResolver {
+public class QSharePathResolver
+{
     public static String getRealPathFromURI(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) { // DocumentProvider
             if (isExternalStorageDocument(uri)) {
                 Log.d("QSharePathResolver", " isExternalStorageDocument");
 
@@ -55,13 +55,14 @@ public class QSharePathResolver {
 
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
+                } else {
+                    // TODO handle non-primary volumes
                 }
-                // TODO handle non-primary volumes
             } else if (isDownloadsDocument(uri)) {
                 Log.d("QSharePathResolver", " isDownloadsDocument");
 
                 final String id = DocumentsContract.getDocumentId(uri);
-                Log.d("QSharePathResolver", " getDocumentId "+id);
+                Log.d("QSharePathResolver", " getDocumentId " + id);
                 long longId = 0;
 
                 try {
@@ -98,8 +99,7 @@ public class QSharePathResolver {
                 Log.d("QSharePathResolver", " is uri.getScheme()");
 
                 // Return the remote address
-                if (isGooglePhotosUri(uri))
-                    return uri.getLastPathSegment();
+                if (isGooglePhotosUri(uri)) return uri.getLastPathSegment();
 
                 return getDataColumn(context, uri, null, null);
             } else {
@@ -126,21 +126,16 @@ public class QSharePathResolver {
                     return null;
                 }
             }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) { // MediaStore (and general)
             Log.d("QSharePathResolver", " NOT DocumentsContract.isDocumentUri");
             Log.d("QSharePathResolver", " is uri.getScheme()");
 
             // Return the remote address
-            if (isGooglePhotosUri(uri))
-                return uri.getLastPathSegment();
+            if (isGooglePhotosUri(uri)) return uri.getLastPathSegment();
 
             Log.d("QSharePathResolver", " return: getDataColumn ");
             return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) { // File
             Log.d("QSharePathResolver", " NOT DocumentsContract.isDocumentUri");
             Log.d("QSharePathResolver", " is file scheme");
             return uri.getPath();
@@ -192,8 +187,7 @@ public class QSharePathResolver {
             return null;
         }
         finally {
-            if (cursor != null)
-                cursor.close();
+            if (cursor != null) cursor.close();
         }
         return result;
     }

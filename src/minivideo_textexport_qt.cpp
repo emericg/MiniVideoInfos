@@ -343,7 +343,7 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
             break;
 
         // Section title
-        exportData += "\n\nSUBTITLES TRACK #"+ QString::number(i);
+        exportData += "\n\nSUBTITLES TRACK #" + QString::number(i);
         exportData += "\n------------------";
         if (i > 9) exportData += "-";
 

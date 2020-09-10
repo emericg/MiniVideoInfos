@@ -1,13 +1,12 @@
 QT += core
 
-MOBILESHARING_VERSION = 0.1
-
-INCLUDEPATH += $${PWD}
+MOBILESHARING_VERSION = 0.2
 
 SOURCES += $${PWD}/SharingUtils.cpp \
            $${PWD}/SharingApplication.cpp
 HEADERS += $${PWD}/SharingUtils.h \
            $${PWD}/SharingApplication.h
+INCLUDEPATH += $${PWD}
 
 android {
     QT += androidextras
@@ -15,7 +14,7 @@ android {
     SOURCES += $${PWD}/SharingUtils_android.cpp
     HEADERS += $${PWD}/SharingUtils_android.h
 
-    # Add this line to the dependencies {} section of build.gradle file
+    # Add this line to the dependencies {} section of build.gradle file:
     #compile 'com.android.support:support-v4:25.3.1'
 
     # These files are from the parent project:

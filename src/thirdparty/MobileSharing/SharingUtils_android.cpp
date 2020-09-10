@@ -56,14 +56,16 @@ AndroidShareUtils *AndroidShareUtils::getInstance()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool AndroidShareUtils::checkMimeTypeView(const QString &mimeType)
 {
     QAndroidJniObject jsMime = QAndroidJniObject::fromString(mimeType);
-    jboolean verified = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
-                                              "checkMimeTypeView",
-                                              "(Ljava/lang/String;)Z",
-                                              jsMime.object<jstring>());
+    jboolean verified = QAndroidJniObject::callStaticMethod<jboolean>(
+                            "com/minivideo/utils/QShareUtils",
+                            "checkMimeTypeView",
+                            "(Ljava/lang/String;)Z",
+                            jsMime.object<jstring>());
 
     //qDebug() << "View VERIFIED: " << mimeType << " - " << verified;
     return verified;
@@ -72,10 +74,11 @@ bool AndroidShareUtils::checkMimeTypeView(const QString &mimeType)
 bool AndroidShareUtils::checkMimeTypeEdit(const QString &mimeType)
 {
     QAndroidJniObject jsMime = QAndroidJniObject::fromString(mimeType);
-    jboolean verified = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
-                                                  "checkMimeTypeEdit",
-                                                  "(Ljava/lang/String;)Z",
-                                                  jsMime.object<jstring>());
+    jboolean verified = QAndroidJniObject::callStaticMethod<jboolean>(
+                            "com/minivideo/utils/QShareUtils",
+                            "checkMimeTypeEdit",
+                            "(Ljava/lang/String;)Z",
+                            jsMime.object<jstring>());
 
     //qDebug() << "Edit VERIFIED: " << mimeType << " - " << verified;
     return verified;
@@ -85,10 +88,11 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
 {
     QAndroidJniObject jsText = QAndroidJniObject::fromString(text);
     QAndroidJniObject jsUrl = QAndroidJniObject::fromString(url.toString());
-    jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
-                                              "share",
-                                              "(Ljava/lang/String;Ljava/lang/String;)Z",
-                                              jsText.object<jstring>(), jsUrl.object<jstring>());
+    jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>(
+                                        "com/minivideo/utils/QShareUtils",
+                                        "share",
+                                        "(Ljava/lang/String;Ljava/lang/String;)Z",
+                                        jsText.object<jstring>(), jsUrl.object<jstring>());
 
     if (!ok)
     {
@@ -97,14 +101,18 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
     }
 }
 
+/* ************************************************************************** */
+
 /*
  * As default we're going the Java - way with one simple JNI call (recommended)
  * if altImpl is true we're going the pure JNI way
  *
  * If a requestId was set we want to get the Activity Result back (recommended)
  * We need the Request Id and Result Id to control our workflow
-*/
-void AndroidShareUtils::sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl)
+ */
+void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
+                                 const QString &mimeType, const int &requestId,
+                                 const bool &altImpl)
 {
     mIsEditMode = false;
 
@@ -129,7 +137,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title, 
     // to get a valid Path we must prefix file://
     // attention file must be inside Users Documents folder !
     // trying to send a file from APP DATA will fail
-    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://"+filePath);
+    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
     {
         qWarning() << "QAndroidJniObject jniPath not valid.";
@@ -232,14 +240,18 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title, 
     }
 }
 
+/* ************************************************************************** */
+
 /*
  * As default we're going the Java - way with one simple JNI call (recommended)
  * if altImpl is true we're going the pure JNI way
  *
  * If a requestId was set we want to get the Activity Result back (recommended)
  * We need the Request Id and Result Id to control our workflow
-*/
-void AndroidShareUtils::viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl)
+ */
+void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
+                                 const QString &mimeType, const int &requestId,
+                                 const bool &altImpl)
 {
     mIsEditMode = false;
 
@@ -264,7 +276,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title, 
     // to get a valid Path we must prefix file://
     // attention file must be inside Users Documents folder !
     // trying to view or edit a file from APP DATA will fail
-    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://"+filePath);
+    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
     {
         qWarning() << "QAndroidJniObject jniPath not valid.";
@@ -352,18 +364,23 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title, 
     }
 }
 
+/* ************************************************************************** */
+
 /*
  * As default we're going the Java - way with one simple JNI call (recommended)
  * if altImpl is true we're going the pure JNI way
  *
  * If a requestId was set we want to get the Activity Result back (recommended)
  * We need the Request Id and Result Id to control our workflow
-*/
-void AndroidShareUtils::editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl)
+ */
+void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
+                                 const QString &mimeType, const int &requestId,
+                                 const bool &altImpl)
 {
     mIsEditMode = true;
     mCurrentFilePath = filePath;
     QFileInfo fileInfo = QFileInfo(mCurrentFilePath);
+
     mLastModified = fileInfo.lastModified().toSecsSinceEpoch();
     qDebug() << "LAST MODIFIED: " << mLastModified;
 
@@ -390,7 +407,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title, 
     // to get a valid Path we must prefix file://
     // attention file must be inside Users Documents folder !
     // trying to view or edit a file from APP DATA will fail
-    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://"+filePath);
+    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
     {
         qWarning() << "QAndroidJniObject jniPath not valid.";
@@ -480,6 +497,8 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title, 
     }
 }
 
+/* ************************************************************************** */
+
 // used from QAndroidActivityResultReceiver
 void AndroidShareUtils::handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data)
 {
@@ -504,7 +523,8 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
     }
     else if (resultCode == RESULT_CANCELED)
     {
-        if (mIsEditMode) {
+        if (mIsEditMode)
+        {
             // Attention: not all Apps will give you the correct ResultCode:
             // Google Fotos will send OK if saved and CANCELED if canceled
             // Some Apps always sends CANCELED even if you modified and Saved the File
@@ -560,7 +580,7 @@ void AndroidShareUtils::setFileUrlReceived(const QString &url)
     QString myUrl;
     if (url.startsWith("file://"))
     {
-        myUrl = url.right(url.length()-7);
+        myUrl = url.right(url.length() - 7);
         qDebug() << "QFile needs this URL: " << myUrl;
     }
     else
@@ -593,7 +613,7 @@ void AndroidShareUtils::setFileReceivedAndSaved(const QString &url)
     QString myUrl;
     if (url.startsWith("file://"))
     {
-        myUrl = url.right(url.length()-7);
+        myUrl = url.right(url.length() - 7);
         qDebug() << "QFile needs this URL: " << myUrl;
     }
     else
@@ -661,8 +681,8 @@ extern "C" {
 
 JNIEXPORT void JNICALL
   Java_com_minivideo_infos_QShareActivity_setFileUrlReceived(JNIEnv *env,
-                                        jobject obj,
-                                        jstring url)
+                                                             jobject obj,
+                                                             jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, NULL);
     Q_UNUSED(obj)
@@ -673,8 +693,8 @@ JNIEXPORT void JNICALL
 
 JNIEXPORT void JNICALL
   Java_com_minivideo_infos_QShareActivity_setFileReceivedAndSaved(JNIEnv *env,
-                                        jobject obj,
-                                        jstring url)
+                                                                  jobject obj,
+                                                                  jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, NULL);
     Q_UNUSED(obj)
@@ -685,8 +705,8 @@ JNIEXPORT void JNICALL
 
 JNIEXPORT bool JNICALL
   Java_com_minivideo_infos_QShareActivity_checkFileExits(JNIEnv *env,
-                                        jobject obj,
-                                        jstring url)
+                                                         jobject obj,
+                                                         jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, NULL);
     Q_UNUSED(obj)
@@ -697,9 +717,9 @@ JNIEXPORT bool JNICALL
 
 JNIEXPORT void JNICALL
   Java_com_minivideo_infos_QShareActivity_fireActivityResult(JNIEnv *env,
-                                        jobject obj,
-                                        jint requestCode,
-                                        jint resultCode)
+                                                             jobject obj,
+                                                             jint requestCode,
+                                                             jint resultCode)
 {
     Q_UNUSED(obj)
     Q_UNUSED(env)

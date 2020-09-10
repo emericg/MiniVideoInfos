@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Emeric Grange
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
+ * Copyright (c) 2020 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,8 +60,8 @@ public class QShareUtils
     }
 
     public static boolean checkMimeTypeView(String mimeType) {
-        if (QtNative.activity() == null)
-            return false;
+        if (QtNative.activity() == null) return false;
+
         Intent myIntent = new Intent();
         myIntent.setAction(Intent.ACTION_VIEW);
         // without an URI resolve always fails
@@ -81,8 +81,8 @@ public class QShareUtils
     }
 
     public static boolean checkMimeTypeEdit(String mimeType) {
-        if (QtNative.activity() == null)
-            return false;
+        if (QtNative.activity() == null) return false;
+
         Intent myIntent = new Intent();
         myIntent.setAction(Intent.ACTION_EDIT);
         // without an URI resolve always fails
@@ -102,8 +102,8 @@ public class QShareUtils
     }
 
     public static boolean share(String text, String url) {
-        if (QtNative.activity() == null)
-            return false;
+        if (QtNative.activity() == null) return false;
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, text + " " + url);
@@ -138,7 +138,7 @@ public class QShareUtils
         // had to remove this check - there can be more Activity names, per ex
         // com.google.android.apps.docs.editors.kix.quickword.QuickWordDocumentOpenerActivityAlias
         // if (!defaultAppInfo.activityInfo.name.endsWith("ResolverActivity") && !defaultAppInfo.activityInfo.name.endsWith("EditActivity")) {
-            // Log.d("QShareUtils", title+" defaultAppInfo not Resolver or EditActivity: "+defaultAppInfo.activityInfo.name);
+            // Log.d("QShareUtils", title+" defaultAppInfo not Resolver or EditActivity: " + defaultAppInfo.activityInfo.name);
             // return false;
         //}
 
@@ -148,7 +148,7 @@ public class QShareUtils
             Log.d("QShareUtils", title + " appInfoList.isEmpty");
             return false;
         }
-        Log.d("QShareUtils", title + " appInfoList: "+appInfoList.size());
+        Log.d("QShareUtils", title + " appInfoList: " + appInfoList.size());
 
         // Sort in alphabetical order
         Collections.sort(appInfoList, new Comparator<ResolveInfo>() {
@@ -233,21 +233,20 @@ public class QShareUtils
     }
 
     public static boolean sendFile(String filePath, String title, String mimeType, int requestId) {
-        if (QtNative.activity() == null)
-            return false;
+        if (QtNative.activity() == null) return false;
 
         // using v4 support library create the Intent from ShareCompat
         // Intent sendIntent = new Intent();
         Intent sendIntent = ShareCompat.IntentBuilder.from(QtNative.activity()).getIntent();
         sendIntent.setAction(Intent.ACTION_SEND);
 
-        File imageFileToShare = new File(filePath);
+        File fileToShare = new File(filePath);
 
         // Using FileProvider you must get the URI from FileProvider using your AUTHORITY
-        // Uri uri = Uri.fromFile(imageFileToShare);
+        // Uri uri = Uri.fromFile(fileToShare);
         Uri uri;
         try {
-            uri = FileProvider.getUriForFile(QtNative.activity(), AUTHORITY, imageFileToShare);
+            uri = FileProvider.getUriForFile(QtNative.activity(), AUTHORITY, fileToShare);
         } catch (IllegalArgumentException e) {
             Log.d("QShareUtils sendFile - cannot be shared: ", filePath);
             return false;
@@ -260,7 +259,7 @@ public class QShareUtils
             // fallback if mimeType not set
             mimeType = QtNative.activity().getContentResolver().getType(uri);
             Log.d("QShareUtils sendFile guessed mimeType:", mimeType);
-        }  else {
+        } else {
             Log.d("QShareUtils sendFile w mimeType:", mimeType);
         }
 
@@ -273,21 +272,20 @@ public class QShareUtils
     }
 
     public static boolean viewFile(String filePath, String title, String mimeType, int requestId) {
-        if (QtNative.activity() == null)
-            return false;
+        if (QtNative.activity() == null) return false;
 
         // using v4 support library create the Intent from ShareCompat
         // Intent viewIntent = new Intent();
         Intent viewIntent = ShareCompat.IntentBuilder.from(QtNative.activity()).getIntent();
         viewIntent.setAction(Intent.ACTION_VIEW);
 
-        File imageFileToShare = new File(filePath);
+        File fileToShare = new File(filePath);
 
         // Using FileProvider you must get the URI from FileProvider using your AUTHORITY
-        // Uri uri = Uri.fromFile(imageFileToShare);
+        // Uri uri = Uri.fromFile(fileToShare);
         Uri uri;
         try {
-            uri = FileProvider.getUriForFile(QtNative.activity(), AUTHORITY, imageFileToShare);
+            uri = FileProvider.getUriForFile(QtNative.activity(), AUTHORITY, fileToShare);
         } catch (IllegalArgumentException e) {
             Log.d("QShareUtils viewFile - cannot be shared: ", filePath);
             return false;
@@ -316,21 +314,20 @@ public class QShareUtils
     }
 
     public static boolean editFile(String filePath, String title, String mimeType, int requestId) {
-        if (QtNative.activity() == null)
-            return false;
+        if (QtNative.activity() == null) return false;
 
         // using v4 support library create the Intent from ShareCompat
         // Intent editIntent = new Intent();
         Intent editIntent = ShareCompat.IntentBuilder.from(QtNative.activity()).getIntent();
         editIntent.setAction(Intent.ACTION_EDIT);
 
-        File imageFileToShare = new File(filePath);
+        File fileToShare = new File(filePath);
 
         // Using FileProvider you must get the URI from FileProvider using your AUTHORITY
-        // Uri uri = Uri.fromFile(imageFileToShare);
+        // Uri uri = Uri.fromFile(fileToShare);
         Uri uri;
         try {
-            uri = FileProvider.getUriForFile(QtNative.activity(), AUTHORITY, imageFileToShare);
+            uri = FileProvider.getUriForFile(QtNative.activity(), AUTHORITY, fileToShare);
         } catch (IllegalArgumentException e) {
             Log.d("QShareUtils editFile - cannot be shared: ", filePath);
             return false;
@@ -356,8 +353,7 @@ public class QShareUtils
     public static String getContentName(ContentResolver cR, Uri uri) {
         Cursor cursor = cR.query(uri, null, null, null, null);
         cursor.moveToFirst();
-        int nameIndex = cursor
-            .getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
+        int nameIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
         if (nameIndex >= 0) {
             return cursor.getString(nameIndex);
         } else {

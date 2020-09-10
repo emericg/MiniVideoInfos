@@ -21,10 +21,9 @@
  * SOFTWARE.
  */
 
-/* ************************************************************************** */
-
 #ifndef MOBILEUI_H
 #define MOBILEUI_H
+/* ************************************************************************** */
 
 #include <QObject>
 #include <QColor>
@@ -34,6 +33,7 @@
 class MobileUI : public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(bool available READ isAvailable CONSTANT)
 
     Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)

@@ -23,11 +23,11 @@
 
 /*
  * This project is based on ideas from:
+ * - https://github.com/ekke/ekkesSHAREexample
  * - https://www.qt.io/blog/2017/12/01/sharing-files-android-ios-qt-app
  * - https://www.qt.io/blog/2018/01/16/sharing-files-android-ios-qt-app-part-2
- * - https://www.qt.io/blog/2018/01/16/sharing-files-android-ios-qt-app-part-3
- * - https://www.qt.io/blog/2018/01/16/sharing-files-android-ios-qt-app-part-4
- * - https://github.com/ekke/ekkesSHAREexample
+ * - https://www.qt.io/blog/2018/02/06/sharing-files-android-ios-qt-app-part-3
+ * - https://www.qt.io/blog/2018/11/06/sharing-files-android-ios-qt-app-part-4
  * also inspired by:
  * - http://blog.lasconic.com/share-on-ios-and-android-using-qml/
  * - https://github.com/lasconic/ShareUtils-QML
