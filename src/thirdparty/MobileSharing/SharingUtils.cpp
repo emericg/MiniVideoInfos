@@ -81,19 +81,19 @@ void ShareUtils::share(const QString &text, const QUrl &url)
     mPlatformShareUtils->share(text, url);
 }
 
-void ShareUtils::sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl)
+void ShareUtils::sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId)
 {
-    mPlatformShareUtils->sendFile(filePath, title, mimeType, requestId, altImpl);
+    mPlatformShareUtils->sendFile(filePath, title, mimeType, requestId);
 }
 
-void ShareUtils::viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl)
+void ShareUtils::viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId)
 {
-    mPlatformShareUtils->viewFile(filePath, title, mimeType, requestId, altImpl);
+    mPlatformShareUtils->viewFile(filePath, title, mimeType, requestId);
 }
 
-void ShareUtils::editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId, const bool &altImpl)
+void ShareUtils::editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId)
 {
-    mPlatformShareUtils->editFile(filePath, title, mimeType, requestId, altImpl);
+    mPlatformShareUtils->editFile(filePath, title, mimeType, requestId);
 }
 
 void ShareUtils::checkPendingIntents(const QString workingDirPath)

@@ -105,26 +105,26 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
 
 /*
  * As default we're going the Java - way with one simple JNI call (recommended)
- * if altImpl is true we're going the pure JNI way
+ * if mAltImpl is true we're going the pure JNI way
  *
  * If a requestId was set we want to get the Activity Result back (recommended)
  * We need the Request Id and Result Id to control our workflow
  */
 void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
-                                 const QString &mimeType, const int &requestId,
-                                 const bool &altImpl)
+                                 const QString &mimeType, const int &requestId)
 {
     mIsEditMode = false;
 
-    if (!altImpl)
+    if (!mAltImpl)
     {
         QAndroidJniObject jsPath = QAndroidJniObject::fromString(filePath);
         QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
         QAndroidJniObject jsMimeType = QAndroidJniObject::fromString(mimeType);
-        jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
-                                                  "sendFile",
-                                                  "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+        jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>(
+                                            "com/minivideo/utils/QShareUtils",
+                                            "sendFile",
+                                            "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
+                                            jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
@@ -244,18 +244,17 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
 
 /*
  * As default we're going the Java - way with one simple JNI call (recommended)
- * if altImpl is true we're going the pure JNI way
+ * if mAltImpl is true we're going the pure JNI way
  *
  * If a requestId was set we want to get the Activity Result back (recommended)
  * We need the Request Id and Result Id to control our workflow
  */
 void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
-                                 const QString &mimeType, const int &requestId,
-                                 const bool &altImpl)
+                                 const QString &mimeType, const int &requestId)
 {
     mIsEditMode = false;
 
-    if (!altImpl)
+    if (!mAltImpl)
     {
         QAndroidJniObject jsPath = QAndroidJniObject::fromString(filePath);
         QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
@@ -368,14 +367,13 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
 
 /*
  * As default we're going the Java - way with one simple JNI call (recommended)
- * if altImpl is true we're going the pure JNI way
+ * if mAltImpl is true we're going the pure JNI way
  *
  * If a requestId was set we want to get the Activity Result back (recommended)
  * We need the Request Id and Result Id to control our workflow
  */
 void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
-                                 const QString &mimeType, const int &requestId,
-                                 const bool &altImpl)
+                                 const QString &mimeType, const int &requestId)
 {
     mIsEditMode = true;
     mCurrentFilePath = filePath;
@@ -384,7 +382,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     mLastModified = fileInfo.lastModified().toSecsSinceEpoch();
     qDebug() << "LAST MODIFIED: " << mLastModified;
 
-    if (!altImpl)
+    if (!mAltImpl)
     {
         QAndroidJniObject jsPath = QAndroidJniObject::fromString(filePath);
         QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
