@@ -110,7 +110,7 @@ ApplicationWindow {
         height: parent.height
     }
 
-    // Sharing handling /////////////////////////////////////////////////////////
+    // Sharing handling ////////////////////////////////////////////////////////
 
     Connections {
         target: utilsShare
@@ -150,7 +150,7 @@ ApplicationWindow {
                 //console.log("Qt.ApplicationActive")
 
                 // Check if we need an 'automatic' theme change
-                Theme.loadTheme(settingsManager.appTheme);
+                Theme.loadTheme(settingsManager.appTheme)
 
                 break
             }
@@ -172,8 +172,6 @@ ApplicationWindow {
     }
 
     function backAction() {
-        if (appContent.state === "Tutorial" && screenTutorial.exitTo === "MediaList") return; // do nothing
-
         if (appContent.state === "Tutorial") {
             appContent.state = screenTutorial.exitTo
         } else if (appContent.state === "Permissions") {
@@ -219,6 +217,8 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
+            if (appContent.state === "Tutorial" && screenTutorial.exitTo === "MediaList") return; // do nothing
+
             if (appContent.state === "MediaList") {
                 if (screenMediaList.selectionList.length !== 0) {
                     screenMediaList.exitSelectionMode()

@@ -43,18 +43,6 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: screenStatusbarPadding + screenNotchPadding
 
-        Text {
-            anchors.left: parent.left
-            anchors.leftMargin: 64
-            anchors.verticalCenter: parent.verticalCenter
-
-            text: title
-            color: Theme.colorHeaderContent
-            font.bold: false
-            font.pixelSize: Theme.fontSizeHeader
-            font.capitalization: Font.Capitalize
-        }
-
         MouseArea {
             id: leftArea
             width: headerHeight
@@ -77,6 +65,18 @@ Rectangle {
                 source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
                 color: Theme.colorHeaderContent
             }
+        }
+
+        Text {
+            anchors.left: parent.left
+            anchors.leftMargin: 64
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: title
+            color: Theme.colorHeaderContent
+            font.bold: false
+            font.pixelSize: Theme.fontSizeHeader
+            font.capitalization: Font.Capitalize
         }
 
         ////////////
