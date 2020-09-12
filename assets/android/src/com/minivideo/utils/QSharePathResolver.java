@@ -43,9 +43,7 @@ public class QSharePathResolver
 {
     public static String getRealPathFromURI(final Context context, final Uri uri) {
 
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) { // DocumentProvider
+        if (DocumentsContract.isDocumentUri(context, uri)) { // DocumentProvider
             if (isExternalStorageDocument(uri)) {
                 Log.d("QSharePathResolver", " isExternalStorageDocument");
 
@@ -57,6 +55,8 @@ public class QSharePathResolver
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 } else {
                     // TODO handle non-primary volumes
+                    Log.d("QSharePathResolver", " Storage type: " + type + " ," + split[1]);
+                    return "/storage/" + type + "/" + split[1];
                 }
             } else if (isDownloadsDocument(uri)) {
                 Log.d("QSharePathResolver", " isDownloadsDocument");
@@ -67,8 +67,7 @@ public class QSharePathResolver
 
                 try {
                     longId = Long.valueOf(id);
-                }
-                catch(NumberFormatException nfe) {
+                } catch(NumberFormatException nfe) {
                     return getDataColumn(context, uri, null, null);
                 }
                 final Uri contentUri = ContentUris.withAppendedId(
@@ -181,8 +180,7 @@ public class QSharePathResolver
                 final int index = cursor.getColumnIndexOrThrow(column);
                 result = cursor.getString(index);
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }

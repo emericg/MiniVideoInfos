@@ -64,7 +64,7 @@ public class QShareActivity extends QtActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("QShareActivity", "onCreate() QShareActivity");
+        Log.d("QShareActivity", " onCreate() QShareActivity");
         // now we're checking if the App was started from another Android App via Intent
         Intent theIntent = getIntent();
         if (theIntent != null) {

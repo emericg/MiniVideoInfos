@@ -18,21 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <!-- Handle incoming urls -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="audio/*"/>
-                <data android:mimeType="video/*"/>
-                <data android:mimeType="image/*"/>
-            </intent-filter>
-
             <!-- Application arguments -->
             <!-- meta-data android:name="android.app.arguments" android:value="arg1 arg2 arg3"/ -->
             <!-- Application arguments -->
 
-            <meta-data android:name="android.app.lib_name" android:value="MiniVideoInfos"/>
+            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
             <meta-data android:name="android.app.qt_sources_resource_id" android:resource="@array/qt_sources"/>
             <meta-data android:name="android.app.repository" android:value="default"/>
             <meta-data android:name="android.app.qt_libs_resource_id" android:resource="@array/qt_libs"/>
@@ -66,16 +56,31 @@
             <!-- extract android style -->
             <meta-data android:name="android.app.extract_android_style" android:value="none"/>
 
+            <!-- Handle incoming urls -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="audio/*"/>
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="image/*"/>
+                <data android:scheme="file"/>
+                <data android:scheme="content"/>
+            </intent-filter>
         </activity>
 
-    <!-- Handle outgoing urls -->
-￼    <provider android:name="android.support.v4.content.FileProvider"
-              android:authorities="com.minivideo.utils.fileprovider"
-              android:grantUriPermissions="true" android:exported="false">
-￼        <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths"/>
-￼    </provider>
+        <!-- Handle outgoing urls -->
+    ￼    <provider android:name="android.support.v4.content.FileProvider"
+                  android:authorities="com.minivideo.infos.fileprovider"
+                  android:grantUriPermissions="true" android:exported="false">
+    ￼        <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths"/>
+    ￼    </provider>
 
-    <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
+        <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 
     </application>
 

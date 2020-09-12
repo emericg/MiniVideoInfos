@@ -1,3 +1,18 @@
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <files-path name="my_shared_files" path="share_example_x_files/" />
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+  <external-path
+    name="external"
+    path="." />
+  <external-files-path
+    name="external_files"
+    path="." />
+  <cache-path
+    name="cache"
+    path="." />
+  <external-cache-path
+    name="external_cache"
+    path="." />
+<files-path
+    name="files"
+    path="." />
 </paths>
