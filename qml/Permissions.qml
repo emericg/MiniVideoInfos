@@ -10,6 +10,19 @@ Item {
     anchors.fill: parent
     anchors.leftMargin: screenLeftPadding
     anchors.rightMargin: screenRightPadding
+
+    Connections {
+        target: appContent
+        onStateChanged: {
+            if (appContent.state === "Permissions") {
+                // Refresh permissions
+                button_storage_read_test.validperm = utilsApp.checkMobileStorageReadPermission()
+                button_storage_write_test.validperm = utilsApp.checkMobileStorageWritePermission()
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 /*
     Rectangle {
         id: rectangleHeader
@@ -52,7 +65,6 @@ Item {
         }
     }
 */
-    ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
         id: scrollView
@@ -180,7 +192,6 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorError
                     background: true
 
-                    Component.onCompleted: validperm = utilsApp.checkMobileStorageReadPermission();
                     onClicked: validperm = utilsApp.getMobileStorageReadPermission();
                 }
             }
@@ -251,7 +262,6 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
-                    Component.onCompleted: validperm = utilsApp.checkMobileStorageWritePermission();
                     onClicked: validperm = utilsApp.getMobileStorageWritePermission();
                 }
             }
