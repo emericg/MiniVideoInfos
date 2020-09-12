@@ -23,6 +23,7 @@
 #include "media.h"
 #include "minivideo_utils_qt.h"
 #include "minivideo_textexport_qt.h"
+#include "utils/utils_app.h"
 
 #ifdef ENABLE_LIBEXIF
 #include <libexif/exif-data.h>
@@ -677,7 +678,7 @@ bool Media::getMetadataFromVideo()
     }
     else
     {
-        qDebug() << "minivideo_open() failed with retcode: " << minivideo_retcode;
+        qWarning() << "minivideo_open() failed with retcode: " << minivideo_retcode;
         qDebug() << "minivideo_open() cannot open: " << m_path;
         qDebug() << "minivideo_open() cannot open: " << m_path.toLocal8Bit();
     }
@@ -926,16 +927,21 @@ bool Media::saveExportString()
 {
     bool status = false;
 
+    UtilsApp *utilsApp = UtilsApp::getInstance();
+    utilsApp->getMobileStorageWritePermission();
+
     if (m_media)
     {
         QString exportData;
         textExport::generateExportData_text(*m_media, exportData, true);
         if (!exportData.isEmpty())
         {
-            QString ppp = m_file_folder + m_file_name + "_infos.txt";
+            QString exportFilePath = m_file_folder + m_file_name + "_infos.txt";
+
             QFile exportFile;
-            exportFile.setFileName(ppp);
-            if (exportFile.exists() == false)
+            exportFile.setFileName(exportFilePath);
+
+            //if (exportFile.exists() == false)
             {
                 if (exportFile.open(QIODevice::WriteOnly) == true &&
                     exportFile.isWritable() == true)
@@ -948,17 +954,50 @@ bool Media::saveExportString()
                 }
                 else
                 {
-                    qDebug() << "saveExportString() not writable: " << ppp;
+                    qWarning() << "saveExportString() not writable: " << exportFilePath;
                 }
             }
-            else
-            {
-                qDebug() << "saveExportString() already exists: " << ppp;
-            }
+            //else
+            //{
+            //    qWarning() << "saveExportString() already exists: " << exportFilePath
+            //}
         }
     }
 
     return status;
+}
+
+QString Media::openExportString()
+{
+    QString exportFilePath;
+
+    if (m_media)
+    {
+        QString exportData;
+        textExport::generateExportData_text(*m_media, exportData, true);
+        if (!exportData.isEmpty())
+        {
+            QString docLocationRoot = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
+            exportFilePath = docLocationRoot + "/" + m_file_name + "_infos.txt";
+
+            QFile exportFile;
+            exportFile.setFileName(exportFilePath);
+
+            if (exportFile.open(QIODevice::WriteOnly) == true &&
+                exportFile.isWritable() == true)
+            {
+                exportFile.write(exportData.toLocal8Bit());
+                exportFile.close();
+            }
+            else
+            {
+                qWarning() << "openExportString() not writable: " << exportFilePath;
+                exportFilePath = "";
+            }
+        }
+    }
+
+    return exportFilePath;
 }
 
 /* ************************************************************************** */
@@ -978,6 +1017,9 @@ QString Media::getSubtitlesString(unsigned track)
 bool Media::saveSubtitlesString(unsigned track)
 {
     bool status = false;
+
+    UtilsApp *utilsApp = UtilsApp::getInstance();
+    utilsApp->getMobileStorageWritePermission();
 
     if (m_media)
     {
@@ -1007,12 +1049,12 @@ bool Media::saveSubtitlesString(unsigned track)
                 }
                 else
                 {
-                    qDebug() << "saveExportString() not writable: " << ppp;
+                    qWarning() << "saveExportString() not writable: " << ppp;
                 }
             }
             else
             {
-                qDebug() << "saveExportString() already exists: " << ppp;
+                qWarning() << "saveExportString() already exists: " << ppp;
             }
         }
     }

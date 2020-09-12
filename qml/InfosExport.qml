@@ -16,6 +16,7 @@ Item {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
         buttonExport.primaryColor = Theme.colorPrimary
+        buttonExport.fullColor = false
         buttonExport.text =  qsTr("SAVE")
 
         textArea.text = mediaItem.getExportString()
@@ -61,6 +62,7 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
+            visible: isDesktop
             text: qsTr("SAVE")
 
             onClicked: {
@@ -72,6 +74,22 @@ Item {
                     buttonExport.text = qsTr("ERROR")
                 }
                 buttonExport.fullColor = true
+            }
+        }
+        ButtonWireframe {
+            id: buttonOpen
+            width: 128
+            height: 32
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
+
+            visible: isMobile
+            text: qsTr("EXPORT")
+
+            onClicked: {
+                var file = mediaItem.openExportString()
+                utilsShare.sendFile(file, "Open file", "text/plain", 0)
             }
         }
     }

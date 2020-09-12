@@ -351,6 +351,7 @@ public slots:
 
     QString getExportString();
     bool saveExportString();
+    QString openExportString();
 
     QString getSubtitlesString(unsigned track);
     bool saveSubtitlesString(unsigned track);
