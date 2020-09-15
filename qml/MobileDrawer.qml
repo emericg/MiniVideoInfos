@@ -203,6 +203,7 @@ Drawer {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     source: isPhone ? "" : "MiniList.qml"
+                    visible: !isPhone && mediaManager.mediaList.length
                 }
 
                 ////////
