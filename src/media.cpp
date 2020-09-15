@@ -44,6 +44,8 @@
 #include <taglib/apetag.h>
 #endif
 
+#include <cstdint>
+#include <cstring>
 #include <cmath>
 
 #include <QDir>
@@ -941,26 +943,19 @@ bool Media::saveExportString()
             QFile exportFile;
             exportFile.setFileName(exportFilePath);
 
-            //if (exportFile.exists() == false)
+            if (exportFile.open(QIODevice::WriteOnly) == true &&
+                exportFile.isWritable() == true)
             {
-                if (exportFile.open(QIODevice::WriteOnly) == true &&
-                    exportFile.isWritable() == true)
+                if (exportFile.write(exportData.toLocal8Bit()) == exportData.toLocal8Bit().size())
                 {
-                    if (exportFile.write(exportData.toLocal8Bit()) == exportData.toLocal8Bit().size())
-                    {
-                        status = true;
-                    }
-                    exportFile.close();
+                    status = true;
                 }
-                else
-                {
-                    qWarning() << "saveExportString() not writable: " << exportFilePath;
-                }
+                exportFile.close();
             }
-            //else
-            //{
-            //    qWarning() << "saveExportString() already exists: " << exportFilePath
-            //}
+            else
+            {
+                qWarning() << "saveExportString() not writable: " << exportFilePath;
+            }
         }
     }
 
@@ -977,8 +972,14 @@ QString Media::openExportString()
         textExport::generateExportData_text(*m_media, exportData, true);
         if (!exportData.isEmpty())
         {
-            QString docLocationRoot = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
-            exportFilePath = docLocationRoot + "/" + m_file_name + "_infos.txt";
+            // Get temp directory path
+            QString exportDirectory = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
+
+            QDir ddd(exportDirectory + "/export");
+            if (!ddd.exists()) ddd.mkpath(exportDirectory + "/export");
+
+            // Get temp file path
+            exportFilePath = exportDirectory + "/export/" + m_file_name + "_infos.txt";
 
             QFile exportFile;
             exportFile.setFileName(exportFilePath);
