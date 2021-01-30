@@ -192,8 +192,8 @@ android {
                    assets/android/src/com/minivideo/utils/QShareUtils.java \
                    assets/android/src/com/minivideo/utils/QSharePathResolver.java
 
-    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml
-    #DISTFILES += android/build.gradle
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
+                 $${PWD}/assets/android/build.gradle
 
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
