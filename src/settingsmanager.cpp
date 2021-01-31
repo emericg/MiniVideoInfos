@@ -69,8 +69,8 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
 
-        if (settings.contains("settings/autoDark"))
-            m_autoDark = settings.value("settings/autoDark").toBool();
+        if (settings.contains("settings/appThemeAuto"))
+            m_appThemeAuto = settings.value("settings/appThemeAuto").toBool();
 
         if (settings.contains("settings/mediaFilter"))
             m_mediaFilter = settings.value("settings/mediaFilter").toBool();
@@ -123,7 +123,7 @@ bool SettingsManager::writeSettings()
     if (settings.isWritable())
     {
         settings.setValue("settings/appTheme", m_appTheme);
-        settings.setValue("settings/autoDark", m_autoDark);
+        settings.setValue("settings/appThemeAuto", m_appThemeAuto);
         settings.setValue("settings/mediaFilter", m_mediaFilter);
         settings.setValue("settings/mediaPreview", m_mediaPreview);
         settings.setValue("settings/exportEnabled", m_exportEnabled);
@@ -152,8 +152,8 @@ void SettingsManager::resetSettings()
     // Settings
     m_appTheme= "light";
     Q_EMIT appThemeChanged();
-    m_autoDark = false;
-    Q_EMIT autoDarkChanged();
+    m_appThemeAuto = false;
+    Q_EMIT appThemeAutoChanged();
     m_mediaFilter = true;
     Q_EMIT mediaFilterChanged();
     m_mediaPreview = true;
@@ -180,13 +180,13 @@ void SettingsManager::setAppTheme(const QString &value)
     }
 }
 
-void SettingsManager::setAutoDark(const bool value)
+void SettingsManager::setAppThemeAuto(const bool value)
 {
-    if (m_autoDark != value)
+    if (m_appThemeAuto != value)
     {
-        m_autoDark = value;
+        m_appThemeAuto = value;
         writeSettings();
-        Q_EMIT autoDarkChanged();
+        Q_EMIT appThemeAutoChanged();
     }
 }
 

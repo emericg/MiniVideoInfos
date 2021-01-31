@@ -122,7 +122,7 @@ Item {
         if (themeIndex === "dark") themeIndex = ThemeEngine.THEME_DARK
         if (themeIndex >= ThemeEngine.THEME_LAST) themeIndex = 0
 
-        if (settingsManager.autoDark) {
+        if (settingsManager.appThemeAuto) {
             var rightnow = new Date();
             var hour = Qt.formatDateTime(rightnow, "hh");
             if (hour >= 21 || hour <= 8) {

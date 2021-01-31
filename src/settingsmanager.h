@@ -39,7 +39,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool firstLaunch READ isFirstLaunch NOTIFY firstLaunchChanged)
 
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
-    Q_PROPERTY(bool autoDark READ getAutoDark WRITE setAutoDark NOTIFY autoDarkChanged)
+    Q_PROPERTY(bool appThemeAuto READ getAppThemeAuto WRITE setAppThemeAuto NOTIFY appThemeAutoChanged)
 
     Q_PROPERTY(bool mediaFilter READ getMediaFilter WRITE setMediaFilter NOTIFY mediaFilterChanged)
     Q_PROPERTY(bool mediaPreview READ getMediaPreview WRITE setMediaPreview NOTIFY mediaPreviewChanged)
@@ -51,7 +51,7 @@ class SettingsManager: public QObject
     bool m_firstlaunch = true;
 
     QString m_appTheme = "light";
-    bool m_autoDark = false;
+    bool m_appThemeAuto = false;
     bool m_mediaFilter = true;
     bool m_mediaPreview = true;
     bool m_exportEnabled = false;
@@ -69,7 +69,7 @@ class SettingsManager: public QObject
 Q_SIGNALS:
     void firstLaunchChanged();
     void appThemeChanged();
-    void autoDarkChanged();
+    void appThemeAutoChanged();
     void mediaFilterChanged();
     void mediaPreviewChanged();
     void exportEnabledChanged();
@@ -86,8 +86,8 @@ public:
     QString getAppTheme() const { return m_appTheme; }
     void setAppTheme(const QString &value);
 
-    bool getAutoDark() const { return m_autoDark; }
-    void setAutoDark(const bool value);
+    bool getAppThemeAuto() const { return m_appThemeAuto; }
+    void setAppThemeAuto(const bool value);
 
     bool getMediaFilter() const { return m_mediaFilter; }
     void setMediaFilter(const bool value);
