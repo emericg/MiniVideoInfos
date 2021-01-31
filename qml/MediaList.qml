@@ -230,10 +230,9 @@ Item {
 
             Row {
                 anchors.left: parent.left
-                anchors.leftMargin: 16
+                anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 16
-
+                spacing: 12
 
                 ButtonWireframeImage {
                     id: buttonUpdate2
@@ -246,6 +245,7 @@ Item {
                     onClicked: updateSelectedMedia()
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                 }
+
                 ButtonWireframeImage {
                     id: buttonClose2
                     height: 32
@@ -261,9 +261,9 @@ Item {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 16
+                spacing: 12
 
                 Text {
                     id: textActions

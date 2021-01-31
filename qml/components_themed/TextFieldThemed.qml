@@ -12,12 +12,16 @@ TextField {
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
 
-    text: "Text Field"
+    onEditingFinished: focus = false
+
+    //placeholderText: qsTr("TODO")
+
+    text: ""
     color: colorText
     font.pixelSize: Theme.fontSizeComponent
 
     background: Rectangle {
-        border.width: 2
+        border.width: 1
         border.color: textFieldThemed.activeFocus ? Theme.colorPrimary : colorBorder
         radius: Theme.componentRadius
         color: colorBackground

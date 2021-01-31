@@ -89,8 +89,8 @@ Item {
             Item {
                 id: element_network
                 height: 24
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Text {
                     id: text_network
@@ -113,7 +113,7 @@ Item {
                     width: 28
                     height: 28
                     anchors.left: parent.left
-                    anchors.leftMargin: 4
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -148,8 +148,8 @@ Item {
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -181,7 +181,7 @@ Item {
                     width: 28
                     height: 28
                     anchors.left: parent.left
-                    anchors.leftMargin: 4
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -218,8 +218,8 @@ Item {
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -227,8 +227,8 @@ Item {
             Item {
                 id: element_storage_write
                 height: 24
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Text {
                     id: text_storage_write
@@ -251,7 +251,7 @@ Item {
                     width: 28
                     height: 28
                     anchors.left: parent.left
-                    anchors.leftMargin: 4
+                    anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 

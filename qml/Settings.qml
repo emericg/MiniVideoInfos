@@ -73,10 +73,10 @@ Item {
             Item {
                 id: element_theme
                 height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
 
                 ImageSvg {
                     id: image_theme
@@ -93,10 +93,10 @@ Item {
                 Text {
                     id: text_theme
                     height: 40
-                    anchors.right: theme_selector.left
-                    anchors.rightMargin: 16
                     anchors.left: image_theme.right
                     anchors.leftMargin: 16
+                    anchors.right: theme_selector.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application theme")
@@ -177,10 +177,10 @@ Item {
             Item {
                 id: element_autoDarkmode
                 height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
 
                 visible: (settingsManager.appTheme !== "night")
 
@@ -188,9 +188,9 @@ Item {
                     id: image_autoDarkmode
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
@@ -199,10 +199,10 @@ Item {
                 Text {
                     id: text_autoDarkmode
                     height: 40
-                    anchors.right: switch_autoDarkmode.left
-                    anchors.rightMargin: 16
                     anchors.left: image_autoDarkmode.right
                     anchors.leftMargin: 16
+                    anchors.right: switch_autoDarkmode.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatic dark mode")
@@ -216,7 +216,7 @@ Item {
                     id: switch_autoDarkmode
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.autoDark
@@ -257,10 +257,10 @@ Item {
             Item {
                 id: element_mediaFilter
                 height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
 
                 ImageSvg {
                     id: image_mediaFilter
@@ -294,7 +294,7 @@ Item {
                     id: switch_mediaFilter
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.mediaFilter
@@ -307,10 +307,10 @@ Item {
             Item {
                 id: element_mediaPreview
                 height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
 
                 Text {
                     id: text_mediaPreview
@@ -332,7 +332,7 @@ Item {
                     id: switch_mediaPreview
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.mediaPreview
@@ -343,9 +343,9 @@ Item {
                     id: image_mediaPreview
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
@@ -394,7 +394,7 @@ Item {
                     id: switch_mediaExport
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.exportEnabled
@@ -416,9 +416,9 @@ Item {
                     id: image_unit
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
@@ -427,11 +427,11 @@ Item {
                 Text {
                     id: text_unit
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_unit.right
                     anchors.leftMargin: 16
-                    anchors.right: radioDelegateMetric.left
+                    anchors.right: row_unit.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Unit system")
                     wrapMode: Text.WordWrap
@@ -440,52 +440,55 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                RadioButtonThemed {
-                    id: radioDelegateMetric
-                    height: 40
-                    anchors.right: radioDelegateImperial.left
-                    anchors.verticalCenter: text_unit.verticalCenter
-
-                    z: 1
-                    text: qsTr("Metric")
-                    font.pixelSize: 14
-
-                    checked: {
-                        if (settingsManager.unitSystem === 1) {
-                            radioDelegateMetric.checked = true
-                            radioDelegateImperial.checked = false
-                        } else {
-                            radioDelegateMetric.checked = false
-                            radioDelegateImperial.checked = true
-                        }
-                    }
-                    onCheckedChanged: {
-                        if (checked === true) settingsManager.unitSystem = 1
-                    }
-                }
-
-                RadioButtonThemed {
-                    id: radioDelegateImperial
-                    height: 40
+                Row {
+                    id: row_unit
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    spacing: 8
 
-                    z: 1
-                    text: qsTr("Imperial")
-                    font.pixelSize: 14
+                    RadioButtonThemed {
+                        id: radioDelegateMetric
+                        height: 40
 
-                    checked: {
-                        if (settingsManager.unitSystem !== 1) {
-                            radioDelegateMetric.checked = false
-                            radioDelegateImperial.checked = true
-                        } else {
-                            radioDelegateImperial.checked = false
-                            radioDelegateMetric.checked = true
+                        z: 1
+                        text: qsTr("Metric")
+                        font.pixelSize: 14
+
+                        checked: {
+                            if (settingsManager.unitSystem === 1) {
+                                radioDelegateMetric.checked = true
+                                radioDelegateImperial.checked = false
+                            } else {
+                                radioDelegateMetric.checked = false
+                                radioDelegateImperial.checked = true
+                            }
+                        }
+                        onCheckedChanged: {
+                            if (checked === true) settingsManager.unitSystem = 1
                         }
                     }
-                    onCheckedChanged: {
-                        if (checked === true) settingsManager.unitSystem = 2
+
+                    RadioButtonThemed {
+                        id: radioDelegateImperial
+                        height: 40
+
+                        z: 1
+                        text: qsTr("Imperial")
+                        font.pixelSize: 14
+
+                        checked: {
+                            if (settingsManager.unitSystem !== 1) {
+                                radioDelegateMetric.checked = false
+                                radioDelegateImperial.checked = true
+                            } else {
+                                radioDelegateImperial.checked = false
+                                radioDelegateMetric.checked = true
+                            }
+                        }
+                        onCheckedChanged: {
+                            if (checked === true) settingsManager.unitSystem = 2
+                        }
                     }
                 }
             }
@@ -496,17 +499,17 @@ Item {
                 id: element_sizes
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                anchors.leftMargin: 0
 
                 ImageSvg {
                     id: image_sizes
                     width: 24
                     height: 24
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: 16
                     anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
                     source: "qrc:/assets/icons_material/outline-save-24px.svg"
@@ -515,11 +518,11 @@ Item {
                 Text {
                     id: text_sizes
                     height: 40
-                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: image_sizes.right
                     anchors.leftMargin: 16
                     anchors.right: row_sizes.left
                     anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Sizes unit")
                     wrapMode: Text.WordWrap
@@ -532,8 +535,9 @@ Item {
                     id: row_sizes
                     height: 40
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    spacing: 8
 
                     RadioButtonThemed {
                         id: radioDelegateKB

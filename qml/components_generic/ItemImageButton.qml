@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -12,6 +11,7 @@ Item {
 
     // states
     signal clicked()
+    signal longClicked()
     property bool highlighted: false
     property bool selected: false
 
@@ -30,25 +30,22 @@ Item {
     property string borderColor: Theme.colorComponentBorder
 
     property url source: ""
-    property string tooltipText: ""
 
-    clip: tooltipText
-    Behavior on width { NumberAnimation { duration: 133 } }
+    ////////////////////////////////////////////////////////////////////////////
 
     MouseArea {
         anchors.fill: bgRect
         onClicked: itemImageButton.clicked()
+        onPressAndHold: itemImageButton.longClicked()
 
         hoverEnabled: true
         onEntered: {
             itemImageButton.highlighted = true
             bgRect.opacity = (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background) ? 1 : 0.75
-            if (tooltipText) itemImageButton.width = btnSize + (tooltip.width + tooltip.anchors.leftMargin)
         }
         onExited: {
             itemImageButton.highlighted = false
             bgRect.opacity = itemImageButton.background ? 0.75 : 0
-            if (tooltipText) itemImageButton.width = btnSize
         }
     }
 
@@ -76,7 +73,7 @@ Item {
         anchors.centerIn: bgRect
 
         source: itemImageButton.source
-        opacity: itemImageButton.enabled ? 1.0 : 0.75
+        opacity: itemImageButton.enabled ? 1.0 : 0.33
         color: {
             if (selected === true) {
                 itemImageButton.highlightColor
@@ -86,16 +83,5 @@ Item {
                 itemImageButton.iconColor
             }
         }
-    }
-
-    Text {
-        id: tooltip
-        anchors.left: contentImage.right
-        anchors.leftMargin: (btnSize / 3)
-        anchors.verticalCenter: contentImage.verticalCenter
-
-        text: tooltipText
-        color: Theme.colorText
-        font.pixelSize: Theme.fontSizeComponent
     }
 }

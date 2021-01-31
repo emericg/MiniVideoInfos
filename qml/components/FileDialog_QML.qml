@@ -82,10 +82,10 @@ Rectangle {
 
     function onBackPressed() {
         if (folderListModel.folder === folderListModel.rootFolder) {
-            close();
+            close()
         } else {
-            folderListModel.folder = folderListModel.parentFolder;
-            updateHeaderText();
+            folderListModel.folder = folderListModel.parentFolder
+            updateHeaderText()
         }
     }
 
@@ -108,6 +108,7 @@ Rectangle {
             width: 48
             height: 48
             anchors.left: parent.left
+            anchors.leftMargin: 6
             anchors.verticalCenter: parent.verticalCenter
 
             visible: true // (utilsApp.getMobileStorageCount() > 1)
@@ -136,28 +137,27 @@ Rectangle {
 
                     // change icons and set new storage root
                     if (storageChooser.storageIndex === 0) {
-                        folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal();
-                        folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal();
-                        storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg";
+                        folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
+                        folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
+                        storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
                     } else {
-                        folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal();
-                        folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal();
-                        storageIcon.source = "qrc:/assets/icons_material/outline-sd_card-24px.svg";
+                        folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal()
+                        folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal()
+                        storageIcon.source = "qrc:/assets/icons_material/outline-sd_card-24px.svg"
                     }
 
-                    updateHeaderText();
+                    updateHeaderText()
                 }
             }
         }
 
         Text {
             id: headerText
-
-            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 48
+            anchors.leftMargin: 56
             anchors.right: upButton.left
             anchors.rightMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
 
             clip: true
             text: folderListModel.folder
@@ -188,7 +188,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     if (folderListModel.folder != folderListModel.rootFolder) {
-                        folderListModel.folder = folderListModel.parentFolder;
+                        folderListModel.folder = folderListModel.parentFolder
                         updateHeaderText()
                     }
                 }
@@ -231,7 +231,7 @@ Rectangle {
             ImageSvg {
                 id: icon
                 anchors.left: parent.left
-                anchors.leftMargin: 14
+                anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
 
                 width: 36
@@ -264,11 +264,11 @@ Rectangle {
             }
 
             Text {
-                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: icon.right
-                anchors.leftMargin: 14
+                anchors.leftMargin: 12
                 anchors.right: parent.right
                 anchors.rightMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
 
                 text: fileName
                 color: Theme.colorText
@@ -289,7 +289,7 @@ Rectangle {
 
                 visible: selectFolder
                 text: qsTr("choose")
-                onClicked: fileDialogMobile.onRowChoose(index, fileURL);
+                onClicked: fileDialogMobile.onRowChoose(index, fileURL)
             }
         }
     }
@@ -299,12 +299,9 @@ Rectangle {
     Rectangle {
         id: mediaOnlyChooser
         height: 40
-        anchors.right: parent.right
-        anchors.rightMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
 
         visible: !selectFolder
         color: Theme.colorHeader
@@ -312,7 +309,7 @@ Rectangle {
         Text {
             id: rectangleErrorText
             anchors.left: parent.left
-            anchors.leftMargin: 32
+            anchors.leftMargin: 24
             anchors.verticalCenter: parent.verticalCenter
 
             text: qsTr("Show media files only")

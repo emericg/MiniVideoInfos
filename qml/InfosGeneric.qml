@@ -49,7 +49,7 @@ ScrollView {
             info_iaspectratio.text = UtilsMedia.varToString(mediaItem.width, mediaItem.height)
             info_iresolution.text = (mediaItem.resolution) ? (mediaItem.resolution + " " + qsTr("dpi")) : ""
             item_iorientation.visible = (mediaItem.orientation !== 0)
-            info_iorientation.text = UtilsMedia.orientationToString(mediaItem.orientation)
+            info_iorientation.text = UtilsMedia.orientationExifToString(mediaItem.orientation)
             item_iprojection.visible = (mediaItem.projection > 0)
             info_iprojection.text = UtilsMedia.projectionToString(mediaItem.projection)
             item_idepth.visible = (mediaItem.depth > 0)
@@ -779,7 +779,7 @@ ScrollView {
                         font.pixelSize: 15
                     }
                     Text {
-                        text: UtilsMedia.rotationToString(modelData.orientation)
+                        text: UtilsMedia.orientationMp4ToString(modelData.orientation)
                         color: Theme.colorText
                         font.pixelSize: 15
                     }

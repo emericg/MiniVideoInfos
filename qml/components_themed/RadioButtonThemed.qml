@@ -5,6 +5,10 @@ import ThemeEngine 1.0
 
 RadioButton {
     id: control
+    implicitHeight: Theme.componentHeight
+    leftPadding: 0
+    rightPadding: 0
+    spacing: 8
 
     checked: false
     text: "Radio Button"
@@ -22,8 +26,7 @@ RadioButton {
         border.color: control.down ? Theme.colorSecondary : Theme.colorComponentBorder
 
         Rectangle {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
             width: 12
             height: 12
             radius: (width / 2)
@@ -40,7 +43,7 @@ RadioButton {
         leftPadding: control.indicator.width + control.spacing
         verticalAlignment: Text.AlignVCenter
 
-        color: control.down ? Theme.colorSubText : Theme.colorText
+        color: Theme.colorSubText
         opacity: enabled ? 1.0 : 0.33
     }
 }
