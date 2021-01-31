@@ -91,7 +91,7 @@ contains(DEFINES, USE_CONTRIBS) {
     ios { # QMAKE_APPLE_DEVICE_ARCHS available: armv7 arm64
         PLATFORM = "iOS"
         ARCH = "armv8" # can be simulator, armv7 and armv8
-        QMAKE_APPLE_DEVICE_ARCHS = "arm64" # Force 'arm64' and ignore 'armv7'
+        QMAKE_APPLE_DEVICE_ARCHS = "arm64" # force 'arm64'
     }
 
     CONTRIBS_DIR = $${PWD}/contribs/env/$${PLATFORM}_$${ARCH}/usr
@@ -139,13 +139,13 @@ CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
 
 # Build artifacts ##############################################################
 
-OBJECTS_DIR = build/
-MOC_DIR     = build/
-RCC_DIR     = build/
-UI_DIR      = build/
-QMLCACHE_DIR= build/
+OBJECTS_DIR = build/$${ARCH}/
+MOC_DIR     = build/$${ARCH}/
+RCC_DIR     = build/$${ARCH}/
+UI_DIR      = build/$${ARCH}/
+QMLCACHE_DIR= build/$${ARCH}/
 
-DESTDIR     = bin/
+DESTDIR = bin/
 
 ################################################################################
 # Application deployment and installation steps
@@ -196,9 +196,26 @@ android {
                  $${PWD}/assets/android/gradle.properties \
                  $${PWD}/assets/android/build.gradle
 
-    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
-    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
-    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so
+    versionAtLeast(QT_VERSION, "5.14.0") {
+        DEFINES += LIBS_SUFFIX='\\"_$${QT_ARCH}.so\\"'
+        ANDROID_EXTRA_LIBS += \
+            $${PWD}/contribs/env/android_armv7/usr/lib/libexif.so \
+            $${PWD}/contribs/env/android_armv7/usr/lib/libtag.so \
+            $${PWD}/contribs/env/android_armv7/usr/lib/libminivideo.so \
+            $${PWD}/contribs/env/android_armv8/usr/lib/libexif.so \
+            $${PWD}/contribs/env/android_armv8/usr/lib/libtag.so \
+            $${PWD}/contribs/env/android_armv8/usr/lib/libminivideo.so \
+            $${PWD}/contribs/env/android_x86/usr/lib/libexif.so \
+            $${PWD}/contribs/env/android_x86/usr/lib/libtag.so \
+            $${PWD}/contribs/env/android_x86/usr/lib/libminivideo.so \
+            $${PWD}/contribs/env/android_x86_64/usr/lib/libexif.so \
+            $${PWD}/contribs/env/android_x86_64/usr/lib/libtag.so \
+            $${PWD}/contribs/env/android_x86_64/usr/lib/libminivideo.so
+    } else {
+        ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
+        ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
+        ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so
+    }
     include($${PWD}/contribs/env/android_openssl-master/openssl.pri)
 }
 

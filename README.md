@@ -3,7 +3,6 @@
 [![Travis](https://img.shields.io/travis/emericg/MiniVideoInfos.svg?style=flat-square)](https://travis-ci.org/emericg/MiniVideoInfos)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
-
 Get detailed informations about your audio, video and picture files with MiniVideo Infos!
 
 ### Features
@@ -38,7 +37,7 @@ PICTURE file formats:
 
 You will need:
 - Any C++11 compiler
-- Android NDK 20
+- Android NDK 20+
 - Android SDK
 - Qt 5.12+ (with Qt Charts)
 - MiniVideo
@@ -47,11 +46,13 @@ You will need:
 
 ### Building MiniVideo Infos
 
-> $ git clone https://github.com/emericg/MiniVideoInfos.git  
-> $ cd MiniVideoInfos/  
-> $ cd contribs/ && python3 contribs.py && cd ..  
-> $ qmake  
-> $ make  
+```
+$ git clone https://github.com/emericg/MiniVideoInfos.git
+$ cd MiniVideoInfos/
+$ cd contribs/ && python3 contribs.py && cd ..
+$ qmake
+$ make
+```
 
 
 ## Get involved!
@@ -70,7 +71,7 @@ You can help us find and report bugs, suggest new features, help with translatio
 MiniVideoInfos is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.  
 Read the [LICENSE](LICENSE) file or [consult the license on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
-Emeric Grange <emeric.grange@gmail.com>
+> Emeric Grange <emeric.grange@gmail.com>
 
 ### Third party projects used by MiniVideo Infos
 
