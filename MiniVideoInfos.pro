@@ -193,6 +193,7 @@ android {
                    assets/android/src/com/minivideo/utils/QSharePathResolver.java
 
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
+                 $${PWD}/assets/android/gradle.properties \
                  $${PWD}/assets/android/build.gradle
 
     ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
