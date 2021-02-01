@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
@@ -7,7 +8,7 @@ import "qrc:/js/UtilsString.js" as UtilsString
 import "qrc:/js/UtilsMedia.js" as UtilsMedia
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Item { ////
+Item {
     id: elementTracks
     anchors.left: parent.left
     anchors.leftMargin: 56
@@ -52,6 +53,8 @@ Item { ////
         //console.log(trackTable)
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Rectangle {
         id: rectangleTracks
         anchors.top: parent.top
@@ -61,7 +64,7 @@ Item { ////
 
         clip: true
         height: 8
-        radius: 3
+        radius: 2
         color: "transparent" // Theme.colorForeground
 
         Row {
@@ -87,10 +90,23 @@ Item { ////
                 }
             }
         }
+
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                x: rectangleTracks.x
+                y: rectangleTracks.y
+                width: rectangleTracks.width
+                height: rectangleTracks.height
+                radius: rectangleTracks.radius
+            }
+        }
     }
 
+    ////////
+
     Row {
-        id: rowTrackSize ////
+        id: rowTrackSize
         anchors.top: rectangleTracks.bottom
         anchors.topMargin: 4
         anchors.horizontalCenter: parent.horizontalCenter

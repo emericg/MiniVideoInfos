@@ -74,7 +74,7 @@ ScrollView {
         }
 
         // Track sizes graph
-        if (mediaItem.getVideoTracks() + mediaItem.getAudioTracks() > 0) {
+        if (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount() > 0) {
             elementTracks.visible = true
             elementTracks.load(mediaItem)
         } else {
