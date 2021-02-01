@@ -679,3 +679,19 @@ Q_INVOKABLE void MediaTrackQml::getBitrateDataFps(QLineSeries *bitrateData, floa
         bitrateData->replace(points);
     }
 }
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+MediaChapterQml::MediaChapterQml(int64_t pts, const QString &name, QObject *parent) : QObject(parent)
+{
+    m_pts = pts;
+    m_name = name;
+}
+
+MediaChapterQml::~MediaChapterQml()
+{
+    //
+}
+
+/* ************************************************************************** */

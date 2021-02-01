@@ -48,8 +48,8 @@ ScrollView {
             info_idefinition.text = mediaItem.width + " x " + mediaItem.height
             info_iaspectratio.text = UtilsMedia.varToString(mediaItem.width, mediaItem.height)
             info_iresolution.text = (mediaItem.resolution) ? (mediaItem.resolution + " " + qsTr("dpi")) : ""
-            item_iorientation.visible = (mediaItem.orientation !== 0)
-            info_iorientation.text = UtilsMedia.orientationExifToString(mediaItem.orientation)
+            item_iorientation.visible = (mediaItem.transformation !== 0)
+            info_iorientation.text = UtilsMedia.orientationQtToString(mediaItem.transformation)
             item_iprojection.visible = (mediaItem.projection > 0)
             info_iprojection.text = UtilsMedia.projectionToString(mediaItem.projection)
             item_idepth.visible = (mediaItem.depth > 0)
@@ -87,9 +87,16 @@ ScrollView {
         // Audio tracks
         columnAudio.model = mediaItem.getAudioTracks()
 
-        // Other tracks
-        columnOther.visible = (mediaItem.getSubtitlesTrackCount() || mediaItem.getOtherTrackCount())
+        // Subtitles tracks
+        columnSubtitles.visible = mediaItem.getSubtitlesTrackCount()
         repeaterSubtitles.model = mediaItem.getSubtitlesTracks()
+
+        // Chapters
+        columnChapters.visible = mediaItem.getChaptersCount()
+        repeaterChapters.model = mediaItem.getChapters()
+
+        // Other tracks
+        columnOther.visible =mediaItem.getOtherTrackCount()
         repeaterOther.model = mediaItem.getOtherTracks()
     }
 
@@ -951,13 +958,13 @@ ScrollView {
         ////////////////
 
         Column {
-            id: columnOther
+            id: columnSubtitles
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: 2
 
             Item {
-                id: titleOther
+                id: titleSubtitles
                 height: 32
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -973,14 +980,14 @@ ScrollView {
 
                     color: Theme.colorPrimary
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material/baseline-list-24px.svg"
+                    source: "qrc:/assets/icons_material_media/outline-closed_caption-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
                     anchors.leftMargin: 56
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("OTHER")
+                    text: qsTr("SUBTITLES")
                     color: Theme.colorPrimary
                     font.pixelSize: 18
                     font.bold: true
@@ -1025,6 +1032,47 @@ ScrollView {
                     }
                 }
             }
+        }
+
+        ////////////////
+
+        Column {
+            id: columnOther
+            anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 2
+
+            Item {
+                id: titleOther
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                ImageSvg {
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorPrimary
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/assets/icons_material/baseline-list-24px.svg"
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("OTHER")
+                    color: Theme.colorPrimary
+                    font.pixelSize: 18
+                    font.bold: true
+                }
+            }
+
             Repeater {
                 id: repeaterOther
                 anchors.left: parent.left
@@ -1043,13 +1091,13 @@ ScrollView {
                     Text {
                         id: trackOtherId
                         text: {
-                            if (modelData.type === 4) // stream_MENU
+                            if (modelData.type === 5) // MiniVideo.stream_MENU
                                 return qsTr("menu track #") + modelData.id
-                            else if (modelData.type === 5) // stream_TMCD
+                            else if (modelData.type === 6) // MiniVideo.stream_TMCD
                                 return qsTr("SMPTE timecode")
-                            else if (modelData.type === 6) // stream_META
+                            else if (modelData.type === 7) // MiniVideo.stream_META
                                 return qsTr("metadata track")
-                            else if (modelData.type === 7) // stream_HINT
+                            else if (modelData.type === 8) // MiniVideo.stream_HINT
                                 return qsTr("hint track")
                             else
                                 return qsTr("Unknown track type")
@@ -1062,7 +1110,7 @@ ScrollView {
                         width: parent.width - parent.spacing - trackOtherId.contentWidth
 
                         text: {
-                            if (modelData.type === 5) // stream_TMCD
+                            if (modelData.type === 6) // MiniVideo.stream_TMCD
                                 return mediaItem.timecode
                             else
                                 return modelData.title
@@ -1070,6 +1118,84 @@ ScrollView {
                         color: Theme.colorText
                         font.pixelSize: 15
                         wrapMode: Text.WrapAnywhere
+                    }
+                }
+            }
+        }
+
+        ////////////////
+
+        Column {
+            id: columnChapters
+            anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 2
+
+            Item {
+                id: titleChapters
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                ImageSvg {
+                    width: 28
+                    height: 28
+                    anchors.left: parent.left
+                    anchors.leftMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+                    rotation: 90
+
+                    color: Theme.colorPrimary
+                    fillMode: Image.PreserveAspectFit
+                    source: "qrc:/assets/icons_material/baseline-label_important-24px.svg"
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("CHAPTERS")
+                    color: Theme.colorPrimary
+                    font.pixelSize: 18
+                    font.bold: true
+                }
+            }
+
+            Repeater {
+                id: repeaterChapters
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Row { ////
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    height: 24
+                    spacing: 8
+
+                    Text {
+                        id: trackChapterId
+                        text: "#" + (index + 1)
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        id: trackChapterName
+                        visible: modelData.name.length
+                        text: modelData.name
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
+                    Text {
+                        id: trackChapterTimestamp
+                        text: "@ " + UtilsString.durationToString_ISO8601_compact(modelData.pts)
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                        wrapMode: Text.WordWrap
                     }
                 }
             }

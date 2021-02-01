@@ -42,7 +42,7 @@ public:
 
     static void registerQML()
     {
-        qmlRegisterType<MiniVideoQML>("MiniVideo", 0, 12, "MiniVideo");
+        qmlRegisterType<MiniVideoQML>("MiniVideo", 0, 13, "MiniVideo");
     }
 
     Q_ENUM(StreamType_e)
@@ -51,25 +51,22 @@ public:
     Q_ENUM(BitrateMode_e)
 
     Q_ENUM(FramerateMode_e)
+    Q_ENUM(Projection_e)
+    Q_ENUM(ScanType_e)
     Q_ENUM(Rotation_e)
-
     Q_ENUM(StereoMode_e)
+
+    Q_ENUM(ColorModel_e)
+    Q_ENUM(ColorsRec_e)
+    Q_ENUM(ColorMatrix_e)
+
+    Q_ENUM(ColorPrimaries_e)
+    Q_ENUM(ColorTransferCharacteristic_e)
+    Q_ENUM(ColorSpace_e)
+
+    Q_ENUM(AudioSpeakers_e)
+    Q_ENUM(AudioSpeakersExtended_e)
     Q_ENUM(ChannelMode_e)
-/*
-    enum StreamType_qml {
-        stream_UNKNOWN
-
-        stream_AUDIO
-        stream_VIDEO
-        stream_TEXT
-
-        stream_MENU
-        stream_TMCD
-        stream_META
-        stream_HINT
-    };
-    Q_ENUM(PlaybackState)
-*/
 };
 
 /* ************************************************************************** */

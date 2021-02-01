@@ -63,7 +63,7 @@ ScrollView {
 
             item_vprojection.visible = (trackItem.projection > 0)
             info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
-            info_vorientation.visible = (trackItem.orientation > 0)
+            item_vorientation.visible = (trackItem.orientation > 0)
             info_vorientation.text = UtilsMedia.orientationMp4ToString(trackItem.orientation)
 
             item_vscan.visible = (trackItem.scanmode > 0)

@@ -66,8 +66,10 @@ class Media: public QObject
     Q_PROPERTY(bool hasAudio READ hasAudio NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasAudioTags READ hasAudioTags NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasSubtitles READ hasSubtitles NOTIFY mediaUpdated)
+    Q_PROPERTY(bool hasChapters READ hasChapters NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasEXIF READ hasEXIF NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasGPS READ hasGPS NOTIFY mediaUpdated)
+    Q_PROPERTY(bool hasGPMF READ hasGPMF NOTIFY mediaUpdated)
 
     Q_PROPERTY(QString cameraBrand READ getCameraBrand NOTIFY mediaUpdated)
     Q_PROPERTY(QString cameraModel READ getCameraModel NOTIFY mediaUpdated)
@@ -89,7 +91,8 @@ class Media: public QObject
     Q_PROPERTY(unsigned resolution READ getResolution NOTIFY mediaUpdated)
     Q_PROPERTY(bool alpha READ getAlpha NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned projection READ getProjection NOTIFY mediaUpdated)
-    Q_PROPERTY(int orientation READ getOrientation NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned transformation READ getTransformation NOTIFY mediaUpdated)
+    Q_PROPERTY(int rotation READ getRotation NOTIFY mediaUpdated)
 
     // image tags
     Q_PROPERTY(QString iso READ getIso NOTIFY mediaUpdated)
@@ -146,6 +149,7 @@ class Media: public QObject
     QList <QObject *> tracksVideo;
     QList <QObject *> tracksSubtitles;
     QList <QObject *> tracksOther;
+    QList <QObject *> trackChapters;
 
     QString m_path;
     QString m_file_folder;
@@ -158,11 +162,11 @@ class Media: public QObject
     QString m_creation_app;
     QString m_creation_lib;
 
-    QString m_camera_brand;        //!< Brand of the camera that produced the shot
-    QString m_camera_model;        //!< Model of the camera that produced the shot
+    QString m_camera_brand;         //!< Brand of the camera that produced the shot
+    QString m_camera_model;         //!< Model of the camera that produced the shot
     QString m_camera_software;      //!< Firmware of the camera that produced the shot
 
-    qint64 m_duration = 0;
+    qint64 m_duration = 0;          //!< Duration (in ms for video, in pictures for pic or timelpase)
 
     QDateTime m_date_file_c;
     QDateTime m_date_file_m;
@@ -170,12 +174,13 @@ class Media: public QObject
     QDateTime m_date_gps;
 
     // GLOBAL metadata
-    int orientation = 0;
-    unsigned projection = 0;
     unsigned width = 0;
     unsigned height = 0;
     unsigned bpp = 0;
     bool alpha = false;
+    unsigned projection = 0;
+    unsigned transformation = 0;    //!< QImageIOHandler::Transformation
+    int rotation = 0;
 
     // IMAGE metadata
     bool m_hasEXIF = false;
@@ -203,6 +208,9 @@ class Media: public QObject
     double vframerate = 0.0;
     unsigned vbitrate = 0;
     unsigned vbitratemode = 0;
+
+    bool m_hasGPMF = false;
+    bool hasGPMF() const { return m_hasGPMF; }
 
     // AUDIO metadata
     QString acodec;
@@ -233,9 +241,11 @@ class Media: public QObject
     QString gps_lat_str;
     QString gps_long_str;
     QString gps_alt_str;
+    QString gps_alt_egm96_str;
     double gps_lat = 0.0;
     double gps_long = 0.0;
     double gps_alt = 0.0;
+    double gps_alt_egm96 = 0.0;
     unsigned gps_dop = 0;
     unsigned gps_diff = 0;
 
@@ -251,6 +261,7 @@ public:
     bool hasVideo() const { return (tracksVideo.length() > 0); }
     bool hasImage() const { return (m_type == Shared::FILE_PICTURE); }
     bool hasSubtitles() const { return (tracksSubtitles.length() > 0); }
+    bool hasChapters() const { return (trackChapters.length() > 0); }
 
     bool getMetadataFromPicture();
     bool getMetadataFromVideo();
@@ -278,7 +289,8 @@ public:
     unsigned getDepth() const { return bpp; }
     bool getAlpha() const { return alpha; }
     unsigned getProjection() const { return projection; }
-    int getOrientation() const { return orientation; }
+    unsigned getTransformation() const { return transformation; }
+    int getRotation() const { return rotation; }
     unsigned getResolution() const { return resolution_x; }
 
 
@@ -287,6 +299,8 @@ public:
     double getFramerate() const { return vframerate; }
     unsigned getBitrate() const { return vbitrate; }
     unsigned getBitrateMode() const { return vbitratemode; }
+
+    bool hasGpmf() const { return m_hasGPMF; }
 
     QString getAudioCodec() const { return acodec; }
     unsigned getAudioChannels() const { return achannels; }
@@ -370,6 +384,9 @@ public slots:
     int getAudioTrackCount() const { return tracksAudio.size(); }
     int getSubtitlesTrackCount() const { return tracksSubtitles.size(); }
     int getOtherTrackCount() const { return tracksOther.size(); }
+
+    QVariant getChapters() const { if (trackChapters.empty()) return QVariant(); return QVariant::fromValue(trackChapters); }
+    int getChaptersCount() const { return trackChapters.size(); }
 };
 
 /* ************************************************************************** */

@@ -186,4 +186,32 @@ private:
 };
 
 /* ************************************************************************** */
+
+/*!
+ * \brief The MediaChapterQml class
+ *
+ * QML binding for minivideo chapters.
+ */
+class MediaChapterQml: public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(qint64 pts READ getPts NOTIFY chapterUpdated)
+    Q_PROPERTY(QString name READ getName NOTIFY chapterUpdated)
+
+    int64_t m_pts = -1;
+    QString m_name;
+
+Q_SIGNALS:
+    void chapterUpdated();
+
+public:
+    MediaChapterQml(int64_t pts, const QString &name, QObject *parent = nullptr);
+    ~MediaChapterQml();
+
+    qint64 getPts() const { return m_pts; };
+    QString getName() const { return m_name; };
+};
+
+/* ************************************************************************** */
 #endif // MINIVIDEO_TRACK_QML_H

@@ -212,8 +212,6 @@ bool Media::getMetadataFromPicture()
             //m_exif_tag_found++;
         }
 
-        //EXIF_TAG_COLOR_SPACE
-        //EXIF_TAG_BITS_PER_SAMPLE
         //EXIF_TAG_YCBCR_COEFFICIENTS
         //EXIF_TAG_YCBCR_SUB_SAMPLING
         //EXIF_TAG_YCBCR_POSITIONING
@@ -224,27 +222,34 @@ bool Media::getMetadataFromPicture()
         if (entry)
         {
             exif_entry_get_value(entry, buf, sizeof(buf));
-            //qDebug() << "EXIF_TAG_ORIENTATION" << QString::fromLatin1(buf);
 /*
-            1 = Horizontal (normal)
-            2 = Mirror horizontal
-            3 = Rotate 180
-            4 = Mirror vertical
-            5 = Mirror horizontal and rotate 270 CW
-            6 = Rotate 90 CW
-            7 = Mirror horizontal and rotate 90 CW
-            8 = Rotate 270 CW
+            1 = Horizontal (normal)     // "Top-left"
+            2 = Mirror horizontal       // "Top-right"
+            3 = Rotate 180              // "Bottom-right"
+            4 = Mirror vertical         // "Bottom-left"
+            5 = Mirror horizontal and rotate 270 CW // "Left-top"
+            6 = Rotate 90 CW                        // "Right-top"
+            7 = Mirror horizontal and rotate 90 CW  // "Right-bottom"
+            8 = Rotate 270 CW                       // "Left-bottom"
 */
-/*
             if (strncmp(buf, "Top-left", sizeof(buf)) == 0)
-            {
-                //orientation = -90;
-            }
-            if (strncmp(buf, "Right-top", sizeof(buf)) == 0)
-            {
-                //orientation = 90;
-            }
-*/
+                transformation = QImageIOHandler::TransformationNone;
+            else if (strncmp(buf, "Top-right", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationMirror;
+            else if (strncmp(buf, "Bottom-right", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationRotate180;
+            else if (strncmp(buf, "Bottom-left", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationFlip;
+            else if (strncmp(buf, "Left-top", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationFlipAndRotate90;
+            else if (strncmp(buf, "Right-top", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationRotate90;
+            else if (strncmp(buf, "Right-bottom", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationMirrorAndRotate90;
+            else if (strncmp(buf, "Left-bottom", sizeof(buf)) == 0)
+                transformation = QImageIOHandler::TransformationRotate270;
+
+            m_exif_tag_found++;
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FNUMBER);
@@ -525,7 +530,7 @@ bool Media::getMetadataFromPicture()
         vcodec = img_infos.format();
         width = img_infos.size().rwidth();
         height = img_infos.size().rheight();
-        orientation = img_infos.transformation(); // FIXME
+        transformation = img_infos.transformation();
 
         status = true;
     }
@@ -736,7 +741,13 @@ bool Media::getMetadataFromVideo()
                     height = m_media->tracks_video[0]->height;
                     //m_duration = m_media->tracks_video[0]->stream_duration_ms;
                     projection = m_media->tracks_video[0]->video_projection;
-                    orientation = m_media->tracks_video[0]->video_rotation;
+                    rotation = m_media->tracks_video[0]->video_rotation * 90;
+                    if (m_media->tracks_video[0]->video_rotation == 1)
+                        transformation = QImageIOHandler::TransformationRotate90;
+                    else if (m_media->tracks_video[0]->video_rotation == 2)
+                        transformation = QImageIOHandler::TransformationRotate180;
+                    else if (m_media->tracks_video[0]->video_rotation == 3)
+                        transformation = QImageIOHandler::TransformationRotate270;
 
                     vcodec = QString::fromLocal8Bit(getCodecString(stream_VIDEO, m_media->tracks_video[0]->stream_codec, true));
                     vframerate = m_media->tracks_video[0]->framerate;
@@ -768,6 +779,15 @@ bool Media::getMetadataFromVideo()
             }
         }
 
+        for (unsigned i = 0; i < m_media->chapters_count; i++)
+        {
+            Chapter_t *ch = &m_media->chapters[i];
+            if (ch == nullptr) break;
+
+            MediaChapterQml *c = new MediaChapterQml(ch->pts, QString::fromUtf8(ch->name), this);
+            if (c) trackChapters.push_back(c);
+        }
+
         for (unsigned i = 0; i < m_media->tracks_others_count; i++)
         {
             if (m_media->tracks_others[i])
@@ -782,7 +802,6 @@ bool Media::getMetadataFromVideo()
                                     .arg(t->time_reference[2], 2, 'u', 0, '0')\
                                     .arg(t->time_reference[3], 2, 'u', 0, '0');
                 }
-/*
                 else if (t->stream_fcc == fourcc_be("gpmd"))
                 {
                     MediaStream_t *t = m_media->tracks_others[i];
@@ -791,8 +810,8 @@ bool Media::getMetadataFromVideo()
                     int devc_count = 0;
 
                     if (devc_count)
-                        hasGPMF = true;
-
+                        m_hasGPMF = true;
+/*
                     // Now the purpose of the following code is to get accurate
                     // date from the GPS, but in case of chaptered videos, we may
                     // have that date already, so don't run this code twice
@@ -816,8 +835,9 @@ bool Media::getMetadataFromVideo()
                             minivideo_destroy_sample(&sp);
                         }
                     }
-                }
 */
+                }
+
                 MediaTrackQml *tt = new MediaTrackQml(this);
                 tt->loadMediaStream(m_media->tracks_others[i]);
 

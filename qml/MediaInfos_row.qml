@@ -319,7 +319,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosSubtitles {
                     id: content_subtitles
@@ -339,7 +339,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosAudioTags {
                     id: content_audio_tags
@@ -359,7 +359,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosImageTags {
                     id: content_image_tags
@@ -379,7 +379,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: ((mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
                 }
                 InfosExport {
                     id: content_export
