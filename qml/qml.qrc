@@ -25,6 +25,7 @@
         <file>InfosExport.qml</file>
 
         <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
+        <file alias="ItemImagePopup.qml">components/ItemImagePopup.qml</file>
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
         <file alias="ItemLoading.qml">components/ItemLoading.qml</file>
         <file alias="ItemSwipeMenu.qml">components/ItemSwipeMenu.qml</file>

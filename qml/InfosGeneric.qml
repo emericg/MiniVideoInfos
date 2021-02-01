@@ -639,11 +639,36 @@ ScrollView {
                     horizontalAlignment: Image.AlignLeft
                     autoTransform: true
                     fillMode: Image.PreserveAspectFit
+
+                    ItemImagePopup {
+                        id: itemImagePopup
+                    }
                 }
-                /*MouseArea {
+                MouseArea {
                     anchors.fill: parent
-                    onPressAndHold: utilsApp.openWith(mediaItem.fullpath);
-                }*/
+
+                    onClicked: {
+                        if (isMobile) {
+                            itemImagePopup.source = info_preview.source
+                            itemImagePopup.open()
+                        }
+                    }
+                    onDoubleClicked: {
+                        if (isDesktop) {
+                            itemImagePopup.source = info_preview.source
+                            itemImagePopup.open()
+                        }
+                    }
+                    onPressAndHold: {
+                        if (isDesktop) {
+                            utilsApp.openWith(mediaItem.fullpath)
+                        } else {
+                            var mimetype = "image/" + mediaItem.videoCodec
+                            //if (mediaItem.videoCodec === "") mimetype =
+                            utilsShare.sendFile(mediaItem.fullpath, "Open file", mimetype, 0)
+                        }
+                    }
+                }
             }
         }
 
