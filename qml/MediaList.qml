@@ -97,7 +97,6 @@ Item {
             errorBar.hideError()
             screenMediaInfos.loadMediaInfos(mediaManager.mediaList[0])
             itemLoading.close()
-            appContent.state = "MediaInfos"
         } else {
             errorBar.showError(pathToLoad)
             itemLoading.close()

@@ -40,7 +40,6 @@ Rectangle {
 
             // regular click
             screenMediaInfos.loadMediaInfos(mediaMiniWidget)
-            appContent.state = "MediaInfos"
             appDrawer.close()
         }
     }

@@ -80,7 +80,6 @@ Item {
                     // regular click
                     if (mediaItem.valid) {
                         screenMediaInfos.loadMediaInfos(mediaItem)
-                        appContent.state = "MediaInfos"
                     }
                 }
             }

@@ -14,27 +14,22 @@ Item {
     property var mediaItem: null
     property var content: null
 
-    Connections {
-        target: appContent
-        onStateChanged: {
-            if (appContent.state === "MediaInfos") {
-                // Set header title
-                if (!isPhone || mediaItem.name.length < 24) {
-                    appHeader.title = mediaItem.name + "." + mediaItem.ext
-                } else {
-                    appHeader.title = appHeader.appName
-                }
-            }
-        }
-    }
-
     function loadMediaInfos(newmedia) {
         if (typeof newmedia === "undefined" || !newmedia) return
+        appContent.state = "MediaInfos"
         if (newmedia === mediaItem) return
-
         mediaItem = newmedia
+
         //console.log("screenMediaInfos.loadMediaInfos(" + mediaItem.name + ")")
 
+        // Set header title
+        if (!isPhone || mediaItem.name.length < 24) {
+            appHeader.title = mediaItem.name + "." + mediaItem.ext
+        } else {
+            appHeader.title = appHeader.appName
+        }
+
+        // View loader
         if (contentLoader.status != Loader.Ready) {
             if (isPhone)
                 contentLoader.source = "MediaInfos_swipeview.qml"
@@ -44,13 +39,10 @@ Item {
             content = contentLoader.item
         }
 
-        if (isPhone) {
-            content.loadHeader()
-            content.loadSwipeView()
-        } else {
-            content.loadHeader()
-            content.loadRowView()
-        }
+        //
+        content.loadHeader()
+        if (isPhone) content.loadSwipeView()
+        else content.loadRowView()
     }
 
     ////////////////////////////////////////////////////////////////////////////
