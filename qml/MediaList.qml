@@ -201,7 +201,7 @@ Item {
                 anchors.verticalCenterOffset: -4
 
                 primaryColor: Theme.colorPrimary
-                text: qsTr("LOAD ANOTHER MEDIA")
+                text: qsTr("OPEN ANOTHER MEDIA")
                 onClicked: openDialog()
             }
 

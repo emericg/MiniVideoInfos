@@ -29,7 +29,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             primaryColor: Theme.colorPrimary
-            text: qsTr("LOAD A MEDIA FILE")
+            text: qsTr("OPEN MEDIA FILE")
             onClicked: itemNoFile.clicked()
         }
     }

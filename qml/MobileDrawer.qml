@@ -148,7 +148,7 @@ Drawer {
                         anchors.leftMargin: screenLeftPadding + 56
                         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Load media")
+                        text: qsTr("Open media")
                         font.pixelSize: 13
                         font.bold: true
                         color: Theme.colorText
