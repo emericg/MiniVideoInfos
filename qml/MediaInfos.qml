@@ -15,19 +15,11 @@ Item {
     property var content: null
 
     function loadMediaInfos(newmedia) {
-        if (typeof newmedia === "undefined" || !newmedia) return
-        appContent.state = "MediaInfos"
-        if (newmedia === mediaItem) return
+        if (typeof newmedia === "undefined" || !newmedia) { return; }
+        if (newmedia === mediaItem) { appContent.state = "MediaInfos"; return; }
+
+        //console.log("screenMediaInfos.loadMediaInfos(" + newmedia + ")")
         mediaItem = newmedia
-
-        //console.log("screenMediaInfos.loadMediaInfos(" + mediaItem.name + ")")
-
-        // Set header title
-        if (!isPhone || mediaItem.name.length < 24) {
-            appHeader.title = mediaItem.name + "." + mediaItem.ext
-        } else {
-            appHeader.title = appHeader.appName
-        }
 
         // View loader
         if (contentLoader.status != Loader.Ready) {
@@ -43,6 +35,16 @@ Item {
         content.loadHeader()
         if (isPhone) content.loadSwipeView()
         else content.loadRowView()
+
+        // Change screen
+        appContent.state = "MediaInfos"
+
+        // Set header title
+        if (!isPhone || mediaItem.name.length < 24) {
+            appHeader.title = mediaItem.name + "." + mediaItem.ext
+        } else {
+            appHeader.title = appHeader.appName
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
