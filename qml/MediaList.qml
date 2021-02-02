@@ -226,16 +226,15 @@ Item {
             // prevent clicks into this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-
             Row {
                 anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.leftMargin: isPhone ? 6 : 12
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 12
+                spacing: isPhone ? 6 : 12
 
                 ButtonWireframeImage {
                     id: buttonUpdate2
-                    height: 32
+                    height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
                     fullColor: true
@@ -247,7 +246,7 @@ Item {
 
                 ButtonWireframeImage {
                     id: buttonClose2
-                    height: 32
+                    height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
                     fullColor: true
@@ -260,9 +259,9 @@ Item {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: isPhone ? 8 : 12
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 12
+                spacing: isPhone ? 8 : 12
 
                 Text {
                     id: textActions

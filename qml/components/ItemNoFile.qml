@@ -28,7 +28,9 @@ Item {
             height: 40
             anchors.horizontalCenter: parent.horizontalCenter
 
+            fullColor: false
             primaryColor: Theme.colorPrimary
+
             text: qsTr("OPEN MEDIA FILE")
             onClicked: itemNoFile.clicked()
         }
