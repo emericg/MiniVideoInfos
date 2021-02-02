@@ -25,13 +25,11 @@
 #include "utils/utils_language.h"
 #include "minivideo_qml.h"
 
-#include "settingsmanager.h"
-#include "mediamanager.h"
+#include "SettingsManager.h"
+#include "MediaManager.h"
 
 #include <MobileUI.h>
 #include <SharingApplication.h>
-
-#include <cstdlib>
 
 #include <QtGlobal>
 #include <QTranslator>

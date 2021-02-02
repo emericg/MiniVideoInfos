@@ -20,8 +20,8 @@
  * \date      2019
  */
 
-#include "mediamanager.h"
-#include "media.h"
+#include "MediaManager.h"
+#include "Media.h"
 
 #include <QStandardPaths>
 #include <QList>

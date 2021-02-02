@@ -20,16 +20,12 @@
  * \date      2019
  */
 
-#include "settingsmanager.h"
+#include "SettingsManager.h"
 
 #include <QCoreApplication>
-#include <QStandardPaths>
 #include <QSettings>
 #include <QLocale>
-#include <QDir>
 #include <QDebug>
-
-#include <cmath>
 
 /* ************************************************************************** */
 
@@ -56,6 +52,7 @@ SettingsManager::~SettingsManager()
     //
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 bool SettingsManager::readSettings()
@@ -147,10 +144,11 @@ bool SettingsManager::writeSettings()
     return status;
 }
 
+/* ************************************************************************** */
+
 void SettingsManager::resetSettings()
 {
-    // Settings
-    m_appTheme= "light";
+    m_appTheme = "light";
     Q_EMIT appThemeChanged();
     m_appThemeAuto = false;
     Q_EMIT appThemeAutoChanged();
@@ -168,6 +166,7 @@ void SettingsManager::resetSettings()
     Q_EMIT unitSizesChanged();
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void SettingsManager::setAppTheme(const QString &value)

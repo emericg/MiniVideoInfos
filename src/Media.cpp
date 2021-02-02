@@ -20,7 +20,7 @@
  * \date      2019
  */
 
-#include "media.h"
+#include "Media.h"
 #include "minivideo_utils_qt.h"
 #include "minivideo_textexport_qt.h"
 #include "utils/utils_app.h"

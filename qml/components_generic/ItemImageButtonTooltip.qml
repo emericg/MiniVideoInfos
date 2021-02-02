@@ -268,15 +268,7 @@ Item {
                 var obj = mapToItem(appContent, x, y)
                 var thestart = obj.x - 12
                 var theend = obj.x + 12 + 12 + ttT.contentWidth
-/*
-                console.log("[" + text + "]", "x:", x, "y:", y,
-                            " mapToItem().x:", obj.x, " mapToItem().y", obj.y)
-                console.log(" > appContent.width " + appContent.width)
-                console.log(" > ttT.contentWidth " + ttT.contentWidth)
-                console.log(" > ttT.thestart " + thestart)
-                console.log(" > ttT.end " + theend)
-*/
-                //if (tooltip.state.indexOf("top") != -1) {
+
                 if (tooltip.state === "top") {
                     if (thestart < 0) {
                         tooltip.state = "topLeft"
@@ -295,15 +287,7 @@ Item {
                     }
                 }
             }
-/*
-            Component.onCompleted: {
-                var obj = mapFromItem(itemImageButton.parent, x, y)
-                console.log("[button_1]", "x:", x, "y:", y, "mapToItem().x:", obj.x, "mapToItem().y", obj.y)
-            }
-            //anchors.top: parent.top
-            //anchors.topMargin: 16
-            //anchors.horizontalCenter: parent.horizontalCenter
-*/
+
             text: itemImageButton.tooltipText
             color: iconColor
         }

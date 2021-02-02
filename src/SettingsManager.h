@@ -44,22 +44,24 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool mediaFilter READ getMediaFilter WRITE setMediaFilter NOTIFY mediaFilterChanged)
     Q_PROPERTY(bool mediaPreview READ getMediaPreview WRITE setMediaPreview NOTIFY mediaPreviewChanged)
     Q_PROPERTY(bool exportEnabled READ getExportEnabled WRITE setExportEnabled NOTIFY exportEnabledChanged)
-
     Q_PROPERTY(int unitSystem READ getUnitSystem WRITE setUnitSystem NOTIFY unitSystemChanged)
     Q_PROPERTY(int unitSizes READ getUnitSizes WRITE setUnitSizes NOTIFY unitSizesChanged)
 
     bool m_firstlaunch = true;
 
+    // Application generic
     QString m_appTheme = "light";
     bool m_appThemeAuto = false;
+
+    // Application specific
     bool m_mediaFilter = true;
     bool m_mediaPreview = true;
     bool m_exportEnabled = false;
-    int m_unitSystem = 0;   //!< 0: Metric, 1: ImperialUSSystem, 2: ImperialUKSystem // Or use QLocal::MeasurementSystem
-    int m_unitSizes = 0;    //!< 0: KB, 1: KiB, 2: display both
+    int m_unitSystem = 0;                       //!< QLocale::MeasurementSystem
+    int m_unitSizes = 0;                        //!< 0: KB, 1: KiB, 2: display both
 
+    // Singleton
     static SettingsManager *instance;
-
     SettingsManager();
     ~SettingsManager();
 
@@ -78,8 +80,6 @@ Q_SIGNALS:
 
 public:
     static SettingsManager *getInstance();
-
-    void resetSettings();
 
     bool isFirstLaunch() const { return m_firstlaunch; }
 
@@ -103,6 +103,9 @@ public:
 
     int getUnitSizes() const { return m_unitSizes; }
     void setUnitSizes(const int value);
+
+    // Utils
+    Q_INVOKABLE void resetSettings();
 };
 
 /* ************************************************************************** */

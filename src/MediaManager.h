@@ -24,7 +24,7 @@
 #define MEDIA_MANAGER_H
 /* ************************************************************************** */
 
-#include "settingsmanager.h"
+#include "SettingsManager.h"
 
 class Media;
 
