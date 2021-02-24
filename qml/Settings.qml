@@ -8,8 +8,8 @@ Item {
     width: 480
     height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenLeftPadding
-    anchors.rightMargin: screenRightPadding
+    anchors.leftMargin: screenPaddingLeft
+    anchors.rightMargin: screenPaddingRight
 
     Rectangle {
         id: rectangleHeader

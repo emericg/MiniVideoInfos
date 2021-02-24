@@ -8,8 +8,8 @@ Item {
     width: 480
     height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenLeftPadding
-    anchors.rightMargin: screenRightPadding
+    anchors.leftMargin: screenPaddingLeft
+    anchors.rightMargin: screenPaddingRight
 
     property var mediaItem: null
     property var content: null

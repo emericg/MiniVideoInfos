@@ -9,8 +9,8 @@ Item {
     width: 480
     height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenLeftPadding
-    anchors.rightMargin: screenRightPadding
+    anchors.leftMargin: screenPaddingLeft
+    anchors.rightMargin: screenPaddingRight
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -112,7 +112,7 @@ Item {
                 spacing: 16
 
                 onWidthChanged: {
-                    var ww = (scrollView.width - 48 - screenLeftPadding - screenRightPadding) / 2;
+                    var ww = (scrollView.width - 48 - screenPaddingLeft - screenPaddingRight) / 2;
                     if (ww > 0) { websiteBtn.width = ww; supportBtn.width = ww; }
                 }
 

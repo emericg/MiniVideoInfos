@@ -175,7 +175,7 @@ Item {
         z: 5
         height: 72
         color: Theme.colorForeground
-        visible: !(isPhone && screenOrientation == 2)
+        visible: !(isPhone && screenPrimaryOrientation == 2)
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -526,7 +526,7 @@ Item {
         height: 56
         opacity: 0.9
         color: Theme.colorForeground
-        visible: !(isPhone && screenOrientation == 2) && (mediaPages.count > 1)
+        visible: !(isPhone && screenPrimaryOrientation == 2) && (mediaPages.count > 1)
 
         Rectangle {
             height: 1

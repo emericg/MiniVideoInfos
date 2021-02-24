@@ -7,8 +7,8 @@ Item {
     width: 480
     height: 640
     anchors.fill: parent
-    anchors.leftMargin: screenLeftPadding
-    anchors.rightMargin: screenRightPadding
+    anchors.leftMargin: screenPaddingLeft
+    anchors.rightMargin: screenPaddingRight
 
     function loadScreen() {
         // Refresh permissions

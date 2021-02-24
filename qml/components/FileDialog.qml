@@ -45,7 +45,7 @@ Loader {
 
     function openFilter(filter) {
         fileDialog.item.title = title;
-        fileDialog.item.folder = utilsApp.getStandardPath(filter);
+        fileDialog.item.folder = utilsApp.getStandardPath_url(filter);
         fileDialog.item.sidebarVisible = sidebarVisible;
         fileDialog.item.selectExisting = selectExisting;
         fileDialog.item.selectFolder = selectFolder;
@@ -69,7 +69,7 @@ Loader {
 
     function open() {
         fileDialog.item.title = title;
-        fileDialog.item.folder = utilsApp.getStandardPath("");
+        fileDialog.item.folder = utilsApp.getStandardPath_url("");
         fileDialog.item.sidebarVisible = sidebarVisible;
         fileDialog.item.selectExisting = selectExisting;
         fileDialog.item.selectFolder = selectFolder;

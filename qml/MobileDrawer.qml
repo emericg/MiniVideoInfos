@@ -33,7 +33,7 @@ Drawer {
 
             Connections {
                 target: appWindow
-                onScreenStatusbarPaddingChanged: rectangleHeader.updateIOSHeader()
+                onScreenPaddingStatusbarChanged: rectangleHeader.updateIOSHeader()
             }
             Connections {
                 target: Theme
@@ -42,8 +42,8 @@ Drawer {
 
             function updateIOSHeader() {
                 if (Qt.platform.os === "ios") {
-                    if (screenStatusbarPadding != 0)
-                        rectangleStatusbar.height = screenStatusbarPadding
+                    if (screenPaddingStatusbar != 0)
+                        rectangleStatusbar.height = screenPaddingStatusbar
                     else
                         rectangleStatusbar.height = 0
                 }
@@ -56,14 +56,14 @@ Drawer {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "red" // to hide scrollview content
-                height: screenStatusbarPadding
+                height: screenPaddingStatusbar
             }
             Rectangle {
                 id: rectangleNotch
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "yellow" // to hide scrollview content
-                height: screenNotchPadding
+                height: screenPaddingNotch
             }
             Rectangle {
                 id: rectangleLogo
@@ -137,7 +137,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/duotone-library_add-24px.svg"
@@ -145,7 +145,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Open media")
@@ -178,7 +178,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
@@ -186,7 +186,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Media")
@@ -246,7 +246,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
@@ -254,7 +254,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Tool1")
@@ -283,7 +283,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
@@ -291,7 +291,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Tool2")
@@ -339,7 +339,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
@@ -347,7 +347,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Settings")
@@ -378,7 +378,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-info-24px.svg"
@@ -386,7 +386,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("About")
@@ -436,7 +436,7 @@ Drawer {
                         width: 24
                         height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 16
+                        anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
@@ -444,7 +444,7 @@ Drawer {
                     }
                     Label {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenLeftPadding + 56
+                        anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Exit")

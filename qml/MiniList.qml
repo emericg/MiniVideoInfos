@@ -4,8 +4,8 @@ import ThemeEngine 1.0
 
 Column {
     id: miniList
-    anchors.leftMargin: screenLeftPadding
-    anchors.rightMargin: screenRightPadding
+    anchors.leftMargin: screenPaddingLeft
+    anchors.rightMargin: screenPaddingRight
 
     visible: mediaManager.mediaList.length
 

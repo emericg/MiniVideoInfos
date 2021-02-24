@@ -23,74 +23,113 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    // 1 = Qt::PortraitOrientation, 2 = Qt::LandscapeOrientation
-    property int screenOrientation: Screen.primaryOrientation
+    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation, 4 = inverted portrait, 8 = inverted landscape
+    property int screenPrimaryOrientation: Screen.primaryOrientation
+    property int screenOrientation: Screen.orientation
     onScreenOrientationChanged: handleNotches()
 
-    property int screenStatusbarPadding: 0
-    property int screenNotchPadding: 0
-    property int screenLeftPadding: 0
-    property int screenRightPadding: 0
+    property int screenPaddingStatusbar: 0
+    property int screenPaddingNotch: 0
+    property int screenPaddingLeft: 0
+    property int screenPaddingRight: 0
 
     Timer {
-        id: firstHandleNotches
-        interval: 100
+        id: handleNotchesTimer
+        interval: 33
         repeat: false
         onTriggered: handleNotches()
     }
 
     function handleNotches() {
+/*
+        console.log("handleNotches()")
+        console.log("screen width : " + Screen.width)
+        console.log("screen width avail  : " + Screen.desktopAvailableWidth)
+        console.log("screen height : " + Screen.height)
+        console.log("screen height avail  : " + Screen.desktopAvailableHeight)
+        console.log("screen orientation: " + Screen.orientation)
+        console.log("screen orientation (primary): " + Screen.primaryOrientation)
+*/
         if (Qt.platform.os !== "ios") return
-        if (typeof quickWindow === "undefined" || !quickWindow) return
+        if (typeof quickWindow === "undefined" || !quickWindow) {
+            handleNotchesTimer.restart();
+            return;
+        }
 
-        var screenPadding = (Screen.height - Screen.desktopAvailableHeight)
-        //console.log("screen height : " + Screen.height)
-        //console.log("screen avail  : " + Screen.desktopAvailableHeight)
-        //console.log("screen padding: " + screenPadding)
+        // Statusbar text color hack
+        mobileUI.statusbarTheme = (Theme.themeStatusbar === 0) ? 1 : 0
+        mobileUI.statusbarTheme = Theme.themeStatusbar
 
+        // Margins
         var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
-        //console.log("top:" + safeMargins["top"])
-        //console.log("right:" + safeMargins["right"])
-        //console.log("bottom:" + safeMargins["bottom"])
-        //console.log("left:" + safeMargins["left"])
-
-        if (safeMargins["total"] !== safeMargins["top"]) {
-            if (Screen.primaryOrientation === Qt.PortraitOrientation) {
-                screenStatusbarPadding = 20
-                screenNotchPadding = 12
+        if (safeMargins["total"] === safeMargins["top"]) {
+            screenPaddingStatusbar = safeMargins["top"]
+            screenPaddingNotch = 0
+            screenPaddingLeft = 0
+            screenPaddingRight = 0
+            screenPaddingBottom = 0
+        } else if (safeMargins["total"] > 0) {
+            if (Screen.orientation === Qt.PortraitOrientation) {
+                screenPaddingStatusbar = 20
+                screenPaddingNotch = 12
+                screenPaddingLeft = 0
+                screenPaddingRight = 0
+                screenPaddingBottom = 6
+            } else if (Screen.orientation === Qt.InvertedPortraitOrientation) {
+                screenPaddingStatusbar = 12
+                screenPaddingNotch = 20
+                screenPaddingLeft = 0
+                screenPaddingRight = 0
+                screenPaddingBottom = 6
+            } else if (Screen.orientation === Qt.LandscapeOrientation) {
+                screenPaddingStatusbar = 0
+                screenPaddingNotch = 0
+                screenPaddingLeft = 32
+                screenPaddingRight = 0
+                screenPaddingBottom = 0
+            } else if (Screen.orientation === Qt.InvertedLandscapeOrientation) {
+                screenPaddingStatusbar = 0
+                screenPaddingNotch = 0
+                screenPaddingLeft = 0
+                screenPaddingRight = 32
+                screenPaddingBottom = 0
             } else {
-                screenStatusbarPadding = 0
-                screenNotchPadding = 0
-            }
-
-            if (Screen.primaryOrientation === Qt.LandscapeOrientation) {
-                // TODO left or right ???
-                screenLeftPadding = 32
-                screenRightPadding = 0
-            } else {
-                screenLeftPadding = 0
-                screenRightPadding = 0
+                screenPaddingStatusbar = 0
+                screenPaddingNotch = 0
+                screenPaddingLeft = 0
+                screenPaddingRight = 0
+                screenPaddingBottom = 0
             }
         } else {
-            screenStatusbarPadding = 20
-            screenNotchPadding = 0
+            screenPaddingStatusbar = 0
+            screenPaddingNotch = 0
+            screenPaddingLeft = 0
+            screenPaddingRight = 0
+            screenPaddingBottom = 0
         }
 /*
-        console.log("RECAP screenStatusbarPadding:" + screenStatusbarPadding)
-        console.log("RECAP screenNotchPadding:" + screenNotchPadding)
-        console.log("RECAP screenLeftPadding:" + screenLeftPadding)
-        console.log("RECAP screenRightPadding:" + screenRightPadding)
+        console.log("total:" + safeMargins["total"])
+        console.log("top:" + safeMargins["top"])
+        console.log("left:" + safeMargins["left"])
+        console.log("right:" + safeMargins["right"])
+        console.log("bottom:" + safeMargins["bottom"])
+
+        console.log("RECAP screenPaddingStatusbar:" + screenPaddingStatusbar)
+        console.log("RECAP screenPaddingNotch:" + screenPaddingNotch)
+        console.log("RECAP screenPaddingLeft:" + screenPaddingLeft)
+        console.log("RECAP screenPaddingRight:" + screenPaddingRight)
+        console.log("RECAP screenPaddingBottom:" + screenPaddingBottom)
 */
     }
 
     MobileUI {
         id: mobileUI
-        property var loading: true
+        property var isLoading: true
 
-        statusbarColor: loading ? "white" : Theme.colorStatusbar
-        statusbarTheme: loading ? "white" : Theme.themeStatusbar
+        statusbarTheme: Theme.themeStatusbar
+        statusbarColor: isLoading ? "white" : Theme.colorStatusbar
         navbarColor: {
-            if (loading) return "white"
+            if (isLoading) return "white"
             if (appContent.state === "Tutorial") return Theme.colorHeader
             if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
                 (appContent.state === "MediaInfos" && isPhone) ||
@@ -130,8 +169,8 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        firstHandleNotches.restart()
-        mobileUI.loading = false
+        handleNotchesTimer.restart()
+        mobileUI.isLoading = false
     }
 
     Connections {
@@ -496,27 +535,26 @@ ApplicationWindow {
 
     ////////////////
 
-    Rectangle {
+    Text {
         id: exitWarning
-        width: exitWarningText.width + 16
-        height: exitWarningText.height + 16
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 32
         anchors.horizontalCenter: parent.horizontalCenter
 
-        radius: 4
-        color: Theme.colorSubText
         opacity: 0
         Behavior on opacity { OpacityAnimator { duration: 333 } }
 
-        Text {
-            id: exitWarningText
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
+        text: qsTr("Press one more time to exit...")
+        textFormat: Text.PlainText
+        font.pixelSize: Theme.fontSizeContent
+        color: Theme.colorForeground
 
-            text: qsTr("Press one more time to exit...")
-            font.pixelSize: 16
-            color: Theme.colorForeground
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: -8
+            z: -1
+            radius: 4
+            color: Theme.colorSubText
         }
     }
 }

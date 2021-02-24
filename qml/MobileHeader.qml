@@ -4,7 +4,7 @@ import ThemeEngine 1.0
 
 Rectangle {
     width: parent.width
-    height: screenStatusbarPadding + screenNotchPadding + headerHeight
+    height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
     color: Theme.colorHeader
     z: 10
 
@@ -41,7 +41,7 @@ Rectangle {
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: screenStatusbarPadding + screenNotchPadding
+        anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
 
         MouseArea {
             id: leftArea
