@@ -38,6 +38,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
+#if defined (Q_OS_ANDROID)
+#include <QtAndroid>
+#endif
 
 /* ************************************************************************** */
 
@@ -45,7 +48,6 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    //QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 
     SharingApplication app(argc, argv);
 
@@ -62,7 +64,6 @@ int main(int argc, char *argv[])
 
     // Keep the StatusBar the same color as the splashscreen until UI starts
     MobileUI ui;
-    ui.setStatusbarColor("#fff");
     qmlRegisterType<MobileUI>("MobileUI", 1, 0, "MobileUI");
 /*
     // i18n
@@ -114,6 +115,10 @@ int main(int argc, char *argv[])
     // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
+
+#if defined (Q_OS_ANDROID)
+    QtAndroid::hideSplashScreen();
+#endif
 
     return app.exec();
 }

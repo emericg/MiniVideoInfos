@@ -379,7 +379,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     anchors.margins: -12
-                    onClicked: appContent.state = "Permissions"
+                    onClicked: screenPermissions.loadScreen()
                 }
             }
 

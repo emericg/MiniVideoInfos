@@ -84,17 +84,20 @@ ApplicationWindow {
     }
 
     MobileUI {
-        statusbarColor: Theme.colorStatusbar
-        statusbarTheme: Theme.themeStatusbar
+        id: mobileUI
+        property var loading: true
+
+        statusbarColor: loading ? "white" : Theme.colorStatusbar
+        statusbarTheme: loading ? "white" : Theme.themeStatusbar
         navbarColor: {
-            if (appContent.state === "Tutorial")
-                return Theme.colorHeader
-            else if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
-                     (appContent.state === "MediaInfos" && isPhone) ||
-                      tabletMenuScreen.visible)
+            if (loading) return "white"
+            if (appContent.state === "Tutorial") return Theme.colorHeader
+            if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
+                (appContent.state === "MediaInfos" && isPhone) ||
+                tabletMenuScreen.visible)
                 return Theme.colorForeground
-            else
-                return Theme.colorBackground
+
+            return Theme.colorBackground
         }
     }
 
@@ -118,9 +121,6 @@ ApplicationWindow {
             console.log("onFileUrlReceived + " + url)
             screenMediaList.loadMedia(url)
         }
-    }
-    Connections {
-        target: utilsShare
         onFileReceivedAndSaved: {
             console.log("onFileReceivedAndSaved + " + url)
             screenMediaList.loadMedia(url)
@@ -131,6 +131,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         firstHandleNotches.restart()
+        mobileUI.loading = false
     }
 
     Connections {

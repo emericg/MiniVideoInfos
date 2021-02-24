@@ -33,7 +33,6 @@
 class MobileUI : public QObject
 {
     Q_OBJECT
-
     Q_PROPERTY(bool available READ isAvailable CONSTANT)
 
     Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
@@ -50,7 +49,10 @@ public:
     explicit MobileUI(QObject *parent = nullptr);
     static bool isAvailable();
 
-    enum Theme { Light, Dark };
+    enum Theme {
+        Light,  //!< DARK TEXT (assumes LIGHT application theme/background)
+        Dark    //!< LIGHT TEXT (assumes DARK application theme/background)
+    };
     Q_ENUM(Theme)
 
     // Status bar
@@ -67,6 +69,7 @@ public:
     static Theme navbarTheme();
     static void setNavbarTheme(Theme theme);
 
+    // Screen helpers
     enum Orientation {
         SCREEN_ORIENTATION_UNSET,
         SCREEN_ORIENTATION_UNSPECIFIED,
@@ -88,7 +91,6 @@ public:
     };
     Q_ENUM(Orientation)
 
-    // Screen
     //void screen_keepOn(bool on);
     //void screen_lockOrientation(Orientation orientation);
 };

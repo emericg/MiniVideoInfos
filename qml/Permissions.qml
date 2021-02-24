@@ -4,22 +4,19 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Item {
-    id: permissionsScreen
     width: 480
     height: 640
     anchors.fill: parent
     anchors.leftMargin: screenLeftPadding
     anchors.rightMargin: screenRightPadding
 
-    Connections {
-        target: appContent
-        onStateChanged: {
-            if (appContent.state === "Permissions") {
-                // Refresh permissions
-                button_storage_read_test.validperm = utilsApp.checkMobileStorageReadPermission()
-                button_storage_write_test.validperm = utilsApp.checkMobileStorageWritePermission()
-            }
-        }
+    function loadScreen() {
+        // Refresh permissions
+        button_storage_read_test.validperm = utilsApp.checkMobileStorageReadPermission()
+        button_storage_write_test.validperm = utilsApp.checkMobileStorageWritePermission()
+
+        // Load screen
+        appContent.state = "Permissions"
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -65,7 +62,6 @@ Item {
         }
     }
 */
-
     ScrollView {
         id: scrollView
         contentWidth: -1
