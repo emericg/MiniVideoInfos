@@ -114,9 +114,9 @@ Item {
     property string dialogHeaderSaved: appHeader.appName
     FileDialog {
         id: fileDialog
+        z: 10
         title: qsTr("Media file selection")
 
-        z: 10
         onAccepted: {
             //console.log("FileDialog::onAccepted() << " + fileUrl)
             loadMedia(UtilsPath.cleanUrl(fileUrl))
@@ -219,11 +219,13 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            height: 48
             color: Theme.colorActionbar
-            visible: (screenMediaList.selectionCount)
+            clip: true
 
-            // prevent clicks into this area
+            height: (screenMediaList.selectionCount) ? 48 : 0
+            Behavior on height { NumberAnimation { duration: 133 } }
+
+            // prevent clicks below this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
             Row {
@@ -234,7 +236,7 @@ Item {
 
                 ButtonWireframeImage {
                     id: buttonUpdate2
-                    height: 36
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
                     fullColor: true
@@ -246,7 +248,7 @@ Item {
 
                 ButtonWireframeImage {
                     id: buttonClose2
-                    height: 36
+                    height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
                     fullColor: true

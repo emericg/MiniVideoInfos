@@ -36,13 +36,9 @@ Item {
     Rectangle {
         id: deviceWidgetRectangle
         anchors.fill: parent
-        anchors.topMargin: 6
-        anchors.bottomMargin: 6
 
-        radius: 2
-        border.width: 2
-        border.color: (singleColumn) ? "transparent" : Theme.colorSeparator
-        color: mediaWidget.selected ? Theme.colorSeparator : "transparent"
+        color: mediaWidget.selected ? Theme.colorSeparator : Theme.colorBackground
+        Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
 
         MouseArea {
             anchors.fill: parent
@@ -104,13 +100,11 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: 8
             anchors.left: parent.left
-            anchors.leftMargin: (singleColumn ? 8 : 16)
+            anchors.leftMargin: 8
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 8
-
-            //spacing: (singleColumn ? 12 : 10)
 
             ImageSvg {
                 id: imageMedia
