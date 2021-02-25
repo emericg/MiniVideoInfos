@@ -9,7 +9,7 @@ Loader {
 
     ////////
 
-    // Mimick 'quick' API
+    // Emulate 'quick dialogs' API
     // https://doc.qt.io/qt-5/qml-qtquick-dialogs-filedialog.html
     property var title: ""
     property bool sidebarVisible: true
@@ -44,52 +44,57 @@ Loader {
     ////////
 
     function openFilter(filter) {
-        fileDialog.item.title = title;
-        fileDialog.item.folder = utilsApp.getStandardPath_url(filter);
-        fileDialog.item.sidebarVisible = sidebarVisible;
-        fileDialog.item.selectExisting = selectExisting;
-        fileDialog.item.selectFolder = selectFolder;
-        fileDialog.item.selectMultiple = selectMultiple;
-        fileDialog.item.visible = true;
-        fileDialog.item.open();
-        fileDialog.focus = true;
+        //console.log("openFilter(" + filter + ")")
+        fileDialog.item.title = title
+        fileDialog.item.folder = utilsApp.getStandardPath_url(filter)
+        fileDialog.item.sidebarVisible = sidebarVisible
+        fileDialog.item.selectExisting = selectExisting
+        fileDialog.item.selectFolder = selectFolder
+        fileDialog.item.selectMultiple = selectMultiple
+        fileDialog.item.visible = true
+        fileDialog.item.open()
+        fileDialog.focus = true
     }
 
     function openFolder(folder) {
-        fileDialog.item.title = title;
-        fileDialog.item.folder = "file://" + folder;
-        fileDialog.item.sidebarVisible = sidebarVisible;
-        fileDialog.item.selectExisting = selectExisting;
-        fileDialog.item.selectFolder = selectFolder;
-        fileDialog.item.selectMultiple = selectMultiple;
-        fileDialog.item.visible = true;
-        fileDialog.item.open();
-        fileDialog.focus = true;
+        //console.log("openFolder(" + folder + ")")
+        fileDialog.item.title = title
+        fileDialog.item.folder = "file://" + folder
+        fileDialog.item.sidebarVisible = sidebarVisible
+        fileDialog.item.selectExisting = selectExisting
+        fileDialog.item.selectFolder = selectFolder
+        fileDialog.item.selectMultiple = selectMultiple
+        fileDialog.item.visible = true
+        fileDialog.item.open()
+        fileDialog.focus = true
     }
 
     function open() {
-        fileDialog.item.title = title;
-        fileDialog.item.folder = utilsApp.getStandardPath_url("");
-        fileDialog.item.sidebarVisible = sidebarVisible;
-        fileDialog.item.selectExisting = selectExisting;
-        fileDialog.item.selectFolder = selectFolder;
-        fileDialog.item.selectMultiple = selectMultiple;
-        fileDialog.item.visible = true;
-        fileDialog.item.open();
-        fileDialog.focus = true;
+        //console.log("open()")
+        fileDialog.item.title = title
+        fileDialog.item.folder = utilsApp.getStandardPath_url("")
+        fileDialog.item.sidebarVisible = sidebarVisible
+        fileDialog.item.selectExisting = selectExisting
+        fileDialog.item.selectFolder = selectFolder
+        fileDialog.item.selectMultiple = selectMultiple
+        fileDialog.item.visible = true
+        fileDialog.item.open()
+        fileDialog.focus = true
     }
 
     function close() {
-        fileDialog.item.visible = false;
-        fileDialog.focus = false;
-        rejected();
+        //console.log("close()")
+        fileDialog.item.visible = false
+        fileDialog.focus = false
+        rejected()
     }
 
     function back() {
-       if (Qt.platform.os === "android" && !usePlatformDialog) {
-            fileDialog.item.onBackPressed();
+        //console.log("back()")
+        if (Qt.platform.os === "android" && !usePlatformDialog) {
+            fileDialog.item.onBackPressed()
         } else {
-            close();
+            close()
         }
     }
 }

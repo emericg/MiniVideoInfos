@@ -23,15 +23,17 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation, 4 = inverted portrait, 8 = inverted landscape
-    property int screenPrimaryOrientation: Screen.primaryOrientation
-    property int screenOrientation: Screen.orientation
-    onScreenOrientationChanged: handleNotches()
+    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation
+    // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
+    property int screenOrientation: Screen.primaryOrientation
+    property int screenOrientationFull: Screen.orientation
+    onScreenOrientationChanged: handleNotchesTimer.restart()
 
     property int screenPaddingStatusbar: 0
     property int screenPaddingNotch: 0
     property int screenPaddingLeft: 0
     property int screenPaddingRight: 0
+    property int screenPaddingBottom: 0
 
     Timer {
         id: handleNotchesTimer
