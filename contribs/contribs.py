@@ -166,7 +166,7 @@ if OS_HOST == "Linux":
         TARGETS.append(["android", "armv8"])
         TARGETS.append(["android", "armv7"])
         TARGETS.append(["android", "x86_64"])
-        #TARGETS.append(["android", "x86"])
+        TARGETS.append(["android", "x86"])
     #TARGETS.append(["windows", "x86_64"]) # Windows cross compilation
 
 if OS_HOST == "Darwin":
@@ -178,7 +178,7 @@ if OS_HOST == "Darwin":
         TARGETS.append(["android", "armv8"])
         TARGETS.append(["android", "armv7"])
         TARGETS.append(["android", "x86_64"])
-        #TARGETS.append(["android", "x86"])
+        TARGETS.append(["android", "x86"])
 
 if OS_HOST == "Windows":
     TARGETS.append(["windows", "x86_64"])

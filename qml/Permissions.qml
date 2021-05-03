@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Item {
+    id: permissionsScreen
     width: 480
     height: 640
     anchors.fill: parent
@@ -33,7 +34,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        // prevent clicks into this area
+        // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         Text {
@@ -62,6 +63,8 @@ Item {
         }
     }
 */
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         contentWidth: -1

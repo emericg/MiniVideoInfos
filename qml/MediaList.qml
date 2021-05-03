@@ -115,6 +115,7 @@ Item {
     FileDialog {
         id: fileDialog
         z: 10
+
         title: qsTr("Media file selection")
 
         onAccepted: {
