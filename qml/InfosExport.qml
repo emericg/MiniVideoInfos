@@ -15,9 +15,7 @@ Item {
     function loadExport(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
-        buttonExport.primaryColor = Theme.colorPrimary
-        buttonExport.fullColor = false
-        buttonExport.text =  qsTr("SAVE")
+        buttonExport.exportState = 0
 
         textArea.text = mediaItem.getExportString()
     }
@@ -54,42 +52,53 @@ Item {
             font.bold: true
         }
 
-        ButtonWireframe {
-            id: buttonExport
-            width: 128
-            height: 32
+        ////
+
+        Row {
             anchors.right: parent.right
             anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
+            spacing: 16
 
-            visible: isDesktop
-            text: qsTr("SAVE")
+            ButtonWireframe {
+                id: buttonOpen
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
 
-            onClicked: {
-                if (mediaItem.saveExportString() === true) {
-                    buttonExport.primaryColor = Theme.colorGreen
-                    buttonExport.text = qsTr("SAVED")
-                } else {
-                    buttonExport.primaryColor = Theme.colorRed
-                    buttonExport.text = qsTr("ERROR")
+                visible: isMobile
+                text: qsTr("OPEN")
+
+                onClicked: {
+                    var file = mediaItem.openExportString()
+                    utilsShare.sendFile(file, "Open file", "text/plain", 0)
                 }
-                buttonExport.fullColor = true
             }
-        }
-        ButtonWireframe {
-            id: buttonOpen
-            width: 128
-            height: 32
-            anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
 
-            visible: isMobile
-            text: qsTr("EXPORT")
+            ButtonWireframe {
+                id: buttonExport
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
 
-            onClicked: {
-                var file = mediaItem.openExportString()
-                utilsShare.sendFile(file, "Open file", "text/plain", 0)
+                property int exportState: 0
+
+                fullColor: (exportState === 0) ? false : true
+                primaryColor: {
+                    if (exportState === 0) return Theme.colorPrimary
+                    if (exportState === 1) return Theme.colorGreen
+                    if (exportState === 2) return Theme.colorRed
+                }
+                text: {
+                    if (exportState === 0) return qsTr("SAVE")
+                    if (exportState === 1) return qsTr("SAVED")
+                    if (exportState === 2) return qsTr("ERROR")
+                }
+
+                onClicked: {
+                    if (mediaItem.saveExportString() === true) {
+                        exportState = 1
+                    } else {
+                        exportState = 2
+                    }
+                }
             }
         }
     }
@@ -113,7 +122,6 @@ Item {
 
         ScrollView {
             anchors.fill: parent
-            //anchors.margins: -8
 
             TextArea {
                 id: textArea

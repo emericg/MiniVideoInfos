@@ -23,12 +23,12 @@ Item {
         var trackTable = []
         var dataSize = 0
 
-        for (var i = 0; i < mediaItem.getVideoTrackCount(); i++) {
+        for (var i = 0; i < mediaItem.videoTracksCount; i++) {
             dataSize += mediaItem.getVideoTrack(i).size
             trackCurrent = [mediaItem.getVideoTrack(i).type, i, (mediaItem.getVideoTrack(i).size / mediaItem.size) * 1]
             trackTable.push(trackCurrent)
         }
-        for (i = 0; i < mediaItem.getAudioTrackCount(); i++) {
+        for (i = 0; i < mediaItem.audioTracksCount; i++) {
             dataSize += mediaItem.getAudioTrack(i).size
             trackCurrent = [mediaItem.getAudioTrack(i).type, i, (mediaItem.getAudioTrack(i).size / mediaItem.size) * 1]
             trackTable.push(trackCurrent)

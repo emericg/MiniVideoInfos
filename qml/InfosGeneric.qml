@@ -74,7 +74,7 @@ ScrollView {
         }
 
         // Track sizes graph
-        if (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount() > 0) {
+        if (mediaItem.videoTracksCount + mediaItem.audioTracksCount > 0) {
             elementTracks.visible = true
             elementTracks.load(mediaItem)
         } else {
@@ -82,22 +82,22 @@ ScrollView {
         }
 
         // VIDEO tracks
-        columnVideo.model = mediaItem.getVideoTracks()
+        columnVideo.model = mediaItem.videoTracks
 
         // Audio tracks
-        columnAudio.model = mediaItem.getAudioTracks()
+        columnAudio.model = mediaItem.audioTracks
 
         // Subtitles tracks
-        columnSubtitles.visible = mediaItem.getSubtitlesTrackCount()
-        repeaterSubtitles.model = mediaItem.getSubtitlesTracks()
+        columnSubtitles.visible = mediaItem.subtitlesCount
+        repeaterSubtitles.model = mediaItem.subtitlesTracks
 
         // Chapters
         columnChapters.visible = mediaItem.chaptersCount
         repeaterChapters.model = mediaItem.chapters
 
         // Other tracks
-        columnOther.visible =mediaItem.getOtherTrackCount()
-        repeaterOther.model = mediaItem.getOtherTracks()
+        columnOther.visible = mediaItem.otherTracksCount
+        repeaterOther.model = mediaItem.otherTracks
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -1028,7 +1028,6 @@ ScrollView {
                 id: repeaterSubtitles
                 anchors.left: parent.left
                 anchors.right: parent.right
-                //model: mediaItem.getSubtitlesTracks()
 
                 Row { ////
                     anchors.left: parent.left

@@ -956,12 +956,18 @@ bool Media::saveExportString()
     {
         QString exportData;
         textExport::generateExportData_text(*m_media, exportData, true);
+
         if (!exportData.isEmpty())
         {
             QString exportFilePath = m_file_folder + m_file_name + "_infos.txt";
 
             QFile exportFile;
             exportFile.setFileName(exportFilePath);
+
+            if (exportFile.exists() == true)
+            {
+                qWarning() << "saveExportString() already exists: " << exportFilePath;
+            }
 
             if (exportFile.open(QIODevice::WriteOnly) == true &&
                 exportFile.isWritable() == true)
@@ -1053,34 +1059,78 @@ bool Media::saveSubtitlesString(unsigned track)
         {
             QString lng = m_media->tracks_subt[track]->track_languagecode;
             if (lng.size()) lng.prepend("_");
+            QString subtitlesFilePath = m_file_folder + m_file_name + lng + ".srt";
 
-            QString ppp = m_file_folder + m_file_name + lng + ".srt";
-            QFile exportFile;
-            exportFile.setFileName(ppp);
-            if (exportFile.exists() == false)
+            QFile subtitlesFile;
+            subtitlesFile.setFileName(subtitlesFilePath);
+
+            if (subtitlesFile.exists() == true)
             {
-                if (exportFile.open(QIODevice::WriteOnly) == true &&
-                    exportFile.isWritable() == true)
+                qWarning() << "saveSubtitlesString() already exists: " << subtitlesFilePath;
+            }
+
+            if (subtitlesFile.open(QIODevice::WriteOnly) == true &&
+                subtitlesFile.isWritable() == true)
+            {
+                if (subtitlesFile.write(subtitlesData.toLocal8Bit()) == subtitlesData.toLocal8Bit().size())
                 {
-                    if (exportFile.write(subtitlesData.toLocal8Bit()) == subtitlesData.toLocal8Bit().size())
-                    {
-                        status = true;
-                    }
-                    exportFile.close();
+                    status = true;
                 }
-                else
-                {
-                    qWarning() << "saveExportString() not writable: " << ppp;
-                }
+                subtitlesFile.close();
             }
             else
             {
-                qWarning() << "saveExportString() already exists: " << ppp;
+                qWarning() << "saveSubtitlesString() not writable: " << subtitlesFilePath;
             }
         }
     }
 
     return status;
+}
+
+QString Media::openSubtitlesString(unsigned track)
+{
+    QString subtitlesFilePath;
+
+    if (m_media)
+    {
+        if (m_media->tracks_subtitles_count <= track) return subtitlesFilePath;
+
+        QString subtitlesData;
+        textExport::generateExportData_text(*m_media, subtitlesData, true);
+
+        if (!subtitlesData.isEmpty())
+        {
+            QString lng = m_media->tracks_subt[track]->track_languagecode;
+            if (lng.size()) lng.prepend("_");
+
+            // Get temp directory path
+            QString exportDirectory = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
+
+            QDir ddd(exportDirectory + "/export");
+            if (!ddd.exists()) ddd.mkpath(exportDirectory + "/export");
+
+            // Get temp file path
+            subtitlesFilePath = exportDirectory + "/export/" + m_file_name + lng + ".srt";
+
+            QFile subtitlesFile;
+            subtitlesFile.setFileName(subtitlesFilePath);
+
+            if (subtitlesFile.open(QIODevice::WriteOnly) == true &&
+                subtitlesFile.isWritable() == true)
+            {
+                subtitlesFile.write(subtitlesData.toLocal8Bit());
+                subtitlesFile.close();
+            }
+            else
+            {
+                qWarning() << "openSubtitlesString() not writable: " << subtitlesFilePath;
+                subtitlesFilePath = "";
+            }
+        }
+    }
+
+    return subtitlesFilePath;
 }
 
 /* ************************************************************************** */

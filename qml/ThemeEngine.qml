@@ -176,11 +176,11 @@ Item {
             colorLowContrast = "white"
             colorHighContrast = "black"
 
-            colorComponent = "#eaeaea"
+            colorComponent = "#f0f0f0"
             colorComponentText = "black"
             colorComponentContent = "black"
-            colorComponentBorder = "#b3b3b3"
-            colorComponentDown = "#cacaca"
+            colorComponentBorder = "#c4c4c4"
+            colorComponentDown = "#e0e0e0"
             colorComponentBackground = "white"
 
         } else if (themeIndex === ThemeEngine.THEME_DARK) {

@@ -95,12 +95,12 @@ Item {
         content_generic.loadGeneric()
 
         if (mediaItem.hasVideo) {
-            if (mediaItem.getVideoTrackCount() >= 1) {
+            if (mediaItem.videoTrackCount >= 1) {
                 content_video1.loadTrack(mediaItem.getVideoTrack(0))
                 mediaPages.addPage(pageVideo1)
                 menuVideo1.index = mediaPages.count-1
             }
-            if (mediaItem.getVideoTrackCount() >= 2) {
+            if (mediaItem.videoTracksCount >= 2) {
                 content_video2.loadTrack(mediaItem.getVideoTrack(1))
                 mediaPages.addPage(pageVideo2)
                 menuVideo2.index = mediaPages.count-1
@@ -108,22 +108,22 @@ Item {
         }
 
         if (mediaItem.hasAudio) {
-            if (mediaItem.getAudioTrackCount() >= 1) {
+            if (mediaItem.audioTracksCount >= 1) {
                 content_audio1.loadTrack(mediaItem.getAudioTrack(0))
                 mediaPages.addPage(pageAudio1)
                 menuAudio1.index = mediaPages.count-1
             }
-            if (mediaItem.getAudioTrackCount() >= 2) {
+            if (mediaItem.audioTracksCount >= 2) {
                 content_audio2.loadTrack(mediaItem.getAudioTrack(1))
                 mediaPages.addPage(pageAudio2)
                 menuAudio2.index = mediaPages.count-1
             }
-            if (mediaItem.getAudioTrackCount() >= 3) {
+            if (mediaItem.audioTracksCount >= 3) {
                 content_audio3.loadTrack(mediaItem.getAudioTrack(1))
                 mediaPages.addPage(pageAudio3)
                 menuAudio3.index = mediaPages.count-1
             }
-            if (mediaItem.getAudioTrackCount() >= 4) {
+            if (mediaItem.audioTracksCount >= 4) {
                 content_audio4.loadTrack(mediaItem.getAudioTrack(1))
                 mediaPages.addPage(pageAudio4)
                 menuAudio4.index = mediaPages.count-1

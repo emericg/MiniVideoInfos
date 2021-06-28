@@ -119,6 +119,14 @@ class Media: public QObject
     Q_PROPERTY(unsigned vbitrate READ getBitrate NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned vbitratemode READ getBitrateMode NOTIFY mediaUpdated)
 
+    Q_PROPERTY(QVariant videoTracks READ getVideoTracks NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned videoTracksCount READ getVideoTracksCount NOTIFY mediaUpdated)
+    Q_PROPERTY(QVariant audioTracks READ getAudioTracks NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned audioTracksCount READ getAudioTracksCount NOTIFY mediaUpdated)
+    Q_PROPERTY(QVariant subtitlesTracks READ getSubtitlesTracks NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned subtitlesCount READ getSubtitlesTracksCount NOTIFY mediaUpdated)
+    Q_PROPERTY(QVariant otherTracks READ getOtherTracks NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned otherTracksCount READ getOtherTracksCount NOTIFY mediaUpdated)
     Q_PROPERTY(QVariant chapters READ getChapters NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned chaptersCount READ getChaptersCount NOTIFY mediaUpdated)
 
@@ -302,7 +310,16 @@ public:
     unsigned getBitrate() const { return vbitrate; }
     unsigned getBitrateMode() const { return vbitratemode; }
 
-    bool hasGpmf() const { return m_hasGPMF; }
+    int getAudioTracksCount() const { return tracksAudio.size(); }
+    int getVideoTracksCount() const { return tracksVideo.size(); }
+    int getSubtitlesTracksCount() const { return tracksSubtitles.size(); }
+    int getOtherTracksCount() const { return tracksOther.size(); }
+    QVariant getAudioTracks() const { if (tracksAudio.empty()) return QVariant(); return QVariant::fromValue(tracksAudio); }
+    QVariant getVideoTracks() const { if (tracksVideo.empty()) return QVariant(); return QVariant::fromValue(tracksVideo); }
+    QVariant getSubtitlesTracks() const { if (tracksSubtitles.empty()) return QVariant(); return QVariant::fromValue(tracksSubtitles); }
+    QVariant getOtherTracks() const { if (tracksOther.empty()) return QVariant(); return QVariant::fromValue(tracksOther); }
+    QVariant getChapters() const { if (trackChapters.empty()) return QVariant(); return QVariant::fromValue(trackChapters); }
+    int getChaptersCount() const { return trackChapters.size(); }
 
     QString getAudioCodec() const { return acodec; }
     unsigned getAudioChannels() const { return achannels; }
@@ -364,31 +381,18 @@ public:
         return Shared::SHOT_UNKNOWN;
     }
 
-public slots:
     Q_INVOKABLE QString getExportString();
     Q_INVOKABLE bool saveExportString();
     Q_INVOKABLE QString openExportString();
 
-    Q_INVOKABLE QString getSubtitlesString(unsigned track);
-    Q_INVOKABLE bool saveSubtitlesString(unsigned track);
+    Q_INVOKABLE QString getSubtitlesString(unsigned track = 0);
+    Q_INVOKABLE bool saveSubtitlesString(unsigned track = 0);
+    Q_INVOKABLE QString openSubtitlesString(unsigned track = 0);
 
-    QVariant getVideoTracks() const { if (tracksVideo.empty()) return QVariant(); return QVariant::fromValue(tracksVideo); }
-    QVariant getAudioTracks() const { if (tracksAudio.empty()) return QVariant(); return QVariant::fromValue(tracksAudio); }
-    QVariant getSubtitlesTracks() const { if (tracksSubtitles.empty()) return QVariant(); return QVariant::fromValue(tracksSubtitles); }
-    QVariant getOtherTracks() const { if (tracksOther.empty()) return QVariant(); return QVariant::fromValue(tracksOther); }
-
-    QVariant getVideoTrack(int tid = 0);
-    QVariant getAudioTrack(int tid = 0);
-    QVariant getSubtitlesTrack(int tid = 0);
-    QVariant getOtherTrack(int tid = 0);
-
-    int getVideoTrackCount() const { return tracksVideo.size(); }
-    int getAudioTrackCount() const { return tracksAudio.size(); }
-    int getSubtitlesTrackCount() const { return tracksSubtitles.size(); }
-    int getOtherTrackCount() const { return tracksOther.size(); }
-
-    QVariant getChapters() const { if (trackChapters.empty()) return QVariant(); return QVariant::fromValue(trackChapters); }
-    int getChaptersCount() const { return trackChapters.size(); }
+    Q_INVOKABLE QVariant getVideoTrack(int tid = 0);
+    Q_INVOKABLE QVariant getAudioTrack(int tid = 0);
+    Q_INVOKABLE QVariant getSubtitlesTrack(int tid = 0);
+    Q_INVOKABLE QVariant getOtherTrack(int tid = 0);
 };
 
 /* ************************************************************************** */

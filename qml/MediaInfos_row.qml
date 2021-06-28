@@ -46,8 +46,8 @@ Item {
     function loadRowView() {
         content_generic.loadGeneric()
 
-        videoRepeater.model = mediaItem.getVideoTrackCount()
-        audioRepeater.model = mediaItem.getAudioTrackCount()
+        videoRepeater.model = mediaItem.videoTracksCount
+        audioRepeater.model = mediaItem.audioTracksCount
 
         item_subtitles.visible = mediaItem.hasSubtitles
         if (mediaItem.hasSubtitles) content_subtitles.loadSubtitles(mediaItem)
@@ -328,7 +328,7 @@ Item {
                         anchors.fill: parent
                         opacity: 0.4
                         color: Theme.colorForeground
-                        visible: ((mediaItem.getVideoTrackCount() + index) % 2 === 0)
+                        visible: ((mediaItem.videoTracksCount + index) % 2 === 0)
                     }
                     InfosAV {
                         id: content_audio
@@ -349,7 +349,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
                 }
                 InfosSubtitles {
                     id: content_subtitles
@@ -369,7 +369,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
                 }
                 InfosAudioTags {
                     id: content_audio_tags
@@ -389,7 +389,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
                 }
                 InfosImageTags {
                     id: content_image_tags
@@ -409,7 +409,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.getVideoTrackCount() + mediaItem.getAudioTrackCount()) % 2 === 0)
+                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
                 }
                 InfosExport {
                     id: content_export

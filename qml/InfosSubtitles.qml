@@ -15,8 +15,10 @@ Item {
     function loadSubtitles(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
+        buttonExport.exportState = 0
+
         cbSubtitles.clear()
-        var tracks = mediaItem.getSubtitlesTracks()
+        var tracks = mediaItem.subtitlesTracks
         for (var i = 0; i < tracks.length; i++) {
             var txt = ""
             if (tracks[i].title.length) txt += tracks[i].title
@@ -27,7 +29,7 @@ Item {
             if (!tracks[i].title.length && !tracks[i].language.length) txt += qsTr("Unknown")
             if (tracks[i].codec.length) txt += " (" + tracks[i].codec + ")"
 
-            var entry = { text: txt };
+            var entry = { text: txt }
             cbSubtitles.append(entry)
         }
         comboboxSubtitles.currentIndex = 0
@@ -68,6 +70,56 @@ Item {
             font.pixelSize: 18
             font.bold: true
         }
+
+        ////
+
+        Row {
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+            spacing: 16
+
+            ButtonWireframe {
+                id: buttonOpen
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: isMobile
+                text: qsTr("OPEN")
+
+                onClicked: {
+                    var file = mediaItem.openSubtitlesString(comboboxSubtitles.currentIndex)
+                    utilsShare.sendFile(file, "Open file", "text/plain", 0)
+                }
+            }
+
+            ButtonWireframe {
+                id: buttonExport
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
+
+                property int exportState: 0
+
+                fullColor: (exportState === 0) ? false : true
+                primaryColor: {
+                    if (exportState === 0) return Theme.colorPrimary
+                    if (exportState === 1) return Theme.colorGreen
+                    if (exportState === 2) return Theme.colorRed
+                }
+                text: {
+                    if (exportState === 0) return qsTr("SAVE")
+                    if (exportState === 1) return qsTr("SAVED")
+                    if (exportState === 2) return qsTr("ERROR")
+                }
+
+                onClicked: {
+                    if (mediaItem.saveSubtitlesString(comboboxSubtitles.currentIndex) === true) {
+                        exportState = 1
+                    } else {
+                        exportState = 2
+                    }
+                }
+            }
+        }
     }
 
     Item {
@@ -83,7 +135,7 @@ Item {
             height: 32
             anchors.left: parent.left
             anchors.leftMargin: 16
-            anchors.right: buttonExport.left
+            anchors.right: parent.right
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
@@ -93,32 +145,8 @@ Item {
             }
 
             onCurrentIndexChanged: {
-                buttonExport.primaryColor = Theme.colorPrimary
-                buttonExport.fullColor = false
-                buttonExport.text = qsTr("SAVE")
+                buttonExport.exportState = 0
                 loadSubtitlesTrack(currentIndex)
-            }
-        }
-
-        ButtonWireframe {
-            id: buttonExport
-            width: 128
-            height: 32
-            anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
-
-            text: qsTr("SAVE")
-
-            onClicked: {
-                if (mediaItem.saveSubtitlesString(comboboxSubtitles.currentIndex) === true) {
-                    buttonExport.primaryColor = Theme.colorGreen
-                    buttonExport.text = qsTr("SAVED")
-                } else {
-                    buttonExport.primaryColor = Theme.colorRed
-                    buttonExport.text = qsTr("ERROR")
-                }
-                buttonExport.fullColor = true
             }
         }
     }
@@ -142,7 +170,6 @@ Item {
 
         ScrollView {
             anchors.fill: parent
-            //anchors.margins: -8
 
             TextArea {
                 id: textArea
