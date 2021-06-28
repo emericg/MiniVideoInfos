@@ -173,6 +173,11 @@ ApplicationWindow {
     Component.onCompleted: {
         handleNotchesTimer.restart()
         mobileUI.isLoading = false
+
+        if (isDesktop) {
+            width = 1280
+            height = 720
+        }
     }
 
     Connections {
@@ -465,9 +470,9 @@ ApplicationWindow {
 
     Rectangle {
         id: appTabletMenu
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
 
         color: Theme.colorTabletmenu
         width: parent.width
@@ -481,7 +486,7 @@ ApplicationWindow {
             color: Theme.colorTabletmenuContent
         }
 
-        visible: isTablet && (appContent.state != "Tutorial" && appContent.state != "MediaInfos")
+        visible: (isDesktop || isTablet) && (appContent.state != "Tutorial" && appContent.state != "MediaInfos")
 
         Row {
             id: tabletMenuScreen
