@@ -27,9 +27,9 @@ Item {
         }
     }
 
-    property var selectionMode: false
+    property bool selectionMode: false
     property var selectionList: []
-    property var selectionCount: 0
+    property int selectionCount: 0
 
     function selectMedia(index) {
         selectionMode = true;

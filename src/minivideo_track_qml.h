@@ -117,8 +117,8 @@ public:
 
     bool loadMediaStream(MediaStream_t *stream);
 
-    Q_INVOKABLE void getBitrateData(QLineSeries *bitrateData);
-    Q_INVOKABLE void getBitrateDataFps(QLineSeries *bitrateData, float fps);
+    Q_INVOKABLE void getBitrateData(QtCharts::QLineSeries *bitrateData);
+    Q_INVOKABLE void getBitrateDataFps(QtCharts::QLineSeries *bitrateData, float fps);
     //Q_INVOKABLE void getBitrateData(QChart *chart, QLineSeries *bitrateData);
     QVector<QPointF> points;
 

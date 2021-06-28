@@ -293,7 +293,6 @@ public:
     int getRotation() const { return rotation; }
     unsigned getResolution() const { return resolution_x; }
 
-
     QString getVideoCodec() const { return vcodec; }
     QString getTimecode() const { return vtimecode; }
     double getFramerate() const { return vframerate; }
@@ -346,7 +345,6 @@ public:
     int getGpsPointCount() const { return m_gps.size(); }
 */
 
-public slots:
     bool isValid() { return m_valid; }
     unsigned getFileType() const {
 /*
@@ -363,12 +361,13 @@ public slots:
         return Shared::SHOT_UNKNOWN;
     }
 
-    QString getExportString();
-    bool saveExportString();
-    QString openExportString();
+public slots:
+    Q_INVOKABLE QString getExportString();
+    Q_INVOKABLE bool saveExportString();
+    Q_INVOKABLE QString openExportString();
 
-    QString getSubtitlesString(unsigned track);
-    bool saveSubtitlesString(unsigned track);
+    Q_INVOKABLE QString getSubtitlesString(unsigned track);
+    Q_INVOKABLE bool saveSubtitlesString(unsigned track);
 
     QVariant getVideoTracks() const { if (tracksVideo.empty()) return QVariant(); return QVariant::fromValue(tracksVideo); }
     QVariant getAudioTracks() const { if (tracksAudio.empty()) return QVariant(); return QVariant::fromValue(tracksAudio); }

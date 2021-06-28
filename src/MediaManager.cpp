@@ -61,6 +61,10 @@ bool MediaManager::openMedia(const QString &path)
             status = true;
             Q_EMIT mediaUpdated();
         }
+        else
+        {
+            delete mf;
+        }
     }
 
     return status;
@@ -72,7 +76,7 @@ void MediaManager::closeMedia(const QString &path)
     {
         //qDebug() << "MediaManager::closeMedia()" << path;
 
-        for (auto m: m_media)
+        for (auto m: qAsConst(m_media))
         {
             Media *mm = static_cast<Media *>(m);
             if (mm->getPath() == path)
