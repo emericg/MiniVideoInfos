@@ -7,11 +7,11 @@ import "qrc:/js/UtilsString.js" as UtilsString
 import "qrc:/js/UtilsMedia.js" as UtilsMedia
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-ScrollView {
-    id: scrollView
-    implicitWidth: 480
-    implicitHeight: 720
-    contentWidth: -1
+Flickable {
+    contentWidth: width
+    contentHeight: columnMain.height
+
+    ScrollBar.vertical: ScrollBar {}
 
     function loadTags(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
@@ -43,10 +43,9 @@ ScrollView {
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
-        anchors.top: parent.top
+        id: columnMain
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
 
         topPadding: 16
         bottomPadding: 16 + rectangleMenus.height

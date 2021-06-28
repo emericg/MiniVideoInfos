@@ -383,7 +383,6 @@ Item {
         Item {
             id: pageGeneric
             visible: true
-            clip: true
 
             InfosGeneric {
                 id: content_generic
@@ -411,12 +410,11 @@ Item {
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     Item {
         id: pageVideo1
         visible: false
-        clip: true
 
         InfosAV {
             id: content_video1
@@ -426,7 +424,6 @@ Item {
     Item {
         id: pageVideo2
         visible: false
-        clip: true
 
         InfosAV {
             id: content_video2
@@ -437,7 +434,6 @@ Item {
     Item {
         id: pageAudio1
         visible: false
-        clip: true
 
         InfosAV {
             id: content_audio1
@@ -447,7 +443,6 @@ Item {
     Item {
         id: pageAudio2
         visible: false
-        clip: true
 
         InfosAV {
             id: content_audio2
@@ -457,7 +452,6 @@ Item {
     Item {
         id: pageAudio3
         visible: false
-        clip: true
 
         InfosAV {
             id: content_audio3
@@ -467,7 +461,6 @@ Item {
     Item {
         id: pageAudio4
         visible: false
-        clip: true
 
         InfosAV {
             id: content_audio4
@@ -478,7 +471,6 @@ Item {
     Item {
         id: pageSubtitles
         visible: false
-        clip: true
 
         InfosSubtitles {
             id: content_subtitles
@@ -489,7 +481,6 @@ Item {
     Item {
         id: pageAudioTags
         visible: false
-        clip: true
 
         InfosAudioTags {
             id: content_audio_tags
@@ -500,7 +491,6 @@ Item {
     Item {
         id: pageImageTags
         visible: false
-        clip: true
 
         InfosImageTags {
             id: content_image_tags
@@ -512,7 +502,6 @@ Item {
     Item {
         id: pageMap
         visible: false
-        clip: true
 
         Loader {
             id: mapLoader
@@ -523,7 +512,6 @@ Item {
     Item {
         id: pageExport
         visible: false
-        clip: true
 
         InfosExport {
             id: content_export

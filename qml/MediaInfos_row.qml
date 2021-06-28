@@ -107,8 +107,6 @@ Item {
         anchors.fill: parent
         contentHeight: -1
 
-        //ScrollBar.horizontal: ScrollBarThemedH { z: 1; policy: ScrollBar.AsNeeded; }
-
         Row {
             id: row
             anchors.top: parent.top
