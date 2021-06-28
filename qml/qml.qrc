@@ -34,12 +34,14 @@
         <file alias="FileDialog_quick.qml">components/FileDialog_quick.qml</file>
         <file alias="FileDialog_QML.qml">components/FileDialog_QML.qml</file>
 
+        <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
+        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
         <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
         <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
         <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
         <file alias="ItemMenuVerticalButton.qml">components_generic/ItemMenuVerticalButton.qml</file>
-        <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
-        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
+        <file alias="SimpleShadow.qml">components_generic/SimpleShadow.qml</file>
+
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>
         <file alias="SwitchThemedMobile.qml">components_themed/SwitchThemed_mobile.qml</file>
@@ -47,6 +49,7 @@
         <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
         <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
     </qresource>
+
     <qresource prefix="/js">
         <file alias="UtilsMedia.js">components_js/UtilsMedia.js</file>
         <file alias="UtilsNumber.js">components_js/UtilsNumber.js</file>

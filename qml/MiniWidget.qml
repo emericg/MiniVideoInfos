@@ -56,17 +56,18 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
-    Label {
+    Text {
         id: mediaFilename
         anchors.left: parent.left
         anchors.leftMargin: screenPaddingLeft + 56
         anchors.right: parent.right
+        anchors.rightMargin: 0
         anchors.verticalCenter: parent.verticalCenter
 
-        clip: true
         color: Theme.colorText
         font.pixelSize: 14
         font.bold: false
+        elide: Text.ElideMiddle
     }
 
     ////////////////

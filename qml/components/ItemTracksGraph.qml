@@ -10,11 +10,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: elementTracks
-    anchors.left: parent.left
-    anchors.leftMargin: 56
-    anchors.right: parent.right
-    anchors.rightMargin: 12
-    height: 32
+    implicitHeight: 32
 
     function load(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
@@ -62,10 +58,9 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        clip: true
-        height: 8
-        radius: 2
-        color: "transparent" // Theme.colorForeground
+        height: 10
+        radius: 10
+        color: Theme.colorForeground
 
         Row {
             Repeater {
@@ -73,9 +68,9 @@ Item {
                 //model: trackTable
 
                 Rectangle {
-                    height: 8//parent.height
+                    height: rectangleTracks.height
                     width: {
-                        var www = Math.floor(modelData[2] * rectangleTracks.width)
+                        var www = Math.round(modelData[2] * rectangleTracks.width)
                         return ((www > 1) ? www : 1)
                     }
                     opacity: (modelData[1] % 2) ? 0.66 : 1

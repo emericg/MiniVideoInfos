@@ -72,6 +72,36 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    Rectangle {
+        id: fakeHeader
+        anchors.top: parent.top
+        anchors.topMargin: -3
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        z: 4
+        height: 4
+        color: Theme.colorForeground
+
+        Rectangle {
+            height: 1
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
+        SimpleShadow {
+            height: 4
+            anchors.top: parent.bottom
+            anchors.topMargin: -height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         anchors.fill: parent

@@ -5,11 +5,12 @@ import Qt.labs.folderlistmodel 2.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
+import "qrc:/js/UtilsString.js" as UtilsString
 
 Rectangle {
     id: fileDialogMobile
-
     anchors.fill: parent
+
     visible: false
     color: Theme.colorBackground
 
@@ -93,11 +94,12 @@ Rectangle {
 
     Rectangle {
         id: header
-        height: 48
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
 
+        z: 1
+        height: 48
         color: Theme.colorHeader
 
         // prevent clicks into this area
@@ -108,7 +110,7 @@ Rectangle {
             width: 48
             height: 48
             anchors.left: parent.left
-            anchors.leftMargin: 6
+            anchors.leftMargin: 2
             anchors.verticalCenter: parent.verticalCenter
 
             visible: true // (utilsApp.getMobileStorageCount() > 1)
@@ -116,12 +118,19 @@ Rectangle {
             property int storageIndex: 0
             property int storageCount: utilsApp.getMobileStorageCount()
 
+            Rectangle {
+                width: 36
+                height: 36
+                radius: 36
+                anchors.centerIn: parent
+                color: Theme.colorComponent
+            }
+
             ImageSvg {
                 id: storageIcon
                 width: 24
                 height: 24
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.centerIn: parent
 
                 source: "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
                 color: Theme.colorIcon
@@ -154,16 +163,16 @@ Rectangle {
         Text {
             id: headerText
             anchors.left: parent.left
-            anchors.leftMargin: 56
+            anchors.leftMargin: 48
             anchors.right: upButton.left
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
-            clip: true
             text: folderListModel.folder
             //onTextChanged: updateHeaderText()
             color: Theme.colorText
-            font.pixelSize: 18
+            font.pixelSize: Theme.fontSizeContent
+            elide: Text.ElideMiddle
         }
 
         Item {
@@ -197,10 +206,18 @@ Rectangle {
 
         Rectangle {
             height: 1
-            color: Theme.colorSeparator
-            anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
+        SimpleShadow {
+            height: 4
+            anchors.top: parent.bottom
+            anchors.topMargin: -height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
         }
     }
 
@@ -209,10 +226,10 @@ Rectangle {
     ListView {
         id: list
 
-        width: parent.width
         anchors.top: header.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: mediaOnlyChooser.top
-        clip: true
 
         model: FolderListModel {
             id: folderListModel
@@ -224,14 +241,14 @@ Rectangle {
         }
 
         delegate: Item {
-            id: iii
+            id: listItem
             width: list.width
             height: 48
 
             ImageSvg {
                 id: icon
                 anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.leftMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
 
                 width: 36
@@ -253,8 +270,8 @@ Rectangle {
                             source = "qrc:/assets/icons_material_media/baseline-photo-24px.svg"
                         } else {
                             if (onlyShowMedia) {
-                                iii.visible = false
-                                iii.height = 0
+                                listItem.visible = false
+                                listItem.height = 0
                             } else {
                                 source = "qrc:/assets/icons_material/outline-insert_empty-24px.svg"
                             }
@@ -263,17 +280,32 @@ Rectangle {
                 }
             }
 
-            Text {
+            Column {
                 anchors.left: icon.right
-                anchors.leftMargin: 12
+                anchors.leftMargin: 8
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: fileName
-                color: Theme.colorText
-                font.pixelSize: 14
-                elide: Text.ElideMiddle
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    text: fileName
+                    color: Theme.colorText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    elide: Text.ElideMiddle
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    visible: !fileIsDir
+
+                    text: UtilsString.bytesToString_short(fileSize)
+                    color: Theme.colorSubText
+                    font.pixelSize: 11
+                    elide: Text.ElideMiddle
+                }
             }
 
             //Rectangle { width: parent.width; height: 1; color: Theme.colorHeader; visible: index == 0; }
@@ -298,11 +330,12 @@ Rectangle {
 
     Rectangle {
         id: mediaOnlyChooser
-        height: 40
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
+        z: 1
+        height: 40
         visible: !selectFolder
         color: Theme.colorHeader
 
@@ -314,7 +347,7 @@ Rectangle {
 
             text: qsTr("Show media files only")
             color: Theme.colorSubText
-            font.pixelSize: 14
+            font.pixelSize: Theme.fontSizeContentSmall
         }
 
         SwitchThemedMobile {

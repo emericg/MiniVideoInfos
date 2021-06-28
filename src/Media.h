@@ -119,6 +119,9 @@ class Media: public QObject
     Q_PROPERTY(unsigned vbitrate READ getBitrate NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned vbitratemode READ getBitrateMode NOTIFY mediaUpdated)
 
+    Q_PROPERTY(QVariant chapters READ getChapters NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned chaptersCount READ getChaptersCount NOTIFY mediaUpdated)
+
     // audio
     Q_PROPERTY(QString audioCodec READ getAudioCodec NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned audioChannels READ getAudioChannels NOTIFY mediaUpdated)

@@ -126,7 +126,7 @@ ApplicationWindow {
 
     MobileUI {
         id: mobileUI
-        property var isLoading: true
+        property bool isLoading: true
 
         statusbarTheme: Theme.themeStatusbar
         statusbarColor: isLoading ? "white" : Theme.colorStatusbar
@@ -503,7 +503,7 @@ ApplicationWindow {
 
                 menuText: qsTr("Media")
                 selected: (appContent.state === "MediaList")
-                source: "qrc:/assets/icons_fontawesome/photo-video-duotone"
+                source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                 onClicked: appContent.state = "MediaList"
             }
             ItemMenuButton {

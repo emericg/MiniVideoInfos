@@ -38,7 +38,7 @@ Item {
         anchors.fill: parent
 
         color: mediaWidget.selected ? Theme.colorSeparator : Theme.colorBackground
-        Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
+        Behavior on color { ColorAnimation { duration: 133 } }
 
         MouseArea {
             anchors.fill: parent
@@ -83,11 +83,12 @@ Item {
             onPressAndHold: {
                 // multi selection
                 if (!selected) {
-                    selected = true;
-                    screenMediaList.selectMedia(index);
+                    utilsApp.vibrate(25)
+                    selected = true
+                    screenMediaList.selectMedia(index)
                 } else {
-                    selected = false;
-                    screenMediaList.deselectMedia(index);
+                    selected = false
+                    screenMediaList.deselectMedia(index)
                 }
             }
         }
@@ -96,15 +97,8 @@ Item {
 
         Item {
             id: rowLeft
-
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: 8
-            anchors.right: parent.right
-            anchors.rightMargin: 8
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
+            anchors.fill: parent
+            anchors.margins: 8
 
             ImageSvg {
                 id: imageMedia
@@ -133,11 +127,11 @@ Item {
                     anchors.topMargin: 4
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    clip: true
 
                     text: mediaItem.name
                     color: Theme.colorText
                     font.pixelSize: 16
+                    elide: Text.ElideMiddle
                     verticalAlignment: Text.AlignVCenter
                 }
 /*
@@ -168,18 +162,19 @@ Item {
                         font.pixelSize: 16
                         verticalAlignment: Text.AlignVCenter
                     }
-                }*/
+                }
+*/
                 Text {
                     id: mediaPath
                     anchors.top: mediaFilename.bottom
                     anchors.topMargin: 4
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    clip: true
 
                     text: mediaItem.path
                     color: Theme.colorSubText
                     font.pixelSize: 15
+                    elide: Text.ElideMiddle
                     verticalAlignment: Text.AlignVCenter
                 }
 /*

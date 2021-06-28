@@ -87,7 +87,6 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-
             model: ListModel {
                 id: cbSubtitles
                 ListElement { text: "srt"; }

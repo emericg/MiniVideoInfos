@@ -92,8 +92,8 @@ ScrollView {
         repeaterSubtitles.model = mediaItem.getSubtitlesTracks()
 
         // Chapters
-        columnChapters.visible = mediaItem.getChaptersCount()
-        repeaterChapters.model = mediaItem.getChapters()
+        columnChapters.visible = mediaItem.chaptersCount
+        repeaterChapters.model = mediaItem.chapters
 
         // Other tracks
         columnOther.visible =mediaItem.getOtherTrackCount()
@@ -422,6 +422,10 @@ ScrollView {
             }
             ItemTracksGraph {
                 id: elementTracks
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 12
                 height: 32
             }
         }
@@ -663,6 +667,7 @@ ScrollView {
                         if (isDesktop) {
                             utilsApp.openWith(mediaItem.fullpath)
                         } else {
+                            utilsApp.vibrate(25)
                             var mimetype = "image/" + mediaItem.videoCodec
                             //if (mediaItem.videoCodec === "") mimetype =
                             utilsShare.sendFile(mediaItem.fullpath, "Open file", mimetype, 0)

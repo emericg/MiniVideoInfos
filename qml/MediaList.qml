@@ -12,6 +12,8 @@ Item {
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Connections {
         target: mediaManager
         onMediaUpdated: {
@@ -76,10 +78,16 @@ Item {
         exitSelectionMode()
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    ItemLoading {
+        id: itemLoading
+    }
+
     property string pathToLoad: ""
     Timer {
         id: ttt
-        interval: 1
+        interval: 150
         running: false
         repeat: false
         onTriggered: loadMedia2()
@@ -104,40 +112,29 @@ Item {
         pathToLoad = ""
     }
 
-    ItemLoading {
-        id: itemLoading
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     property bool dialogIsOpen: false
     property string dialogHeaderSaved: appHeader.appName
+
     FileDialog {
         id: fileDialog
-        z: 10
 
+        z: 10
         title: qsTr("Media file selection")
 
         onAccepted: {
             //console.log("FileDialog::onAccepted() << " + fileUrl)
             loadMedia(UtilsPath.cleanUrl(fileUrl))
-
-            if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
-                appHeader.title = dialogHeaderSaved
-                appHeader.leftMenuMode = "drawer"
-                dialogIsOpen = false
-            }
+            closeDialog()
         }
         onRejected: {
             //console.log("FileDialog::onRejected()")
-            if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
-                appHeader.title = dialogHeaderSaved
-                appHeader.leftMenuMode = "drawer"
-                dialogIsOpen = false
-            }
+            closeDialog()
         }
     }
     function openDialog() {
+        //console.log("FileDialog::openDialog()")
         if (!dialogIsOpen) {
             if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
                 dialogHeaderSaved = appHeader.title
@@ -149,80 +146,104 @@ Item {
         }
     }
     function closeDialog() {
+        //console.log("FileDialog::closeDialog()")
         if (dialogIsOpen) {
             if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
                 appHeader.title = dialogHeaderSaved
                 appHeader.leftMenuMode = "drawer"
                 dialogIsOpen = false
             }
+            fileDialog.close()
         }
-        fileDialog.close()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: rectangleHeader
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        z: 5
+        height: visible ? 80 : 0
+        visible: false
+        color: Theme.colorForeground
+
+        // prevent clicks into this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
+        ImageSvg {
+            id: image
+            width: 64
+            height: 64
+            anchors.left: parent.left
+            anchors.leftMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -4
+
+            color: Theme.colorIcon
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+        }
+
+        ButtonWireframe {
+            height: 40
+            anchors.left: image.right
+            anchors.leftMargin: 32
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -4
+
+            primaryColor: Theme.colorPrimary
+            text: qsTr("OPEN ANOTHER MEDIA")
+            onClicked: openDialog()
+        }
+    }
+
+    Rectangle {
+        id: fakeHeader
+        anchors.top: parent.top
+        anchors.topMargin: (itemLoading.visible || !rectangleHeader.visible) ? -3 : 80 - 3
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        z: 4
+        height: 4
+        color: Theme.colorForeground
+
+        Rectangle {
+            height: 1
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
+        SimpleShadow {
+            height: 4
+            anchors.top: parent.bottom
+            anchors.topMargin: -height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
         id: bars
-        anchors.top: parent.top
+        anchors.top: rectangleHeader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        z: 5
-
-        Rectangle {
-            id: rectangleHeader
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            height: 80
-            visible: false
-            color: Theme.colorForeground
-
-            // prevent clicks into this area
-            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-            ImageSvg {
-                id: image
-                width: 64
-                height: 64
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -4
-
-                color: Theme.colorIcon
-                fillMode: Image.PreserveAspectFit
-                source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
-            }
-
-            ButtonWireframe {
-                height: 40
-                anchors.left: image.right
-                anchors.leftMargin: 32
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -4
-
-                primaryColor: Theme.colorPrimary
-                text: qsTr("OPEN ANOTHER MEDIA")
-                onClicked: openDialog()
-            }
-
-            Rectangle {
-                height: 1
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-            }
-        }
+        z: 4
 
         Rectangle {
             id: actionBar
             anchors.left: parent.left
             anchors.right: parent.right
 
-            color: Theme.colorActionbar
             clip: true
-
+            color: Theme.colorActionbar
             height: (screenMediaList.selectionCount) ? 48 : 0
             Behavior on height { NumberAnimation { duration: 133 } }
 
@@ -297,9 +318,10 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            height: 48
-            visible: false
+            clip: true
             color: Theme.colorError
+            height: 0
+            Behavior on height { NumberAnimation { duration: 133 } }
 
             // prevent clicks into this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
@@ -341,23 +363,21 @@ Item {
                 else
                     rectangleErrorText.text = qsTr("Cannot open '%1'").arg(filename)
 
-                errorBar.visible = true
                 errorBar.height = 48
                 rectangleErrorTimer.start()
             }
             function hideError() {
-                errorBar.visible = false
                 errorBar.height = 0
             }
         }
     }
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     ItemNoFile {
         id: itemNoFile
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: (isDesktop) ? -26 : -13
+        anchors.verticalCenterOffset: isDesktop ? -26 : -13
 
         visible: true
         onClicked: openDialog()

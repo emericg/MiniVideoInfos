@@ -173,7 +173,7 @@ Item {
         id: rectangleHeader
 
         z: 5
-        height: 72
+        height: visible ? 72 : 0
         color: Theme.colorForeground
         visible: !(isPhone && screenOrientation == 2)
 
@@ -337,13 +337,33 @@ Item {
                 }
             }
         }
+    }
+
+    Rectangle {
+        id: fakeHeader
+        anchors.top: rectangleHeader.bottom
+        anchors.topMargin: -3
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        z: 4
+        height: 4
+        color: Theme.colorForeground
 
         Rectangle {
             height: 1
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-            anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
+        SimpleShadow {
+            height: 4
+            anchors.top: parent.bottom
+            anchors.topMargin: -height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
         }
     }
 

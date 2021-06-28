@@ -86,15 +86,16 @@ Drawer {
                 }
                 Text {
                     id: textHeader
+                    anchors.top: imageHeader.top
                     anchors.left: imageHeader.right
-                    anchors.leftMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: 2
+                    anchors.leftMargin: 12
+                    anchors.bottom: imageHeader.bottom
 
                     text: "MiniVideo Infos"
                     color: Theme.colorText
                     font.bold: true
-                    font.pixelSize: 20
+                    font.pixelSize: Theme.fontSizeHeader
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
         }

@@ -27,21 +27,15 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        height: 1
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        visible: (!isPhone && appContent.state === "MediaInfos")
-        color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-    }
-
     // prevent clicks into this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
     Item {
-        anchors.fill: parent
+        anchors.top: parent.top
         anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: headerHeight
 
         MouseArea {
             id: leftArea

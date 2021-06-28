@@ -58,6 +58,22 @@ Item {
                 font.pixelSize: 18
             }
         }
+
+        Rectangle {
+            height: 1
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
+        SimpleShadow {
+            height: 4
+            anchors.top: parent.bottom
+            anchors.topMargin: -height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
