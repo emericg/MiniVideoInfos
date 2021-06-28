@@ -46,9 +46,9 @@ if sys.version_info < (3, 0):
 # Cross compilation (from Linux):
 # - Windows (mingw32-w64)
 # Cross compilation (from macOS):
-# - iOS (simulator, armv7a, armv8a)
+# - iOS (simulator, armv7, armv8)
 # Cross compilation (from Linux or macOS):
-# - Android (armv7a, armv8a)
+# - Android (armv7, armv8)
 
 OS_HOST = platform.system()
 ARCH_HOST = platform.machine()
@@ -182,6 +182,7 @@ if OS_HOST == "Darwin":
 
 if OS_HOST == "Windows":
     TARGETS.append(["windows", "x86_64"])
+    #TARGETS.append(["windows", "x86"])
     #TARGETS.append(["windows", "armv7"]) # WinRT
 
 ## SOFTWARES ###################################################################
@@ -196,7 +197,7 @@ if not os.path.exists("src/" + FILE_libexif):
     urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
 ## taglib
-## version: git (1.12 beta)
+## version: git (1.12)
 FILE_taglib = "taglib-master.zip"
 DIR_taglib = "taglib-master"
 
@@ -282,7 +283,7 @@ for TARGET in TARGETS:
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + contribs_dir + "/tools/ios.toolchain.cmake", "-DPLATFORM=OS64"]
             else:
                 # Without custom toolchain
-                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=armv7;armv7s;arm64;i386;x86_64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10.0"]
+                CMAKE_cmd = ["cmake", "-DCMAKE_SYSTEM_NAME=iOS","-DCMAKE_OSX_ARCHITECTURES=arm64","-DCMAKE_OSX_DEPLOYMENT_TARGET=10.0"]
     elif OS_HOST == "Windows":
         CMAKE_gen = MSVC_GEN_VER
         if ARCH_TARGET == "armv7":
@@ -322,16 +323,19 @@ for TARGET in TARGETS:
         zipMV.extractall(build_dir)
 
     # taglib
+    print("> Building taglib")
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
 
     # libexif
+    print("> Building libexif")
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_libexif + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_libexif + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_libexif + "/build")
 
     # minivideo
+    print("> Building minivideo")
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_minivideo + "/minivideo/build")
     subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
     subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")

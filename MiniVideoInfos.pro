@@ -9,9 +9,8 @@ android { QT += androidextras }
 ios { QT += gui-private }
 
 # Validate Qt version
-if (lessThan(QT_MAJOR_VERSION, 5) | lessThan(QT_MINOR_VERSION, 12)) {
-    error("You need AT LEAST Qt 5.12 to build $${TARGET}")
-}
+!versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for $${TARGET}")
+!versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for WatchFlower")
 
 # Project features #############################################################
 
@@ -279,7 +278,7 @@ macx {
 }
 
 ios {
-    #QMAKE_IOS_DEPLOYMENT_TARGET = 11.0
+    #QMAKE_IOS_DEPLOYMENT_TARGET = 12.0
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
     # Bundle name
