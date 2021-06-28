@@ -6,6 +6,10 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 RangeSlider {
     id: control
+    implicitWidth: 200
+    implicitHeight: 4
+    padding: 4
+
     //first.value: 0.25
     //second.value: 0.75
     snapMode: RangeSlider.SnapAlways
@@ -16,7 +20,9 @@ RangeSlider {
     property string colorFg: Theme.colorPrimary
     property string colorTxt: "white"
 
-    property int hhh: 16
+    property int hhh: 18
+
+    ////////
 
     background: Rectangle {
         x: control.leftPadding
@@ -38,6 +44,8 @@ RangeSlider {
             radius: hhh
         }
     }
+
+    ////////
 
     first.handle: Rectangle {
         id: h1
@@ -64,6 +72,7 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + unit
             }
+            textFormat: Text.PlainText
             color: colorTxt
             font.pixelSize: 10
             font.bold: true
@@ -71,6 +80,8 @@ RangeSlider {
             verticalAlignment: Text.AlignVCenter
         }
     }
+
+    ////////
 
     second.handle: Rectangle {
         id: h2
@@ -97,6 +108,7 @@ RangeSlider {
                 vvalue = vvalue.toFixed(0)
                 return ((kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + unit
             }
+            textFormat: Text.PlainText
             font.pixelSize: 10
             font.bold: true
             color: colorTxt

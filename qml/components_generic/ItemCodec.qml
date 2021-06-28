@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
@@ -7,7 +6,6 @@ Item {
     id: codec
     implicitWidth: 80
     implicitHeight: 28
-    clip: true
 
     property string text: "CODEC"
     property string color: Theme.colorForeground
@@ -26,7 +24,9 @@ Item {
             anchors.fill: parent
 
             text: codec.text
+            textFormat: Text.PlainText
             color: codec.colorText
+            elide: Text.ElideMiddle
             font.capitalization: Font.AllUppercase
             font.pixelSize: Theme.fontSizeComponent
             font.bold: true

@@ -5,10 +5,10 @@ import ThemeEngine 1.0
 
 Switch {
     id: control
+    implicitHeight: Theme.componentHeight
 
-    leftPadding: 0
-    rightPadding: 0
-    spacing: 16
+    padding: 4
+    spacing: 12
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
@@ -20,6 +20,7 @@ Switch {
 
         color: Theme.colorComponentBackground
         border.color: Theme.colorComponentBorder
+        border.width: Theme.componentBorderWidth
 
         Rectangle {
             x: control.checked ? (parent.width - width) : 0
@@ -28,8 +29,7 @@ Switch {
             height: width
             radius: (width / 2)
 
-            color: control.checked ? Theme.colorPrimary : Theme.colorComponentDown
-            border.color: control.checked ? Theme.colorPrimary : Theme.colorComponentDown
+            color: control.checked ? Theme.colorPrimary : Theme.colorComponentBorder
 
             Behavior on x { NumberAnimation { duration: 133 } }
         }
@@ -40,7 +40,9 @@ Switch {
         verticalAlignment: Text.AlignVCenter
 
         text: control.text
+        textFormat: Text.PlainText
         font: control.font
+
         color: Theme.colorText
         opacity: enabled ? 1.0 : 0.33
     }

@@ -7,7 +7,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Button {
     id: control
     width: contentRow.width + 16 + (source && !text ? 0 : 16)
-    implicitHeight: Theme.componentHeight
+    height: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
     font.bold: false
@@ -41,7 +41,7 @@ Button {
                 visible: source
                 opacity: enabled ? 1.0 : 0.33
                 source: control.source
-                color: Theme.colorIcon
+                color: Theme.colorComponentContent
             }
 
             Text {
@@ -49,9 +49,10 @@ Button {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: control.text
+                textFormat: Text.PlainText
                 font: control.font
                 opacity: enabled ? 1.0 : 0.33
-                color: control.down ? Theme.colorComponentContent : Theme.colorComponentContent
+                color: Theme.colorComponentContent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight

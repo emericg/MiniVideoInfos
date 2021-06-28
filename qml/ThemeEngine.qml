@@ -67,6 +67,7 @@ Item {
 
     property int componentHeight: 40
     property int componentRadius: 4
+    property int componentBorderWidth: 1
 
     ////////////////
 

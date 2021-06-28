@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -33,8 +32,8 @@ Item {
     property string borderColor: Theme.colorComponentBorder
 
     // animation
-    property var animation: "rotation" // rotation / fade
-    property var animationRunning: false
+    property string animation: "" // rotate / fade
+    property bool animationRunning: false
 
     // tooltip
     property string tooltipPosition: "bottom"
@@ -71,7 +70,7 @@ Item {
         visible: (highlightMode === "circle" || highlightMode === "both" || itemImageButton.background)
         color: itemImageButton.backgroundColor
 
-        border.width: itemImageButton.border ? 1 : 0
+        border.width: itemImageButton.border ? Theme.componentBorderWidth : 0
         border.color: itemImageButton.borderColor
 
         opacity: itemImageButton.background ? 0.75 : 0
@@ -127,7 +126,7 @@ Item {
         visible: itemImageButton.tooltipText
         enabled: itemImageButton.tooltipText
 
-        property var tooltipVisible: itemImageButton.highlighted
+        property bool tooltipVisible: itemImageButton.highlighted
         onTooltipVisibleChanged: ttT.checkPosition()
 
         opacity: tooltipVisible ? 1 : 0
@@ -244,7 +243,8 @@ Item {
         Rectangle {
             id: ttA
             anchors.margins: 4
-            width: 12; height: 12; rotation: 45
+            width: 12; height: 12;
+            rotation: 45
             color: backgroundColor
         }
         Rectangle {
@@ -257,8 +257,8 @@ Item {
         Text {
             id: ttT
             anchors.topMargin: 16
-            anchors.leftMargin: 16
-            anchors.rightMargin: 16
+            anchors.leftMargin: (tooltip.state === "topLeft" || tooltip.state === "bottomLeft") ? 8 : 16
+            anchors.rightMargin: (tooltip.state === "topRight" || tooltip.state === "bottomRight") ? 8 : 16
             anchors.bottomMargin: 16
 
             function checkPosition() {
@@ -289,6 +289,7 @@ Item {
             }
 
             text: itemImageButton.tooltipText
+            textFormat: Text.PlainText
             color: iconColor
         }
     }

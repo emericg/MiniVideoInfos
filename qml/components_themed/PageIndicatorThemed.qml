@@ -5,7 +5,8 @@ import ThemeEngine 1.0
 
 PageIndicator {
     id: control
-    count: 3
+
+    count: 1
     currentIndex: 1
 
     delegate: Rectangle {
@@ -14,7 +15,7 @@ PageIndicator {
         radius: (width / 2)
 
         color: Theme.colorHeaderContent
-        opacity: (index === control.currentIndex) ? (0.95) : (control.pressed ? 0.7 : 0.45)
+        opacity: (parent.index === control.currentIndex) ? (0.95) : (control.pressed ? 0.7 : 0.45)
 
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }

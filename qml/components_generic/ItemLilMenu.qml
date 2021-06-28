@@ -1,5 +1,4 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
@@ -9,8 +8,11 @@ Rectangle {
     implicitWidth: 256
     implicitHeight: 32
 
-    color: Theme.colorComponent
     radius: Theme.componentRadius
+    color: Theme.colorComponent
+
+    border.width: 1
+    border.color: Theme.colorComponentBorder
 
     layer.enabled: true
     layer.effect: OpacityMask {

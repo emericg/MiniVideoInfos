@@ -3,22 +3,25 @@ import QtQuick.Controls 2.12
 
 import ThemeEngine 1.0
 
-TextField {
+TextArea {
     id: control
     implicitWidth: 128
-    implicitHeight: Theme.componentHeight
+    implicitHeight: Theme.componentHeight*2
 
-    property string colorText: Theme.colorComponentText
+    topPadding: 8
+    bottomPadding: 8
+
+    property string colorText: Theme.colorComponentContent
     property string colorPlaceholderText: Theme.colorSubText
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
 
-    placeholderText: ""
-    placeholderTextColor: colorPlaceholderText
-
     text: ""
     color: colorText
     font.pixelSize: Theme.fontSizeComponent
+
+    placeholderText: ""
+    placeholderTextColor: colorPlaceholderText
 
     onEditingFinished: focus = false
 

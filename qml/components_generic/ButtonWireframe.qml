@@ -1,11 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 
 Button {
     id: control
-    width: contentText.width + 24
+    implicitWidth: contentText.width + 24
     implicitHeight: Theme.componentHeight
 
     font.pixelSize: Theme.fontSizeComponent
@@ -13,36 +14,61 @@ Button {
 
     focusPolicy: Qt.NoFocus
 
+    signal clicked()
+    signal pressed()
+    signal pressAndHold()
+
     property bool fullColor: false
     property string fulltextColor: "white"
     property string primaryColor: Theme.colorPrimary
     property string secondaryColor: Theme.colorComponentBackground
+
     property bool hoverAnimation: isDesktop
 
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         radius: Theme.componentRadius
-        opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
+        opacity: enabled ? (control.down && !hoverAnimation ? 0.8 : 1.0) : 0.33
         color: fullColor ? control.primaryColor : control.secondaryColor
-        border.width: 1
+        border.width: Theme.componentBorderWidth
         border.color: fullColor ? control.primaryColor : Theme.colorComponentBorder
-        clip: hoverAnimation
 
         MouseArea {
-            id: mmmm
             anchors.fill: parent
-            acceptedButtons: Qt.NoButton
-
-            enabled: hoverAnimation
-            visible: hoverAnimation
+            propagateComposedEvents: false
             hoverEnabled: hoverAnimation
 
+            onClicked: {
+                control.clicked()
+            }
+            onPressed: {
+                control.pressed()
+                control.down = true
+                mouseBackground.width = background.width*2
+                mouseBackground.opacity = 0.16
+            }
+            onPressAndHold: {
+                control.pressAndHold()
+                control.down = true
+            }
+            onReleased: {
+                control.released()
+                control.down = false
+                mouseBackground.width = 0
+                mouseBackground.opacity = 0
+            }
             onEntered: {
-                mouseBackground.width = 80
+                mouseBackground.width = 72
                 mouseBackground.opacity = 0.16
             }
             onExited: {
+                control.down = false
+                mouseBackground.width = 0
+                mouseBackground.opacity = 0
+            }
+            onCanceled: {
+                control.down = false
                 mouseBackground.width = 0
                 mouseBackground.opacity = 0
             }
@@ -50,27 +76,41 @@ Button {
             Rectangle {
                 id: mouseBackground
                 width: 0; height: width; radius: width;
-                x: mmmm.mouseX + 4 - (mouseBackground.width / 2)
-                y: mmmm.mouseY + 4 - (mouseBackground.width / 2)
-                color: "#fff"
+                x: parent.mouseX - (mouseBackground.width / 2)
+                y: parent.mouseY - (mouseBackground.width / 2)
+
+                visible: hoverAnimation
+                color: "white"
                 opacity: 0
-                Behavior on opacity { NumberAnimation { duration: 133 } }
-                Behavior on width { NumberAnimation { duration: 133 } }
+                Behavior on opacity { NumberAnimation { duration: 200 } }
+                Behavior on width { NumberAnimation { duration: 200 } }
+            }
+
+            layer.enabled: hoverAnimation
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    x: background.x
+                    y: background.y
+                    width: background.width
+                    height: background.height
+                    radius: background.radius
+                }
             }
         }
     }
 
-    contentItem: Item {
-        anchors.fill: parent
+    ////////////////////////////////////////////////////////////////////////////
 
+    contentItem: Item {
         Text {
             id: contentText
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
 
             text: control.text
+            textFormat: Text.PlainText
             font: control.font
-            opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
+            opacity: enabled ? (control.down && !hoverAnimation ? 0.8 : 1.0) : 0.33
             color: fullColor ? fulltextColor : control.primaryColor
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

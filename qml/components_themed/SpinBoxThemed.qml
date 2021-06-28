@@ -1,91 +1,134 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 SpinBox {
     id: control
     implicitWidth: 128
     implicitHeight: Theme.componentHeight
 
-    clip: true
     value: 50
     editable: true
     font.pixelSize: Theme.fontSizeComponent
 
-    property string legend: ""
+    property string legend
+
+    ////////
+
+    background: Rectangle {
+        anchors.fill: parent
+        radius: Theme.componentRadius
+        color: Theme.colorComponentBackground
+
+        Rectangle {
+            width: Theme.componentHeight
+            height: control.height
+            anchors.verticalCenter: parent.verticalCenter
+            x: control.mirrored ? 0 : control.width - width
+            color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
+        }
+
+        Rectangle {
+            width: Theme.componentHeight
+            height: control.height
+            anchors.verticalCenter: parent.verticalCenter
+            x: control.mirrored ? control.width - width : 0
+
+            color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            radius: Theme.componentRadius
+            color: "transparent"
+            border.width: Theme.componentBorderWidth
+            border.color: Theme.colorComponentBorder
+        }
+
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                x: control.x
+                y: control.y
+                width: control.width
+                height: control.height
+                radius: Theme.componentRadius
+            }
+        }
+    }
+
+    ////////
 
     contentItem: TextInput {
-        z: 2
-        text: control.textFromValue(control.value, control.locale) + legend
-        font: control.font
-
-        color: Theme.colorComponentText
-        selectionColor: Theme.colorText
-        selectedTextColor: "white"
-        horizontalAlignment: Qt.AlignHCenter
-        verticalAlignment: Qt.AlignVCenter
+        height: parent.height
+        anchors.verticalCenter: parent.verticalCenter
 
         readOnly: !control.editable
         validator: control.validator
         inputMethodHints: Qt.ImhFormattedNumbersOnly
 
-        Rectangle {
-            z: -1
-            anchors.fill: parent
-            anchors.margins: -8
-            color: Theme.colorComponentBackground
+        text: control.textFromValue(control.value, control.locale) + legend
+        font: control.font
+        color: Theme.colorComponentText
+        horizontalAlignment: Qt.AlignHCenter
+        verticalAlignment: Qt.AlignVCenter
+
+        selectionColor: Theme.colorText
+        selectedTextColor: "white"
+    }
+
+    ////////
+
+    up.indicator: Item {
+        width: Theme.componentHeight
+        height: control.height
+        anchors.verticalCenter: parent.verticalCenter
+        x: control.mirrored ? 0 : control.width - width
+        z: 1
+
+        Item {
+            anchors.centerIn: parent
+            width: UtilsNumber.round2(parent.height * 0.4)
+            height: width
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.width
+                height: 2
+                color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            }
+            Rectangle {
+                anchors.centerIn: parent
+                width: 2
+                height: parent.width
+                color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            }
         }
     }
 
-    up.indicator: Rectangle {
-        x: control.mirrored ? 0 : parent.width - width
-        height: parent.height
-        implicitWidth: 40
-        implicitHeight: 40
-        color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
-        //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
-        radius: Theme.componentRadius
+    ////////
 
-        Text {
-            anchors.fill: parent
+    down.indicator: Item {
+        width: Theme.componentHeight
+        height: control.height
+        anchors.verticalCenter: parent.verticalCenter
+        x: control.mirrored ? control.width - width : 0
+        z: 1
 
-            text: "+"
-            font.pixelSize: 18
-            color: enabled ? Theme.colorComponentContent : Theme.colorSubText
-            fontSizeMode: Text.Fit
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+        Item {
+            anchors.centerIn: parent
+            width: UtilsNumber.round2(parent.height * 0.4)
+            height: width
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.width
+                height: 2
+                color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            }
         }
-    }
-
-    down.indicator: Rectangle {
-        x: control.mirrored ? parent.width - width : 0
-        height: parent.height
-        implicitWidth: 40
-        implicitHeight: 40
-        color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
-        //border.color: enabled ? Theme.colorSubText : Theme.colorSubText
-        radius: Theme.componentRadius
-
-        Text {
-            anchors.fill: parent
-
-            text: "-"
-            font.pixelSize: 30
-            color: enabled ? Theme.colorComponentContent : Theme.colorSubText
-            fontSizeMode: Text.Fit
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-        }
-    }
-
-    background: Rectangle {
-        radius: Theme.componentRadius
-        z: 3
-
-        color: "transparent"
-        border.color: Theme.colorComponentBorder
-        border.width: 1
     }
 }

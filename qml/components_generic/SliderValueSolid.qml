@@ -8,9 +8,10 @@ Slider {
     id: control
     implicitWidth: 200
     implicitHeight: Theme.componentHeight
-    leftPadding: 0
-    rightPadding: 0
+    padding: 4
 
+    //first.value: 0.25
+    //second.value: 0.75
     snapMode: RangeSlider.SnapAlways
 
     property string unit: ""
@@ -21,11 +22,11 @@ Slider {
 
     property int hhh: 16
 
+    ////////
+
     background: Rectangle {
         x: control.leftPadding
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
-        implicitWidth: 200
-        implicitHeight: hhh
         width: control.availableWidth
 
         height: hhh
@@ -34,7 +35,6 @@ Slider {
         opacity: 1
 
         Rectangle {
-            x: 0
             visible: h2.x > 4
             width: (h2.x + (h2.width / 3))
             height: parent.height
@@ -42,6 +42,8 @@ Slider {
             radius: hhh
         }
     }
+
+    ////////
 
     handle: Rectangle {
         id: h2
@@ -68,6 +70,7 @@ Slider {
                 vvalue = vvalue.toFixed(0)
                 return ((kshort && control.value > 999) ? (vvalue / 1000) : vvalue) + unit
             }
+            textFormat: Text.PlainText
             font.pixelSize: 10
             font.bold: true
             color: colorTxt

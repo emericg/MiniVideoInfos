@@ -5,9 +5,10 @@ import ThemeEngine 1.0
 
 Switch {
     id: control
+    implicitHeight: Theme.componentHeight
 
-    leftPadding: 0
-    rightPadding: 0
+    padding: 4
+    spacing: 12
     font.pixelSize: Theme.fontSizeComponent
 
     indicator: Rectangle {
@@ -35,11 +36,15 @@ Switch {
     }
 
     contentItem: Text {
-        verticalAlignment: Text.AlignVCenter
+        id: contentText
+
         leftPadding: control.indicator.width + control.spacing
+        verticalAlignment: Text.AlignVCenter
 
         text: control.text
+        textFormat: Text.PlainText
         font: control.font
+
         color: Theme.colorText
         opacity: enabled ? 1.0 : 0.33
     }
