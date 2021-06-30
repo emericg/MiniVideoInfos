@@ -65,6 +65,7 @@ Item {
     ////////
 
     function loadSwipeView() {
+        sensorPages.disableAnimation()
         mediaPages.interactive = false
         mediaPages.currentIndex = 0
 
@@ -164,6 +165,7 @@ Item {
             menuExport.index = mediaPages.count-1
         }
 
+        sensorPages.enableAnimation()
         mediaPages.interactive = true
     }
 
@@ -380,14 +382,11 @@ Item {
 
         interactive: true
 
-        Item {
-            id: pageGeneric
-            visible: true
-
-            InfosGeneric {
-                id: content_generic
-                anchors.fill: parent
-            }
+        function enableAnimation() {
+            contentItem.highlightMoveDuration = 333
+        }
+        function disableAnimation() {
+            contentItem.highlightMoveDuration = 0
         }
 
         function addPage(page) {
@@ -407,6 +406,16 @@ Item {
                 removeItem(0);
             }
             console.log("now we have: " + mediaPages.count)
+        }
+
+        Item {
+            id: pageGeneric
+            visible: true
+
+            InfosGeneric {
+                id: content_generic
+                anchors.fill: parent
+            }
         }
     }
 
