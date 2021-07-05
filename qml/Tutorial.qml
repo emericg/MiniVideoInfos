@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtGraphicalEffects 1.12
 
 import ThemeEngine 1.0
 
@@ -23,6 +22,8 @@ Rectangle {
     SwipeView {
         id: tutorialPages
         anchors.fill: parent
+        anchors.leftMargin: screenPaddingLeft
+        anchors.rightMargin: screenPaddingRight
         anchors.bottomMargin: 56
 
         currentIndex: 0
@@ -50,6 +51,7 @@ Rectangle {
                     anchors.rightMargin: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 32
+
                     text: qsTr("<b>MiniVideo Infos</b> extract a maximum of informations and metadata from <b>multimedia files</b>.")
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     font.pixelSize: 18
@@ -57,7 +59,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                 }
                 ImageSvg {
-                    width: tutorialPages.width * 0.5
+                    width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
                     height: width
                     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -101,7 +103,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                 }
                 ImageSvg {
-                    width: tutorialPages.width * 0.5
+                    width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
                     height: width
                     anchors.horizontalCenter: parent.horizontalCenter
 
