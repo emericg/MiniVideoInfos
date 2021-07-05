@@ -1071,7 +1071,7 @@ Flickable {
                     anchors.bottomMargin: -24
 
                     antialiasing: true
-                    legend.visible: false // works only with Qt 5.10+
+                    legend.visible: false
 
                     backgroundRoundness: 0
                     backgroundColor: "transparent"
@@ -1083,7 +1083,7 @@ Flickable {
 
                     LineSeries {
                         id: bitrateData
-                        //useOpenGL: true
+                        useOpenGL: true
 
                         color: Theme.colorSecondary;
                         width: 1;
