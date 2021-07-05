@@ -65,7 +65,7 @@ Item {
     ////////
 
     function loadSwipeView() {
-        sensorPages.disableAnimation()
+        mediaPages.disableAnimation()
         mediaPages.interactive = false
         mediaPages.currentIndex = 0
 
@@ -96,7 +96,7 @@ Item {
         content_generic.loadGeneric()
 
         if (mediaItem.hasVideo) {
-            if (mediaItem.videoTrackCount >= 1) {
+            if (mediaItem.videoTracksCount >= 1) {
                 content_video1.loadTrack(mediaItem.getVideoTrack(0))
                 mediaPages.addPage(pageVideo1)
                 menuVideo1.index = mediaPages.count-1
@@ -165,7 +165,7 @@ Item {
             menuExport.index = mediaPages.count-1
         }
 
-        sensorPages.enableAnimation()
+        mediaPages.enableAnimation()
         mediaPages.interactive = true
     }
 
