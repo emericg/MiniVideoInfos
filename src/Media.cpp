@@ -25,15 +25,15 @@
 #include "minivideo_textexport_qt.h"
 #include "utils/utils_app.h"
 
-#ifdef ENABLE_LIBEXIF
+#if defined(ENABLE_LIBEXIF)
 #include <libexif/exif-data.h>
 #endif
 
-#ifdef ENABLE_EXIV2
+#if defined(ENABLE_EXIV2)
 #include <exiv2/exiv2.hpp>
 #endif
 
-#ifdef ENABLE_TAGLIB
+#if defined(ENABLE_TAGLIB)
 #include <taglib/tag.h>
 #include <taglib/fileref.h>
 #include <taglib/tpropertymap.h>
@@ -100,7 +100,7 @@ Media::~Media()
 /* ************************************************************************** */
 /* ************************************************************************** */
 /*
-#ifdef ENABLE_LIBEXIF
+#if defined(ENABLE_LIBEXIF)
 static void show_tag(ExifData *d, ExifIfd ifd, ExifTag tag)
 {
     ExifEntry *entry = exif_content_get_entry(d->ifd[ifd],tag);
@@ -118,7 +118,7 @@ bool Media::getMetadataFromPicture()
 {
     bool status = false;
 
-#ifdef ENABLE_LIBEXIF
+#if defined(ENABLE_LIBEXIF)
 
     // Check if the file is already parsed;
     ExifData *ed = exif_data_new_from_file(m_path.toLocal8Bit());
@@ -127,9 +127,9 @@ bool Media::getMetadataFromPicture()
         m_hasEXIF = true;
         m_exif_tag_found = 0;
 
-        //ExifByteOrder byte_order = exif_data_get_byte_order(ed);
-
         // EXIF ////////////////////////////////////////////////////////////////
+
+        ExifByteOrder byteOrder = exif_data_get_byte_order(ed);
 
         // Parse tags
         ExifEntry *entry;
@@ -221,7 +221,6 @@ bool Media::getMetadataFromPicture()
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_ORIENTATION);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
 /*
             1 = Horizontal (normal)     // "Top-left"
             2 = Mirror horizontal       // "Top-right"
@@ -232,6 +231,29 @@ bool Media::getMetadataFromPicture()
             7 = Mirror horizontal and rotate 90 CW  // "Right-bottom"
             8 = Rotate 270 CW                       // "Left-bottom"
 */
+            int orientation = exif_get_short(entry->data, byteOrder);
+            //qDebug() << "orientation:" << orientation;
+
+            if (orientation == 1)
+                transformation = QImageIOHandler::TransformationNone;
+            else if (orientation == 2)
+                transformation = QImageIOHandler::TransformationMirror;
+            else if (orientation == 3)
+                transformation = QImageIOHandler::TransformationRotate180;
+            else if (orientation == 4)
+                transformation = QImageIOHandler::TransformationFlip;
+            else if (orientation == 5)
+                transformation = QImageIOHandler::TransformationFlipAndRotate90;
+            else if (orientation == 6)
+                transformation = QImageIOHandler::TransformationRotate90;
+            else if (orientation == 7)
+                transformation = QImageIOHandler::TransformationMirrorAndRotate90;
+            else if (orientation == 8)
+                transformation = QImageIOHandler::TransformationRotate270;
+/*
+            exif_entry_get_value(entry, buf, sizeof(buf));
+            //qDebug() << "orientation string:" << buf;
+
             if (strncmp(buf, "Top-left", sizeof(buf)) == 0)
                 transformation = QImageIOHandler::TransformationNone;
             else if (strncmp(buf, "Top-right", sizeof(buf)) == 0)
@@ -248,7 +270,7 @@ bool Media::getMetadataFromPicture()
                 transformation = QImageIOHandler::TransformationMirrorAndRotate90;
             else if (strncmp(buf, "Left-bottom", sizeof(buf)) == 0)
                 transformation = QImageIOHandler::TransformationRotate270;
-
+*/
             m_exif_tag_found++;
         }
 
@@ -506,7 +528,7 @@ bool Media::getMetadataFromPicture()
     }
 #endif // ENABLE_LIBEXIF
 
-#ifdef ENABLE_EXIV2
+#if defined(ENABLE_EXIV2)
     Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(m_pictures.at(index)->filesystemPath.toStdString());
     image->readMetadata();
 
@@ -568,7 +590,7 @@ bool Media::getMetadataFromAudio()
     if (m_path.isEmpty())
         return status;
 
-#ifdef ENABLE_TAGLIB
+#if defined(ENABLE_TAGLIB)
     TagLib::FileRef f(m_path.toLocal8Bit());
     if (!f.isNull() && f.tag())
     {
