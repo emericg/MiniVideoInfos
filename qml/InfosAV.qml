@@ -1083,10 +1083,10 @@ Flickable {
 
                     LineSeries {
                         id: bitrateData
-                        useOpenGL: true
+                        //useOpenGL: true
 
-                        color: Theme.colorSecondary;
-                        width: 1;
+                        color: Theme.colorSecondary
+                        width: 1
                         visible: true
 
                         axisX: axisX0
