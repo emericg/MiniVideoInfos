@@ -119,6 +119,7 @@ Item {
 
     FileDialog {
         id: fileDialog
+        anchors.fill: parent
 
         z: 10
         title: qsTr("Media file selection")

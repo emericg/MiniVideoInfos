@@ -2,7 +2,7 @@ import QtQuick 2.12
 import Qt.labs.platform 1.1
 
 FileDialog {
-    id: fileDialogPlatform
+    id: fileDialogPlatformFile
 
     // 'platform'
     // https://doc.qt.io/qt-5/qml-qt-labs-platform-filedialog.html
@@ -12,6 +12,8 @@ FileDialog {
     property bool selectExisting: true
     property bool selectFolder: false // not supported
     property bool selectMultiple: false
+
+    ////////////////////////////////////////////////////////////////////////////
 
     fileMode: {
         if (!selectExisting)
@@ -30,8 +32,11 @@ FileDialog {
         qsTr("Image files") + " (*.jpg *.jpeg *.webp *.png *.gpr *.gif *.heif *.heic *.avif *.bmp *.tga *.tif *.tiff *.svg)"
     ]
 
+    ////////////////////////////////////////////////////////////////////////////
+
     onAccepted: {
-        fileDialog.accepted(file)
+        if (selectMultiple) fileDialog.accepted(files)
+        else fileDialog.accepted(file)
         fileDialog.close()
     }
     onRejected: {

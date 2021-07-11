@@ -25,24 +25,30 @@ Rectangle {
     property bool onlyShowMedia: settingsManager.mediaFilter
     property bool inited: false
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function open() {
         if (!inited) {
             folderListModel.rootFolder = fileDialogMobile.folder
             folderListModel.folder = fileDialogMobile.folder
-
-            storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
             updateHeaderText()
             inited = true
         }
-/*
-        if (utilsApp.getMobileStorageCount() > 1) {
-            storageChooser.visible = true
-            headerText.anchors.leftMargin = 48
-        } else {
-            storageChooser.visible = false
-            headerText.anchors.leftMargin = 0
-        }
-*/
+
+        // Show the storage chooser?
+        //if (utilsApp.getMobileStorageCount() > 1) {
+        //    storageChooser.visible = true
+        //    headerText.anchors.leftMargin = 48
+        //} else {
+        //    storageChooser.visible = false
+        //    headerText.anchors.leftMargin = 0
+        //}
+
+        visible = true
+    }
+
+    function close() {
+        visible = false
     }
 
     function updateHeaderText() {
@@ -67,23 +73,24 @@ Rectangle {
 
     function onRowChoose(index, folderURL) {
         if (folderListModel.isFolder(index)) {
-            parent.accepted(folderURL);
-            parent.close();
+            fileDialog.accepted(folderURL)
+            fileDialog.close()
         }
     }
     function onRowClick(index, fileURL) {
         if (folderListModel.isFolder(index)) {
-            folderListModel.folder = fileURL;
-            updateHeaderText();
+            folderListModel.folder = fileURL
+            updateHeaderText()
         } else {
-            parent.accepted(fileURL);
-            parent.close();
+            fileDialog.accepted(fileURL)
+            fileDialog.close()
         }
     }
 
     function onBackPressed() {
         if (folderListModel.folder === folderListModel.rootFolder) {
-            close()
+            fileDialog.rejected()
+            fileDialog.close()
         } else {
             folderListModel.folder = folderListModel.parentFolder
             updateHeaderText()
