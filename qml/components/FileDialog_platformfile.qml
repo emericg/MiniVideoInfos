@@ -35,6 +35,8 @@ FileDialog {
     ////////////////////////////////////////////////////////////////////////////
 
     onAccepted: {
+        if (Qt.platform.os === "android") file = utilsShare.getPathFromURI(file)
+
         if (selectMultiple) fileDialog.accepted(files)
         else fileDialog.accepted(file)
         fileDialog.close()

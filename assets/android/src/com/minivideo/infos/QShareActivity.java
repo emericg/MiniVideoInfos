@@ -98,8 +98,10 @@ public class QShareActivity extends QtActivity
     // this method here - otherwise you'll get wrong request or result codes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
         Log.d("QShareActivity", " onActivityResult() requestCode: " + requestCode);
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check which request we're responding to
         if (resultCode == RESULT_OK) {
             Log.d("QShareActivity", " onActivityResult() requestCode SUCCESS");
         } else {
@@ -118,6 +120,7 @@ public class QShareActivity extends QtActivity
     public void onNewIntent(Intent intent) {
         Log.d("QShareActivity", " onNewIntent()");
         super.onNewIntent(intent);
+
         setIntent(intent);
         // Intent will be processed, if all is initialized and Qt / QML can handle the event
         if (isInitialized) {

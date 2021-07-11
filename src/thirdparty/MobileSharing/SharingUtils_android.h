@@ -57,7 +57,9 @@ public:
     void handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data) override;
     void onActivityResult(int requestCode, int resultCode);
 
-    void checkPendingIntents(const QString workingDirPath) override;
+    void checkPendingIntents(const QString &workingDirPath) override;
+
+    QString getPathFromURI(const QString &contentURI) override;
 
 public slots:
     void setFileUrlReceived(const QString &url);

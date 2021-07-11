@@ -85,8 +85,13 @@ public:
         qDebug() << filePath << " - " << title << "requestId: " << requestId << " - " << mimeType;
     }
 
-    virtual void checkPendingIntents(const QString workingDirPath) {
+    virtual void checkPendingIntents(const QString &workingDirPath) {
         qDebug() << "checkPendingIntents" << workingDirPath;
+    }
+
+    virtual QString getPathFromURI(const QString &contentURI) {
+        qDebug() << "getPathFromURI" << contentURI;
+        return QString();
     }
 };
 
@@ -122,7 +127,8 @@ public:
     Q_INVOKABLE void sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId);
     Q_INVOKABLE void viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId);
     Q_INVOKABLE void editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId);
-    Q_INVOKABLE void checkPendingIntents(const QString workingDirPath);
+    Q_INVOKABLE void checkPendingIntents(const QString &workingDirPath);
+    Q_INVOKABLE QString getPathFromURI(const QString &contentURI);
 };
 
 /* ************************************************************************** */

@@ -124,7 +124,8 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
                                             "com/minivideo/utils/QShareUtils",
                                             "sendFile",
                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                            jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+                                            jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(),
+                                            requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
@@ -135,7 +136,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
 
     // THE FILE PATH
     // to get a valid Path we must prefix file://
-    // attention file must be inside Users Documents folder !
+    // attention file must be inside Users Documents folder!
     // trying to send a file from APP DATA will fail
     QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
@@ -145,7 +146,10 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         return;
     }
     // next step: convert filePath Java String into Java Uri
-    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", jniPath.object<jstring>());
+    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri",
+                                                                         "parse",
+                                                                         "(Ljava/lang/String;)Landroid/net/Uri;",
+                                                                         jniPath.object<jstring>());
     if (!jniUri.isValid())
     {
         qWarning() << "QAndroidJniObject jniUri not valid.";
@@ -187,7 +191,9 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         return;
     }
     // set Type (MimeType)
-    QAndroidJniObject jniType = jniIntent.callObjectMethod("setType", "(Ljava/lang/String;)Landroid/content/Intent;", jniMimeType.object<jstring>());
+    QAndroidJniObject jniType = jniIntent.callObjectMethod("setType",
+                                                           "(Ljava/lang/String;)Landroid/content/Intent;",
+                                                           jniMimeType.object<jstring>());
     if (!jniType.isValid())
     {
         qWarning() << "QAndroidJniObject jniType not valid.";
@@ -198,15 +204,18 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     // THE EXTRA STREAM
     // create a Java String for the EXTRA
     QAndroidJniObject jniExtra = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "EXTRA_STREAM");
-    if (!jniExtra.isValid()) {
+    if (!jniExtra.isValid())
+    {
         qWarning() << "QAndroidJniObject jniExtra not valid.";
         emit shareError(requestId, "Share: an Error occured");
         return;
     }
     // put Extra (EXTRA_STREAM and URI)
-    QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniUri.object<jobject>());
-    //QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniExtra.object<jstring>());
-    if (!jniExtraStreamUri.isValid()) {
+    QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra",
+                                                                     "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;",
+                                                                     jniExtra.object<jstring>(), jniUri.object<jobject>());
+    if (!jniExtraStreamUri.isValid())
+    {
         qWarning() << "QAndroidJniObject jniExtraStreamUri not valid.";
         emit shareError(requestId, "Share: an Error occured");
         return;
@@ -262,7 +271,8 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
                                                   "viewFile",
                                                   "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(),
+                                                  requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
@@ -283,7 +293,10 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         return;
     }
     // next step: convert filePath Java String into Java Uri
-    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", jniPath.object<jstring>());
+    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri",
+                                                                         "parse",
+                                                                         "(Ljava/lang/String;)Landroid/net/Uri;",
+                                                                         jniPath.object<jstring>());
     if (!jniUri.isValid())
     {
         qWarning() << "QAndroidJniObject jniUri not valid.";
@@ -391,7 +404,8 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
                                                   "editFile",
                                                   "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
+                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(),
+                                                  requestId);
 
         if (!ok)
         {
@@ -413,7 +427,10 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         return;
     }
     // next step: convert filePath Java String into Java Uri
-    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", jniPath.object<jstring>());
+    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri",
+                                                                         "parse",
+                                                                         "(Ljava/lang/String;)Landroid/net/Uri;",
+                                                                         jniPath.object<jstring>());
     if (!jniUri.isValid())
     {
         qWarning() << "QAndroidJniObject jniUri not valid.";
@@ -546,7 +563,7 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
     }
 }
 
-void AndroidShareUtils::checkPendingIntents(const QString workingDirPath)
+void AndroidShareUtils::checkPendingIntents(const QString &workingDirPath)
 {
     QAndroidJniObject activity = QtAndroid::androidActivity();
     if (activity.isValid())
@@ -566,6 +583,22 @@ void AndroidShareUtils::checkPendingIntents(const QString workingDirPath)
     qDebug() << "checkPendingIntents: Activity not valid";
 }
 
+QString AndroidShareUtils::getPathFromURI(const QString &contentURI)
+{
+    QAndroidJniObject jniURI = QAndroidJniObject::fromString(contentURI);
+    if (!jniURI.isValid())
+    {
+        qWarning() << "QAndroidJniObject jniPath not valid.";
+    }
+
+    QAndroidJniObject jniString = QAndroidJniObject::callStaticObjectMethod("com/minivideo/utils/QSharePathResolver",
+                                                                            "getRealPathFromSTR",
+                                                                            "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",
+                                                                            QtAndroid::androidContext().object(), jniURI.object<jstring>());
+    QString str = jniString.toString();
+    return str;
+}
+
 void AndroidShareUtils::setFileUrlReceived(const QString &url)
 {
     if (url.isEmpty())
@@ -575,6 +608,7 @@ void AndroidShareUtils::setFileUrlReceived(const QString &url)
         return;
     }
     qDebug() << "AndroidShareUtils setFileUrlReceived: we got the File URL from JAVA: " << url;
+
     QString myUrl;
     if (url.startsWith("file://"))
     {
@@ -654,7 +688,7 @@ bool AndroidShareUtils::checkFileExits(const QString &url)
         myUrl = url;
     }
 
-    // check if File exists
+    // check if the file exists
     QFileInfo fileInfo = QFileInfo(myUrl);
     if (fileInfo.exists())
     {
@@ -668,14 +702,14 @@ bool AndroidShareUtils::checkFileExits(const QString &url)
     }
 }
 
-// instead of defining all JNICALL as demonstrated below
-// there's another way, making it easier to manage all the methods
-// see https://www.kdab.com/qt-android-episode-5/
-
 /* ************************************************************************** */
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+// instead of defining all JNICALL as demonstrated below
+// there's another way, making it easier to manage all the methods
+// see https://www.kdab.com/qt-android-episode-5/
 
 JNIEXPORT void JNICALL
   Java_com_minivideo_infos_QShareActivity_setFileUrlReceived(JNIEnv *env,

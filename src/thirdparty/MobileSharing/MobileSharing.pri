@@ -1,6 +1,6 @@
 QT += core
 
-MOBILESHARING_VERSION = 0.2
+MOBILESHARING_VERSION = 0.3
 
 SOURCES += $${PWD}/SharingUtils.cpp \
            $${PWD}/SharingApplication.cpp
