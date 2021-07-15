@@ -50,7 +50,7 @@ Loader {
                 else
                     return "FileDialog_platformfile.qml"
              } else {
-                return "FileDialog_quickcontrols1.qml"
+                return "FileDialog_quickdialogs.qml"
             }
         }
     }

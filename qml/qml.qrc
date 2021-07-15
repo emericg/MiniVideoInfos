@@ -33,7 +33,7 @@
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
         <file alias="FileDialog_platformfile.qml">components/FileDialog_platformfile.qml</file>
         <file alias="FileDialog_platformfolder.qml">components/FileDialog_platformfolder.qml</file>
-        <file alias="FileDialog_quickcontrols1.qml">components/FileDialog_quickcontrols1.qml</file>
+        <file alias="FileDialog_quickdialogs.qml">components/FileDialog_quickdialogs.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
