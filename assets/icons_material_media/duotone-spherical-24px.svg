@@ -14,51 +14,10 @@
    id="svg6"
    sodipodi:docname="duotone-spherical-24px.svg"
    inkscape:version="0.92.4 5da689c313, 2019-01-14">
-  <metadata
-     id="metadata12">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <defs
-     id="defs10" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1538"
-     inkscape:window-height="1020"
-     id="namedview8"
-     showgrid="false"
-     inkscape:snap-page="true"
-     inkscape:snap-bbox="true"
-     inkscape:snap-object-midpoints="true"
-     inkscape:snap-center="true"
-     inkscape:zoom="39.333333"
-     inkscape:cx="13.317781"
-     inkscape:cy="12.206092"
-     inkscape:window-x="1335"
-     inkscape:window-y="157"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg6" />
   <path
      style="opacity:0.66;fill-opacity:1;stroke:none;stroke-width:0.88340807"
      d="M 12 1.9824219 A 10.016949 10.016949 0 0 0 1.9824219 12 A 10.016949 10.016949 0 0 0 12 22.017578 A 10.016949 10.016949 0 0 0 22.017578 12 A 10.016949 10.016949 0 0 0 12 1.9824219 z M 12 3.8652344 A 8.1355925 8.1355925 0 0 1 20.134766 12 A 8.1355925 8.1355925 0 0 1 12 20.134766 A 8.1355925 8.1355925 0 0 1 3.8652344 12 A 8.1355925 8.1355925 0 0 1 12 3.8652344 z "
      id="path822" />
-  <path
-     d="M0 0h24v24H0z"
-     fill="none"
-     id="path2" />
   <path
      style="opacity:1;fill-opacity:1;stroke:none"
      d="M 12,3.8652344 C 9.7533598,3.8646128 7.9318692,7.5067196 7.9316406,12 7.9318691,16.493281 9.7533597,20.135388 12,20.134766 14.24664,20.135387 16.068131,16.49328 16.068359,12 16.06813,7.5067199 14.24664,3.8646133 12,3.8652344 Z M 12,4.927 c 1.853322,8.879e-4 3.055042,3.0016332 3.055,7.073 4.2e-5,4.071367 -1.201678,7.072112 -3.055,7.073 C 10.146678,19.072112 8.9449583,16.071367 8.945,12 8.9449584,7.9286334 10.146678,4.927888 12,4.927 Z"
