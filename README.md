@@ -46,13 +46,22 @@ You will need:
 
 ### Building MiniVideo Infos
 
-```
+```bash
 $ git clone https://github.com/emericg/MiniVideoInfos.git
 $ cd MiniVideoInfos/
 $ cd contribs/ && python3 contribs.py && cd ..
 $ qmake
 $ make
 ```
+
+### Third party projects used by MiniVideo Infos
+
+* Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* MiniVideo [website](https://github.com/emericg/MiniVideo) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* TagLib [website](https://taglib.org/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
+* libexif [website](https://github.com/libexif/libexif/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
+* StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
+* Graphical resources: please read [assets/COPYING](assets/COPYING)
 
 
 ## Get involved!
@@ -72,12 +81,3 @@ MiniVideoInfos is free software; you can redistribute it and/or modify it under 
 Read the [LICENSE](LICENSE) file or [consult the license on the FSF website](https://www.gnu.org/licenses/gpl-3.0.txt) directly.
 
 > Emeric Grange <emeric.grange@gmail.com>
-
-### Third party projects used by MiniVideo Infos
-
-* Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
-* MiniVideo [website](https://github.com/emericg/MiniVideo) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
-* TagLib [website](https://taglib.org/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
-* libexif [website](https://github.com/libexif/libexif/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
-* StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
-* Graphical resources: please read [assets/COPYING](assets/COPYING)
