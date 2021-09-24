@@ -62,7 +62,7 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     function openFilter(filter) {
-        //console.log("FileDialog::penFilter(" + filter + ")")
+        //console.log("FileDialog::openFilter(" + filter + ")")
         if (title) fileDialogItem.title = title
         fileDialogItem.folder = utilsApp.getStandardPath_url(filter)
 

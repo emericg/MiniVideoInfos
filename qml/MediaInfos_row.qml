@@ -150,7 +150,7 @@ Item {
 
                             color: Theme.colorIcon
                             fillMode: Image.PreserveAspectFit
-                            source: "qrc:/assets/icons_material_media/duotone-av_timer-24px.svg"
+                            source: "qrc:/assets/icons_material/duotone-av_timer-24px.svg"
                         }
                         Text {
                             id: textDuration
@@ -205,7 +205,7 @@ Item {
 
                             color: Theme.colorIcon
                             fillMode: Image.PreserveAspectFit
-                            source: "qrc:/assets/icons_material_media/duotone-aspect_ratio-24px.svg"
+                            source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
                         }
                         Text {
                             id: textGeometry
@@ -232,7 +232,7 @@ Item {
 
                             color: Theme.colorIcon
                             fillMode: Image.PreserveAspectFit
-                            source: "qrc:/assets/icons_material_media/duotone-speaker-24px.svg"
+                            source: "qrc:/assets/icons_material/duotone-speaker-24px.svg"
                         }
                         Text {
                             id: textChannels

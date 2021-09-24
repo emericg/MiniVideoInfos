@@ -18,13 +18,13 @@ Rectangle {
 
     function initBoxData() {
         if (mediaMiniWidget.fileType === 1)
-            imageMedia.source = "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
+            imageMedia.source = "qrc:/assets/icons_material/outline-insert_music-24px.svg"
         else if (mediaMiniWidget.fileType === 2)
-            imageMedia.source = "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
+            imageMedia.source = "qrc:/assets/icons_material/outline-local_movies-24px.svg"
         else if (mediaMiniWidget.fileType === 3)
-            imageMedia.source = "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg" // icons_material_media/baseline-photo-24px.svg
+            imageMedia.source = "qrc:/assets/icons_material/outline-insert_photo-24px.svg" // icons_material/baseline-photo-24px.svg
         else
-            imageMedia.source = "qrc:/assets/icons_material_media/baseline-broken_image-24px.svg"
+            imageMedia.source = "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
 
         mediaFilename.text = mediaMiniWidget.name + "." + mediaMiniWidget.ext
     }

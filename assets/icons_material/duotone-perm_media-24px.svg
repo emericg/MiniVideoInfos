@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="duotone-perm_media-24px.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="36.375"
+     inkscape:cx="9.3745704"
+     inkscape:cy="12.082474"
+     inkscape:current-layer="svg6" />
+  <path
+     d="M 2,6 H 0 v 5 H 0.01 L 0,20 c 0,1.1 0.9,2 2,2 H 20 V 20 H 2 Z"
+     id="path4"
+     sodipodi:nodetypes="cccccscccc"
+     style="opacity:0.66" />
+  <path
+     d="M 22,4 H 14 L 12,2 H 6 C 4.9,2 4.01,2.9 4.01,4 L 4,16 c 0,1.1 0.9,2 2,2 h 16 c 1.1,0 2,-0.9 2,-2 V 6 C 24,4.9 23.1,4 22,4 Z M 7,15 11.5,9 15,13.51 17.5,10.5 21,15 Z"
+     id="path4-6"
+     sodipodi:nodetypes="sccsccssssscccccc" />
+</svg>

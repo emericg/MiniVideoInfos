@@ -182,7 +182,7 @@ Drawer {
                         anchors.leftMargin: screenPaddingLeft + 16
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
+                        source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                         color: Theme.colorText
                     }
                     Label {

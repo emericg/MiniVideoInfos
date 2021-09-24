@@ -73,7 +73,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_media/outline-photo_camera-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-photo_camera-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -181,7 +181,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_media/baseline-exposure-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-exposure-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -498,7 +498,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left

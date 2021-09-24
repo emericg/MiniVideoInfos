@@ -364,7 +364,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                 }
             }
 
@@ -437,7 +437,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/baseline-edit-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                 }
 
                 Text {

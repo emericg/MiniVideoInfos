@@ -154,7 +154,7 @@ Rectangle {
                     ImageSvg {
                         width: 32
                         height: width
-                        source: "qrc:/assets/icons_material_media/baseline-4k-24px.svg"
+                        source: "qrc:/assets/icons_material/baseline-4k-24px.svg"
                         color: Theme.colorIcon
                     }
                     Text {
@@ -174,7 +174,7 @@ Rectangle {
                     ImageSvg {
                         width: 32
                         height: width
-                        source: "qrc:/assets/icons_material_media/duotone-aspect_ratio-24px.svg"
+                        source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
                         color: Theme.colorIcon
                     }
                     Text {
@@ -214,7 +214,7 @@ Rectangle {
                     ImageSvg {
                         width: 32
                         height: width
-                        source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
+                        source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
                         color: Theme.colorIcon
                     }
                     Text {
@@ -234,7 +234,7 @@ Rectangle {
                     ImageSvg {
                         width: 32
                         height: width
-                        source: "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
+                        source: "qrc:/assets/icons_material/outline-insert_music-24px.svg"
                         color: Theme.colorIcon
                     }
                     Text {

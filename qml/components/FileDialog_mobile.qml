@@ -270,11 +270,11 @@ Rectangle {
                             source = "qrc:/assets/icons_material/outline-folder-24px.svg"
                     } else {
                         if (UtilsPath.isVideoFile(fileName)) {
-                            source = "qrc:/assets/icons_material_media/baseline-slideshow-24px.svg"
+                            source = "qrc:/assets/icons_material/baseline-slideshow-24px.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
-                            source = "qrc:/assets/icons_material_media/baseline-music-24px.svg"
+                            source = "qrc:/assets/icons_material/baseline-music-24px.svg"
                         } else if (UtilsPath.isPictureFile(fileName, )) {
-                            source = "qrc:/assets/icons_material_media/baseline-photo-24px.svg"
+                            source = "qrc:/assets/icons_material/baseline-photo-24px.svg"
                         } else {
                             if (onlyShowMedia) {
                                 listItem.visible = false

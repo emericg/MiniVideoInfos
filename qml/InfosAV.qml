@@ -401,7 +401,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -771,7 +771,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left

@@ -31,15 +31,15 @@ Item {
             if (icon === "file")
                 return "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
             else if (icon === "video")
-                return "qrc:/assets/icons_material_media/outline-local_movies-24px.svg"
+                return "qrc:/assets/icons_material/outline-local_movies-24px.svg"
             else if (icon === "audio")
-                return "qrc:/assets/icons_material_media/outline-speaker-24px.svg"
+                return "qrc:/assets/icons_material/outline-speaker-24px.svg"
             else if (icon === "subtitles")
-                return "qrc:/assets/icons_material_media/outline-closed_caption-24px.svg"
+                return "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
             else if (icon === "audio_tags")
-                return "qrc:/assets/icons_material_media/outline-insert_music-24px.svg"
+                return "qrc:/assets/icons_material/outline-insert_music-24px.svg"
             else if (icon === "image_tags")
-                return "qrc:/assets/icons_material_media/outline-insert_photo-24px.svg"
+                return "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
             else if (icon === "map")
                 return "qrc:/assets/icons_material/baseline-map-24px.svg"
             else if (icon === "export")
