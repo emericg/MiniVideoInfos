@@ -1,9 +1,10 @@
 # ![MiniVideo Infos](https://i.imgur.com/eKFauTe.jpg)
 
-[![Travis](https://img.shields.io/travis/emericg/MiniVideoInfos.svg?style=flat-square)](https://travis-ci.org/emericg/MiniVideoInfos)
+[![GitHub release](https://img.shields.io/github/release/emericg/MiniVideoInfos.svg?style=flat-square)](https://github.com/emericg/MiniVideoInfos/releases)
+[![GitHub action](https://img.shields.io/github/workflow/status/emericg/MiniVideoInfos/CI%20builds.svg?style=flat-square)](https://github.com/emericg/MiniVideoInfos/actions)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
 
-Get detailed informations about your audio, video and picture files with MiniVideo Infos!
+> Get detailed informations about your audio, video and picture files with MiniVideo Infos!
 
 ### Features
 
@@ -61,7 +62,7 @@ $ make
 * TagLib [website](https://taglib.org/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
 * libexif [website](https://github.com/libexif/libexif/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
 * StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
-* Graphical resources: please read [assets/COPYING](assets/COPYING)
+* Graphical resources: [assets/COPYING](assets/COPYING)
 
 
 ## Get involved!
