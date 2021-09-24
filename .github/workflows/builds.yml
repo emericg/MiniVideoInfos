@@ -1,0 +1,63 @@
+#--------------------------------------------------------------------------------
+# Workflow configuration
+#--------------------------------------------------------------------------------
+
+name: "CI builds"
+on:
+  push:
+  pull_request:
+
+#--------------------------------------------------------------------------------
+# Define application name & version
+#--------------------------------------------------------------------------------
+
+env:
+  VERSION: "0.8"
+  EXECUTABLE: "MiniVideoInfos"
+  APPLICATION: "MiniVideoInfos"
+  QMAKE_PROJECT: "MiniVideoInfos.pro"
+
+#--------------------------------------------------------------------------------
+# Workflow jobs
+#--------------------------------------------------------------------------------
+
+jobs:
+  ## GNU/Linux build ###########################################################
+  build-linux:
+    name: "Linux CI build"
+    runs-on: ubuntu-18.04
+    steps:
+      # Checkout the repository
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      # Cache Qt
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: ${{runner.os}}-QtCache
+
+      # Install Qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+          modules: qtcharts
+          cached: ${{steps.cache-qt.outputs.cache-hit}}
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+             sudo apt-get install libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev -y;
+             sudo apt-get install libgl1-mesa-dev -y;
+
+      # Build application
+      - name: Build application
+        run: |
+             qmake --version
+             qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
+             make -j$(nproc)
