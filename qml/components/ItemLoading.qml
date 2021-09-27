@@ -31,7 +31,7 @@ Popup {
                 width: 128
                 height: 128
                 source: "qrc:/assets/icons_material/baseline-hourglass_empty-24px.svg"
-                color: Theme.colorText
+                color: Theme.colorSubText
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 

@@ -208,7 +208,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/baseline-list-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-list-24px.svg"
                 }
                 Text {
                     id: titleTrackText
@@ -977,7 +977,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-sd_card-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-sd_card-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left

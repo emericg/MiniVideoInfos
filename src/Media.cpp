@@ -828,7 +828,7 @@ bool Media::getMetadataFromVideo()
                 {
                     MediaStream_t *t = m_media->tracks_others[i];
 
-                    uint32_t gpmf_sample_count = t->sample_count;
+                    //uint32_t gpmf_sample_count = t->sample_count;
                     int devc_count = 0;
 
                     if (devc_count)

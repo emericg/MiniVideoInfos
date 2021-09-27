@@ -32,7 +32,6 @@
         <file>icons_material/baseline-iso-24px.svg</file>
         <file>icons_material/baseline-label_important-24px.svg</file>
         <file>icons_material/baseline-language-24px.svg</file>
-        <file>icons_material/baseline-list-24px.svg</file>
         <file>icons_material/baseline-local_movies-24px.svg</file>
         <file>icons_material/baseline-music-24px.svg</file>
         <file>icons_material/baseline-map-24px.svg</file>
@@ -68,8 +67,10 @@
         <file>icons_material/duotone-exit_to_app-24px.svg</file>
         <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
         <file>icons_material/duotone-library_add-24px.svg</file>
+        <file>icons_material/duotone-list-24px.svg</file>
         <file>icons_material/duotone-minimize-24px.svg</file>
         <file>icons_material/duotone-pin_drop-24px.svg</file>
+        <file>icons_material/duotone-sd_card-24px.svg</file>
         <file>icons_material/duotone-spherical-24px.svg</file>
         <file>icons_material/duotone-speaker-24px.svg</file>
         <file>icons_material/duotone-style-24px.svg</file>
@@ -90,7 +91,6 @@
         <file>icons_material/outline-photo_camera-24px.svg</file>
         <file>icons_material/outline-save-24px.svg</file>
         <file>icons_material/outline-settings-24px.svg</file>
-        <file>icons_material/outline-sd_card-24px.svg</file>
         <file>icons_material/outline-speaker-24px.svg</file>
     </qresource>
 

@@ -159,7 +159,7 @@ Rectangle {
                     } else {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal()
-                        storageIcon.source = "qrc:/assets/icons_material/outline-sd_card-24px.svg"
+                        storageIcon.source = "qrc:/assets/icons_material/duotone-sd_card-24px.svg"
                     }
 
                     updateHeaderText()

@@ -1087,7 +1087,7 @@ Flickable {
 
                     color: Theme.colorPrimary
                     fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/icons_material/baseline-list-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-list-24px.svg"
                 }
                 Text {
                     anchors.left: parent.left
