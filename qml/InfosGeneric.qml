@@ -133,7 +133,6 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
                 }
                 Text {
@@ -451,7 +450,6 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                 }
                 Text {
@@ -703,7 +701,6 @@ Flickable {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorPrimary
-                        fillMode: Image.PreserveAspectFit
                         source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
                     }
                     Text {
@@ -886,7 +883,6 @@ Flickable {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorPrimary
-                        fillMode: Image.PreserveAspectFit
                         source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
                     }
                     Text {
@@ -1008,7 +1004,6 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
                 }
                 Text {
@@ -1086,7 +1081,6 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/icons_material/duotone-list-24px.svg"
                 }
                 Text {
@@ -1176,7 +1170,6 @@ Flickable {
                     rotation: 90
 
                     color: Theme.colorPrimary
-                    fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/icons_material/baseline-label_important-24px.svg"
                 }
                 Text {

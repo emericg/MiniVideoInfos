@@ -149,7 +149,6 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            fillMode: Image.PreserveAspectFit
                             source: "qrc:/assets/icons_material/duotone-av_timer-24px.svg"
                         }
                         Text {
@@ -176,7 +175,6 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            fillMode: Image.PreserveAspectFit
                             source: "qrc:/assets/icons_material/duotone-data_usage-24px.svg"
                         }
                         Text {
@@ -204,7 +202,6 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            fillMode: Image.PreserveAspectFit
                             source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
                         }
                         Text {
@@ -231,7 +228,6 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            fillMode: Image.PreserveAspectFit
                             source: "qrc:/assets/icons_material/duotone-speaker-24px.svg"
                         }
                         Text {
@@ -258,7 +254,6 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            fillMode: Image.PreserveAspectFit
                             source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
                         }
                         Text {
@@ -326,7 +321,7 @@ Item {
                         anchors.fill: parent
                         opacity: 0.4
                         color: Theme.colorForeground
-                        visible: ((mediaItem.videoTracksCount + index) % 2 === 0)
+                        visible: (mediaItem && (mediaItem.videoTracksCount + index) % 2 === 0)
                     }
                     InfosAV {
                         id: content_audio

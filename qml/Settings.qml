@@ -286,8 +286,9 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
                     source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                    fillMode: Image.PreserveAspectFit
+                    color: Theme.colorText
                 }
 
                 Text {

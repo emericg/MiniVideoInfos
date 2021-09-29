@@ -53,7 +53,6 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         color: Theme.colorIcon
-        fillMode: Image.PreserveAspectFit
     }
 
     Text {

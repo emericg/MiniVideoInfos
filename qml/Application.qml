@@ -404,7 +404,7 @@ ApplicationWindow {
                     if (UtilsPath.isMediaFile(drag.urls[i])) {
                         dropAreaImage.source = "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                         dropAreaIndicator.color = Theme.colorGreen
-                        break;
+                        break
                     }
                 }
             }
@@ -418,11 +418,11 @@ ApplicationWindow {
             if (drop.hasUrls) {
                 for (var i = 0; i < drop.urls.length; i++) {
                     //console.log("dropped URL: " + drop.urls[i])
-                    var fp = UtilsPath.cleanUrl(drop.urls[i]);
+                    var fp = UtilsPath.cleanUrl(drop.urls[i])
 
                     if (UtilsPath.isMediaFile(fp)) {
                         screenMediaList.loadMedia(fp)
-                        break;
+                        break
                     }
                 }
             }
@@ -446,7 +446,7 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                source: ""
+                fillMode: Image.PreserveAspectFit
                 color: "white"
             }
         }

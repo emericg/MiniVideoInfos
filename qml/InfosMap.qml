@@ -260,7 +260,6 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorPrimary
-                fillMode: Image.PreserveAspectFit
                 source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
             }
 

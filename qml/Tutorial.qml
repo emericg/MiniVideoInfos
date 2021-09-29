@@ -64,6 +64,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                    fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
                 }
                 Text {

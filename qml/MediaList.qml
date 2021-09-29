@@ -183,9 +183,9 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -4
 
-            color: Theme.colorIcon
-            fillMode: Image.PreserveAspectFit
             source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+            fillMode: Image.PreserveAspectFit
+            color: Theme.colorIcon
         }
 
         ButtonWireframe {
@@ -336,7 +336,6 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorActionbarContent
-                fillMode: Image.PreserveAspectFit
                 source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
             }
 
@@ -389,13 +388,9 @@ Item {
     ListView {
         id: mediaView
         anchors.top: bars.bottom
-        anchors.topMargin: 0
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
 
         visible: false
         model: mediaManager.mediaList
