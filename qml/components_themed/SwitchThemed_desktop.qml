@@ -19,19 +19,20 @@ Switch {
         radius: (width / 2)
 
         color: Theme.colorComponentBackground
+        Behavior on color { ColorAnimation { duration: 133; easing.type: Easing.InOutCirc; } }
+
         border.color: Theme.colorComponentBorder
         border.width: Theme.componentBorderWidth
 
         Rectangle {
             x: control.checked ? (parent.width - width) : 0
-            anchors.verticalCenter: parent.verticalCenter
+            Behavior on x { NumberAnimation { duration: 133 } }
             width: 24
             height: width
             radius: (width / 2)
+            anchors.verticalCenter: parent.verticalCenter
 
             color: control.checked ? Theme.colorPrimary : Theme.colorComponentBorder
-
-            Behavior on x { NumberAnimation { duration: 133 } }
         }
     }
 
@@ -43,7 +44,7 @@ Switch {
         textFormat: Text.PlainText
         font: control.font
 
-        color: Theme.colorText
+        color: control.checked ? Theme.colorText : Theme.colorSubText
         opacity: enabled ? 1.0 : 0.33
     }
 }

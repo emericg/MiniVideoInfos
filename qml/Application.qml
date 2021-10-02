@@ -8,6 +8,7 @@ import "qrc:/js/UtilsPath.js" as UtilsPath
 
 ApplicationWindow {
     id: appWindow
+
     minimumWidth: 400
     minimumHeight: 800
 

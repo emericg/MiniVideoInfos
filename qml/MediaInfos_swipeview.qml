@@ -177,7 +177,7 @@ Item {
         z: 5
         height: visible ? 72 : 0
         color: Theme.colorForeground
-        visible: !(isPhone && screenOrientation == 2)
+        visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)
 
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -538,7 +538,7 @@ Item {
         height: 56
         opacity: 0.9
         color: Theme.colorForeground
-        visible: !(isPhone && screenOrientation == 2) && (mediaPages.count > 1)
+        visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation) && (mediaPages.count > 1)
 
         Rectangle {
             height: 1

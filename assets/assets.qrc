@@ -65,7 +65,7 @@
         <file>icons_material/duotone-data_usage-24px.svg</file>
         <file>icons_material/duotone-edit-24px.svg</file>
         <file>icons_material/duotone-exit_to_app-24px.svg</file>
-        <file>icons_material/duotone-insert_chart_outlined-24px.svg</file>
+        <file>icons_material/duotone-insert_chart-24px.svg</file>
         <file>icons_material/duotone-library_add-24px.svg</file>
         <file>icons_material/duotone-list-24px.svg</file>
         <file>icons_material/duotone-minimize-24px.svg</file>
@@ -87,7 +87,6 @@
         <file>icons_material/outline-insert_music-24px.svg</file>
         <file>icons_material/outline-insert_photo-24px.svg</file>
         <file>icons_material/outline-local_movies-24px.svg</file>
-        <file>icons_material/outline-mail_outline-24px.svg</file>
         <file>icons_material/outline-photo_camera-24px.svg</file>
         <file>icons_material/outline-save-24px.svg</file>
         <file>icons_material/outline-settings-24px.svg</file>

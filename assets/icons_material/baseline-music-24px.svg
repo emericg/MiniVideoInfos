@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="24"
    height="24"
    viewBox="0 0 24 24"
    version="1.1"
-   id="svg6"
-   sodipodi:docname="baseline-music-24px.svg"
-   inkscape:version="0.92.4 5da689c313, 2019-01-14">
+   id="svg6">
   <path
      d="M 5 3 C 3.9 3 3 3.9 3 5 L 3 19 C 3 20.1 3.9 21 5 21 L 19 21 C 20.1 21 21 20.1 21 19 L 21 5 C 21 3.9 20.1 3 19 3 L 5 3 z M 12 7.4902344 L 15.410156 7.4902344 L 15.410156 8.9511719 L 13.460938 8.9511719 L 13.460938 14.3125 L 13.4375 14.3125 C 13.315678 15.408898 12.395167 16.261719 11.269531 16.261719 C 10.056184 16.261719 9.0761719 15.281707 9.0761719 14.068359 C 9.0761719 12.855012 10.056184 11.875 11.269531 11.875 C 11.527794 11.875 11.770975 11.92888 12 12.011719 L 12 7.4902344 z "
      id="path4" />

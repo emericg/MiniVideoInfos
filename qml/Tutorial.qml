@@ -195,7 +195,7 @@ Rectangle {
                     ImageSvg {
                         width: 32
                         height: width
-                        source: "qrc:/assets/icons_material/duotone-insert_chart_outlined-24px.svg"
+                        source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
                         color: Theme.colorIcon
                     }
                     Text {
