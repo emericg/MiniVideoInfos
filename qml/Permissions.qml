@@ -148,7 +148,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
                     anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -218,7 +220,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
                     anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

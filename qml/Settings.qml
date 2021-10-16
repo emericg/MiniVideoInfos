@@ -8,8 +8,8 @@ Item {
     width: 480
     height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenPaddingLeft
-    anchors.rightMargin: screenPaddingRight
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
         id: rectangleHeader
@@ -26,20 +26,25 @@ Item {
 
         Text {
             id: textTitle
-            anchors.left: parent.left
-            anchors.leftMargin: 16
             anchors.top: parent.top
             anchors.topMargin: 8
+            anchors.left: parent.left
+            anchors.leftMargin: screenPaddingLeft + 16
+            anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight + 16
 
             text: qsTr("Change persistent settings here!")
             font.pixelSize: 18
+            elide: Text.ElideRight
             color: Theme.colorText
         }
 
         Text {
             id: textSubtitle
             anchors.left: parent.left
-            anchors.leftMargin: 16
+            anchors.leftMargin: screenPaddingLeft + 16
+            anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight + 16
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 20
 
@@ -68,7 +73,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
-        id: scrollView
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
@@ -77,7 +81,6 @@ Item {
         anchors.bottom: parent.bottom
 
         Column {
-            id: column
             anchors.fill: parent
 
             topPadding: 12
@@ -90,9 +93,9 @@ Item {
                 id: element_appTheme
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_appTheme
@@ -194,9 +197,9 @@ Item {
                 id: element_appThemeAuto
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: screenPaddingRight
 
                 visible: (settingsManager.appTheme !== "night")
 
@@ -232,7 +235,7 @@ Item {
                     id: switch_appThemeAuto
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.appThemeAuto
@@ -245,9 +248,9 @@ Item {
             Text {
                 id: legend_appThemeAuto
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: screenPaddingLeft + 56
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 8
 
@@ -274,9 +277,9 @@ Item {
                 id: element_mediaFilter
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_mediaFilter
@@ -311,7 +314,7 @@ Item {
                     id: switch_mediaFilter
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.mediaFilter
@@ -325,9 +328,21 @@ Item {
                 id: element_mediaPreview
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: screenPaddingRight
+
+                ImageSvg {
+                    id: image_mediaPreview
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                }
 
                 Text {
                     id: text_mediaPreview
@@ -349,23 +364,11 @@ Item {
                     id: switch_mediaPreview
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.mediaPreview
                     onCheckedChanged: settingsManager.mediaPreview = checked
-                }
-
-                ImageSvg {
-                    id: image_mediaPreview
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorText
-                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                 }
             }
 
@@ -374,10 +377,10 @@ Item {
             Item {
                 id: element_mediaExport
                 height: 48
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: screenPaddingLeft
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_mediaExport
@@ -411,7 +414,7 @@ Item {
                     id: switch_mediaExport
                     z: 1
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
                     Component.onCompleted: checked = settingsManager.exportEnabled
@@ -425,9 +428,9 @@ Item {
                 id: element_unit
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_unit
@@ -516,9 +519,9 @@ Item {
                 id: element_sizes
                 height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                anchors.rightMargin: screenPaddingRight
 
                 ImageSvg {
                     id: image_sizes
@@ -622,9 +625,9 @@ Item {
             Text {
                 id: legend_sizes
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: screenPaddingLeft + 56
                 anchors.right: parent.right
-                anchors.rightMargin: 16
+                anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
                 bottomPadding: 8
 

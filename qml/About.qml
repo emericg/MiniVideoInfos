@@ -9,8 +9,6 @@ Item {
     width: 480
     height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenPaddingLeft
-    anchors.rightMargin: screenPaddingRight
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -32,7 +30,7 @@ Item {
             width: 64
             height: 64
             anchors.left: parent.left
-            anchors.leftMargin: 16
+            anchors.leftMargin: screenPaddingLeft + 16
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -4
 
@@ -53,7 +51,7 @@ Item {
             }
 
             Text {
-                text: qsTr("version %1").arg(utilsApp.appVersion())
+                text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
                 color: Theme.colorSubText
                 font.pixelSize: 18
             }
@@ -79,7 +77,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ScrollView {
-        id: scrollView
         contentWidth: -1
 
         anchors.top: rectangleHeader.bottom
@@ -89,8 +86,8 @@ Item {
 
         Column {
             anchors.fill: parent
-            anchors.rightMargin: 16
-            anchors.leftMargin: 16
+            anchors.leftMargin: screenPaddingLeft + 16
+            anchors.rightMargin: screenPaddingRight + 16
 
             topPadding: 8
             bottomPadding: 8
@@ -124,17 +121,12 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                //visible: isMobile
+                visible: isMobile || isDesktop
                 spacing: 16
-
-                onWidthChanged: {
-                    var ww = (scrollView.width - 48 - screenPaddingLeft - screenPaddingRight) / 2;
-                    if (ww > 0) { websiteBtn.width = ww; supportBtn.width = ww; }
-                }
 
                 ButtonWireframeImage {
                     id: websiteBtn
-                    width: 180
+                    width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
                     imgSize: 26
@@ -147,7 +139,7 @@ Item {
                 }
                 ButtonWireframeImage {
                     id: supportBtn
-                    width: 180
+                    width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
                     imgSize: 20
@@ -202,6 +194,44 @@ Item {
             ////////
 
             Item {
+                id: tuto
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                ImageSvg {
+                    id: tutoImg
+                    width: 27
+                    height: 27
+                    anchors.left: parent.left
+                    anchors.leftMargin: 2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                    color: Theme.colorText
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Open the tutorial")
+                    color: Theme.colorText
+                    font.pixelSize: 16
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: screenTutorial.reopen()
+                }
+            }
+
+            ////////
+
+            Item {
                 id: authors
                 height: 48
                 anchors.left: parent.left
@@ -241,6 +271,17 @@ Item {
                         cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
                 }
+
+                ImageSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+                    color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                }
             }
 
             ////////
@@ -253,7 +294,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                //visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                //visible: isMobile
 
                 ImageSvg {
                     id: rateImg
@@ -275,57 +316,28 @@ Item {
                     text: qsTr("Rate the application")
                     color: Theme.colorText
                     font.pixelSize: 16
-
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -12
-                        onClicked: {
-                            if (Qt.platform.os === "android")
-                                Qt.openUrlExternally("market://details?id=com.minivideo.infos")
-                            else if (Qt.platform.os === "ios")
-                                Qt.openUrlExternally("itms-apps://itunes.apple.com/app/1476046123")
-                            else
-                                Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/stargazers")
-                        }
-                    }
                 }
-            }
-
-            ////////
-
-            Item {
-                id: tuto
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 ImageSvg {
-                    id: tutoImg
-                    width: 27
-                    height: 27
-                    anchors.left: parent.left
-                    anchors.leftMargin: 2
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                    visible: singleColumn
                     color: Theme.colorText
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 }
 
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Open the tutorial")
-                    color: Theme.colorText
-                    font.pixelSize: 16
-
-                    MouseArea {
-                        anchors.fill: parent
-                        anchors.margins: -12
-                        onClicked: screenTutorial.reopen()
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if (Qt.platform.os === "android")
+                            Qt.openUrlExternally("market://details?id=com.minivideo.infos")
+                        else if (Qt.platform.os === "ios")
+                            Qt.openUrlExternally("itms-apps://itunes.apple.com/app/1476046123")
+                        else
+                            Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/stargazers")
                     }
                 }
             }
@@ -343,7 +355,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
                     anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -394,7 +408,6 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    anchors.margins: -12
                     onClicked: screenPermissions.loadScreen()
                 }
             }
@@ -403,14 +416,16 @@ Item {
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
-                    anchors.right: parent.right
                     anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
+                    anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }

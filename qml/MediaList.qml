@@ -224,7 +224,9 @@ Item {
             anchors.top: parent.bottom
             anchors.topMargin: -height
             anchors.left: parent.left
+            anchors.leftMargin: -screenPaddingLeft
             anchors.right: parent.right
+            anchors.rightMargin: -screenPaddingRight
             color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
         }
     }
