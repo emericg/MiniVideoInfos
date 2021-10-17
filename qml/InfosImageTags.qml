@@ -36,6 +36,7 @@ Flickable {
         info_gps_lat.text = mediaItem.latitudeString
         info_gps_long.text = mediaItem.longitudeString
         info_gps_alt.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
+        info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
 
         columnThumbnail.visible = false
     }
@@ -468,6 +469,24 @@ Flickable {
                 }
                 Text {
                     id: info_gps_alt
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("speed")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                    wrapMode: Text.WordWrap
+                }
+                Text {
+                    id: info_gps_speed
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

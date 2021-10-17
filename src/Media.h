@@ -139,12 +139,16 @@ class Media: public QObject
     Q_PROPERTY(QString latitudeString READ getLatitudeStr NOTIFY metadataUpdated)
     Q_PROPERTY(QString longitudeString READ getLongitudeStr NOTIFY metadataUpdated)
     Q_PROPERTY(QString altitudeString READ getAltitudeStr NOTIFY metadataUpdated)
+    Q_PROPERTY(QString directionString READ getDirectionStr NOTIFY metadataUpdated)
+    Q_PROPERTY(QString speedString READ getDirectionStr NOTIFY metadataUpdated)
+    Q_PROPERTY(QString gpsVersion READ getGpsVersion NOTIFY metadataUpdated)
     Q_PROPERTY(double latitude READ getLatitude NOTIFY metadataUpdated)
     Q_PROPERTY(double longitude READ getLongitude NOTIFY metadataUpdated)
     Q_PROPERTY(double altitude READ getAltitude NOTIFY metadataUpdated)
     Q_PROPERTY(unsigned gpsDop READ getGpsDop NOTIFY metadataUpdated)
     Q_PROPERTY(unsigned gpsDiff READ getGpsDiff NOTIFY metadataUpdated)
-    Q_PROPERTY(QString gpsVersion READ getGpsVersion NOTIFY metadataUpdated)
+    Q_PROPERTY(double direction READ getDirection NOTIFY metadataUpdated)
+    Q_PROPERTY(double speed READ getSpeed NOTIFY metadataUpdated)
 
     ////////
 
@@ -253,12 +257,16 @@ class Media: public QObject
     QString gps_long_str;
     QString gps_alt_str;
     QString gps_alt_egm96_str;
+    QString gps_direction_str;
+    QString gps_speed_str;
     double gps_lat = 0.0;
     double gps_long = 0.0;
     double gps_alt = 0.0;
     double gps_alt_egm96 = 0.0;
     unsigned gps_dop = 0;
     unsigned gps_diff = 0;
+    double gps_direction = 0.0;
+    double gps_speed = 0.0;
 
 Q_SIGNALS:
     void mediaUpdated();
@@ -353,12 +361,18 @@ public:
     QString getLatitudeStr() const { return gps_lat_str; }
     QString getLongitudeStr() const { return gps_long_str; }
     QString getAltitudeStr() const { return gps_alt_str; }
+    QString getDirectionStr() const { return gps_direction_str; }
+    QString getSpeedStr() const { return gps_speed_str; }
     double getLatitude() const { return gps_lat; }
     double getLongitude() const { return gps_long; }
     double getAltitude() const { return gps_alt; }
+    double getAltitudeOffset() const { return gps_alt_egm96; }
     unsigned getGpsDop() const { return gps_dop; }
     unsigned getGpsDiff() const { return gps_diff; }
     QString getGpsVersion() const { return gps_version; }
+    double getDirection() const { return gps_direction; }
+    double getSpeed() const { return gps_speed; }
+
 /*
     int getChapterCount() const;    //!< 0 means no notion of chapter
     int getHighlightCount() const { return m_highlights.size(); }

@@ -25,6 +25,8 @@
 #include "minivideo_textexport_qt.h"
 #include "utils/utils_app.h"
 
+#include "EGM96.h"
+
 #if defined(ENABLE_LIBEXIF)
 #include <libexif/exif-data.h>
 #endif
@@ -133,28 +135,28 @@ bool Media::getMetadataFromPicture()
 
         // Parse tags
         ExifEntry *entry;
-        char buf[1024];
+        char entry_buf[1024];
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_MAKE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            m_camera_brand = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            m_camera_brand = entry_buf;
             m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_MODEL);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            m_camera_model = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            m_camera_model = entry_buf;
             m_exif_tag_found++;
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_SOFTWARE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            m_camera_software = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            m_camera_software = entry_buf;
             m_exif_tag_found++;
         }
 
@@ -168,46 +170,46 @@ bool Media::getMetadataFromPicture()
             //0x9010	OffsetTime	string	ExifIFD	(time zone for ModifyDate)
 
             // ex: DateTime: 2018:08:10 10:37:08
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            m_date_metadata = QDateTime::fromString(buf, "yyyy:MM:dd hh:mm:ss");
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            m_date_metadata = QDateTime::fromString(entry_buf, "yyyy:MM:dd hh:mm:ss");
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_X_DIMENSION);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            width = QString::fromLatin1(buf).toUInt();
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            width = QString::fromLatin1(entry_buf).toUInt();
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_Y_DIMENSION);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            height = QString::fromLatin1(buf).toUInt();
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            height = QString::fromLatin1(entry_buf).toUInt();
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_X_RESOLUTION);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            resolution_x = QString::fromLatin1(buf).toUInt();
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            resolution_x = QString::fromLatin1(entry_buf).toUInt();
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_Y_RESOLUTION);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            resolution_y = QString::fromLatin1(buf).toUInt();
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            resolution_y = QString::fromLatin1(entry_buf).toUInt();
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_COLOR_SPACE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_COLOR_SPACE" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_1], EXIF_TAG_BITS_PER_SAMPLE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_BITS_PER_SAMPLE" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
@@ -277,10 +279,10 @@ bool Media::getMetadataFromPicture()
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FNUMBER);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            if (strlen(buf))
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            if (strlen(entry_buf))
             {
-                focal = buf;
+                focal = entry_buf;
                 focal.replace("f", "ƒ");
             }
             m_exif_tag_found++;
@@ -288,11 +290,11 @@ bool Media::getMetadataFromPicture()
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FOCAL_LENGTH);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            if (strlen(buf))
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            if (strlen(entry_buf))
             {
                 if (!focal.isEmpty()) focal += "  ";
-                focal += buf;
+                focal += entry_buf;
             }
             m_exif_tag_found++;
         }
@@ -300,64 +302,64 @@ bool Media::getMetadataFromPicture()
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_ISO_SPEED_RATINGS);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            iso = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            iso = entry_buf;
             m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_EXPOSURE_TIME);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            exposure_time = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            exposure_time = entry_buf;
             m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_EXPOSURE_BIAS_VALUE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            exposure_bias = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            exposure_bias = entry_buf;
             m_exif_tag_found++;
         }
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_METERING_MODE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            metering_mode = buf;
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            metering_mode = entry_buf;
             m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_SHARPNESS);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_SHARPNESS" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_SATURATION);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_SATURATION" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_SHUTTER_SPEED_VALUE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_SHUTTER_SPEED_VALUE" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_APERTURE_VALUE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_APERTURE_VALUE" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_MAX_APERTURE_VALUE);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
             //qDebug() << "EXIF_TAG_MAX_APERTURE_VALUE" << QString::fromLatin1(buf);
             //m_exif_tag_found++;
         }
@@ -366,8 +368,8 @@ bool Media::getMetadataFromPicture()
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FLASH);
         if (entry)
         {
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            int flashvalue = QString::fromLatin1(buf).toInt();
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            int flashvalue = QString::fromLatin1(entry_buf).toInt();
 
             if (flashvalue > 0) flash = true;
             m_exif_tag_found++;
@@ -384,8 +386,8 @@ bool Media::getMetadataFromPicture()
         if (entry)
         {
             // ex: GPSDateStamp: 2018:08:10
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            gpsDate = QDate::fromString(buf, "yyyy:MM:dd");
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            gpsDate = QDate::fromString(entry_buf, "yyyy:MM:dd");
             m_exif_tag_found++;
         }
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
@@ -393,11 +395,11 @@ bool Media::getMetadataFromPicture()
         if (entry)
         {
             // ex: GPSTimeStamp: 08:36:14,00
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            gpsTime = QTime::fromString(buf, "hh:mm:ss,z");
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            gpsTime = QTime::fromString(entry_buf, "hh:mm:ss,z");
 
             if (!gpsTime.isValid())
-                gpsTime = QTime::fromString(buf, "hh:mm:ss.z");
+                gpsTime = QTime::fromString(entry_buf, "hh:mm:ss.z");
             m_exif_tag_found++;
         }
 
@@ -414,30 +416,33 @@ bool Media::getMetadataFromPicture()
             if (entry)
             {
                 // ex: "45, 41, 24,5662800"
-                exif_entry_get_value(entry, buf, sizeof(buf));
-                QString str = buf;
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                QString str = entry_buf;
                 double deg = str.midRef(0, 2).toDouble();
                 double min = str.midRef(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
                 gps_lat = deg + min/60.0 + sec/3600.0;
-                gps_lat_str = str.mid(0, 2) + "° " + str.mid(4, 2) + "` " + str.mid(8, 8) + "``";
 
                 entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                                static_cast<ExifTag>(EXIF_TAG_GPS_LATITUDE_REF));
                 if (entry)
                 {
-                    exif_entry_get_value(entry, buf, sizeof(buf));
-                    if (strncmp(buf, "S", 1) == 0)
+                    exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                    if (strncmp(entry_buf, "S", 1) == 0)
+                    {
                         gps_lat = -gps_lat;
-                    gps_lat_str += " " +  QString::fromLatin1(buf);
+                        //gps_lat_str += " " +  QString::fromLatin1(buf);
+                    }
                 }
+
+                gps_lat_str = str.mid(0, 2) + "° " + str.mid(4, 2) + "` " + str.mid(8, 8) + "`` N";
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_LONGITUDE));
             if (entry)
             {
-                exif_entry_get_value(entry, buf, sizeof(buf));
-                QString str = buf;
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                QString str = entry_buf;
                 double deg = str.midRef(0, 2).toDouble();
                 double min = str.midRef(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
@@ -448,65 +453,115 @@ bool Media::getMetadataFromPicture()
                                                static_cast<ExifTag>(EXIF_TAG_GPS_LONGITUDE_REF));
                 if (entry)
                 {
-                    exif_entry_get_value(entry, buf, sizeof(buf));
-                    if (strncmp(buf, "W", 1) == 0)
+                    exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                    if (strncmp(entry_buf, "W", 1) == 0)
+                    {
                         gps_long = -gps_long;
-                    gps_long_str += " " + QString::fromLatin1(buf);
+                        //gps_long_str += " " + QString::fromLatin1(buf);
+                    }
+
+                    gps_long_str = str.midRef(0, 2) + "° " + str.midRef(4, 2) + "` " + str.mid(8, 8) + "`` E";
                 }
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_ALTITUDE));
             if (entry)
             {
-                exif_entry_get_value(entry, buf, sizeof(buf));
-                QString str = buf;
-                str.replace(',', '.');
-                gps_alt = str.toDouble();
-                gps_alt_str = QString::number(gps_alt, 'g', 3);
-                gps_alt_str += " " +  QObject::tr("meters");
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                gps_alt = QString::fromLatin1(entry_buf).replace(',', '.').toDouble();
 
                 entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                                static_cast<ExifTag>(EXIF_TAG_GPS_ALTITUDE_REF));
                 if (entry)
                 {
-                    exif_entry_get_value(entry, buf, sizeof(buf));
-                    QString gps_alt_ref_qstr = buf;
-                    if (gps_alt_ref_qstr.contains("below", Qt::CaseInsensitive))
+                    exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                    QString alt_ref_str = entry_buf;
+                    if (alt_ref_str.contains("below", Qt::CaseInsensitive))
                         gps_alt = -gps_alt;
                 }
+
+                gps_alt_str = QString::number(gps_alt, 'g', 3);
+                gps_alt_str += " " +  QObject::tr("meters");
+                gps_alt_egm96 = egm96_compute_altitude_offset(gps_lat, gps_long);
+            }
+            entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
+                                           static_cast<ExifTag>(EXIF_TAG_GPS_IMG_DIRECTION));
+            if (entry)
+            {
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                gps_direction = QString::fromLatin1(entry_buf).replace(',', '.').toDouble();
+                gps_direction_str = QString::number(gps_direction, 'g', 4);
+
+                //entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
+                //                               static_cast<ExifTag>(EXIF_TAG_GPS_IMG_DIRECTION_REF));
+                //if (entry)
+                //{
+                //    exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                //    QString dir_ref_str = entry_buf;
+                //}
+            }
+            entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
+                                           static_cast<ExifTag>(EXIF_TAG_GPS_SPEED));
+            if (entry)
+            {
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                gps_speed = QString::fromLatin1(entry_buf).replace(',', '.').toDouble();
+
+                entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
+                                               static_cast<ExifTag>(EXIF_TAG_GPS_SPEED_REF));
+                if (entry)
+                {
+                    exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+
+                    if (strncmp(entry_buf, "M", 1) == 0)
+                    {
+                        // miles/h to km/h
+                        gps_speed *= 1.60934;
+                    }
+                    else if (strncmp(entry_buf, "N", 1) == 0)
+                    {
+                        // knots to km/h
+                        gps_speed *= 1.852;
+                    }
+                    //else if (strncmp(entry_buf, "K", 1) == 0) //km/h
+                }
+
+                gps_speed_str = QString::number(gps_speed, 'g', 4);
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_VERSION_ID));
             if (entry)
             {
-                exif_entry_get_value(entry, buf, sizeof(buf));
-                gps_version = buf;
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                gps_version = entry_buf;
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_DIFFERENTIAL));
             if (entry)
             {
-                exif_entry_get_value(entry, buf, sizeof(buf));
-                gps_diff = QString::fromLatin1(buf).toUInt();
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                gps_diff = QString::fromLatin1(entry_buf).toUInt();
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_DOP));
             if (entry)
             {
-                exif_entry_get_value(entry, buf, sizeof(buf));
-                gps_dop = QString::fromLatin1(buf).toUInt();
+                exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+                gps_dop = QString::fromLatin1(entry_buf).toUInt();
             }
 /*
-            qDebug() << "gps_lat_str:" << gps_lat_str;
-            qDebug() << "gps_long_str:" << gps_long_str;
-            qDebug() << "gps_alt_str:" << gps_alt_str;
-            qDebug() << "gps_lat:" << gps_lat;
-            qDebug() << "gps_long:" << gps_long;
-            qDebug() << "gps_alt:" << gps_alt;
-            qDebug() << "gps_dop:" << m_gps_dop;
-            qDebug() << "gps_diff:" << m_gps_diff;
-            qDebug() << "gps_version:" << m_gps_version;
-            qDebug() << "gps_timestamp:" << m_date_gps;
+            qDebug() << "gps_timestamp: " << m_date_gps;
+            qDebug() << "gps_lat_str:   " << gps_lat_str;
+            qDebug() << "gps_long_str:  " << gps_long_str;
+            qDebug() << "gps_alt_str:   " << gps_alt_str;
+            qDebug() << "gps_direction_str:" << gps_direction_str;
+            qDebug() << "gps_speed_str: " << gps_speed_str;
+            qDebug() << "gps_lat:  " << gps_lat;
+            qDebug() << "gps_long: " << gps_long;
+            qDebug() << "gps_alt:  " << gps_alt;
+            qDebug() << "gps_alt_offset:" << gps_alt_egm96;
+            qDebug() << "gps_direction: " << gps_direction;
+            qDebug() << "gps_speed:     " << gps_speed;
 */
         }
 

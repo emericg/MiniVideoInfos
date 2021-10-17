@@ -31,6 +31,9 @@ DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
 
+# EGM96 altitude correction
+include(src/thirdparty/EGM96/EGM96.pri)
+
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \

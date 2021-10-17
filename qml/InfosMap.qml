@@ -20,21 +20,32 @@ Item {
         if (mediaItem.latitude !== 0.0) {
             center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
 
+            //
             map.center = center
             map.zoomLevel = 12
-            mapMarker.visible = true
-            mapMarker.coordinate = center
             button_map_dezoom.enabled = true
             button_map_zoom.enabled = true
+
+            // map marker
+            mapMarker.visible = true
+            if (mediaItem.direction) {
+                mapMarkerImg.source = "qrc:/assets/others/gps_marker_direction.svg"
+            } else {
+                mapMarkerImg.source = "qrc:/assets/others/gps_marker.svg"
+            }
+            mapMarker.rotation = mediaItem.direction
+            mapMarker.coordinate = center
 
             info_lat.text = mediaItem.latitudeString
             info_long.text = mediaItem.longitudeString
             info_altitude.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
-            item_altitude.visible = (mediaItem.altitude > 0)
-
+            row_altitude.visible = (mediaItem.altitude > 0)
+            info_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
+            row_speed.visible = (mediaItem.speed > 0)
             item_track.visible = false
             //info_track.text = mediaItem.gpscount
 
+            // scale indicator
             calculateScale()
         }
     }
@@ -135,6 +146,7 @@ Item {
                 width: 64
                 height: 64
                 source: "qrc:/assets/others/gps_marker.svg"
+                sourceSize: Qt.size(width, height)
             }
         }
 
@@ -167,6 +179,19 @@ Item {
                 selected: map.moove
                 onClicked: map.moove = !map.moove
                 source: "qrc:/assets/icons_material/baseline-open_with-24px.svg"
+            }
+            ItemImageButton {
+                id: button_map_center
+                width: 40
+                height: 40
+
+                background: true
+                backgroundColor: Theme.colorHeader
+                iconColor: (map.center === QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? Theme.colorHeaderContent : Theme.colorText
+                highlightMode: "color"
+
+                onClicked: map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
+                source: "qrc:/assets/icons_material/baseline-gps_fixed-24px.svg"
             }
         }
 
@@ -325,18 +350,18 @@ Item {
                         }
                     }
                 }
-                Item { ////
-                    id: item_altitude
-                    height: 20
+                Row { ////
                     anchors.left: parent.left
                     anchors.leftMargin: 56
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
+                    height: 20
+                    spacing: 24
+                    visible: (row_altitude.visible || row_speed.visible)
+
                     Row {
                         id: row_altitude
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 16
 
@@ -349,6 +374,26 @@ Item {
                         }
                         Text {
                             id: info_altitude
+                            color: Theme.colorText
+                            font.pixelSize: 15
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+
+                    Row {
+                        id: row_speed
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 16
+
+                        Text {
+                            text: qsTr("speed")
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: Theme.colorSubText
+                            font.pixelSize: 15
+                            wrapMode: Text.WordWrap
+                        }
+                        Text {
+                            id: info_speed
                             color: Theme.colorText
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap

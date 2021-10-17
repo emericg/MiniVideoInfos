@@ -75,12 +75,12 @@ Item {
                     }
                     opacity: (modelData[1] % 2) ? 0.66 : 1
                     color: {
-                        if (modelData[0] === 0)
-                            return Theme.colorSubText
-                        else if (modelData[0] === 1)
+                        if (modelData[0] === 1)
                             return Theme.colorMaterialOrange
                         else if (modelData[0] === 2)
                             return Theme.colorMaterialBlue
+                        else
+                            return Theme.colorSubText
                     }
                 }
             }
