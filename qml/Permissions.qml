@@ -131,7 +131,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
-                text: qsTr("Network state and internet permissions are used get load GPS maps.")
+                text: qsTr("Network state and internet permissions are used to load GPS maps.")
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

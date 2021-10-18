@@ -377,7 +377,32 @@ bool Media::getMetadataFromPicture()
         //EXIF_TAG_FLASH_ENERGY
         //EXIF_TAG_FLASH_PIX_VERSION
 
-        // GPS infos ///////////////////////////////////////////////////////////
+        // DateTime ////////////////////////////////////////////////////////////
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_DATE_TIME);
+        if (entry)
+        {
+            // TODO
+            //0x882a	TimeZoneOffset	int16s[n]	ExifIFD	(1 or 2 values: 1. The time zone offset of DateTimeOriginal from GMT in hours, 2. If present, the time zone offset of ModifyDate)
+            //0x9010	OffsetTime	string	ExifIFD	(time zone for ModifyDate)
+
+            // ex: DateTime: 2018:08:10 10:37:08
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            m_date_metadata = QDateTime::fromString(entry_buf, "yyyy:MM:dd hh:mm:ss");
+        }
+
+        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_DATE_TIME);
+        if (entry)
+        {
+            // TODO
+            //0x882a	TimeZoneOffset	int16s[n]	ExifIFD	(1 or 2 values: 1. The time zone offset of DateTimeOriginal from GMT in hours, 2. If present, the time zone offset of ModifyDate)
+            //0x9010	OffsetTime	string	ExifIFD	(time zone for ModifyDate)
+
+            // ex: DateTime: 2018:08:10 10:37:08
+            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            m_date_metadata = QDateTime::fromString(entry_buf, "yyyy:MM:dd hh:mm:ss");
+            m_exif_tag_found++;
+        }
 
         QDate gpsDate;
         QTime gpsTime;
@@ -406,6 +431,8 @@ bool Media::getMetadataFromPicture()
         if (gpsDate.isValid() && gpsTime.isValid())
             m_date_gps = QDateTime(gpsDate, gpsTime);
 
+        // GPS infos ///////////////////////////////////////////////////////////////
+
         if (m_date_gps.isValid())
         {
             m_hasGPS = true;
@@ -431,7 +458,7 @@ bool Media::getMetadataFromPicture()
                     if (strncmp(entry_buf, "S", 1) == 0)
                     {
                         gps_lat = -gps_lat;
-                        //gps_lat_str += " " +  QString::fromLatin1(buf);
+                        //gps_lat_str += " " +  QString::fromLatin1(entry_buf);
                     }
                 }
 
@@ -447,7 +474,6 @@ bool Media::getMetadataFromPicture()
                 double min = str.midRef(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
                 gps_long = deg + min/60.0 + sec/3600.0;
-                gps_long_str = str.mid(0, 2) + "° " + str.mid(4, 2) + "` " + str.mid(8, 8) + "``";
 
                 entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                                static_cast<ExifTag>(EXIF_TAG_GPS_LONGITUDE_REF));
@@ -457,11 +483,11 @@ bool Media::getMetadataFromPicture()
                     if (strncmp(entry_buf, "W", 1) == 0)
                     {
                         gps_long = -gps_long;
-                        //gps_long_str += " " + QString::fromLatin1(buf);
+                        //gps_long_str += " " + QString::fromLatin1(entry_buf);
                     }
-
-                    gps_long_str = str.midRef(0, 2) + "° " + str.midRef(4, 2) + "` " + str.mid(8, 8) + "`` E";
                 }
+
+                gps_long_str = str.midRef(0, 2) + "° " + str.midRef(4, 2) + "` " + str.mid(8, 8) + "`` E";
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_ALTITUDE));

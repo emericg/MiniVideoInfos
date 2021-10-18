@@ -35,7 +35,9 @@ Flickable {
         info_gps_date.text = mediaItem.dateGPS
         info_gps_lat.text = mediaItem.latitudeString
         info_gps_long.text = mediaItem.longitudeString
+        item_gps_alt.visible = (mediaItem.altitude > 0)
         info_gps_alt.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
+        item_gps_speed.visible =(mediaItem.speed > 0)
         info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
 
         columnThumbnail.visible = false
@@ -456,6 +458,7 @@ Flickable {
                 }
             }
             Row { ////
+                id: item_gps_alt
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24
@@ -474,6 +477,7 @@ Flickable {
                 }
             }
             Row { ////
+                id: item_gps_speed
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24

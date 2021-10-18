@@ -12,36 +12,33 @@ Item {
     implicitWidth: 480
     implicitHeight: 720
 
-    property var center: QtPositioning.coordinate(45.5, 6)
-
     function loadGps(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
         if (mediaItem.latitude !== 0.0) {
-            center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
 
-            //
-            map.center = center
+            // center view
+            map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
+            map.moove = false
             map.zoomLevel = 12
+
+            // buttons
             button_map_dezoom.enabled = true
             button_map_zoom.enabled = true
 
             // map marker
             mapMarker.visible = true
-            if (mediaItem.direction) {
-                mapMarkerImg.source = "qrc:/assets/others/gps_marker_direction.svg"
-            } else {
-                mapMarkerImg.source = "qrc:/assets/others/gps_marker.svg"
-            }
             mapMarker.rotation = mediaItem.direction
-            mapMarker.coordinate = center
+            mapMarker.coordinate = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
 
+            // legend
             info_lat.text = mediaItem.latitudeString
             info_long.text = mediaItem.longitudeString
             info_altitude.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
             row_altitude.visible = (mediaItem.altitude > 0)
             info_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
             row_speed.visible = (mediaItem.speed > 0)
+            row_altspd.visible = (mediaItem.altitude > 0 || mediaItem.speed > 0)
             item_track.visible = false
             //info_track.text = mediaItem.gpscount
 
@@ -68,7 +65,7 @@ Item {
                 if (dist < (scaleLengths[i] + scaleLengths[i+1]) / 2 ) {
                     f = scaleLengths[i] / dist
                     dist = scaleLengths[i]
-                    break;
+                    break
                 }
             }
             if (f === 0) {
@@ -118,9 +115,7 @@ Item {
         copyrightsVisible: false
 
         plugin: Plugin {
-            //name: "mapboxgl"
             preferred: ["mapboxgl", "osm", "esri"]
-            PluginParameter { name: "mapbox.mapping.highdpi_tiles"; value: "false"; }
             PluginParameter { name: "osm.mapping.highdpi_tiles"; value: "true"; }
         }
 
@@ -139,13 +134,16 @@ Item {
         MapQuickItem {
             id: mapMarker
             visible: false
-            anchorPoint.x: mapMarkerImg.width/2
-            anchorPoint.y: mapMarkerImg.height/2
+            anchorPoint.x: (mapMarkerImg.width / 2)
+            anchorPoint.y: (mapMarkerImg.height / 2)
             sourceItem: Image {
                 id: mapMarkerImg
                 width: 64
                 height: 64
-                source: "qrc:/assets/others/gps_marker.svg"
+                source: {
+                    if (mediaItem.direction) return "qrc:/assets/others/gps_marker_direction.svg"
+                    return "qrc:/assets/others/gps_marker.svg"
+                }
                 sourceSize: Qt.size(width, height)
             }
         }
@@ -185,9 +183,11 @@ Item {
                 width: 40
                 height: 40
 
+                visible: (map.center !== QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude))
                 background: true
                 backgroundColor: Theme.colorHeader
-                iconColor: (map.center === QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? Theme.colorHeaderContent : Theme.colorText
+                //iconColor: (map.center === QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? Theme.colorHeaderContent : Theme.colorText
+                iconColor: Theme.colorText
                 highlightMode: "color"
 
                 onClicked: map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
@@ -206,9 +206,11 @@ Item {
                 id: button_map_dezoom
                 width: 40
                 height: 40
+
+                highlightMode: "color"
+                iconColor: Theme.colorText
                 background: true
                 backgroundColor: Theme.colorHeader
-                iconColor: Theme.colorText
 
                 source: "qrc:/assets/icons_material/baseline-zoom_out-24px.svg"
                 onClicked: zoomOut()
@@ -218,9 +220,11 @@ Item {
                 id: button_map_zoom
                 width: 40
                 height: 40
+
+                highlightMode: "color"
+                iconColor: Theme.colorText
                 background: true
                 backgroundColor: Theme.colorHeader
-                iconColor: Theme.colorText
 
                 source: "qrc:/assets/icons_material/baseline-zoom_in-24px.svg"
                 onClicked: zoomIn()
@@ -351,6 +355,7 @@ Item {
                     }
                 }
                 Row { ////
+                    id: row_altspd
                     anchors.left: parent.left
                     anchors.leftMargin: 56
                     anchors.right: parent.right
@@ -358,7 +363,6 @@ Item {
 
                     height: 20
                     spacing: 24
-                    visible: (row_altitude.visible || row_speed.visible)
 
                     Row {
                         id: row_altitude
