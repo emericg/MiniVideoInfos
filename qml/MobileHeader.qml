@@ -70,7 +70,6 @@ Rectangle {
             color: Theme.colorHeaderContent
             font.bold: false
             font.pixelSize: Theme.fontSizeHeader
-            font.capitalization: Font.Capitalize
         }
 
         ////////////

@@ -86,11 +86,13 @@ public:
     }
 
     virtual void checkPendingIntents(const QString &workingDirPath) {
-        qDebug() << "checkPendingIntents" << workingDirPath;
+        //qDebug() << "checkPendingIntents" << workingDirPath;
+        Q_UNUSED(workingDirPath)
     }
 
     virtual QString getPathFromURI(const QString &contentURI) {
-        qDebug() << "getPathFromURI" << contentURI;
+        //qDebug() << "getPathFromURI" << contentURI;
+        Q_UNUSED(contentURI)
         return QString();
     }
 };

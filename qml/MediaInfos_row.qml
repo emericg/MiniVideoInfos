@@ -46,7 +46,9 @@ Item {
     function loadRowView() {
         content_generic.loadGeneric()
 
+        videoRepeater.model = null
         videoRepeater.model = mediaItem.videoTracksCount
+        audioRepeater.model = null
         audioRepeater.model = mediaItem.audioTracksCount
 
         item_subtitles.visible = mediaItem.hasSubtitles

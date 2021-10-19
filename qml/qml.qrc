@@ -25,7 +25,6 @@
         <file>InfosExport.qml</file>
 
         <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
-        <file alias="ItemImagePopup.qml">components/ItemImagePopup.qml</file>
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
         <file alias="ItemLoading.qml">components/ItemLoading.qml</file>
         <file alias="ItemSwipeMenu.qml">components/ItemSwipeMenu.qml</file>
@@ -34,6 +33,7 @@
         <file alias="FileDialog_platformfile.qml">components/FileDialog_platformfile.qml</file>
         <file alias="FileDialog_platformfolder.qml">components/FileDialog_platformfolder.qml</file>
         <file alias="FileDialog_quickdialogs.qml">components/FileDialog_quickdialogs.qml</file>
+        <file alias="PopupImage.qml">popups/PopupImage.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>

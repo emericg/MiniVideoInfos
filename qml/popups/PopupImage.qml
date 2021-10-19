@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import ThemeEngine 1.0
 
 Popup {
-    id: itemImagePopup
+    id: popupImage
     x: 0
     y: -appWindow.height // go over app header
     width: appWindow.width
@@ -39,7 +39,7 @@ Popup {
     contentItem: Item {
         Image {
             anchors.fill: parent
-            source: itemImagePopup.source
+            source: popupImage.source
             autoTransform: true
             fillMode: Image.PreserveAspectFit
         }
@@ -47,7 +47,7 @@ Popup {
             anchors.fill: parent
 
             onClicked: {
-                itemImagePopup.close()
+                popupImage.close()
             }
         }
     }

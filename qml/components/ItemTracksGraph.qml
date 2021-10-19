@@ -45,8 +45,8 @@ Item {
         trackCurrent = [0, 0, ((mediaItem.size - dataSize) / mediaItem.size) * 1]
         trackTable.push(trackCurrent)
 
-        repeaterTrack.model = trackTable
         //console.log(trackTable)
+        repeaterTrack.model = trackTable
     }
 
     ////////////////////////////////////////////////////////////////////////////

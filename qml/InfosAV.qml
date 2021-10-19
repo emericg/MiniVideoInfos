@@ -25,9 +25,9 @@ Flickable {
         item_delay.visible = (trackItem.delay !== 0)
         info_delay.text = UtilsString.durationToString_short(trackItem.delay)
 
+        //item_title.height = (info_title.height > 24) ? info_title.height + 4 : 24
         item_title.visible = (trackItem.title.length > 0)
         info_title.text = trackItem.title
-        //item_title.height = (info_title.height > 24) ? info_title.height + 4 : 24
 
         item_language.visible = (trackItem.language.length > 0)
         info_language.text = trackItem.language

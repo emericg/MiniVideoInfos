@@ -503,14 +503,15 @@ Flickable {
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
+                visible: (info_iresolution.text.length > 0)
 
                 Text {
-                    text: qsTr("aspect ratio")
+                    text: qsTr("resolution")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_iaspectratio
+                    id: info_iresolution
                     color: Theme.colorText
                     font.pixelSize: 15
                 }
@@ -537,15 +538,14 @@ Flickable {
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
-                visible: (info_iresolution.text.length > 0)
 
                 Text {
-                    text: qsTr("resolution")
+                    text: qsTr("aspect ratio")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_iresolution
+                    id: info_iaspectratio
                     color: Theme.colorText
                     font.pixelSize: 15
                 }
@@ -641,8 +641,8 @@ Flickable {
                     autoTransform: true
                     fillMode: Image.PreserveAspectFit
 
-                    ItemImagePopup {
-                        id: itemImagePopup
+                    PopupImage {
+                        id: popupImage
                     }
                 }
                 MouseArea {
@@ -650,14 +650,14 @@ Flickable {
 
                     onClicked: {
                         if (isMobile) {
-                            itemImagePopup.source = info_preview.source
-                            itemImagePopup.open()
+                            popupImage.source = info_preview.source
+                            popupImage.open()
                         }
                     }
                     onDoubleClicked: {
                         if (isDesktop) {
-                            itemImagePopup.source = info_preview.source
-                            itemImagePopup.open()
+                            popupImage.source = info_preview.source
+                            popupImage.open()
                         }
                     }
                     onPressAndHold: {
@@ -905,7 +905,7 @@ Flickable {
                     anchors.left: parent.left
                     anchors.leftMargin: 56
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: 8
                     height: Math.max(UtilsNumber.alignTo(audioCodecText.height + 4, 4), 24)
                     spacing: 16
 
