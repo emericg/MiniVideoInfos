@@ -31,7 +31,7 @@
 
 /* ************************************************************************** */
 
-QString getDurationString(const uint64_t duration)
+QString getDurationQString(const uint64_t duration)
 {
     QString duration_qstr;
 
@@ -69,12 +69,12 @@ QString getDurationString(const uint64_t duration)
         duration_qstr = QObject::tr("NULL duration");
     }
 
-    //qDebug() << "getDurationString(" << duration << ") >" << duration_qstr;
+    //qDebug() << "getDurationQString(" << duration << ") >" << duration_qstr;
 
     return duration_qstr;
 }
 
-QString getTimestampPreciseString(const uint64_t timestamp)
+QString getTimestampPreciseQString(const uint64_t timestamp)
 {
     QString timestamp_qstr;
 
@@ -116,12 +116,12 @@ QString getTimestampPreciseString(const uint64_t timestamp)
         }
     }
 
-    //qDebug() << "getTimestampPreciseString(" << timestamp << ") >" << timestamp_qstr;
+    //qDebug() << "getTimestampPreciseQString(" << timestamp << ") >" << timestamp_qstr;
 
     return timestamp_qstr;
 }
 
-QString getTimestampSmtpeString(const uint64_t timestamp, const double framerate)
+QString getTimestampSmtpeQString(const uint64_t timestamp, const double framerate)
 {
     QString timestamp_qstr;
 
@@ -146,14 +146,14 @@ QString getTimestampSmtpeString(const uint64_t timestamp, const double framerate
                             .arg(frames, 3, 10, QChar('0'));
     }
 
-    //qDebug() << "getTimestampSmtpeString(" << timestamp << ") >" << timestamp_qstr;
+    //qDebug() << "getTimestampSmtpeQString(" << timestamp << ") >" << timestamp_qstr;
 
     return timestamp_qstr;
 }
 
 /* ************************************************************************** */
 
-QString getSizeString(const int64_t size)
+QString getSizeQString(const int64_t size)
 {
     QString size_qstr;
 
@@ -187,12 +187,12 @@ QString getSizeString(const int64_t size)
         size_qstr = QObject::tr("NULL size");
     }
 
-    //qDebug() << "getDurationString(" << size << ") >" << size_qstr;
+    //qDebug() << "getDurationQString(" << size << ") >" << size_qstr;
 
     return size_qstr;
 }
 
-QString getTrackSizeString(const MediaStream_t *track, const int64_t file_size, const bool detailed)
+QString getTrackSizeQString(const MediaStream_t *track, const int64_t file_size, const bool detailed)
 {
     QString size_qstr;
 
@@ -273,7 +273,7 @@ QString getTrackSizeString(const MediaStream_t *track, const int64_t file_size, 
 
 /* ************************************************************************** */
 
-QString getTrackTypeString(const MediaStream_t *track)
+QString getTrackTypeQString(const MediaStream_t *track)
 {
     QString type_qstr;
 
@@ -320,7 +320,7 @@ QString getTrackTypeString(const MediaStream_t *track)
     return type_qstr;
 }
 
-QString getSampleTypeString(const unsigned sampleType)
+QString getSampleTypeQString(const unsigned sampleType)
 {
     QString sample_type_qstr;
 
@@ -350,120 +350,145 @@ QString getSampleTypeString(const unsigned sampleType)
     return sample_type_qstr;
 }
 
-QString getAspectRatioString(const unsigned x, const unsigned y, const bool detailed)
+QString getAspectRatioQString(const unsigned x, const unsigned y, const bool detailed)
 {
     double ar_d = static_cast<double>(x) / static_cast<double>(y);
-    return getAspectRatioString(ar_d, detailed);
+    return getAspectRatioQString(ar_d, detailed);
 }
 
-QString getAspectRatioString(double ar_d, const bool detailed)
+QString getAspectRatioQString(double ar_d, const bool detailed)
 {
     QString aspectratio_qstr;
 
-    if (ar_d > 1.24 && ar_d < 1.26)
+    if (ar_d > 0.99 && ar_d < 1.01)
     {
-        aspectratio_qstr = "5:4";
+        aspectratio_qstr = "1:1";
+        if (detailed) aspectratio_qstr += " (square)";
     }
-    else if (ar_d > 1.323 && ar_d < 1.343)
+    if (ar_d > 1.0)
     {
-        aspectratio_qstr = "4:3";
-    }
-    else if (ar_d > 1.42 && ar_d < 1.44)
-    {
-        aspectratio_qstr = "1.43:1";
-
-        if (detailed)
-            aspectratio_qstr += " (IMAX)";
-    }
-    else if (ar_d > 1.49 && ar_d < 1.51)
-    {
-        aspectratio_qstr = "3:2";
-    }
-    else if (ar_d > 1.545 && ar_d < 1.565)
-    {
-        aspectratio_qstr = "14:9";
-    }
-    else if (ar_d > 1.59 && ar_d < 1.61)
-    {
-        aspectratio_qstr = "16:10";
-    }
-    else if (ar_d > 1.656 && ar_d < 1.676)
-    {
-        aspectratio_qstr = "5:3";
-
-        if (detailed)
-            aspectratio_qstr += " (35 mm film)";
-    }
-    else if (ar_d > 1.767 && ar_d < 1.787)
-    {
-        aspectratio_qstr = "16:9";
-    }
-    else if (ar_d > 1.84 && ar_d < 1.86)
-    {
-        aspectratio_qstr = "1.85:1";
-
-        if (detailed)
-            aspectratio_qstr += " (US / UK widescreen)";
-    }
-    else if (ar_d > 1.886 && ar_d < 1.906)
-    {
-        aspectratio_qstr = "1.896:1";
-
-        if (detailed)
-            aspectratio_qstr += " (DCI / SMPTE digital cinema)";
-    }
-    else if (ar_d > 1.99 && ar_d < 2.01)
-    {
-        aspectratio_qstr = "2.0:1";
-
-        if (detailed)
-            aspectratio_qstr += " (SuperScope / Univisium)";
-    }
-    else if (ar_d > 2.19 && ar_d < 2.22)
-    {
-        aspectratio_qstr = "2.20:1";
-
-        if (detailed)
-            aspectratio_qstr += " (70 mm film)";
-    }
-    else if (ar_d > 2.34 && ar_d < 2.36)
-    {
-        aspectratio_qstr = "2.35:1";
-
-        if (detailed)
-            aspectratio_qstr += " (35 mm anamorphic)";
-    }
-    else if (ar_d > 2.38 && ar_d < 2.40)
-    {
-        aspectratio_qstr = "2.39:1";
-
-        if (detailed)
-            aspectratio_qstr += " (35 mm modern anamorphic)";
-    }
-    else if (ar_d < 2.41)
-    {
-        aspectratio_qstr = "2.4:1";
-
-        if (detailed)
-            aspectratio_qstr += " (35 mm modern anamorphic)";
-    }
-    else if (ar_d > 2.54 && ar_d < 2.56)
-    {
-        aspectratio_qstr = "2.55:1";
-
-        if (detailed)
-            aspectratio_qstr += " (Cinemascope)";
-    }
-    else if (ar_d > 2.75 && ar_d < 2.77)
-    {
-        aspectratio_qstr = "2.76:1";
-
-        if (detailed)
-            aspectratio_qstr += " (Ultra Panavision 70)";
+        if (ar_d > 1.24 && ar_d < 1.26)
+        {
+            aspectratio_qstr = "5:4";
+        }
+        else if (ar_d > 1.323 && ar_d < 1.343)
+        {
+            aspectratio_qstr = "4:3";
+        }
+        else if (ar_d > 1.42 && ar_d < 1.44)
+        {
+            aspectratio_qstr = "1.43:1";
+            if (detailed) aspectratio_qstr += " (IMAX)";
+        }
+        else if (ar_d > 1.49 && ar_d < 1.51)
+        {
+            aspectratio_qstr = "3:2";
+        }
+        else if (ar_d > 1.545 && ar_d < 1.565)
+        {
+            aspectratio_qstr = "14:9";
+        }
+        else if (ar_d > 1.59 && ar_d < 1.61)
+        {
+            aspectratio_qstr = "16:10";
+        }
+        else if (ar_d > 1.656 && ar_d < 1.676)
+        {
+            aspectratio_qstr = "5:3";
+            if (detailed) aspectratio_qstr += " (35 mm film)";
+        }
+        else if (ar_d > 1.767 && ar_d < 1.787)
+        {
+            aspectratio_qstr = "16:9";
+        }
+        else if (ar_d > 1.84 && ar_d < 1.86)
+        {
+            aspectratio_qstr = "1.85:1";
+            if (detailed) aspectratio_qstr += " (US / UK widescreen)";
+        }
+        else if (ar_d > 1.886 && ar_d < 1.906)
+        {
+            aspectratio_qstr = "1.896:1";
+            if (detailed) aspectratio_qstr += " (DCI / SMPTE digital cinema)";
+        }
+        else if (ar_d > 1.99 && ar_d < 2.01)
+        {
+            aspectratio_qstr = "2.0:1";
+            if (detailed) aspectratio_qstr += " (SuperScope / Univisium)";
+        }
+        else if (ar_d > 2.19 && ar_d < 2.22)
+        {
+            aspectratio_qstr = "2.20:1";
+            if (detailed) aspectratio_qstr += " (70 mm film)";
+        }
+        else if (ar_d > 2.34 && ar_d < 2.36)
+        {
+            aspectratio_qstr = "2.35:1";
+            if (detailed) aspectratio_qstr += " (35 mm anamorphic)";
+        }
+        else if (ar_d > 2.38 && ar_d < 2.40)
+        {
+            aspectratio_qstr = "2.39:1";
+            if (detailed) aspectratio_qstr += " (35 mm modern anamorphic)";
+        }
+        else if (ar_d < 2.41)
+        {
+            aspectratio_qstr = "2.4:1";
+            if (detailed) aspectratio_qstr += " (35 mm modern anamorphic)";
+        }
+        else if (ar_d > 2.54 && ar_d < 2.56)
+        {
+            aspectratio_qstr = "2.55:1";
+            if (detailed) aspectratio_qstr += " (Cinemascope)";
+        }
+        else if (ar_d > 2.75 && ar_d < 2.77)
+        {
+            aspectratio_qstr = "2.76:1";
+            if (detailed) aspectratio_qstr += " (Ultra Panavision 70)";
+        }
+        else
+        {
+            aspectratio_qstr = QString::number(ar_d, 'g', 4) + ":1";
+        }
     }
     else
     {
-        aspectratio_qstr = QString::number(ar_d, 'g', 4) + ":1";
+        if (ar_d > 0.49 && ar_d < 0.51)
+        {
+            aspectratio_qstr = "1:2";
+        }
+        else if (ar_d > 0.42 && ar_d < 0.435)
+        {
+            aspectratio_qstr = "9:21";
+        }
+        else if (ar_d > 0.55 && ar_d < 0.57)
+        {
+            aspectratio_qstr = "9:16";
+        }
+        else if (ar_d > 0.59 && ar_d < 0.61)
+        {
+            aspectratio_qstr = "3:5";
+        }
+        else if (ar_d > 0.62 && ar_d < 0.63)
+        {
+            aspectratio_qstr = "10:16";
+        }
+        else if (ar_d > 0.66 && ar_d < 0.70)
+        {
+            aspectratio_qstr = "2:3";
+        }
+        else if (ar_d > 0.74 && ar_d < 0.76)
+        {
+            aspectratio_qstr = "3:4";
+        }
+        else if (ar_d > 0.79 && ar_d < 0.81)
+        {
+            aspectratio_qstr = "4:5";
+        }
+        else
+        {
+            aspectratio_qstr = QString::number(ar_d, 'g', 4) + ":1";
+        }
     }
 
     //qDebug() << "getAspectRatioString(" << x << "," << y << ") >" << aspectratio_qstr;
@@ -471,7 +496,7 @@ QString getAspectRatioString(double ar_d, const bool detailed)
     return aspectratio_qstr;
 }
 
-QString getBitrateString(const unsigned bitrate)
+QString getBitrateQString(const unsigned bitrate)
 {
     QString bitrate_qstr;
 
@@ -500,7 +525,7 @@ QString getBitrateString(const unsigned bitrate)
     return bitrate_qstr;
 }
 
-QString getBitrateModeString(const BitrateMode_e bitrateMode)
+QString getBitrateModeQString(const BitrateMode_e bitrateMode)
 {
     QString bitrate_mode_qstr;
 
@@ -516,7 +541,7 @@ QString getBitrateModeString(const BitrateMode_e bitrateMode)
     return bitrate_mode_qstr;
 }
 
-QString getFramerateModeString(const FramerateMode_e framerateMode)
+QString getFramerateModeQString(const FramerateMode_e framerateMode)
 {
     QString framerate_mode_qstr;
 
@@ -528,7 +553,7 @@ QString getFramerateModeString(const FramerateMode_e framerateMode)
     return framerate_mode_qstr;
 }
 
-QString getProjectionString(const Projection_e projection)
+QString getProjectionQString(const Projection_e projection)
 {
     QString projection_qstr;
 
@@ -548,7 +573,7 @@ QString getProjectionString(const Projection_e projection)
     return projection_qstr;
 }
 
-QString getRotationString(const Rotation_e rotation)
+QString getRotationQString(const Rotation_e rotation)
 {
     QString rotation_qstr;
 
@@ -566,7 +591,7 @@ QString getRotationString(const Rotation_e rotation)
     return rotation_qstr;
 }
 
-QString getChannelModeString(const ChannelMode_e channelMode)
+QString getChannelModeQString(const ChannelMode_e channelMode)
 {
     QString channel_mode_qstr;
 
@@ -606,7 +631,7 @@ QString getChannelModeString(const ChannelMode_e channelMode)
     return channel_mode_qstr;
 }
 
-QString getStereoModeString(const StereoMode_e stereoMode)
+QString getStereoModeQString(const StereoMode_e stereoMode)
 {
     QString channel_mode_qstr;
 
@@ -644,15 +669,31 @@ QString getStereoModeString(const StereoMode_e stereoMode)
 
 /* ************************************************************************** */
 
-QString getFourccString(const unsigned fourcc)
+QString getFourccQString(const unsigned fourcc)
 {
     char fcc_str[5];
     return QString::fromUtf8(getFccString_le(fourcc, fcc_str));
 }
 
+QString getContainerQString(const Containers_e container, const bool long_description)
+{
+    QString qcontainer = QString::fromUtf8(getContainerString(container, long_description));
+    if (qcontainer.isEmpty()) qcontainer = QObject::tr("Unknown");
+
+    return qcontainer;
+}
+
+QString getCodecQString(const StreamType_e type, const Codecs_e codec, const bool long_description)
+{
+    QString qcodec = QString::fromUtf8(getCodecString(type, codec, long_description));
+    if (qcodec.isEmpty()) qcodec = QObject::tr("Unknown");
+
+    return qcodec;
+}
+
 /* ************************************************************************** */
 
-QString getLanguageString(const char *languageCode)
+QString getLanguageQString(const char *languageCode)
 {
     QString langage_qstr;
 

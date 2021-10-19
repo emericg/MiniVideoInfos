@@ -70,12 +70,15 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(double frameDuration READ getFrameDuration NOTIFY trackUpdated)
     Q_PROPERTY(double sampleDuration READ getAudioSampleDuration NOTIFY trackUpdated)
 
-    //
+    // video
     Q_PROPERTY(int width READ getWidth NOTIFY trackUpdated)
     Q_PROPERTY(int height READ getHeight NOTIFY trackUpdated)
-    Q_PROPERTY(int width_visible READ getWidthVisible NOTIFY trackUpdated)
-    Q_PROPERTY(int height_visible READ getHeightVisible NOTIFY trackUpdated)
+    Q_PROPERTY(int widthVisible READ getWidthVisible NOTIFY trackUpdated)
+    Q_PROPERTY(int heightVisible READ getHeightVisible NOTIFY trackUpdated)
     Q_PROPERTY(double framerate READ getFramerate NOTIFY trackUpdated)
+    Q_PROPERTY(double var READ getVAR NOTIFY trackUpdated)
+    Q_PROPERTY(double dar READ getDAR NOTIFY trackUpdated)
+    Q_PROPERTY(double par READ getPAR NOTIFY trackUpdated)
     Q_PROPERTY(int colorDepth READ getColorDepth NOTIFY trackUpdated)
     Q_PROPERTY(bool colorRange READ getColorRange NOTIFY trackUpdated)
     Q_PROPERTY(QString colorPrimaries READ getColorPrimaries NOTIFY trackUpdated)
@@ -87,7 +90,7 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(int stereoMode READ getStereoMode NOTIFY trackUpdated)
     Q_PROPERTY(int scanMode READ getScanMode NOTIFY trackUpdated)
 
-    //
+    // audio
     Q_PROPERTY(int audioChannels READ getAudioChannels NOTIFY trackUpdated)
     Q_PROPERTY(int audioChannelsMode READ getAudioChannelsMode NOTIFY trackUpdated)
     Q_PROPERTY(int audioSamplerate READ getAudioSamplerate NOTIFY trackUpdated)
@@ -153,7 +156,9 @@ private:
     int getHeightVisible() const;
     double getFramerate() const;
     double getCodecLevel() const;
-    //double getAR() const;
+    double getVAR() const;
+    double getDAR() const;
+    double getPAR() const;
     int getProjection() const;
     int getOrientation() const;
     int getScanMode() const;

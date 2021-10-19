@@ -19,8 +19,6 @@ function cleanUrl(pathInput) {
         if (input.slice(0, 8) === "file:///") {
             var k = input.charAt(9) === ':' ? 8 : 7;
             stringOut = input.substring(k);
-        } else if (input.slice(0, 5) === "qrc:/") {
-            stringOut = input.substring(4);
         } else if (input.slice(0, 10) === "content://") {
             // 'content://com.android.providers.media.documents/document/' + filename
             // 'content://' + 'app.package' + '/root/' + path
@@ -92,7 +90,8 @@ function isVideoFile(filePath) {
             extension === "3gp" || extension === "3gpp" ||
             extension === "mkv" || extension === "webm" ||
             extension === "avi" || extension === "divx" ||
-            extension === "asf" || extension === "wmv") {
+            extension === "asf" || extension === "wmv" ||
+            extension === "insv") {
             valid = true;
         }
     }
@@ -115,7 +114,8 @@ function isPictureFile(filePath) {
             extension === "heif" || extension === "heic" || extension === "avif" ||
             extension === "tga" || extension === "bmp" ||
             extension === "tif" || extension === "tiff" ||
-            extension === "svg") {
+            extension === "svg" ||
+            extension === "insp") {
             valid = true;
         }
     }

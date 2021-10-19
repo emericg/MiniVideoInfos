@@ -87,6 +87,10 @@ class Media: public QObject
     // image/video metadata
     Q_PROPERTY(unsigned width READ getWidth NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned height READ getHeight NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned ar READ getAr NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned widthVisible READ getWidthVisible NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned heightVisible READ getHeightVisible NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned arVisible READ getArVisible NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned depth READ getDepth NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned resolution READ getResolution NOTIFY mediaUpdated)
     Q_PROPERTY(bool alpha READ getAlpha NOTIFY mediaUpdated)
@@ -191,11 +195,15 @@ class Media: public QObject
     // GLOBAL metadata
     unsigned width = 0;
     unsigned height = 0;
+    unsigned ar = 0;
+    unsigned width_visible = 0;
+    unsigned height_visible = 0;
+    unsigned ar_visible = 0;
     unsigned bpp = 0;
     bool alpha = false;
     unsigned projection = 0;
     unsigned transformation = 0;    //!< QImageIOHandler::Transformation
-    int rotation = 0;
+    int rotation = 0;               // internal use only
 
     // IMAGE metadata
     bool m_hasEXIF = false;
@@ -285,6 +293,7 @@ public:
     bool getMetadataFromPicture();
     bool getMetadataFromVideo();
     bool getMetadataFromAudio();
+    void computeAdditionalMetadata();
 
     QString getName() const { return m_file_name; }
     QString getFolder() const { return m_file_folder; }
@@ -305,6 +314,10 @@ public:
 
     unsigned getWidth() const { return width; }
     unsigned getHeight() const { return height; }
+    unsigned getAr() const { return ar; }
+    unsigned getWidthVisible() const { return width_visible; }
+    unsigned getHeightVisible() const { return height_visible; }
+    unsigned getArVisible() const { return ar_visible; }
     unsigned getDepth() const { return bpp; }
     bool getAlpha() const { return alpha; }
     unsigned getProjection() const { return projection; }

@@ -21,6 +21,7 @@
  */
 
 #include "Media.h"
+#include "MediaUtils.h"
 #include "minivideo_utils_qt.h"
 #include "minivideo_textexport_qt.h"
 #include "utils/utils_app.h"
@@ -122,20 +123,19 @@ bool Media::getMetadataFromPicture()
 
 #if defined(ENABLE_LIBEXIF)
 
-    // Check if the file is already parsed;
     ExifData *ed = exif_data_new_from_file(m_path.toLocal8Bit());
     if (ed)
     {
         m_hasEXIF = true;
         m_exif_tag_found = 0;
 
-        // EXIF ////////////////////////////////////////////////////////////////
-
-        ExifByteOrder byteOrder = exif_data_get_byte_order(ed);
-
         // Parse tags
         ExifEntry *entry;
         char entry_buf[1024];
+
+        ExifByteOrder byteOrder = exif_data_get_byte_order(ed);
+
+        // EXIF ////////////////////////////////////////////////////////////////
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_MAKE);
         if (entry)
@@ -160,19 +160,7 @@ bool Media::getMetadataFromPicture()
             m_exif_tag_found++;
         }
 
-        ////////////////
-
-        entry = exif_content_get_entry(ed->ifd[EXIF_IFD_0], EXIF_TAG_DATE_TIME);
-        if (entry)
-        {
-            // TODO
-            //0x882a	TimeZoneOffset	int16s[n]	ExifIFD	(1 or 2 values: 1. The time zone offset of DateTimeOriginal from GMT in hours, 2. If present, the time zone offset of ModifyDate)
-            //0x9010	OffsetTime	string	ExifIFD	(time zone for ModifyDate)
-
-            // ex: DateTime: 2018:08:10 10:37:08
-            exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
-            m_date_metadata = QDateTime::fromString(entry_buf, "yyyy:MM:dd hh:mm:ss");
-        }
+        // Geometry ////////////////////////////////////////////////////////////
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_PIXEL_X_DIMENSION);
         if (entry)
@@ -224,17 +212,20 @@ bool Media::getMetadataFromPicture()
         if (entry)
         {
 /*
-            1 = Horizontal (normal)     // "Top-left"
-            2 = Mirror horizontal       // "Top-right"
-            3 = Rotate 180              // "Bottom-right"
-            4 = Mirror vertical         // "Bottom-left"
-            5 = Mirror horizontal and rotate 270 CW // "Left-top"
+            1 = Horizontal (default)                // "Top-left"
+            2 = Mirror horizontal                   // "Top-right"
+            3 = Rotate 180                          // "Bottom-right"
+            4 = Mirror vertical                     // "Bottom-left"
+            5 = Mirror vertical and rotate 90 CW    // "Left-top"
             6 = Rotate 90 CW                        // "Right-top"
             7 = Mirror horizontal and rotate 90 CW  // "Right-bottom"
             8 = Rotate 270 CW                       // "Left-bottom"
 */
             int orientation = exif_get_short(entry->data, byteOrder);
-            //qDebug() << "orientation:" << orientation;
+            //qDebug() << "orientation value:" << orientation;
+
+            //exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
+            //qDebug() << "orientation string:" << entry_buf;
 
             if (orientation == 1)
                 transformation = QImageIOHandler::TransformationNone;
@@ -252,29 +243,11 @@ bool Media::getMetadataFromPicture()
                 transformation = QImageIOHandler::TransformationMirrorAndRotate90;
             else if (orientation == 8)
                 transformation = QImageIOHandler::TransformationRotate270;
-/*
-            exif_entry_get_value(entry, buf, sizeof(buf));
-            //qDebug() << "orientation string:" << buf;
 
-            if (strncmp(buf, "Top-left", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationNone;
-            else if (strncmp(buf, "Top-right", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationMirror;
-            else if (strncmp(buf, "Bottom-right", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationRotate180;
-            else if (strncmp(buf, "Bottom-left", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationFlip;
-            else if (strncmp(buf, "Left-top", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationFlipAndRotate90;
-            else if (strncmp(buf, "Right-top", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationRotate90;
-            else if (strncmp(buf, "Right-bottom", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationMirrorAndRotate90;
-            else if (strncmp(buf, "Left-bottom", sizeof(buf)) == 0)
-                transformation = QImageIOHandler::TransformationRotate270;
-*/
             m_exif_tag_found++;
         }
+
+        // Camera settings /////////////////////////////////////////////////////
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FNUMBER);
         if (entry)
@@ -320,7 +293,6 @@ bool Media::getMetadataFromPicture()
             exposure_bias = entry_buf;
             m_exif_tag_found++;
         }
-
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_METERING_MODE);
         if (entry)
         {
@@ -364,6 +336,8 @@ bool Media::getMetadataFromPicture()
             //m_exif_tag_found++;
         }
         //EXIF_TAG_BRIGHTNESS_VALUE
+
+        // Flash ///////////////////////////////////////////////////////////////
 
         entry = exif_content_get_entry(ed->ifd[EXIF_IFD_EXIF], EXIF_TAG_FLASH);
         if (entry)
@@ -660,6 +634,9 @@ bool Media::getMetadataFromPicture()
         }
     }
 
+    // Post processing
+    computeAdditionalMetadata();
+
     return status;
 }
 
@@ -951,10 +928,34 @@ bool Media::getMetadataFromVideo()
             }
         }
 
-        return true;
+        status = true;
     }
 
-    return false;
+    // Post processing
+    computeAdditionalMetadata();
+
+    return status;
+}
+
+void Media::computeAdditionalMetadata()
+{
+    // Get default aspect ratio value for the UI
+    if (transformation >= QImageIOHandler::TransformationRotate90)
+    {
+        width_visible = height;
+        height_visible = width;
+    }
+    else
+    {
+        width_visible = width;
+        height_visible = height;
+    }
+
+    //qDebug() << "Media::computeAdditionalMetadata(g)" << width << height;
+    //qDebug() << "Media::computeAdditionalMetadata(v)" << width_visible << height_visible;
+
+    ar = MediaUtils::arFromGeometry(width, height);
+    ar_visible = MediaUtils::arFromGeometry(width_visible, height_visible);
 }
 
 /* ************************************************************************** */

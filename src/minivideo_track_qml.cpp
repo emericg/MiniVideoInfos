@@ -189,7 +189,7 @@ QString MediaTrackQml::getCodec() const
 {
     if (mv_stream)
     {
-        return QString::fromUtf8(getCodecString(mv_stream->stream_type, mv_stream->stream_codec, true));
+        return getCodecQString(mv_stream->stream_type, mv_stream->stream_codec, true);
     }
 
     return QString();
@@ -258,7 +258,7 @@ QString MediaTrackQml::getLanguage() const
 
     if (mv_stream)
     {
-        langage_qstr = getLanguageString(mv_stream->track_languagecode);
+        langage_qstr = getLanguageQString(mv_stream->track_languagecode);
     }
 
     return langage_qstr;
@@ -289,7 +289,7 @@ int MediaTrackQml::getWidthVisible() const
 {
     if (mv_stream)
     {
-        return mv_stream->visible_width;
+        return mv_stream->width_display;
     }
 
     return -1;
@@ -298,7 +298,7 @@ int MediaTrackQml::getHeightVisible() const
 {
     if (mv_stream)
     {
-        return mv_stream->visible_height;
+        return mv_stream->height_display;
     }
 
     return -1;
@@ -311,7 +311,35 @@ double MediaTrackQml::getFramerate() const
         return mv_stream->framerate;
     }
 
-    return -1;
+    return -1.0;
+}
+
+double MediaTrackQml::getVAR() const
+{
+    if (mv_stream)
+    {
+         return mv_stream->video_aspect_ratio;
+    }
+
+    return -1.0;
+}
+double MediaTrackQml::getDAR() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->display_aspect_ratio;
+    }
+
+    return -1.0;
+}
+double MediaTrackQml::getPAR() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->pixel_aspect_ratio;
+    }
+
+    return -1.0;
 }
 
 double MediaTrackQml::getCodecLevel() const
@@ -321,7 +349,7 @@ double MediaTrackQml::getCodecLevel() const
         return mv_stream->video_level;
     }
 
-    return -1;
+    return -1.0;
 }
 
 int MediaTrackQml::getProjection() const
@@ -381,7 +409,7 @@ bool MediaTrackQml::getColorRange() const
         return mv_stream->color_range;
     }
 
-    return -1;
+    return false;
 }
 
 QString MediaTrackQml::getColorPrimaries() const

@@ -49,6 +49,7 @@ SOURCES  += src/main.cpp \
             src/utils/utils_ios.cpp
 
 HEADERS  += src/Media.h \
+            src/MediaUtils.h \
             src/MediaManager.h \
             src/SettingsManager.h \
             src/minivideo_qml.h \

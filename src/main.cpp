@@ -27,6 +27,7 @@
 
 #include "SettingsManager.h"
 #include "MediaManager.h"
+#include "MediaUtils.h"
 
 #include <MobileUI.h>
 #include <SharingApplication.h>
@@ -82,6 +83,8 @@ int main(int argc, char *argv[])
     MediaManager *mm = new MediaManager();
     if (!mm) return EXIT_FAILURE;
 
+    MediaUtils *mediaUtils = new MediaUtils();
+
     // Init MiniVideoInfos utils
     UtilsApp *utilsApp = UtilsApp::getInstance();
     if (!utilsApp) return EXIT_FAILURE;
@@ -99,6 +102,7 @@ int main(int argc, char *argv[])
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("mediaManager", mm);
+    engine_context->setContextProperty("mediaUtils", mediaUtils);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     //engine_context->setContextProperty("utilsLanguage", utilsLanguage);
