@@ -162,7 +162,7 @@ TARGETS = []
 
 if OS_HOST == "Linux":
     TARGETS.append(["linux", "x86_64"])
-    if ANDROID_NDK_HOME:
+    if ANDROID_NDK_HOME: # Android cross compilation
         TARGETS.append(["android", "armv8"])
         TARGETS.append(["android", "armv7"])
         TARGETS.append(["android", "x86_64"])
@@ -171,10 +171,10 @@ if OS_HOST == "Linux":
 
 if OS_HOST == "Darwin":
     TARGETS.append(["macOS", "x86_64"])
-    TARGETS.append(["iOS", "simulator"])
+    #TARGETS.append(["macOS", "arm64"])
+    TARGETS.append(["iOS", "simulator"]) # iOS cross compilation
     TARGETS.append(["iOS", "armv8"])
-    #TARGETS.append(["iOS", "armv7"])
-    if ANDROID_NDK_HOME:
+    if ANDROID_NDK_HOME: # Android cross compilation
         TARGETS.append(["android", "armv8"])
         TARGETS.append(["android", "armv7"])
         TARGETS.append(["android", "x86_64"])
@@ -183,7 +183,6 @@ if OS_HOST == "Darwin":
 if OS_HOST == "Windows":
     TARGETS.append(["windows", "x86_64"])
     #TARGETS.append(["windows", "x86"])
-    #TARGETS.append(["windows", "armv7"]) # WinRT
 
 ## SOFTWARES ###################################################################
 
@@ -259,7 +258,7 @@ for TARGET in TARGETS:
 
     ## CMAKE command selection
     CMAKE_cmd = ["cmake"]
-    CMAKE_gen = "Unix Makefiles"
+    CMAKE_gen = "Ninja"
     build_shared = "ON"
     build_static = "OFF"
 
