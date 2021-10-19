@@ -49,16 +49,94 @@ Flickable {
             item_vcodecfeatures.visible = (trackItem.codecFeatures.length > 0)
             info_vcodecfeatures.text = trackItem.codecFeatures
 
+            //console.log("GEOMETRY : " + trackItem.width + " * " + trackItem.height)
+            //console.log("VISIBLE : " + trackItem.widthVisible + " * " + trackItem.heightVisible)
+            //console.log("CROP : " + trackItem.cropTop + " - " + trackItem.cropBottom + " - " +
+            //                        trackItem.cropLeft + " - " + trackItem.cropRight)
+
             // Geometry
             info_vdefinition.text = trackItem.width + " x " + trackItem.height
-            item_vdefinition_visible.visible = ((trackItem.width_visible + trackItem.height_visible) > 0 &&
-                                                (trackItem.width_visible !== trackItem.width || trackItem.height_visible !== trackItem.height))
-            info_vdefinition_visible.text = trackItem.width_visible + " x " + trackItem.height_visible
-
-            info_dar.text = UtilsMedia.varToString(trackItem.width, trackItem.height)
+            info_sar.text = UtilsMedia.varToString(trackItem.width, trackItem.height)
             var ardesc = UtilsMedia.varToDescString(trackItem.width, trackItem.height)
-            if (ardesc.length > 0) info_dar.text += "  (" + ardesc + ")"
+            if (ardesc.length > 0) info_sar.text += "  (" + ardesc + ")"
 
+            // Geometry // transformations
+            var geomismatch = ((trackItem.widthVisible + trackItem.heightVisible) > 0 &&
+                               (trackItem.widthVisible !== trackItem.width || trackItem.heightVisible !== trackItem.height))
+
+            item_vdefinition_display.visible = geomismatch
+            item_dar.visible = geomismatch
+            item_resBox.visible = geomismatch
+
+            if (geomismatch) {
+                info_vdefinition_display.text = trackItem.widthVisible + " x " + trackItem.heightVisible
+                info_dar.text = UtilsMedia.varToString(trackItem.widthVisible, trackItem.heightVisible)
+
+                var maxWidth = item_resBox.width
+                var maxHeight = item_resBox.height
+
+                if (((trackItem.width / trackItem.height) > 1) &&
+                    ((trackItem.widthVisible / trackItem.heightVisible) > 1)) {
+                    //console.log("LEFT geo"); console.log("LEFT disp");
+                    img_display_rotate.visible = false
+                    img_display_resize.visible = true
+
+                    if (trackItem.widthVisible > trackItem.width) {
+                        rect_display.width = maxWidth
+                        rect_display.height = rect_display.width / trackItem.dar
+                        rect_geo.width = rect_display.width * (trackItem.width / trackItem.widthVisible)
+                        rect_geo.height = rect_display.height * (trackItem.height / trackItem.heightVisible)
+                    } else {
+                        rect_geo.width = 200
+                        rect_geo.height = rect_geo.width / trackItem.var
+                        rect_display.width = 160
+                        rect_display.height = rect_display.width / trackItem.dar
+                    }
+                } else if (((trackItem.width / trackItem.height) < 1) &&
+                           ((trackItem.widthVisible / trackItem.heightVisible) < 1)) {
+                    //console.log("UP geo"); console.log("UP disp");
+                    img_display_rotate.visible = false
+                    img_display_resize.visible = true
+
+                } else {
+                    //console.log("UP / LEFT")
+                    img_display_rotate.visible = true
+                    img_display_resize.visible = false
+
+                    if ((trackItem.width / trackItem.height) < 1) {
+                        rect_geo.width = (160 * (trackItem.width/trackItem.height))
+                        rect_geo.height = 160
+                    } else {
+                        rect_geo.width = 160
+                        rect_geo.height = (160 / (trackItem.width/trackItem.height))
+                    }
+                    if ((trackItem.widthVisible / trackItem.heightVisible) < 1) {
+                        rect_display.width = (160 * (trackItem.widthVisible/trackItem.heightVisible))
+                        rect_display.height = 160
+                    } else {
+                        rect_display.width = 160
+                        rect_display.height = (160 / (trackItem.widthVisible/trackItem.heightVisible))
+                    }
+                }
+
+                item_resBox.height = Math.max(rect_geo.height, rect_display.height)
+            }
+
+            // Geometry // crop
+            if (trackItem.cropTop || trackItem.cropBottom || trackItem.cropLeft || trackItem.cropRight) {
+                rect_crop.visible = true
+            } else {
+                rect_crop.visible = false
+            }
+
+            // Geometry // PAR
+            item_par.visible = (trackItem.par != 1.0)
+            info_par.text = trackItem.par.toFixed(2).replace(/[.,]00$/, "") + ":1"
+            item_parBox.visible = (trackItem.par != 1.0)
+            item_parBox.www = 1 * (item_parBox.height/3) * trackItem.par
+            item_parBox.hhh = 1 * (item_parBox.height/3)
+
+            // Geometry // projection
             item_vprojection.visible = (trackItem.projection > 0)
             info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
             item_vorientation.visible = (trackItem.orientation > 0)
@@ -66,10 +144,6 @@ Flickable {
 
             item_vscan.visible = (trackItem.scanmode > 0)
             info_vscan.text = UtilsMedia.scanmodeToString(trackItem.scanmode)
-
-            itemDar.visible = true
-            itemPar.visible = false
-            itemVar.visible = false
 
             // Colors
             item_vcolordepth.visible = (trackItem.colorDepth > 0)
@@ -118,6 +192,7 @@ Flickable {
 
             speakers.visible = true
             speakers_lfe.visible = trackItem.audioChannels > 5
+
             if (trackItem.audioChannels === 6)
                 speakers.source = "qrc:/speakers/5_0.svg"
             else if (trackItem.audioChannels === 2)
@@ -415,57 +490,85 @@ Flickable {
                 }
             }
 
-            Row { ////
+            Item { ////
+                id: item_vcodec
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                height: Math.max(UtilsNumber.alignTo(info_vcodec.contentHeight + 4, 4), 24)
 
                 Text {
+                    id: legend_vcodec
+                    height: 24
                     text: qsTr("codec")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
                     id: info_vcodec
+                    anchors.left: legend_vcodec.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
                     color: Theme.colorText
                     font.pixelSize: 15
+                    wrapMode: Text.WrapAnywhere
                 }
             }
-            Row { ////
+            Item { ////
                 id: item_vcodecprofile
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                height: Math.max(UtilsNumber.alignTo(info_vcodecprofile.contentHeight + 4, 4), 24)
 
                 Text {
+                    id: legend_vcodecprofile
+                    height: 24
                     text: qsTr("profile")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
                     id: info_vcodecprofile
+                    anchors.left: legend_vcodecprofile.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
                     color: Theme.colorText
                     font.pixelSize: 15
+                    wrapMode: Text.WrapAnywhere
                 }
             }
-            Row { ////
+            Item { ////
                 id: item_vcodecfeatures
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                height: Math.max(UtilsNumber.alignTo(info_vcodecfeatures.contentHeight + 4, 4), 24)
 
                 Text {
+                    id: legend_vcodecfeatures
+                    height: 24
                     text: qsTr("features")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
                     id: info_vcodecfeatures
+                    anchors.left: legend_vcodecfeatures.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
                     color: Theme.colorText
                     font.pixelSize: 15
+                    wrapMode: Text.WrapAnywhere
                 }
             }
 
@@ -489,78 +592,25 @@ Flickable {
                 }
             }
             Row { ////
-                id: item_vdefinition_visible
+                id: itemSar
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
 
                 Text {
-                    text: qsTr("definition (visible)")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vdefinition_visible
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                id: itemDar
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    id: legend_dar
+                    id: legend_sar
                     text: qsTr("aspect ratio")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
-                    id: info_dar
+                    id: info_sar
                     color: Theme.colorText
                     font.pixelSize: 15
                 }
             }
-            Row { ////
-                id: itemVar
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
 
-                Text {
-                    text: qsTr("video aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_var
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                id: itemPar
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("pixel aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_par
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
             Row { ////
                 id: item_vprojection
                 anchors.left: parent.left
@@ -597,6 +647,169 @@ Flickable {
                     font.pixelSize: 15
                 }
             }
+
+            //Item { width: 4; height: 4; } // spacer
+
+            Row { ////
+                id: item_vdefinition_display
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("display definition")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_vdefinition_display
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+
+            Row { ////
+                id: item_dar
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("display aspect ratio")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_dar
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+
+            Item { ////
+                id: item_resBox
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 24
+                height: 160
+
+                Rectangle {
+                    id: rect_geo
+                    anchors.left: parent.left
+                    anchors.bottom: parent.bottom
+                    height: 160/(16/9)
+                    width: 160
+                    color: "#22999999"
+                    border.width: 2
+                    border.color: Theme.colorIcon
+                }
+                Rectangle {
+                    id: rect_display
+                    anchors.left: parent.left
+                    anchors.bottom: parent.bottom
+                    height: 160
+                    width: 160/(16/9)
+                    color: "transparent"
+                    border.width: 2
+                    border.color: Theme.colorPrimary
+
+                    ImageSvg {
+                        id: img_display_rotate
+                        width: 24
+                        height: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: 4
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 4
+                        color: Theme.colorPrimary
+                        source: "qrc:/assets/icons_material/duotone-rotate_90_degrees_ccw-24px.svg"
+                    }
+                    ImageSvg {
+                        id: img_display_resize
+                        width: 24
+                        height: 24
+                        anchors.top: parent.top
+                        anchors.topMargin: 4
+                        anchors.right: parent.right
+                        anchors.rightMargin: 4
+                        color: Theme.colorPrimary
+                        source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
+                    }
+                }
+                Rectangle {
+                    id: rect_crop
+                    anchors.left: parent.left
+                    anchors.bottom: parent.bottom
+                    height: 160
+                    width: 160
+                    color: "transparent"
+                    border.width: 2
+                    border.color: Theme.colorWarning
+
+                    ImageSvg {
+                        id: img_crop
+                        width: 24
+                        height: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: 4
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 4
+                        color: Theme.colorWarning
+                        source: "qrc:/assets/icons_material/duotone-settings_overscan-24px.svg"
+                    }
+                }
+            }
+
+            Row { ////
+                id: item_par
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("pixel aspect ratio")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_par
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+
+            Grid { ////
+                id: item_parBox
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                anchors.right: parent.right
+                anchors.rightMargin: 24
+
+                height: 96
+                rows: 3
+                columns: 3
+
+                property int www: 1 * (item_parBox.height/3)
+                property int hhh: 1 * (item_parBox.height/3)
+
+                Rectangle { width: parent.www; height: parent.hhh; color: "#9377a6"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#dda1be"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#ffa6ca"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#707cad"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#9593b5";
+                            border.width: 2; border.color: "white"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#c99fc7"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#6f77a4"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#7784ad"; }
+                Rectangle { width: parent.www; height: parent.hhh; color: "#8e97c1"; }
+            }
+
+            //Item { width: 4; height: 4; } // spacer
+
             Row { ////
                 id: item_vscan
                 anchors.left: parent.left
@@ -784,39 +997,56 @@ Flickable {
                     font.bold: true
                 }
             }
-            Row { ////
+            Item { ////
+                id: item_acodec
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                height: Math.max(UtilsNumber.alignTo(info_acodec.contentHeight + 4, 4), 24)
 
                 Text {
+                    id: legend_acodec
                     text: qsTr("codec")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
                     id: info_acodec
+                    anchors.left: legend_acodec.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
                     color: Theme.colorText
                     font.pixelSize: 15
+                    wrapMode: Text.WrapAnywhere
                 }
             }
-            Row { ////
+            Item { ////
                 id: item_acodecprofile
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                height: Math.max(UtilsNumber.alignTo(info_acodecprofile.contentHeight + 4, 4), 24)
 
                 Text {
+                    id: legend_acodecprofile
                     text: qsTr("profile")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
                 Text {
                     id: info_acodecprofile
+                    anchors.left: legend_acodecprofile.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+
                     color: Theme.colorText
                     font.pixelSize: 15
+                    wrapMode: Text.WrapAnywhere
                 }
             }
 
@@ -931,10 +1161,9 @@ Flickable {
                 }
             }
             Item { ////
+                id: item_speakerBox
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                //anchors.right: parent.right
-                //anchors.rightMargin: 12
                 width: 160
                 height: 160
 
@@ -947,7 +1176,6 @@ Flickable {
                 ImageSvg {
                     id: speakers
                     anchors.fill: parent
-                    source: "qrc:/speakers/2_0_stereo.svg"
                     color: Theme.colorIcon
                 }
             }
@@ -988,110 +1216,6 @@ Flickable {
                     color: Theme.colorPrimary
                     font.pixelSize: 18
                     font.bold: true
-                }
-            }
-
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("compression ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_compression
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("bitrate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_bitrate
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-            Row { ////
-                id: item_bitrate_minmax
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("min")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_bitrate_min
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-                Text {
-                    text: qsTr("max")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_bitrate_max
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
-            }
-
-            Item {
-                id: bitrateGraphItem
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                height: 180
-
-                ChartView {
-                    id: bitrateGraph
-                    anchors.fill: parent
-                    anchors.topMargin: -28
-                    anchors.leftMargin: (isMobile) ? -34 : -38
-                    anchors.rightMargin: -32
-                    anchors.bottomMargin: -24
-
-                    antialiasing: true
-                    legend.visible: false
-
-                    backgroundRoundness: 0
-                    backgroundColor: "transparent"
-                    //animationOptions: ChartView.SeriesAnimations
-                    ValueAxis { id: axisX0; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
-                    ValueAxis { id: axisBitrate; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: "" }
-
-                    LineSeries {
-                        id: bitrateData
-                        //useOpenGL: true
-
-                        color: Theme.colorSecondary
-                        width: 1
-                        visible: true
-
-                        axisX: axisX0
-                        axisY: axisBitrate
-                    }
                 }
             }
 
@@ -1147,6 +1271,113 @@ Flickable {
                     id: info_idr
                     color: Theme.colorText
                     font.pixelSize: 15
+                }
+            }
+
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("compression ratio")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_compression
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+
+            Item { width: 4; height: 4; } // spacer
+
+            Row { ////
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("bitrate")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_bitrate
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_bitrate_minmax
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("min")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_bitrate_min
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+                Text {
+                    text: qsTr("max")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                Text {
+                    id: info_bitrate_max
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+
+            Item {
+                id: bitrateGraphItem
+                anchors.left: parent.left
+                anchors.leftMargin: 24
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                height: 180
+
+                ChartView {
+                    id: bitrateGraph
+                    anchors.fill: parent
+                    anchors.topMargin: -28
+                    anchors.leftMargin: (isMobile) ? -34 : -38
+                    anchors.rightMargin: -32
+                    anchors.bottomMargin: -24
+
+                    antialiasing: true
+                    legend.visible: false
+
+                    backgroundRoundness: 0
+                    backgroundColor: "transparent"
+                    //animationOptions: ChartView.SeriesAnimations
+                    ValueAxis { id: axisX0; visible: true; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
+                    ValueAxis { id: axisBitrate; visible: true; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: "" }
+
+                    LineSeries {
+                        id: bitrateData
+                        //useOpenGL: true
+
+                        color: Theme.colorSecondary
+                        width: 1
+                        visible: true
+
+                        axisX: axisX0
+                        axisY: axisBitrate
+                    }
                 }
             }
         }
