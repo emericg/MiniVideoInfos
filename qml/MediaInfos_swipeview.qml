@@ -395,12 +395,14 @@ Item {
         }
 
         function removePages() {
-            console.log("we have pages: " + count)
             for (var n = 0; n < count; n++) {
-                itemAt(0).visible = false;
-                removeItem(0);
+                itemAt(0).visible = false
+                removeItem(0)
             }
-            console.log("now we have: " + mediaPages.count)
+        }
+
+        onCurrentIndexChanged: {
+            //mediaPages.interactive = true
         }
 
         Item {

@@ -139,7 +139,7 @@ public class QShareActivity extends QtActivity
             Log.d("QShareActivity", " checkPendingIntents() true");
             processIntent();
         } else {
-            Log.d("QShareActivity", " checkPendingIntents() nothingPending");
+            //Log.d("QShareActivity", " checkPendingIntents() nothingPending");
         }
     }
 
