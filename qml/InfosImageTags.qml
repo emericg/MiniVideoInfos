@@ -35,8 +35,12 @@ Flickable {
         info_gps_date.text = mediaItem.dateGPS
         info_gps_lat.text = mediaItem.latitudeString
         info_gps_long.text = mediaItem.longitudeString
-        item_gps_alt.visible = (mediaItem.altitude > 0)
-        info_gps_alt.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
+        item_gps_alt.visible = (mediaItem.altitudeCorrected > 0)
+        info_gps_alt.text = UtilsString.altitudeToString(mediaItem.altitudeCorrected, 0, settingsManager.appunits)
+        item_gps_alt_egm96.visible = (mediaItem.altitudeCorrected > 0)
+        info_gps_alt_egm96.text = UtilsString.altitudeToString(-mediaItem.altitudeCorrection, 0, settingsManager.appunits)
+        item_gps_speed.visible =(mediaItem.speed > 0)
+        info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
         item_gps_speed.visible =(mediaItem.speed > 0)
         info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
 
@@ -472,6 +476,25 @@ Flickable {
                 }
                 Text {
                     id: info_gps_alt
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_gps_alt_egm96
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 16
+
+                Text {
+                    text: qsTr("altitude correction")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                    wrapMode: Text.WordWrap
+                }
+                Text {
+                    id: info_gps_alt_egm96
                     color: Theme.colorText
                     font.pixelSize: 15
                 }

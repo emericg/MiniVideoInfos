@@ -34,11 +34,11 @@ Item {
             // legend
             info_lat.text = mediaItem.latitudeString
             info_long.text = mediaItem.longitudeString
-            info_altitude.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
-            row_altitude.visible = (mediaItem.altitude > 0)
+            info_altitude.text = UtilsString.altitudeToString(mediaItem.altitudeCorrected, 0, settingsManager.appunits)
+            row_altitude.visible = (mediaItem.altitudeCorrected > 0)
             info_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
             row_speed.visible = (mediaItem.speed > 0)
-            row_altspd.visible = (mediaItem.altitude > 0 || mediaItem.speed > 0)
+            row_altspd.visible = (mediaItem.altitudeCorrected > 0 || mediaItem.speed > 0)
             item_track.visible = false
             //info_track.text = mediaItem.gpscount
 

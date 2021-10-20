@@ -140,6 +140,7 @@ class Media: public QObject
     Q_PROPERTY(unsigned audioBitrate READ getAudioBitrate NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned audioSamplerate READ getAudioSamplerate NOTIFY mediaUpdated)
 
+    // gps
     Q_PROPERTY(QString latitudeString READ getLatitudeStr NOTIFY metadataUpdated)
     Q_PROPERTY(QString longitudeString READ getLongitudeStr NOTIFY metadataUpdated)
     Q_PROPERTY(QString altitudeString READ getAltitudeStr NOTIFY metadataUpdated)
@@ -149,6 +150,8 @@ class Media: public QObject
     Q_PROPERTY(double latitude READ getLatitude NOTIFY metadataUpdated)
     Q_PROPERTY(double longitude READ getLongitude NOTIFY metadataUpdated)
     Q_PROPERTY(double altitude READ getAltitude NOTIFY metadataUpdated)
+    Q_PROPERTY(double altitudeCorrected READ getAltitudeCorrected NOTIFY metadataUpdated)
+    Q_PROPERTY(double altitudeCorrection READ getAltitudeOffset NOTIFY metadataUpdated)
     Q_PROPERTY(double direction READ getDirection NOTIFY metadataUpdated)
     Q_PROPERTY(double speed READ getSpeed NOTIFY metadataUpdated)
     Q_PROPERTY(unsigned gpsDop READ getGpsDop NOTIFY metadataUpdated)
@@ -381,6 +384,7 @@ public:
     double getLatitude() const { return gps_lat; }
     double getLongitude() const { return gps_long; }
     double getAltitude() const { return gps_alt; }
+    double getAltitudeCorrected() const { return gps_alt - gps_alt_egm96; }
     double getAltitudeOffset() const { return gps_alt_egm96; }
     double getDirection() const { return gps_direction; }
     double getSpeed() const { return gps_speed; }
