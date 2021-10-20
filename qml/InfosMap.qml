@@ -59,7 +59,8 @@ Item {
         dist = Math.round(coord1.distanceTo(coord2))
 
         if (dist === 0) {
-            // not visible
+            mapScale.visible = false
+            mapScale.width = 100
         } else {
             for (var i = 0; i < scaleLengths.length-1; i++) {
                 if (dist < (scaleLengths[i] + scaleLengths[i+1]) / 2 ) {
@@ -72,10 +73,11 @@ Item {
                 f = dist / scaleLengths[i]
                 dist = scaleLengths[i]
             }
-        }
 
-        mapScale.width = 100 * f
-        mapScaleText.text = UtilsString.distanceToString(dist, 0, settingsManager.appUnits)
+            mapScale.visible = true
+            mapScale.width = 100 * f
+            mapScaleText.text = UtilsString.distanceToString(dist, 0, settingsManager.appUnits)
+        }
     }
 
     function zoomIn() {
@@ -171,27 +173,34 @@ Item {
 
                 background: true
                 backgroundColor: Theme.colorHeader
-                iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
                 highlightMode: "color"
+                iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-open_with-24px.svg"
 
                 selected: map.moove
-                onClicked: map.moove = !map.moove
-                source: "qrc:/assets/icons_material/baseline-open_with-24px.svg"
+                onClicked: {
+                    map.moove = !map.moove
+
+                    // also disable swiping through tabs?
+                    //mediaPages.interactive = !map.moove
+                }
             }
             ItemImageButton {
                 id: button_map_center
                 width: 40
                 height: 40
 
-                visible: (map.center !== QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude))
+                visible: (opacity > 0)
+                opacity: (map.center !== QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? 1 : 0
+                Behavior on opacity { NumberAnimation { duration: 200 } }
+
                 background: true
                 backgroundColor: Theme.colorHeader
-                //iconColor: (map.center === QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? Theme.colorHeaderContent : Theme.colorText
-                iconColor: Theme.colorText
                 highlightMode: "color"
+                iconColor: Theme.colorText
+                source: "qrc:/assets/icons_material/baseline-gps_fixed-24px.svg"
 
                 onClicked: map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
-                source: "qrc:/assets/icons_material/baseline-gps_fixed-24px.svg"
             }
         }
 
