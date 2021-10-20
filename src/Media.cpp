@@ -940,7 +940,8 @@ bool Media::getMetadataFromVideo()
 void Media::computeAdditionalMetadata()
 {
     // Get default aspect ratio value for the UI
-    if (transformation >= QImageIOHandler::TransformationRotate90)
+    if (transformation >= QImageIOHandler::TransformationRotate90 ||
+        rotation == 90 || rotation == 270)
     {
         width_visible = height;
         height_visible = width;

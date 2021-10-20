@@ -44,9 +44,14 @@ Flickable {
             columnImage.visible = true
 
             info_icodec.text = mediaItem.videoCodec
-            info_impix.text = ((mediaItem.width * mediaItem.height) / 1000000).toFixed(1)
-            info_idefinition.text = mediaItem.width + " x " + mediaItem.height
-            info_iaspectratio.text = UtilsMedia.varToString(mediaItem.width, mediaItem.height)
+            info_impix.text = ((mediaItem.widthVisible * mediaItem.heightVisible) / 1000000).toFixed(1) + " " + qsTr("MP")
+            info_idefinition.text = mediaItem.widthVisible + " x " + mediaItem.heightVisible
+            if (mediaItem.width !== mediaItem.widthVisible || mediaItem.height !== mediaItem.heightVisible) {
+                if (mediaItem.transformation > 3) {
+                    info_idefinition.text += " (" + qsTr("rotated") + ")"
+                }
+            }
+            info_iaspectratio.text = UtilsMedia.varToString(mediaItem.widthVisible, mediaItem.heightVisible)
             info_iresolution.text = (mediaItem.resolution) ? (mediaItem.resolution + " " + qsTr("dpi")) : ""
             item_iorientation.visible = (mediaItem.transformation !== 0)
             info_iorientation.text = UtilsMedia.orientationQtToString(mediaItem.transformation)
@@ -59,11 +64,11 @@ Flickable {
 
             if (settingsManager.mediaPreview) {
                 var w = info_preview.width
-                var h = info_preview.width / (mediaItem.width / mediaItem.height)
+                var h = info_preview.width / (mediaItem.widthVisible / mediaItem.heightVisible)
                 info_preview.sourceSize.width = w*2
                 info_preview.sourceSize.height = h*2
                 info_preview.source = "file://" + mediaItem.fullpath
-                item_preview.height = (mediaItem.orientation > 3) ? w : h
+                item_preview.height = h
                 item_preview.visible = true
             } else {
                 item_preview.visible = false
@@ -750,7 +755,18 @@ Flickable {
                         font.pixelSize: 15
                     }
                     Text {
-                        text: modelData.width + " x " + modelData.height
+                        text: {
+                            var txt = modelData.widthVisible + " x " + modelData.heightVisible
+                            if (modelData.width !== modelData.widthVisible ||
+                                modelData.height !== modelData.heightVisible) {
+                                if (modelData.orientation) {
+                                    txt += " (" + qsTr("rotated") + ")"
+                                } else {
+                                    txt += " (" + qsTr("stretched") + ")"
+                                }
+                            }
+                            return txt
+                        }
                         color: Theme.colorText
                         font.pixelSize: 15
                     }
@@ -768,8 +784,8 @@ Flickable {
                     }
                     Text {
                         text: {
-                            var txt = UtilsMedia.varToString(modelData.width, modelData.height)
-                            var ardesc = UtilsMedia.varToDescString(modelData.width, modelData.height)
+                            var txt = UtilsMedia.varToString(modelData.widthVisible, modelData.heightVisible)
+                            var ardesc = UtilsMedia.varToDescString(modelData.widthVisible, modelData.heightVisible)
                             if (ardesc.length > 0) txt += "  (" + ardesc + ")"
                             return txt
                         }

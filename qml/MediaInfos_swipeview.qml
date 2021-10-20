@@ -23,7 +23,7 @@ Item {
 
         if (mediaItem.fileType === 2 || mediaItem.fileType === 3) {
             columnGeometry.visible = true
-            textGeometry.text = mediaItem.width + " x " + mediaItem.height
+            textGeometry.text = mediaItem.widthVisible + " x " + mediaItem.heightVisible
         } else {
             columnGeometry.visible = false
         }
