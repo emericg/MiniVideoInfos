@@ -323,6 +323,7 @@ Item {
 
                         Text {
                             text: qsTr("latitude")
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
@@ -351,6 +352,7 @@ Item {
 
                         Text {
                             text: qsTr("longitude")
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
@@ -380,7 +382,7 @@ Item {
 
                         Text {
                             text: qsTr("altitude")
-                            anchors.verticalCenter: parent.verticalCenter
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
@@ -400,7 +402,7 @@ Item {
 
                         Text {
                             text: qsTr("speed")
-                            anchors.verticalCenter: parent.verticalCenter
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
@@ -429,8 +431,9 @@ Item {
                         spacing: 16
 
                         Text {
-                            color: Theme.colorSubText
                             text: qsTr("track")
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
                         }

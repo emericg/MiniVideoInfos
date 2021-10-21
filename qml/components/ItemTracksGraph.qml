@@ -111,6 +111,7 @@ Item {
             id: legendVideo
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("video")
+            textFormat: Text.PlainText
             color: Theme.colorMaterialBlue
             font.pixelSize: 14
             font.bold: true
@@ -119,6 +120,7 @@ Item {
             id: legendAudio
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("audio")
+            textFormat: Text.PlainText
             color: Theme.colorMaterialOrange
             font.pixelSize: 14
             font.bold: true
@@ -127,6 +129,7 @@ Item {
             id: legendOther
             anchors.verticalCenter: parent.verticalCenter
             text: qsTr("other")
+            textFormat: Text.PlainText
             color: Theme.colorSubText
             font.pixelSize: 14
             font.bold: true

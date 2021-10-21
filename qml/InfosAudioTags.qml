@@ -74,6 +74,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("TAGS")
+                    textFormat: Text.PlainText
                     color: Theme.colorPrimary
                     font.pixelSize: 18
                     font.bold: true
@@ -97,6 +98,7 @@ Flickable {
                     anchors.leftMargin: 0
 
                     text: qsTr("title")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -122,6 +124,7 @@ Flickable {
 
                 Text {
                     text: qsTr("artist")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
@@ -149,6 +152,7 @@ Flickable {
                     anchors.leftMargin: 0
 
                     text: qsTr("album")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -174,6 +178,7 @@ Flickable {
 
                 Text {
                     text: qsTr("year")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -193,6 +198,7 @@ Flickable {
 
                 Text {
                     text: qsTr("track")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -212,6 +218,7 @@ Flickable {
 
                 Text {
                     text: qsTr("genre")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -238,6 +245,7 @@ Flickable {
                     anchors.leftMargin: 0
 
                     text: qsTr("comment")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
@@ -287,6 +295,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("TUMBNAIL")
+                    textFormat: Text.PlainText
                     color: Theme.colorPrimary
                     font.pixelSize: 18
                     font.bold: true
@@ -300,6 +309,7 @@ Flickable {
 
                 Text {
                     text: qsTr("size")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }

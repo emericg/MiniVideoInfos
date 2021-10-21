@@ -92,6 +92,7 @@ Drawer {
                     anchors.bottom: imageHeader.bottom
 
                     text: "MiniVideo Infos"
+                    textFormat: Text.PlainText
                     color: Theme.colorText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeHeader

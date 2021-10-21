@@ -300,7 +300,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
                     font.bold: isDesktop ? true : false
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                 }
                 ItemImageButton {
                     id: buttonClear

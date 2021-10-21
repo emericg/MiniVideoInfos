@@ -41,7 +41,7 @@ You will need:
 - Android NDK 20+
 - Android SDK
 - Qt 5.12+ (with Qt Charts)
-- MiniVideo
+- MiniVideo (0.14+)
 - TagLib
 - libexif
 

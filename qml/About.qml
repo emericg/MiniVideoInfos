@@ -46,12 +46,14 @@ Item {
 
             Text {
                 text: "MiniVideo Infos"
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.pixelSize: 28
             }
 
             Text {
                 text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
+                textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 18
             }
@@ -185,9 +187,10 @@ Item {
                     anchors.verticalCenter: desc.verticalCenter
 
                     text: qsTr("Get detailed informations about all kind of multimedia files!")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                 }
             }
 
@@ -202,7 +205,6 @@ Item {
                 anchors.rightMargin: 0
 
                 ImageSvg {
-                    id: tutoImg
                     width: 27
                     height: 27
                     anchors.left: parent.left
@@ -219,8 +221,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Open the tutorial")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
-                    font.pixelSize: 16
                 }
 
                 MouseArea {
@@ -240,7 +243,6 @@ Item {
                 anchors.rightMargin: 0
 
                 ImageSvg {
-                    id: authorImg
                     width: 31
                     height: 31
                     anchors.left: parent.left
@@ -260,7 +262,7 @@ Item {
 
                     color: Theme.colorText
                     linkColor: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a>")
                     onLinkActivated: Qt.openUrlExternally(link)
 
@@ -297,7 +299,6 @@ Item {
                 //visible: isMobile
 
                 ImageSvg {
-                    id: rateImg
                     width: 31
                     height: 31
                     anchors.left: parent.left
@@ -314,8 +315,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Rate the application")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
-                    font.pixelSize: 16
                 }
 
                 ImageSvg {
@@ -390,9 +392,10 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
                     text: qsTr("About permissions")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
                 }
 
                 ImageSvg {
@@ -460,10 +463,11 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
 
-                    text: qsTr("This application is made possible thanks to a  couple of third party open source projects:")
-                    wrapMode: Text.WordWrap
+                    text: qsTr("This application is made possible thanks to a couple of third party open source projects:")
+                    textFormat: Text.PlainText
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
+                    wrapMode: Text.WordWrap
                 }
 
                 Column {
@@ -481,46 +485,55 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- Material Icons and FontAwesome")
+                        text: "- Material Icons and FontAwesome"
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
                         wrapMode: Text.WordWrap
-                        color: Theme.colorText
-                        font.pixelSize: 16
                     }
                     Text {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- MiniVideo framework")
+                        text: "- MiniVideo framework"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- TagLib")
+                        text: "- TagLib"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- libexif")
+                        text: "- libexif"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: qsTr("- Qt")
+                        text: "- Qt"
+                        textFormat: Text.PlainText
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                 }
             }

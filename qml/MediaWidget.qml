@@ -81,6 +81,8 @@ Item {
             }
 
             onPressAndHold: {
+                if (typeof mediaItem === "undefined" || !mediaItem) return
+
                 // multi selection
                 if (!selected) {
                     utilsApp.vibrate(25)
@@ -109,7 +111,6 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorIcon
-                fillMode: Image.PreserveAspectFit
             }
 
             Item {
@@ -130,7 +131,7 @@ Item {
 
                     text: mediaItem.name
                     color: Theme.colorText
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     elide: Text.ElideMiddle
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -159,7 +160,7 @@ Item {
                         id: mediaFilenameTxt
                         text: parent.display
                         color: Theme.colorText
-                        font.pixelSize: 16
+                        font.pixelSize: Theme.fontSizeContent
                         verticalAlignment: Text.AlignVCenter
                     }
                 }

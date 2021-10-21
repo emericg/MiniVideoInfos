@@ -56,6 +56,7 @@ Item {
         anchors.topMargin: 0
 
         text: parent.title
+        textFormat: Text.PlainText
         font.pixelSize: 12
         color: (parent.selected) ? Theme.colorHeaderContent : Theme.colorIcon
         Behavior on color { ColorAnimation { duration: 133 } }

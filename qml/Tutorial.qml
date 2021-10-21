@@ -118,6 +118,7 @@ Rectangle {
                     anchors.leftMargin: 32
 
                     text: qsTr("You can have many files open at the same time.")
+                    textFormat: Text.PlainText
                     font.pixelSize: 18
                     color: Theme.colorIcon
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -161,6 +162,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Codec parameters")
+                        textFormat: Text.PlainText
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
@@ -181,6 +183,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Image geometry")
+                        textFormat: Text.PlainText
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
@@ -201,6 +204,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Audio/Video bitrate graphs")
+                        textFormat: Text.PlainText
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
@@ -221,6 +225,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Audio channels mapping")
+                        textFormat: Text.PlainText
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
@@ -241,6 +246,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("Audio tags")
+                        textFormat: Text.PlainText
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
@@ -261,6 +267,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: qsTr("GPS location map")
+                        textFormat: Text.PlainText
                         color: Theme.colorIcon
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         horizontalAlignment: Text.AlignHCenter
@@ -282,9 +289,10 @@ Rectangle {
         visible: (tutorialPages.currentIndex != 0)
 
         text: qsTr("Previous")
+        textFormat: Text.PlainText
         color: Theme.colorHeaderContent
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: Theme.fontSizeContent
 
         Behavior on opacity { OpacityAnimator { duration: 100 } }
 
@@ -304,9 +312,10 @@ Rectangle {
         anchors.verticalCenter: pageIndicator.verticalCenter
 
         text: (tutorialPages.currentIndex === lastPage) ? qsTr("Allright!") : qsTr("Next")
+        textFormat: Text.PlainText
         color: Theme.colorHeaderContent
         font.bold: true
-        font.pixelSize: 16
+        font.pixelSize: Theme.fontSizeContent
 
         Behavior on opacity { OpacityAnimator { duration: 100 } }
 

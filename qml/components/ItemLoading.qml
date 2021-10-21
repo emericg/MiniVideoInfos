@@ -30,15 +30,18 @@ Popup {
             ImageSvg {
                 width: 128
                 height: 128
+                anchors.horizontalCenter: parent.horizontalCenter
+
                 source: "qrc:/assets/icons_material/baseline-hourglass_empty-24px.svg"
                 color: Theme.colorSubText
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Text {
-                text: qsTr("Loading...")
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 16
+
+                text: qsTr("Loading...")
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorText
             }
         }

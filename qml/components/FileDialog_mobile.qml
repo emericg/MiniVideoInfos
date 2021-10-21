@@ -176,7 +176,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             text: folderListModel.folder
-            //onTextChanged: updateHeaderText()
+            textFormat: Text.PlainText
             color: Theme.colorText
             font.pixelSize: Theme.fontSizeContent
             elide: Text.ElideMiddle
@@ -299,6 +299,7 @@ Rectangle {
                     anchors.right: parent.right
 
                     text: fileName
+                    textFormat: Text.PlainText
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeContentSmall
                     elide: Text.ElideMiddle
@@ -309,6 +310,7 @@ Rectangle {
                     visible: !fileIsDir
 
                     text: UtilsString.bytesToString_short(fileSize)
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: 11
                     elide: Text.ElideMiddle
@@ -353,6 +355,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             text: qsTr("Show media files only")
+            textFormat: Text.PlainText
             color: Theme.colorSubText
             font.pixelSize: Theme.fontSizeContentSmall
         }

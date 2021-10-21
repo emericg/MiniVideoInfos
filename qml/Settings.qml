@@ -34,6 +34,7 @@ Item {
             anchors.rightMargin: screenPaddingRight + 16
 
             text: qsTr("Change persistent settings here!")
+            textFormat: Text.PlainText
             font.pixelSize: 18
             elide: Text.ElideRight
             color: Theme.colorText
@@ -49,7 +50,8 @@ Item {
             anchors.bottomMargin: 20
 
             text: qsTr("Because everyone love settings...")
-            font.pixelSize: 16
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContent
             color: Theme.colorSubText
         }
 
@@ -119,7 +121,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application theme")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -147,9 +150,7 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: {
-                                settingsManager.appTheme = "light"
-                            }
+                            onClicked: settingsManager.appTheme = "light"
                         }
 
                         Text {
@@ -157,6 +158,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             text: qsTr("light")
+                            textFormat: Text.PlainText
                             color: "#313236"
                             font.pixelSize: 14
                         }
@@ -174,9 +176,7 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: {
-                                settingsManager.appTheme = "dark"
-                            }
+                            onClicked: settingsManager.appTheme = "dark"
                         }
 
                         Text {
@@ -184,6 +184,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("dark")
+                            textFormat: Text.PlainText
                             color: "#dddddd"
                             font.pixelSize: 14
                         }
@@ -225,7 +226,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatic dark mode")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -257,6 +259,7 @@ Item {
                 visible: (element_appThemeAuto.visible)
 
                 text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -304,7 +307,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Filter media in file chooser")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -354,7 +358,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Preview media")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -404,7 +409,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable export tab")
-                    font.pixelSize: 16
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -454,8 +460,9 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Unit system")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -546,7 +553,7 @@ Item {
 
                     text: qsTr("Sizes unit")
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 16
+                    font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -635,6 +642,7 @@ Item {
 
                 text: qsTr("1 KB = 1000 bytes. Uses powers of 10 (10^3) in decimal number system.\n" +
                            "1 KiB = 1024 bytes. Uses powers of 2 (2^10) in binary number system.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14

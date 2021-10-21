@@ -47,6 +47,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             text: qsTr("EXPORT")
+            textFormat: Text.PlainText
             color: Theme.colorPrimary
             font.pixelSize: 18
             font.bold: true
@@ -129,6 +130,7 @@ Item {
                 id: textArea
                 readOnly: true
                 text: ""
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 wrapMode: "WordWrap"
 

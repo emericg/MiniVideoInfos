@@ -67,6 +67,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             text: title
+            textFormat: Text.PlainText
             color: Theme.colorHeaderContent
             font.bold: false
             font.pixelSize: Theme.fontSizeHeader

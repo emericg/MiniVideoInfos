@@ -45,6 +45,7 @@ Item {
             anchors.topMargin: 8
 
             text: qsTr("Permissions")
+            textFormat: Text.PlainText
             font.bold: true
             font.pixelSize: Theme.fontSizeTitle
             color: Theme.colorText
@@ -58,6 +59,7 @@ Item {
             anchors.bottomMargin: 20
 
             text: qsTr("Why are we using these permissions?")
+            textFormat: Text.PlainText
             color: Theme.colorSubText
             font.pixelSize: 18
         }
@@ -101,6 +103,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Network access")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 18
                     color: Theme.colorText
@@ -132,6 +135,7 @@ Item {
                 anchors.rightMargin: 8
 
                 text: qsTr("Network state and internet permissions are used to load GPS maps.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -148,9 +152,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -(screenPaddingLeft + 16)
+                    anchors.leftMargin: -screenPaddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: -(screenPaddingRight + 16)
+                    anchors.rightMargin: -screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -171,6 +175,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Storage read")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 18
                     color: Theme.colorText
@@ -204,6 +209,7 @@ Item {
                 anchors.rightMargin: 8
 
                 text: qsTr("Storage read permission is needed to read and analyze media files. The software won't work without it.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
@@ -220,9 +226,9 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -(screenPaddingLeft + 16)
+                    anchors.leftMargin: -screenPaddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: -(screenPaddingRight + 16)
+                    anchors.rightMargin: -screenPaddingRight
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
@@ -243,6 +249,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Storage write")
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.pixelSize: 18
                     color: Theme.colorText
@@ -276,6 +283,7 @@ Item {
                 anchors.rightMargin: 8
 
                 text: qsTr("Storage write permission is only needed to export subtitles file or metadata overview.")
+                textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: 14
