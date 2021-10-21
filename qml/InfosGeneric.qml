@@ -93,7 +93,7 @@ Flickable {
         columnAudio.model = mediaItem.audioTracks
 
         // Subtitles tracks
-        columnSubtitles.visible = mediaItem.subtitlesCount
+        columnSubtitles.visible = mediaItem.subtitlesTracksCount
         repeaterSubtitles.model = mediaItem.subtitlesTracks
 
         // Chapters

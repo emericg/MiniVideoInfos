@@ -63,6 +63,7 @@ class Media: public QObject
 
     Q_PROPERTY(bool hasImage READ hasImage NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasVideo READ hasVideo NOTIFY mediaUpdated)
+    Q_PROPERTY(bool hasVideoTags READ hasVideoTags NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasAudio READ hasAudio NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasAudioTags READ hasAudioTags NOTIFY mediaUpdated)
     Q_PROPERTY(bool hasSubtitles READ hasSubtitles NOTIFY mediaUpdated)
@@ -128,7 +129,7 @@ class Media: public QObject
     Q_PROPERTY(QVariant audioTracks READ getAudioTracks NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned audioTracksCount READ getAudioTracksCount NOTIFY mediaUpdated)
     Q_PROPERTY(QVariant subtitlesTracks READ getSubtitlesTracks NOTIFY mediaUpdated)
-    Q_PROPERTY(unsigned subtitlesCount READ getSubtitlesTracksCount NOTIFY mediaUpdated)
+    Q_PROPERTY(unsigned subtitlesTracksCount READ getSubtitlesTracksCount NOTIFY mediaUpdated)
     Q_PROPERTY(QVariant otherTracks READ getOtherTracks NOTIFY mediaUpdated)
     Q_PROPERTY(unsigned otherTracksCount READ getOtherTracksCount NOTIFY mediaUpdated)
     Q_PROPERTY(QVariant chapters READ getChapters NOTIFY mediaUpdated)
@@ -333,6 +334,8 @@ public:
     double getFramerate() const { return vframerate; }
     unsigned getBitrate() const { return vbitrate; }
     unsigned getBitrateMode() const { return vbitratemode; }
+
+    bool hasVideoTags() const { return false; }
 
     int getAudioTracksCount() const { return tracksAudio.size(); }
     int getVideoTracksCount() const { return tracksVideo.size(); }

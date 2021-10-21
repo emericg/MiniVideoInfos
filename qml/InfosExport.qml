@@ -122,12 +122,16 @@ Item {
 
         ScrollView {
             anchors.fill: parent
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
             TextArea {
                 id: textArea
                 readOnly: true
                 text: ""
                 color: Theme.colorText
+                wrapMode: "WordWrap"
+
                 font.family: {
                     if (Qt.platform.os === "android")
                         return "Droid Sans Mono"

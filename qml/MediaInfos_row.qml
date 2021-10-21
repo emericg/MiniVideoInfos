@@ -298,7 +298,7 @@ Item {
                         anchors.fill: parent
                         opacity: 0.4
                         color: Theme.colorForeground
-                        visible: (index % 2 === 0)
+                        visible: (mediaItem && index % 2 === 0)
                     }
                     InfosAV {
                         id: content_video
@@ -344,7 +344,15 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
+                    visible: {
+                        if (mediaItem) {
+                            var tabcount = 1
+                            tabcount += mediaItem.videoTracksCount + mediaItem.audioTracksCount
+                            if (mediaItem.subtitlesTracksCount) tabcount += 1
+                            return (tabcount % 2 === 0)
+                        }
+                        return false
+                    }
                 }
                 InfosSubtitles {
                     id: content_subtitles
@@ -364,7 +372,16 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
+                    visible: {
+                        if (mediaItem) {
+                            var tabcount = 1
+                            tabcount += mediaItem.videoTracksCount + mediaItem.audioTracksCount
+                            if (mediaItem.subtitlesTracksCount) tabcount += 1
+                            if (mediaItem.hasAudioTags) tabcount += 1
+                            return (tabcount % 2 === 0)
+                        }
+                        return false
+                    }
                 }
                 InfosAudioTags {
                     id: content_audio_tags
@@ -384,7 +401,16 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
+                    visible: {
+                        if (mediaItem) {
+                            var tabcount = 1
+                            tabcount += mediaItem.videoTracksCount + mediaItem.audioTracksCount
+                            if (mediaItem.subtitlesTracksCount) tabcount += 1
+                            if (mediaItem.hasEXIF) tabcount += 1
+                            return (tabcount % 2 === 0)
+                        }
+                        return false
+                    }
                 }
                 InfosImageTags {
                     id: content_image_tags
@@ -392,6 +418,36 @@ Item {
                 }
             }
 
+
+            ////////
+/*
+            Item {
+                id: item_video_tags
+                width: row.colsize
+                height: parent.height
+
+                Rectangle {
+                    id: content_video_tags_bg
+                    anchors.fill: parent
+                    opacity: 0.4
+                    color: Theme.colorForeground
+                    visible: {
+                        if (mediaItem) {
+                            var tabcount = 1
+                            tabcount += mediaItem.videoTracksCount + mediaItem.audioTracksCount
+                            if (mediaItem.subtitlesTracksCount) tabcount += 1
+                            if (mediaItem.hasVideoTags) tabcount += 1
+                            return (tabcount % 2 === 0)
+                        }
+                        return false
+                    }
+                }
+                InfosVideoTags {
+                    id: content_video_tags
+                    anchors.fill: parent
+                }
+            }
+*/
             ////////
 
             Item {
@@ -404,7 +460,16 @@ Item {
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
-                    visible: (mediaItem && (mediaItem.videoTracksCount + mediaItem.audioTracksCount) % 2 === 0)
+                    visible: {
+                        var tabcount = 1
+                        if (mediaItem) {
+                            tabcount += mediaItem.videoTracksCount + mediaItem.audioTracksCount
+                            if (mediaItem.subtitlesTracksCount) tabcount += 1
+                            if (mediaItem.hasVideoTags) tabcount += 1
+                            tabcount += 1
+                        }
+                        return (tabcount % 2 === 0)
+                    }
                 }
                 InfosExport {
                     id: content_export
