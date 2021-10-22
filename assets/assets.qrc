@@ -101,7 +101,9 @@
         <file>speakers/LFE.svg</file>
         <file>speakers/1_0.svg</file>
         <file>speakers/2_0_stereo.svg</file>
-        <file>speakers/5_0.svg</file>
-        <file>speakers/7_0.svg</file>
+        <file>speakers/4_0_quad.svg</file>
+        <file>speakers/5_0_surround.svg</file>
+        <file>speakers/7_0_surround.svg</file>
+        <file>speakers/9_0_surround.svg</file>
     </qresource>
 </RCC>
