@@ -776,6 +776,8 @@ bool Media::getMetadataFromVideo()
         m_file_folder = m_media->file_directory;
 
         m_file_extension = m_media->file_extension;
+        m_file_extension_mismatch = (m_media->container_sc != m_media->container_ext);
+        m_file_extension_container = getContainerString(m_media->container, false);
         m_file_container = getContainerString(m_media->container, true);
         m_file_containerprofile = getContainerProfileString(m_media->container_profile, true);
 

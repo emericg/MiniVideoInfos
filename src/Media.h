@@ -54,7 +54,9 @@ class Media: public QObject
     Q_PROPERTY(QString name READ getName NOTIFY mediaUpdated)
     Q_PROPERTY(QString path READ getFolder NOTIFY mediaUpdated)
     Q_PROPERTY(QString ext READ getExtension NOTIFY mediaUpdated)
+    Q_PROPERTY(bool extensionMismatch READ getExtensionMismatch NOTIFY mediaUpdated)
     Q_PROPERTY(QString container READ getContainer NOTIFY mediaUpdated)
+    Q_PROPERTY(QString containerExt READ getExtensionContainer NOTIFY mediaUpdated)
     Q_PROPERTY(QString containerProfile READ getContainerProfile NOTIFY mediaUpdated)
     Q_PROPERTY(qint64 size READ getSize NOTIFY mediaUpdated)
 
@@ -178,6 +180,8 @@ class Media: public QObject
     QString m_file_folder;
     QString m_file_name;
     QString m_file_extension;
+    QString m_file_extension_container;
+    bool m_file_extension_mismatch = false;
     QString m_file_container;
     QString m_file_containerprofile;
     qint64 m_file_size = 0;
@@ -303,6 +307,8 @@ public:
     QString getFolder() const { return m_file_folder; }
     QString getPath() const { return m_path; }
     QString getExtension() const { return m_file_extension; }
+    QString getExtensionContainer() const { return m_file_extension_container; }
+    bool getExtensionMismatch() const { return m_file_extension_mismatch; }
     QString getContainer() const { return m_file_container; }
     QString getContainerProfile() const { return m_file_containerprofile; }
     qint64 getSize() const { return m_file_size; }

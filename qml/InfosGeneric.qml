@@ -17,6 +17,8 @@ Flickable {
         info_name.text = mediaItem.name
         info_path.text = mediaItem.path
         info_extension.text = mediaItem.ext
+        item_extension_mismatch.visible = mediaItem.extensionMismatch
+        info_extension_mismatch.text = qsTr("should be %1").arg(mediaItem.containerExt)
         info_date.text = mediaItem.date.toLocaleDateString()
         info_time.text = mediaItem.date.toLocaleTimeString()
         item_duration.visible = (mediaItem.duration > 0)
@@ -227,6 +229,33 @@ Flickable {
                     id: info_extension
                     color: Theme.colorText
                     font.pixelSize: 15
+                }
+            }
+            Row { ////
+                id: item_extension_mismatch
+                anchors.left: parent.left
+                anchors.leftMargin: 56
+                height: 24
+                spacing: 12
+
+                Text {
+                    text: qsTr("extension mismatch")
+                    color: Theme.colorSubText
+                    font.pixelSize: 15
+                }
+                ImageSvg {
+                    width: 24
+                    height: 24
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 4
+                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                    color: Theme.colorWarning
+                }
+                Text {
+                    id: info_extension_mismatch
+                    color: Theme.colorText
+                    font.pixelSize: 15
+                    font.capitalization: Font.AllLowercase
                 }
             }
 
