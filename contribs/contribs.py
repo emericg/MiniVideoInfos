@@ -77,6 +77,7 @@ if platform.machine() not in ("x86_64", "AMD64"):
 
 contribs_dir = os.getcwd()
 src_dir = contribs_dir + "/src/"
+deploy_dir = contribs_dir + "/deploy/"
 
 clean = False
 rebuild = False
@@ -135,6 +136,8 @@ if clean:
 
 if not os.path.exists(src_dir):
     os.makedirs(src_dir)
+if not os.path.exists(deploy_dir):
+    os.makedirs(deploy_dir)
 
 ## UTILS #######################################################################
 
@@ -174,6 +177,7 @@ if OS_HOST == "Darwin":
     #TARGETS.append(["macOS", "arm64"])
     TARGETS.append(["iOS", "simulator"]) # iOS cross compilation
     TARGETS.append(["iOS", "armv8"])
+    #TARGETS.append(["iOS", "armv7"])
     if ANDROID_NDK_HOME: # Android cross compilation
         TARGETS.append(["android", "armv8"])
         TARGETS.append(["android", "armv7"])
@@ -227,13 +231,16 @@ for TARGET in TARGETS:
             zipSSL.extractall("env/")
         break
 
-## linuxdeployqt
+## linuxdeploy
 ## version: git
 if OS_HOST == "Linux":
-    FILE_linuxdeployqt = "linuxdeployqt-6-x86_64.AppImage"
-    if not os.path.exists("src/" + FILE_linuxdeployqt):
-        print("> Downloading " + FILE_linuxdeployqt + "...")
-        urllib.request.urlretrieve("https://github.com/probonopd/linuxdeployqt/releases/download/6/" + FILE_linuxdeployqt, src_dir + FILE_linuxdeployqt)
+    FILE_linuxdeploy = "linuxdeploy-x86_64.AppImage"
+    if not os.path.exists("src/" + FILE_linuxdeploy):
+        print("> Downloading " + FILE_linuxdeploy + "...")
+        urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/" + FILE_linuxdeploy, deploy_dir + FILE_linuxdeploy)
+        urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-appimage-x86_64.AppImage")
+        urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-qt-x86_64.AppImage")
+        urllib.request.urlretrieve("https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gstreamer/master/linuxdeploy-plugin-gstreamer.sh", deploy_dir + "linuxdeploy-plugin-gstreamer.sh")
 
 ## EXECUTE #####################################################################
 
