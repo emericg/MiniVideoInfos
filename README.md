@@ -2,7 +2,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/emericg/MiniVideoInfos.svg?style=flat-square)](https://github.com/emericg/MiniVideoInfos/releases)
 [![GitHub action](https://img.shields.io/github/workflow/status/emericg/MiniVideoInfos/CI%20builds.svg?style=flat-square)](https://github.com/emericg/MiniVideoInfos/actions)
-[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square&color=brightgreen)](http://www.gnu.org/licenses/gpl-3.0)
 
 > Get detailed informations about your audio, video and picture files with MiniVideo Infos!
 
@@ -16,15 +16,15 @@
 - GPS location maps
 
 VIDEO file formats:  
-✔ AVI, ASF / WMV, MKV / WEBM, MP4 / MOV, MPEG  
+▸ AVI, ASF / WMV, MKV / WEBM, MP4 / MOV, MPEG PS  
 
 AUDIO file formats:  
-✔ AAC, MP3, WMA, WAVE  
-✔ ID3 v1/v2 and Vorbis comments tags  
+▸ AAC, MP3, WMA, WAVE  
+▸ ID3 v1/v2 and Vorbis comments tags  
 
 PICTURE file formats:  
-✔ GIF, JPG, PNG, SVG  
-✔ EXIF tags  
+▸ GIF, JPG, PNG, SVG  
+▸ EXIF tags  
 
 ### Screenshots
 

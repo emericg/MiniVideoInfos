@@ -93,27 +93,10 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
-                    id: text_network
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Network access")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 18
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
                 ItemImageButton {
                     id: button_network_test
-                    width: 28
-                    height: 28
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -126,11 +109,29 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
                 }
+
+                Text {
+                    id: text_network
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Network access")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 18
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
             }
             Text {
                 id: legend_network
                 anchors.left: parent.left
-                anchors.leftMargin: 48
+                anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
@@ -152,40 +153,25 @@ Item {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
+                    anchors.leftMargin: -(screenPaddingLeft + 8)
                     anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
+                    anchors.rightMargin: -(screenPaddingRight + 8)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
 
+            ////////
+
             Item {
                 id: element_storage_read
                 height: 24
-                anchors.right: parent.right
                 anchors.left: parent.left
-
-                Text {
-                    id: text_storage_read
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Storage read")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 18
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
+                anchors.right: parent.right
 
                 ItemImageButton {
                     id: button_storage_read_test
-                    width: 28
-                    height: 28
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -200,11 +186,28 @@ Item {
 
                     onClicked: validperm = utilsApp.getMobileStorageReadPermission();
                 }
+
+                Text {
+                    id: text_storage_read
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Storage read")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 18
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
             Text {
                 id: legend_storage_read
                 anchors.left: parent.left
-                anchors.leftMargin: 48
+                anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
@@ -219,19 +222,21 @@ Item {
 
             Item {
                 height: 16
-                anchors.right: parent.right
                 anchors.left: parent.left
+                anchors.right: parent.right
 
                 Rectangle {
                     height: 1
                     color: Theme.colorSeparator
                     anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
+                    anchors.leftMargin: -(screenPaddingLeft + 8)
                     anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
+                    anchors.rightMargin: -(screenPaddingRight + 8)
                     anchors.verticalCenter: parent.verticalCenter
                 }
             }
+
+            ////////
 
             Item {
                 id: element_storage_write
@@ -239,27 +244,10 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Text {
-                    id: text_storage_write
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Storage write")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 18
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
                 ItemImageButton {
                     id: button_storage_write_test
-                    width: 28
-                    height: 28
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -274,11 +262,28 @@ Item {
 
                     onClicked: validperm = utilsApp.getMobileStorageWritePermission();
                 }
+
+                Text {
+                    id: text_storage_write
+                    height: 16
+                    anchors.left: parent.left
+                    anchors.leftMargin: 56
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Storage write")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 18
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
             Text {
                 id: legend_storage_write
                 anchors.left: parent.left
-                anchors.leftMargin: 48
+                anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 8
 
