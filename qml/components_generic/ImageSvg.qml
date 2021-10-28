@@ -20,7 +20,7 @@ Item {
         sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectFit
         asynchronous: false
-        smooth: true
+        smooth: false
     }
 
     ColorOverlay {
