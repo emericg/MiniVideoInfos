@@ -54,8 +54,8 @@ ApplicationWindow {
 */
         if (Qt.platform.os !== "ios") return
         if (typeof quickWindow === "undefined" || !quickWindow) {
-            handleNotchesTimer.restart();
-            return;
+            handleNotchesTimer.restart()
+            return
         }
 
         // Statusbar text color hack

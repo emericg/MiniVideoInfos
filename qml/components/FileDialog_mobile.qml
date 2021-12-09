@@ -1,5 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12 // Qt5
+//import Qt5Compat.GraphicalEffects // Qt6
 
 import Qt.labs.folderlistmodel 2.12
 
@@ -11,6 +13,7 @@ Rectangle {
     id: fileDialogMobile
     anchors.fill: parent
 
+    z: 20 // must be shown on top of everything
     visible: false
     color: Theme.colorBackground
 

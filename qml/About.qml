@@ -123,7 +123,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: isMobile || isDesktop
+                visible: (isMobile || isDesktop)
                 spacing: 16
 
                 ButtonWireframeImage {
