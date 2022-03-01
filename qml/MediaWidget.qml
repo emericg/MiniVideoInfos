@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -37,7 +37,7 @@ Item {
         id: deviceWidgetRectangle
         anchors.fill: parent
 
-        color: mediaWidget.selected ? Theme.colorSeparator : Theme.colorBackground
+        color: mediaWidget.selected ? Theme.colorSeparator : "transparent"
         Behavior on color { ColorAnimation { duration: 133 } }
 
         MouseArea {
@@ -102,7 +102,7 @@ Item {
             anchors.fill: parent
             anchors.margins: 8
 
-            ImageSvg {
+            IconSvg {
                 id: imageMedia
                 width: 40
                 height: 40
@@ -201,7 +201,7 @@ Item {
 */
             }
 
-            ImageSvg {
+            IconSvg {
                 id: imageGo
                 width: 32
                 height: 32

@@ -1,7 +1,7 @@
 pragma Singleton
 
-import QtQuick 2.12
-import QtQuick.Controls.Material 2.12
+import QtQuick 2.15
+import QtQuick.Controls.Material 2.15
 
 Item {
     enum ThemeNames {
@@ -15,55 +15,55 @@ Item {
     ////////////////
 
     property int themeStatusbar
-    property string colorStatusbar
+    property color colorStatusbar
 
     // Header
-    property string colorHeader
-    property string colorHeaderContent
-    property string colorHeaderHighlight
+    property color colorHeader
+    property color colorHeaderContent
+    property color colorHeaderHighlight
 
     // Sidebar
-    property string colorSidebar
-    property string colorSidebarContent
-    property string colorSidebarHighlight
+    property color colorSidebar
+    property color colorSidebarContent
+    property color colorSidebarHighlight
 
     // Action bar
-    property string colorActionbar
-    property string colorActionbarContent
-    property string colorActionbarHighlight
+    property color colorActionbar
+    property color colorActionbarContent
+    property color colorActionbarHighlight
 
     // Tablet bar
-    property string colorTabletmenu
-    property string colorTabletmenuContent
-    property string colorTabletmenuHighlight
+    property color colorTabletmenu
+    property color colorTabletmenuContent
+    property color colorTabletmenuHighlight
 
     // Content
-    property string colorBackground
-    property string colorForeground
+    property color colorBackground
+    property color colorForeground
 
-    property string colorPrimary
-    property string colorSecondary
-    property string colorSuccess
-    property string colorWarning
-    property string colorError
+    property color colorPrimary
+    property color colorSecondary
+    property color colorSuccess
+    property color colorWarning
+    property color colorError
 
-    property string colorText
-    property string colorSubText
-    property string colorIcon
-    property string colorSeparator
+    property color colorText
+    property color colorSubText
+    property color colorIcon
+    property color colorSeparator
 
-    property string colorLowContrast
-    property string colorHighContrast
+    property color colorLowContrast
+    property color colorHighContrast
 
     // App specific
 
     // Qt Quick controls & theming
-    property string colorComponent
-    property string colorComponentText
-    property string colorComponentContent
-    property string colorComponentBorder
-    property string colorComponentDown
-    property string colorComponentBackground
+    property color colorComponent
+    property color colorComponentText
+    property color colorComponentContent
+    property color colorComponentBorder
+    property color colorComponentDown
+    property color colorComponentBackground
 
     property int componentHeight: 40
     property int componentRadius: 4
@@ -72,29 +72,31 @@ Item {
     ////////////////
 
     // Palette colors
-    property string colorLightGreen: "#09debc" // unused
-    property string colorGreen
-    property string colorDarkGreen: "#1ea892" // unused
-    property string colorBlue
-    property string colorYellow
-    property string colorOrange
-    property string colorRed
-    property string colorGrey: "#555151" // unused
-    property string colorLightGrey: "#a9bcb8" // unused
+    property color colorLightGreen: "#09debc" // unused
+    property color colorGreen
+    property color colorDarkGreen: "#1ea892" // unused
+    property color colorBlue
+    property color colorYellow
+    property color colorOrange
+    property color colorRed
+    property color colorGrey: "#555151" // unused
+    property color colorLightGrey: "#a9bcb8" // unused
 
     // Fixed colors
-    readonly property string colorMaterialBlue: "#2196f3" // colorMaterialThisblue
-    readonly property string colorMaterialIndigo: "#3f51b5"
-    readonly property string colorMaterialPurple: "#9c27b0"
-    readonly property string colorMaterialDeepPurple: "#673ab7"
-    readonly property string colorMaterialRed: "#f44336"
-    readonly property string colorMaterialOrange: "#ff9800"
-    readonly property string colorMaterialLightGreen: "#8bc34a"
+    readonly property color colorMaterialBlue: "#2196f3"
+    readonly property color colorMaterialThisblue: "#448aff"
+    readonly property color colorMaterialIndigo: "#3f51b5"
+    readonly property color colorMaterialPurple: "#9c27b0"
+    readonly property color colorMaterialDeepPurple: "#673ab7"
+    readonly property color colorMaterialRed: "#f44336"
+    readonly property color colorMaterialOrange: "#ff9800"
+    readonly property color colorMaterialLightGreen: "#8bc34a"
 
-    readonly property string colorMaterialDarkGrey: "#d0d0d0"
-    readonly property string colorMaterialGrey: "#eeeeee"
-    readonly property string colorMaterialLightGrey: "#fafafa"
-    readonly property string colorMaterialThisblue: "#448aff"
+    readonly property color colorMaterialLightGrey: "#fafafa"
+    readonly property color colorMaterialGrey: "#eeeeee"
+    readonly property color colorMaterialDarkGrey: "#d0d0d0"
+    readonly property color colorNeutralDay: "#e4e4e4"
+    readonly property color colorNeutralNight: "#ffb300"
 
     // ios blue "#077aff"
     // ios red "#ff3b30"
@@ -103,7 +105,7 @@ Item {
     ////////////////
 
     // Fonts (sizes in pixel) (WIP)
-    readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 22 : 24
+    readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 22 : 26
     readonly property int fontSizeTitle: 24
     readonly property int fontSizeContentVerySmall: 12
     readonly property int fontSizeContentSmall: 14
@@ -117,7 +119,7 @@ Item {
     Component.onCompleted: loadTheme(settingsManager.appTheme)
     Connections {
         target: settingsManager
-        onAppThemeChanged: { loadTheme(settingsManager.appTheme) }
+        function onAppThemeChanged() { loadTheme(settingsManager.appTheme) }
     }
 
     function loadTheme(themeIndex) {
@@ -135,7 +137,8 @@ Item {
             }
         }
 
-        if (themeIndex === currentTheme) return;
+        // Do not reload the same theme
+        if (themeIndex === currentTheme) return
 
         if (themeIndex === ThemeEngine.THEME_LIGHT) {
 
@@ -146,11 +149,11 @@ Item {
             colorRed = "#ff523a"
 
             themeStatusbar = Material.Light
-            colorStatusbar = colorMaterialDarkGrey
+            colorStatusbar = "#e9e9e9" //colorMaterialDarkGrey
 
-            colorHeader = colorMaterialGrey
+            colorHeader = "#e9e9e9" //colorMaterialGrey
             colorHeaderContent = "#0079fe"
-            colorHeaderHighlight = ""
+            colorHeaderHighlight = "#ccc"
 
             colorActionbar = colorGreen
             colorActionbarContent = "white"
@@ -161,7 +164,7 @@ Item {
             colorTabletmenuHighlight = "#0079fe"
 
             colorBackground = colorMaterialLightGrey
-            colorForeground = colorMaterialGrey
+            colorForeground = "#f0f0f0"
 
             colorPrimary = colorRed
             colorSecondary = "#ff7b36"
@@ -171,7 +174,7 @@ Item {
 
             colorText = "#303030"
             colorSubText = "#666666"
-            colorIcon = "#494949"
+            colorIcon = "#303030"
             colorSeparator = colorMaterialGrey
             colorLowContrast = "white"
             colorHighContrast = "black"
@@ -196,7 +199,7 @@ Item {
 
             colorHeader = "#292929"
             colorHeaderContent = "#ee8c21"
-            colorHeaderHighlight = ""
+            colorHeaderHighlight = "#444"
 
             colorActionbar = colorGreen
             colorActionbarContent = "white"

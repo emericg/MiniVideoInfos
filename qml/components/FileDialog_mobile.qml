@@ -1,9 +1,10 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtGraphicalEffects 1.12 // Qt5
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+
+import QtGraphicalEffects 1.15 // Qt5
 //import Qt5Compat.GraphicalEffects // Qt6
 
-import Qt.labs.folderlistmodel 2.12
+import Qt.labs.folderlistmodel 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
@@ -103,13 +104,13 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: header
+        id: subheader
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
 
         z: 1
-        height: 48
+        height: 40
         color: Theme.colorHeader
 
         // prevent clicks into this area
@@ -117,10 +118,10 @@ Rectangle {
 
         Item {
             id: storageChooser
-            width: 48
-            height: 48
+            width: 40
+            height: 40
             anchors.left: parent.left
-            anchors.leftMargin: 2
+            anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
 
             visible: true // (utilsApp.getMobileStorageCount() > 1)
@@ -129,17 +130,17 @@ Rectangle {
             property int storageCount: utilsApp.getMobileStorageCount()
 
             Rectangle {
-                width: 36
-                height: 36
-                radius: 36
+                width: 38
+                height: 38
+                radius: 38
                 anchors.centerIn: parent
                 color: Theme.colorComponent
             }
 
-            ImageSvg {
+            IconSvg {
                 id: storageIcon
-                width: 24
-                height: 24
+                width: 26
+                height: 26
                 anchors.centerIn: parent
 
                 source: "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
@@ -150,7 +151,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     // try next storage
-                    storageChooser.storageIndex++;
+                    storageChooser.storageIndex++
                     if (storageChooser.storageIndex >= storageChooser.storageCount)
                         storageChooser.storageIndex = 0
 
@@ -173,9 +174,9 @@ Rectangle {
         Text {
             id: headerText
             anchors.left: parent.left
-            anchors.leftMargin: 48
+            anchors.leftMargin: 64
             anchors.right: upButton.left
-            anchors.rightMargin: 8
+            anchors.rightMargin: 12
             anchors.verticalCenter: parent.verticalCenter
 
             text: folderListModel.folder
@@ -187,17 +188,17 @@ Rectangle {
 
         Item {
             id: upButton
-            width: 48
-            height: 48
+            width: 40
+            height: 40
             anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.rightMargin: 4
             anchors.verticalCenter: parent.verticalCenter
 
-            ImageSvg {
+            IconSvg {
                 id: upIcon
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.centerIn: parent
+                width: 24
+                height: 24
 
                 color: Theme.colorIcon
                 source: "qrc:/assets/icons_material/baseline-subdirectory_arrow_left-24px.svg"
@@ -213,21 +214,29 @@ Rectangle {
                 }
             }
         }
+    }
+    Rectangle { // separator
+        anchors.top: subheader.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-        Rectangle {
-            height: 1
+        height: 2
+        opacity: 0.66
+        color: Theme.colorHeaderHighlight
+
+        Rectangle { // shadow
+            anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-        SimpleShadow {
-            height: 4
-            anchors.top: parent.bottom
-            anchors.topMargin: -height
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+
+            height: 8
+            opacity: 0.66
+
+            gradient: Gradient {
+                orientation: Gradient.Vertical
+                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 1.0; color: Theme.colorBackground; }
+            }
         }
     }
 
@@ -236,10 +245,13 @@ Rectangle {
     ListView {
         id: list
 
-        anchors.top: header.bottom
+        anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: mediaOnlyChooser.top
+
+        topMargin: 4
+        bottomMargin: 4
 
         model: FolderListModel {
             id: folderListModel
@@ -255,10 +267,10 @@ Rectangle {
             width: list.width
             height: 48
 
-            ImageSvg {
+            IconSvg {
                 id: icon
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
 
                 width: 36
@@ -292,9 +304,9 @@ Rectangle {
 
             Column {
                 anchors.left: icon.right
-                anchors.leftMargin: 8
+                anchors.leftMargin: 16
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
@@ -349,7 +361,7 @@ Rectangle {
         z: 1
         height: 40
         visible: !selectFolder
-        color: Theme.colorHeader
+        color: Theme.colorTabletmenu
 
         Text {
             id: rectangleErrorText

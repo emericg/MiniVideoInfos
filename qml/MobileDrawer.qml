@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
@@ -33,11 +33,11 @@ Drawer {
 
             Connections {
                 target: appWindow
-                onScreenPaddingStatusbarChanged: rectangleHeader.updateIOSHeader()
+                function onScreenPaddingStatusbarChanged() { rectangleHeader.updateIOSHeader() }
             }
             Connections {
                 target: Theme
-                onCurrentThemeChanged: rectangleHeader.updateIOSHeader()
+                function onCurrentThemeChanged() { rectangleHeader.updateIOSHeader() }
             }
 
             function updateIOSHeader() {
@@ -55,14 +55,14 @@ Drawer {
                 id: rectangleStatusbar
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorBackground // "red" // to hide scrollview content
+                color: Theme.colorBackground // "red" // to hide flickable content
                 height: screenPaddingStatusbar
             }
             Rectangle {
                 id: rectangleNotch
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorBackground // "yellow" // to hide scrollview content
+                color: Theme.colorBackground // "yellow" // to hide flickable content
                 height: screenPaddingNotch
             }
             Rectangle {
@@ -104,17 +104,19 @@ Drawer {
 
         ////////////////
 
-        ScrollView {
-            id: scrollView
-            contentWidth: -1
-
+        Flickable {
             anchors.top: rectangleHeader.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
+            contentWidth: -1
+            contentHeight: column.height
+
             Column {
-                anchors.fill: parent
+                id: column
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 ////////
 
@@ -134,7 +136,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         id: buttonLoadImg
                         width: 24
                         height: 24
@@ -143,7 +145,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/duotone-library_add-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left
@@ -175,7 +177,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         id: buttonMediaImg
                         width: 24
                         height: 24
@@ -184,7 +186,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left
@@ -244,7 +246,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -252,7 +254,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left
@@ -281,7 +283,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -289,7 +291,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left
@@ -337,7 +339,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -345,7 +347,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left
@@ -376,7 +378,7 @@ Drawer {
                         }
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -384,7 +386,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left
@@ -434,7 +436,7 @@ Drawer {
                         onClicked: utilsApp.appExit()
                     }
 
-                    ImageSvg {
+                    IconSvg {
                         width: 24
                         height: 24
                         anchors.left: parent.left
@@ -442,7 +444,7 @@ Drawer {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
-                        color: Theme.colorText
+                        color: Theme.colorIcon
                     }
                     Label {
                         anchors.left: parent.left

@@ -37,10 +37,10 @@ PICTURE file formats:
 ### Dependencies
 
 You will need:
-- Any C++11 compiler
+- Any C++17 compiler
 - Android NDK 20+
 - Android SDK
-- Qt 5.12+ (with Qt Charts)
+- Qt 5.15 (with Qt Charts)
 - MiniVideo (0.14+)
 - TagLib
 - libexif

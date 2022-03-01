@@ -3,6 +3,7 @@
         <file>Application.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
+        <file>MobilePermissions.qml</file>
         <file>Tutorial.qml</file>
         <file>MediaList.qml</file>
         <file>MediaWidget.qml</file>
@@ -12,7 +13,6 @@
         <file>MediaInfos_row.qml</file>
         <file>MediaInfos_swipeview.qml</file>
         <file>About.qml</file>
-        <file>Permissions.qml</file>
         <file>Settings.qml</file>
         <file>ThemeEngine.qml</file>
 
@@ -24,24 +24,25 @@
         <file>InfosMap.qml</file>
         <file>InfosExport.qml</file>
 
+        <file alias="PopupImage.qml">popups/PopupImage.qml</file>
+        <file alias="PopupLoading.qml">popups/PopupLoading.qml</file>
+
         <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
-        <file alias="ItemLoading.qml">components/ItemLoading.qml</file>
         <file alias="ItemSwipeMenu.qml">components/ItemSwipeMenu.qml</file>
         <file alias="FileDialog.qml">components/FileDialog.qml</file>
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
         <file alias="FileDialog_platformfile.qml">components/FileDialog_platformfile.qml</file>
         <file alias="FileDialog_platformfolder.qml">components/FileDialog_platformfolder.qml</file>
         <file alias="FileDialog_quickdialogs.qml">components/FileDialog_quickdialogs.qml</file>
-        <file alias="PopupImage.qml">popups/PopupImage.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
-        <file alias="ButtonWireframeImage.qml">components_generic/ButtonWireframeImage.qml</file>
-        <file alias="ImageSvg.qml">components_generic/ImageSvg.qml</file>
-        <file alias="ItemImageButton.qml">components_generic/ItemImageButton.qml</file>
-        <file alias="ItemMenuButton.qml">components_generic/ItemMenuButton.qml</file>
-        <file alias="ItemMenuVerticalButton.qml">components_generic/ItemMenuVerticalButton.qml</file>
-        <file alias="SimpleShadow.qml">components_generic/SimpleShadow.qml</file>
+        <file alias="ButtonWireframeIcon.qml">components_generic/ButtonWireframeIcon.qml</file>
+        <file alias="ButtonWireframeIconCentered.qml">components_generic/ButtonWireframeIconCentered.qml</file>
+        <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
+        <file alias="RoundButtonIcon.qml">components_generic/RoundButtonIcon.qml</file>
+        <file alias="MobileMenuItem.qml">components_generic/MobileMenuItem.qml</file>
+        <file alias="ToolTipFlat.qml">components_generic/ToolTipFlat.qml</file>
 
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>

@@ -1,14 +1,16 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsString.js" as UtilsString
 
 Item {
     id: screenMediaInfos_swipeview
+    width: 480
+    height: 720
     anchors.fill: parent
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadHeader() {
         if (mediaItem.fileType === 1 || mediaItem.fileType === 2) {
@@ -53,7 +55,7 @@ Item {
         if (mediaItem.fileType === 1 || mediaItem.audioCodec.length) headercolumncount++;
         if (mediaItem.hasGPS) headercolumncount++;
 
-        var headercolumnwidth = ((rectangleHeader.width - 48) / headercolumncount)
+        var headercolumnwidth = ((subheader.width - 48) / headercolumncount)
         if (headercolumnwidth > 128) headercolumnwidth = 128
         columnDuration.width = headercolumnwidth
         columnSize.width = headercolumnwidth
@@ -172,11 +174,11 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: rectangleHeader
+        id: subheader
 
         z: 5
         height: visible ? 72 : 0
-        color: Theme.colorForeground
+        color: Theme.colorHeader
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)
 
         anchors.top: parent.top
@@ -205,7 +207,7 @@ Item {
                     id: columnDuration
                     width: 96
 
-                    ImageSvg {
+                    IconSvg {
                         width: 40
                         height: 40
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -231,7 +233,7 @@ Item {
                     id: columnSize
                     width: 96
 
-                    ImageSvg {
+                    IconSvg {
                         width: 40
                         height: 40
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -257,7 +259,7 @@ Item {
                     id: columnGeometry
                     width: 96
 
-                    ImageSvg {
+                    IconSvg {
                         id: imgGeometry
                         width: 40
                         height: 40
@@ -284,7 +286,7 @@ Item {
                     id: columnChannels
                     width: 96
 
-                    ImageSvg {
+                    IconSvg {
                         width: 40
                         height: 40
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -310,7 +312,7 @@ Item {
                     id: columnGPS
                     width: 96
 
-                    ImageSvg {
+                    IconSvg {
                         width: 40
                         height: 40
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -335,32 +337,28 @@ Item {
             }
         }
     }
-
-    Rectangle {
-        id: fakeHeader
-        anchors.top: rectangleHeader.bottom
-        anchors.topMargin: -3
+    Rectangle { // separator
+        anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
 
-        z: 4
-        height: 4
-        color: Theme.colorForeground
+        height: 2
+        opacity: 0.66
+        color: Theme.colorHeaderHighlight
 
-        Rectangle {
-            height: 1
+        Rectangle { // shadow
+            anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-        SimpleShadow {
-            height: 4
-            anchors.top: parent.bottom
-            anchors.topMargin: -height
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+
+            height: 8
+            opacity: 0.66
+
+            gradient: Gradient {
+                orientation: Gradient.Vertical
+                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 1.0; color: Theme.colorBackground; }
+            }
         }
     }
 
@@ -370,7 +368,7 @@ Item {
         id: mediaPages
 
         anchors.top: parent.top
-        anchors.topMargin: rectangleHeader.visible ? rectangleHeader.height : 0
+        anchors.topMargin: subheader.visible ? subheader.height : 0
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

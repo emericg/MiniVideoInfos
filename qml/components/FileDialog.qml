@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.15
 import "qrc:/js/UtilsPath.js" as UtilsPath
 
 Loader {

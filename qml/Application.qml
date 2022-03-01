@@ -1,6 +1,6 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Window 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Window 2.15
 
 import ThemeEngine 1.0
 import MobileUI 1.0
@@ -144,8 +144,33 @@ ApplicationWindow {
 
     MobileHeader {
         id: appHeader
-        width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.top: parent.top
+    }
+    Rectangle { // separator
+        anchors.top: appHeader.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        height: 2
+        opacity: 0.66
+        color: Theme.colorHeaderHighlight
+
+        Rectangle { // shadow
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            height: 8
+            opacity: 0.66
+
+            gradient: Gradient {
+                orientation: Gradient.Vertical
+                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 1.0; color: Theme.colorBackground; }
+            }
+        }
     }
 
     MobileDrawer {
@@ -158,11 +183,11 @@ ApplicationWindow {
 
     Connections {
         target: utilsShare
-        onFileUrlReceived: {
+        function onFileUrlReceived() {
             console.log("onFileUrlReceived + " + url)
             screenMediaList.loadMedia(url)
         }
-        onFileReceivedAndSaved: {
+        function onFileReceivedAndSaved() {
             console.log("onFileReceivedAndSaved + " + url)
             screenMediaList.loadMedia(url)
         }
@@ -182,7 +207,7 @@ ApplicationWindow {
 
     Connections {
         target: Qt.application
-        onStateChanged: {
+        function onStateChanged() {
             switch (Qt.application.state) {
             case Qt.ApplicationSuspended:
                 //console.log("Qt.ApplicationSuspended")
@@ -206,22 +231,22 @@ ApplicationWindow {
 
     Connections {
         target: appHeader
-        onLeftMenuClicked: {
+        function onLeftMenuClicked() {
             if (appHeader.leftMenuMode === "drawer") {
                 appDrawer.open()
             } else {
                 backAction()
             }
         }
-        onRightMenuClicked: {
+        function onRightMenuClicked() {
             //
         }
     }
 
     function backAction() {
         if (appContent.state === "Tutorial") {
-            appContent.state = screenTutorial.exitTo
-        } else if (appContent.state === "Permissions") {
+            appContent.state = screenTutorial.entryPoint
+        } else if (appContent.state === "MobilePermissions") {
             appContent.state = "About"
         } else {
             appContent.state = "MediaList"
@@ -284,7 +309,7 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial" && screenTutorial.exitTo === "MediaList") return; // do nothing
+            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") return; // do nothing
 
             if (appContent.state === "MediaList") {
                 if (screenMediaList.selectionList.length !== 0) {
@@ -316,7 +341,7 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenSettings
         }
-        Permissions {
+        MobilePermissions {
             anchors.fill: parent
             id: screenPermissions
         }
@@ -383,7 +408,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "Permissions"
+                name: "MobilePermissions"
                 PropertyChanges { target: appHeader; title: qsTr("Permissions"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
@@ -459,7 +484,7 @@ ApplicationWindow {
             opacity: 0
             Behavior on opacity { OpacityAnimator { duration: 200 } }
 
-            ImageSvg {
+            IconSvg {
                 id: dropAreaImage
                 anchors.fill: parent
                 anchors.margins: 48
@@ -510,51 +535,51 @@ ApplicationWindow {
 
         Row {
             id: tabletMenuScreen
+            anchors.centerIn: parent
+            height: parent.height
             spacing: 24
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
 
             visible: (appContent.state === "MediaList" ||
                       appContent.state === "Settings" ||
                       appContent.state === "About")
 
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuMedia
-                imgSize: 24
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
 
-                menuText: qsTr("Media")
+                text: qsTr("Media")
                 selected: (appContent.state === "MediaList")
                 source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                sourceSize: 24
+
                 onClicked: appContent.state = "MediaList"
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuSettings
-                imgSize: 24
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
 
-                menuText: qsTr("Settings")
+                text: qsTr("Settings")
                 selected: (appContent.state === "Settings")
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                sourceSize: 24
+
                 onClicked: appContent.state = "Settings"
             }
-            ItemMenuButton {
+            MobileMenuItem {
                 id: menuAbout
-                imgSize: 24
 
-                colorBackground: Theme.colorTabletmenuContent
-                colorContent: Theme.colorTabletmenuHighlight
-                highlightMode: "text"
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
 
-                menuText: qsTr("About")
+                text: qsTr("About")
                 selected: (appContent.state === "About")
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                sourceSize: 24
+
                 onClicked: appContent.state = "About"
             }
         }

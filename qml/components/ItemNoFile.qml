@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
@@ -14,7 +14,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 16
 
-        ImageSvg {
+        IconSvg {
             width: 200
             height: 200
             anchors.horizontalCenter: parent.horizontalCenter
@@ -22,6 +22,7 @@ Item {
             source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon
+            smooth: true
         }
 
         ButtonWireframe {

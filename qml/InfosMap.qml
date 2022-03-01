@@ -1,8 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
-import QtLocation 5.12
-import QtPositioning 5.12
+import QtLocation 5.15
+import QtPositioning 5.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsString.js" as UtilsString
@@ -166,7 +166,7 @@ Item {
             anchors.leftMargin: 16
             spacing: 16
 
-            ItemImageButton {
+            RoundButtonIcon {
                 id: button_map_moove
                 width: 40
                 height: 40
@@ -185,7 +185,7 @@ Item {
                     //mediaPages.interactive = !map.moove
                 }
             }
-            ItemImageButton {
+            RoundButtonIcon {
                 id: button_map_center
                 width: 40
                 height: 40
@@ -211,7 +211,7 @@ Item {
             anchors.rightMargin: 16
             spacing: 16
 
-            ItemImageButton {
+            RoundButtonIcon {
                 id: button_map_dezoom
                 width: 40
                 height: 40
@@ -225,7 +225,7 @@ Item {
                 onClicked: zoomOut()
             }
 
-            ItemImageButton {
+            RoundButtonIcon {
                 id: button_map_zoom
                 width: 40
                 height: 40
@@ -290,7 +290,7 @@ Item {
             color: Theme.colorForeground
             opacity: 0.9
 
-            ImageSvg {
+            IconSvg {
                 width: 32
                 height: 32
                 anchors.left: parent.left

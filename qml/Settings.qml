@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
@@ -11,85 +11,64 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorForeground
-        height: 80
-        z: 5
+    Flickable {
+        anchors.fill: parent
 
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        // prevent clicks into this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Text {
-            id: textTitle
-            anchors.top: parent.top
-            anchors.topMargin: 8
-            anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft + 16
-            anchors.right: parent.right
-            anchors.rightMargin: screenPaddingRight + 16
-
-            text: qsTr("Change persistent settings here!")
-            textFormat: Text.PlainText
-            font.pixelSize: 18
-            elide: Text.ElideRight
-            color: Theme.colorText
-        }
-
-        Text {
-            id: textSubtitle
-            anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft + 16
-            anchors.right: parent.right
-            anchors.rightMargin: screenPaddingRight + 16
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 20
-
-            text: qsTr("Because everyone love settings...")
-            textFormat: Text.PlainText
-            font.pixelSize: Theme.fontSizeContent
-            color: Theme.colorSubText
-        }
-
-        Rectangle {
-            height: 1
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-        SimpleShadow {
-            height: 4
-            anchors.top: parent.bottom
-            anchors.topMargin: -height
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ScrollView {
         contentWidth: -1
+        contentHeight: column.height
 
-        anchors.top: rectangleHeader.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+        ScrollBar.vertical: ScrollBar { visible: isDesktop; }
 
         Column {
-            anchors.fill: parent
+            id: column
+            anchors.left: parent.left
+            anchors.leftMargin: screenPaddingLeft
+            anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight
 
-            topPadding: 12
-            bottomPadding: 12
+            topPadding: 16
+            bottomPadding: 16
             spacing: 8
 
-            ////////
+            ////////////////
+
+            Rectangle {
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                color: Theme.colorForeground
+
+                IconSvg {
+                    id: image_appsettings
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                }
+
+                Text {
+                    id: text_appsettings
+                    anchors.left: image_appsettings.right
+                    anchors.leftMargin: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Application")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            ////////////////
 
             Item {
                 id: element_appTheme
@@ -99,7 +78,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_appTheme
                     width: 24
                     height: 24
@@ -107,7 +86,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-style-24px.svg"
                 }
 
@@ -115,7 +94,7 @@ Item {
                     id: text_appTheme
                     height: 40
                     anchors.left: image_appTheme.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: theme_selector.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -204,7 +183,7 @@ Item {
 
                 visible: (settingsManager.appTheme !== "night")
 
-                ImageSvg {
+                IconSvg {
                     id: image_appThemeAuto
                     width: 24
                     height: 24
@@ -212,7 +191,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
                 }
 
@@ -220,7 +199,7 @@ Item {
                     id: text_appThemeAuto
                     height: 40
                     anchors.left: image_appThemeAuto.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: switch_appThemeAuto.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -250,7 +229,7 @@ Item {
             Text {
                 id: legend_appThemeAuto
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 56
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12
@@ -265,16 +244,44 @@ Item {
                 font.pixelSize: 14
             }
 
-            ////////
+            ////////////////
 
             Rectangle {
-                height: 1
-                anchors.right: parent.right
+                height: 48
                 anchors.left: parent.left
-                color: Theme.colorSeparator
+                anchors.right: parent.right
+
+                color: Theme.colorForeground
+
+                IconSvg {
+                    id: image_mediasettings
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                }
+
+                Text {
+                    id: text_mediasettings
+                    anchors.left: image_mediasettings.right
+                    anchors.leftMargin: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Media")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
 
-            ////////
+            ////////////////
 
             Item {
                 id: element_mediaFilter
@@ -284,7 +291,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_mediaFilter
                     width: 24
                     height: 24
@@ -294,14 +301,14 @@ Item {
 
                     source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                     fillMode: Image.PreserveAspectFit
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
                     id: text_mediaFilter
                     height: 40
                     anchors.left: image_mediaFilter.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: switch_mediaFilter.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -336,7 +343,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_mediaPreview
                     width: 24
                     height: 24
@@ -344,7 +351,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                 }
 
@@ -352,7 +359,7 @@ Item {
                     id: text_mediaPreview
                     height: 40
                     anchors.left: image_mediaPreview.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: switch_mediaPreview.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -387,7 +394,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_mediaExport
                     width: 24
                     height: 24
@@ -395,7 +402,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/outline-archive-24px.svg"
                 }
 
@@ -405,7 +412,7 @@ Item {
                     anchors.right: switch_mediaExport.left
                     anchors.rightMargin: 16
                     anchors.left: image_mediaExport.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Enable export tab")
@@ -438,7 +445,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_unit
                     width: 24
                     height: 24
@@ -446,7 +453,7 @@ Item {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                 }
 
@@ -454,7 +461,7 @@ Item {
                     id: text_unit
                     height: 40
                     anchors.left: image_unit.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: row_unit.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -530,7 +537,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
 
-                ImageSvg {
+                IconSvg {
                     id: image_sizes
                     width: 24
                     height: 24
@@ -538,7 +545,7 @@ Item {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/outline-save-24px.svg"
                 }
 
@@ -546,7 +553,7 @@ Item {
                     id: text_sizes
                     height: 40
                     anchors.left: image_sizes.right
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: 24
                     anchors.right: row_sizes.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
@@ -632,7 +639,7 @@ Item {
             Text {
                 id: legend_sizes
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 56
+                anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
                 topPadding: -12

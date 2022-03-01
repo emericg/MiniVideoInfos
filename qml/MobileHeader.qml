@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.15
 
 import ThemeEngine 1.0
 
@@ -48,7 +48,7 @@ Rectangle {
             visible: true
             onClicked: leftMenuClicked()
 
-            ImageSvg {
+            IconSvg {
                 id: leftMenuImg
                 width: headerHeight/2
                 height: headerHeight/2
@@ -86,7 +86,7 @@ Rectangle {
             visible: false
             onClicked: rightMenuClicked()
 
-            ImageSvg {
+            IconSvg {
                 id: rightMenuImg
                 width: headerHeight/2
                 height: headerHeight/2

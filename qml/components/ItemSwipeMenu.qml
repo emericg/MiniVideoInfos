@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
@@ -18,7 +18,7 @@ Item {
         onClicked: mediaPages.currentIndex = index
     }
 
-    ImageSvg {
+    IconSvg {
         id: menuItemImg
         width: 26
         height: 26

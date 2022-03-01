@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsString.js" as UtilsString
@@ -85,20 +85,28 @@ Item {
         height: 4
         color: Theme.colorForeground
 
-        Rectangle {
-            height: 1
+        Rectangle { // separator
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+
+            height: 2
+            opacity: 0.66
+            color: Theme.colorHeaderHighlight
         }
-        SimpleShadow {
-            height: 4
-            anchors.top: parent.bottom
-            anchors.topMargin: -height
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+    }
+    Rectangle { // shadow
+        anchors.top: fakeHeader.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        height: 8
+        opacity: 0.66
+
+        gradient: Gradient {
+            orientation: Gradient.Vertical
+            GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+            GradientStop { position: 1.0; color: Theme.colorBackground; }
         }
     }
 
@@ -145,7 +153,7 @@ Item {
                         id: columnDuration
                         width: 96
 
-                        ImageSvg {
+                        IconSvg {
                             width: 40
                             height: 40
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -171,7 +179,7 @@ Item {
                         id: columnSize
                         width: 96
 
-                        ImageSvg {
+                        IconSvg {
                             width: 40
                             height: 40
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -197,7 +205,7 @@ Item {
                         id: columnGeometry
                         width: 96
 
-                        ImageSvg {
+                        IconSvg {
                             id: imgGeometry
                             width: 40
                             height: 40
@@ -224,7 +232,7 @@ Item {
                         id: columnChannels
                         width: 96
 
-                        ImageSvg {
+                        IconSvg {
                             width: 40
                             height: 40
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -250,7 +258,7 @@ Item {
                         id: columnGPS
                         width: 96
 
-                        ImageSvg {
+                        IconSvg {
                             width: 40
                             height: 40
                             anchors.horizontalCenter: parent.horizontalCenter

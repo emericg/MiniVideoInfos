@@ -886,6 +886,7 @@ bool Media::getMetadataFromVideo()
                 }
                 else if (t->stream_fcc == fourcc_be("gpmd"))
                 {
+/*
                     MediaStream_t *t = m_media->tracks_others[i];
 
                     //uint32_t gpmf_sample_count = t->sample_count;
@@ -893,7 +894,7 @@ bool Media::getMetadataFromVideo()
 
                     if (devc_count)
                         m_hasGPMF = true;
-/*
+
                     // Now the purpose of the following code is to get accurate
                     // date from the GPS, but in case of chaptered videos, we may
                     // have that date already, so don't run this code twice

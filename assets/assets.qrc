@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/assets">
         <file>logos/logo.svg</file>
+        <file>logos/github.svg</file>
+
         <file>others/gps_marker.svg</file>
         <file>others/gps_marker_direction.svg</file>
         <file>icons_fontawesome/photo-video-duotone.svg</file>

@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
@@ -16,13 +16,13 @@ Item {
 
     Connections {
         target: mediaManager
-        onMediaUpdated: {
+        function onMediaUpdated() {
             if (mediaManager.areMediaAvailable()) {
-                rectangleHeader.visible = true
+                subheader.visible = true
                 itemNoFile.visible = false
                 mediaView.visible = true
             } else {
-                rectangleHeader.visible = false
+                subheader.visible = false
                 itemNoFile.visible = true
                 mediaView.visible = false
             }
@@ -34,27 +34,27 @@ Item {
     property int selectionCount: 0
 
     function selectMedia(index) {
-        selectionMode = true;
-        selectionList.push(index);
-        selectionCount++;
+        selectionMode = true
+        selectionList.push(index)
+        selectionCount++
     }
     function deselectMedia(index) {
-        var i = selectionList.indexOf(index);
+        var i = selectionList.indexOf(index)
         if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
-        if (selectionList.length === 0) selectionMode = false;
+        if (selectionList.length === 0) selectionMode = false
     }
     function exitSelectionMode() {
-        if (selectionList.length === 0) return;
+        if (selectionList.length === 0) return
 
         for (var child in mediaView.contentItem.children) {
             if (mediaView.contentItem.children[child].selected) {
-                mediaView.contentItem.children[child].selected = false;
+                mediaView.contentItem.children[child].selected = false
             }
         }
 
-        selectionMode = false;
-        selectionList = [];
-        selectionCount = 0;
+        selectionMode = false
+        selectionList = []
+        selectionCount = 0
     }
 
     function updateSelectedMedia() {
@@ -66,7 +66,7 @@ Item {
         exitSelectionMode()
     }
     function removeSelectedMedia() {
-        var mediaPaths = [];
+        var mediaPaths = []
         for (var child in mediaView.contentItem.children) {
             if (mediaView.contentItem.children[child].selected) {
                 mediaPaths.push(mediaView.contentItem.children[child].mediaItem.fullpath)
@@ -80,14 +80,14 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ItemLoading {
-        id: itemLoading
+    PopupLoading {
+        id: popupLoading
     }
 
     property string pathToLoad: ""
     Timer {
         id: ttt
-        interval: 150
+        interval: 140
         running: false
         repeat: false
         onTriggered: loadMedia2()
@@ -95,7 +95,7 @@ Item {
 
     function loadMedia(path) {
         //console.log("loadMedia() << " + path)
-        itemLoading.open()
+        popupLoading.open()
         pathToLoad = path
         ttt.start()
     }
@@ -104,10 +104,10 @@ Item {
         if (mediaManager.openMedia(pathToLoad) === true) {
             errorBar.hideError()
             screenMediaInfos.loadMediaInfos(mediaManager.mediaList[0])
-            itemLoading.close()
+            popupLoading.close()
         } else {
             errorBar.showError(pathToLoad)
-            itemLoading.close()
+            popupLoading.close()
         }
         pathToLoad = ""
     }
@@ -161,7 +161,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
-        id: rectangleHeader
+        id: subheader
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
@@ -169,12 +169,12 @@ Item {
         z: 5
         height: visible ? 80 : 0
         visible: false
-        color: Theme.colorForeground
+        color: Theme.colorHeader
 
         // prevent clicks into this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-        ImageSvg {
+        IconSvg {
             id: image
             width: 64
             height: 64
@@ -200,34 +200,29 @@ Item {
             onClicked: openDialog()
         }
     }
-
-    Rectangle {
-        id: fakeHeader
-        anchors.top: parent.top
-        anchors.topMargin: (itemLoading.visible || !rectangleHeader.visible) ? -3 : 80 - 3
+    Rectangle { // separator
+        anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
 
-        z: 4
-        height: 4
-        color: Theme.colorForeground
+        visible: subheader.visible
+        height: 2
+        opacity: 0.66
+        color: Theme.colorHeaderHighlight
 
-        Rectangle {
-            height: 1
+        Rectangle { // shadow
+            anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-        SimpleShadow {
-            height: 4
-            anchors.top: parent.bottom
-            anchors.topMargin: -height
-            anchors.left: parent.left
-            anchors.leftMargin: -screenPaddingLeft
-            anchors.right: parent.right
-            anchors.rightMargin: -screenPaddingRight
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
+
+            height: 8
+            opacity: 0.66
+
+            gradient: Gradient {
+                orientation: Gradient.Vertical
+                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 1.0; color: Theme.colorBackground; }
+            }
         }
     }
 
@@ -235,7 +230,7 @@ Item {
 
     Column {
         id: bars
-        anchors.top: rectangleHeader.bottom
+        anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         z: 4
@@ -259,7 +254,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: isPhone ? 6 : 12
 
-                ButtonWireframeImage {
+                ButtonWireframeIcon {
                     id: buttonUpdate2
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
@@ -271,7 +266,7 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
                 }
 
-                ButtonWireframeImage {
+                ButtonWireframeIcon {
                     id: buttonClose2
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
@@ -302,7 +297,7 @@ Item {
                     font.bold: isDesktop ? true : false
                     font.pixelSize: Theme.fontSizeContent
                 }
-                ItemImageButton {
+                RoundButtonIcon {
                     id: buttonClear
                     width: 36
                     height: 36
@@ -329,7 +324,7 @@ Item {
             // prevent clicks into this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-            ImageSvg {
+            IconSvg {
                 id: rectangleErrorImage
                 width: 28
                 height: 28

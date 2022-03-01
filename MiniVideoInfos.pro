@@ -3,13 +3,13 @@ TARGET  = MiniVideoInfos
 VERSION = 0.9
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
-CONFIG += c++11
+CONFIG += c++17
 QT     += core qml quickcontrols2 svg widgets charts location
 android { QT += androidextras }
 ios { QT += gui-private }
 
 # Validate Qt version
-!versionAtLeast(QT_VERSION, 5.12) : error("You need at least Qt version 5.12 for $${TARGET}")
+!versionAtLeast(QT_VERSION, 5.15) : error("You need at least Qt version 5.15 for $${TARGET}")
 !versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for $${TARGET}")
 
 # Project features #############################################################

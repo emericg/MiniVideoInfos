@@ -1,12 +1,12 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
 Item {
     id: permissionsScreen
     width: 480
-    height: 640
+    height: 720
     anchors.fill: parent
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
@@ -17,69 +17,21 @@ Item {
         button_storage_write_test.validperm = utilsApp.checkMobileStorageWritePermission()
 
         // Load screen
-        appContent.state = "Permissions"
+        appContent.state = "MobilePermissions"
     }
 
     ////////////////////////////////////////////////////////////////////////////
-/*
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorForeground
-        height: 80
-        z: 5
 
-        visible: isDesktop
+    Flickable {
+        anchors.fill: parent
 
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Text {
-            id: textTitle
-            anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.top: parent.top
-            anchors.topMargin: 8
-
-            text: qsTr("Permissions")
-            textFormat: Text.PlainText
-            font.bold: true
-            font.pixelSize: Theme.fontSizeTitle
-            color: Theme.colorText
-        }
-
-        Text {
-            id: textSubtitle
-            anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 20
-
-            text: qsTr("Why are we using these permissions?")
-            textFormat: Text.PlainText
-            color: Theme.colorSubText
-            font.pixelSize: 18
-        }
-    }
-*/
-    ////////////////////////////////////////////////////////////////////////////
-
-    ScrollView {
-        id: scrollView
         contentWidth: -1
-
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        contentHeight: column.height
 
         Column {
-            anchors.fill: parent
-            anchors.leftMargin: 8
-            anchors.rightMargin: 8
+            id: column
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             topPadding: 16
             bottomPadding: 16
@@ -93,12 +45,12 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ItemImageButton {
+                RoundButtonIcon {
                     id: button_network_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -114,9 +66,9 @@ Item {
                     id: text_network
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: 64
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Network access")
@@ -131,15 +83,15 @@ Item {
             Text {
                 id: legend_network
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 16
 
                 text: qsTr("Network state and internet permissions are used to load GPS maps.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -168,12 +120,12 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ItemImageButton {
+                RoundButtonIcon {
                     id: button_storage_read_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -191,9 +143,9 @@ Item {
                     id: text_storage_read
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: 64
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Storage read")
@@ -207,15 +159,15 @@ Item {
             Text {
                 id: legend_storage_read
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 16
 
                 text: qsTr("Storage read permission is needed to read and analyze media files. The software won't work without it.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////
@@ -244,12 +196,12 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ItemImageButton {
+                RoundButtonIcon {
                     id: button_storage_write_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
@@ -267,9 +219,9 @@ Item {
                     id: text_storage_write
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: 64
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Storage write")
@@ -283,15 +235,15 @@ Item {
             Text {
                 id: legend_storage_write
                 anchors.left: parent.left
-                anchors.leftMargin: 56
+                anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 16
 
                 text: qsTr("Storage write permission is only needed to export subtitles file or metadata overview.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
-                font.pixelSize: 14
+                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ////////

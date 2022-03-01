@@ -1,10 +1,10 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
 Popup {
-    id: itemLoading
+    id: popupLoading
     width: parent.width
     height: parent.height
 
@@ -27,13 +27,13 @@ Popup {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
-            ImageSvg {
+            IconSvg {
                 width: 128
                 height: 128
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 source: "qrc:/assets/icons_material/baseline-hourglass_empty-24px.svg"
-                color: Theme.colorSubText
+                color: Theme.colorIcon
             }
 
             Text {

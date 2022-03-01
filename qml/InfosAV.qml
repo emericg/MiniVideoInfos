@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import QtCharts 2.3
 
 import ThemeEngine 1.0
@@ -285,7 +285,7 @@ Flickable {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ImageSvg {
+                IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -478,7 +478,7 @@ Flickable {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ImageSvg {
+                IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -726,7 +726,7 @@ Flickable {
                     border.width: 2
                     border.color: Theme.colorPrimary
 
-                    ImageSvg {
+                    IconSvg {
                         id: img_display_rotate
                         width: 24
                         height: 24
@@ -737,7 +737,7 @@ Flickable {
                         color: Theme.colorPrimary
                         source: "qrc:/assets/icons_material/duotone-rotate_90_degrees_ccw-24px.svg"
                     }
-                    ImageSvg {
+                    IconSvg {
                         id: img_display_resize
                         width: 24
                         height: 24
@@ -759,7 +759,7 @@ Flickable {
                     border.width: 2
                     border.color: Theme.colorWarning
 
-                    ImageSvg {
+                    IconSvg {
                         id: img_crop
                         width: 24
                         height: 24
@@ -986,7 +986,7 @@ Flickable {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -1177,13 +1177,13 @@ Flickable {
                 width: 160
                 height: 160
 
-                ImageSvg {
+                IconSvg {
                     id: speakers_lfe
                     anchors.fill: parent
                     source: "qrc:/speakers/LFE.svg"
                     color: Theme.colorIcon
                 }
-                ImageSvg {
+                IconSvg {
                     id: speakers
                     anchors.fill: parent
                     color: Theme.colorIcon
@@ -1207,7 +1207,7 @@ Flickable {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left

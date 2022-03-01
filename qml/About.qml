@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -12,107 +12,121 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: rectangleHeader
-        color: Theme.colorForeground
-        height: 80
-        z: 5
+    Flickable {
+        anchors.fill: parent
 
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        contentWidth: parent.width
+        contentHeight: column.height
 
-        // prevent clicks into this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Image {
-            id: imageLogo
-            width: 64
-            height: 64
-            anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft + 16
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -4
-
-            source: "qrc:/assets/logos/logo.svg"
-            sourceSize: Qt.size(width, height)
-        }
+        boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+        ScrollBar.vertical: ScrollBar { visible: isDesktop; }
 
         Column {
-            anchors.left: imageLogo.right
-            anchors.leftMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -4
-
-            Text {
-                text: "MiniVideo Infos"
-                textFormat: Text.PlainText
-                color: Theme.colorText
-                font.pixelSize: 28
-            }
-
-            Text {
-                text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
-                textFormat: Text.PlainText
-                color: Theme.colorSubText
-                font.pixelSize: 18
-            }
-        }
-
-        Rectangle {
-            height: 1
+            id: column
             anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-        SimpleShadow {
-            height: 4
-            anchors.top: parent.bottom
-            anchors.topMargin: -height
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ScrollView {
-        contentWidth: -1
-
-        anchors.top: rectangleHeader.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        Column {
-            anchors.fill: parent
             anchors.leftMargin: screenPaddingLeft + 16
+            anchors.right: parent.right
             anchors.rightMargin: screenPaddingRight + 16
 
-            topPadding: 8
-            bottomPadding: 8
+            topPadding: 16
+            bottomPadding: 16
             spacing: 8
 
-            ////////
-/*
-            ListView {
-                // helper to list available fonts
-                anchors.fill: parent;
-                model: Qt.fontFamilies()
+            ////////////////
 
-                delegate: Item {
-                    height: 40;
-                    width: ListView.view.width
-                    Text {
-                        anchors.centerIn: parent
-                        text: modelData;
+            Rectangle {
+                id: rectangleHeader
+                anchors.left: parent.left
+                anchors.leftMargin: -(screenPaddingLeft + 16)
+                anchors.right: parent.right
+                anchors.rightMargin: -(screenPaddingRight + 16)
+
+                height: 80
+                color: Theme.colorBackground
+
+                Row {
+                    id: logo
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    z: 2
+                    height: 80
+                    spacing: 24
+
+                    Image {
+                        id: imageLogo2
+                        width: 80
+                        height: 80
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        source: "qrc:/assets/logos/logo.svg"
+                        sourceSize: Qt.size(width, height)
+                    }
+
+                    Column {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: 0
+                        spacing: 0
+
+                        Text {
+                            text: "MiniVideo Infos"
+                            color: Theme.colorText
+                            font.pixelSize: 28
+                        }
+                        Text {
+                            color: Theme.colorSubText
+                            text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
+                            font.pixelSize: 22
+                        }
+                    }
+                }
+
+                Row {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: wideWideMode
+                    spacing: 16
+
+                    ButtonWireframeIconCentered {
+                        width: 160
+                        sourceSize: 28
+                        fullColor: true
+                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                        text: qsTr("WEBSITE")
+                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                        onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
+                    }
+
+                    ButtonWireframeIconCentered {
+                        width: 160
+                        sourceSize: 22
+                        fullColor: true
+                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                        text: qsTr("SUPPORT")
+                        source: "qrc:/assets/icons_material/baseline-support-24px.svg"
+                        onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
+                    }
+
+                    ButtonWireframeIconCentered {
+                        visible: (appWindow.width > 800)
+                        width: 160
+                        sourceSize: 22
+                        fullColor: true
+                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
+                        text: qsTr("GitHub")
+                        source: "qrc:/assets/logos/github.svg"
+                        onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos")
                     }
                 }
             }
-*/
-            ////////
+
+            ////////////////
 
             Row {
                 id: buttonsRow
@@ -123,15 +137,15 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: (isMobile || isDesktop)
+                visible: isMobile
                 spacing: 16
 
-                ButtonWireframeImage {
+                ButtonWireframeIconCentered {
                     id: websiteBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 26
+                    sourceSize: 26
                     fullColor: true
                     primaryColor: Theme.colorHeaderContent
 
@@ -139,12 +153,12 @@ Item {
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
                 }
-                ButtonWireframeImage {
+                ButtonWireframeIconCentered {
                     id: supportBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
-                    imgSize: 20
+                    sourceSize: 20
                     fullColor: true
                     primaryColor: Theme.colorHeaderContent
 
@@ -166,7 +180,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     id: descImg
                     width: 32
                     height: 32
@@ -175,7 +189,7 @@ Item {
                     anchors.verticalCenter: desc.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -204,7 +218,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     width: 27
                     height: 27
                     anchors.left: parent.left
@@ -212,7 +226,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -242,7 +256,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     width: 31
                     height: 31
                     anchors.left: parent.left
@@ -250,7 +264,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -261,7 +275,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorText
-                    linkColor: Theme.colorText
+                    linkColor: Theme.colorIcon
                     font.pixelSize: Theme.fontSizeContent
                     text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a>")
                     onLinkActivated: Qt.openUrlExternally(link)
@@ -274,14 +288,15 @@ Item {
                     }
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 20
                     height: 20
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
+
                     visible: singleColumn
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 }
             }
@@ -298,7 +313,7 @@ Item {
 
                 //visible: isMobile
 
-                ImageSvg {
+                IconSvg {
                     width: 31
                     height: 31
                     anchors.left: parent.left
@@ -306,7 +321,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-stars-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -320,14 +335,15 @@ Item {
                     color: Theme.colorText
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 20
                     height: 20
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
+
                     visible: singleColumn
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                 }
 
@@ -374,7 +390,7 @@ Item {
 
                 visible: (Qt.platform.os === "android")
 
-                ImageSvg {
+                IconSvg {
                     id: permissionsImg
                     width: 24
                     height: 24
@@ -383,7 +399,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {
@@ -398,7 +414,7 @@ Item {
                     color: Theme.colorText
                 }
 
-                ImageSvg {
+                IconSvg {
                     width: 24
                     height: 24
                     anchors.right: parent.right
@@ -406,7 +422,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 MouseArea {
@@ -441,7 +457,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     id: dependenciesImg
                     width: 24
                     height: 24
@@ -451,7 +467,7 @@ Item {
                     anchors.leftMargin: 4
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                    color: Theme.colorText
+                    color: Theme.colorIcon
                 }
 
                 Text {

@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -44,7 +44,7 @@ Rectangle {
         }
     }
 
-    ImageSvg {
+    IconSvg {
         id: imageMedia
         width: 24
         height: 24

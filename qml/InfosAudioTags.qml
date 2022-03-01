@@ -1,5 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
@@ -58,7 +58,7 @@ Flickable {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ImageSvg {
+                IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -279,7 +279,7 @@ Flickable {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                ImageSvg {
+                IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left
