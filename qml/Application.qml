@@ -543,43 +543,43 @@ ApplicationWindow {
                       appContent.state === "Settings" ||
                       appContent.state === "About")
 
-            MobileMenuItem {
+            MobileMenuItem_horizontal {
                 id: menuMedia
 
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Media")
-                selected: (appContent.state === "MediaList")
                 source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                 sourceSize: 24
 
+                selected: (appContent.state === "MediaList")
                 onClicked: appContent.state = "MediaList"
             }
-            MobileMenuItem {
+            MobileMenuItem_horizontal {
                 id: menuSettings
 
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                selected: (appContent.state === "Settings")
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 sourceSize: 24
 
+                selected: (appContent.state === "Settings")
                 onClicked: appContent.state = "Settings"
             }
-            MobileMenuItem {
+            MobileMenuItem_horizontal {
                 id: menuAbout
 
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("About")
-                selected: (appContent.state === "About")
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
                 sourceSize: 24
 
+                selected: (appContent.state === "About")
                 onClicked: appContent.state = "About"
             }
         }

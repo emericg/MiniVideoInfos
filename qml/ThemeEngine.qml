@@ -160,7 +160,7 @@ Item {
             colorActionbarHighlight = "#00a27d"
 
             colorTabletmenu = "#f3f3f3"
-            colorTabletmenuContent = "#9d9d9d"
+            colorTabletmenuContent = "#555555"
             colorTabletmenuHighlight = "#0079fe"
 
             colorBackground = colorMaterialLightGrey

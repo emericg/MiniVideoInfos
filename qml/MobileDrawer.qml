@@ -125,7 +125,7 @@ Drawer {
                     height: 48
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    color: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ? Theme.colorForeground : "transparent"
+                    color: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ? Theme.colorForeground : Theme.colorBackground
 
                     MouseArea {
                         anchors.fill: parent
@@ -166,7 +166,7 @@ Drawer {
                     height: 48
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    color: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen) ? Theme.colorForeground : "transparent"
+                    color: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen) ? Theme.colorForeground : Theme.colorBackground
 
                     MouseArea {
                         anchors.fill: parent
@@ -236,7 +236,7 @@ Drawer {
                     height: 48
                     anchors.right: parent.right
                     anchors.left: parent.left
-                    color: (appContent.state === "Tool1") ? Theme.colorForeground : "transparent"
+                    color: (appContent.state === "Tool1") ? Theme.colorForeground : Theme.colorBackground
 
                     MouseArea {
                         anchors.fill: parent
@@ -273,7 +273,7 @@ Drawer {
                     height: 48
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    color: (appContent.state === "Tool2") ? Theme.colorForeground : "transparent"
+                    color: (appContent.state === "Tool2") ? Theme.colorForeground : Theme.colorBackground
 
                     MouseArea {
                         anchors.fill: parent
@@ -329,7 +329,7 @@ Drawer {
                     height: 48
                     anchors.right: parent.right
                     anchors.left: parent.left
-                    color: (appContent.state === "Settings") ? Theme.colorForeground : "transparent"
+                    color: (appContent.state === "Settings") ? Theme.colorForeground : Theme.colorBackground
 
                     MouseArea {
                         anchors.fill: parent
@@ -368,7 +368,7 @@ Drawer {
                     height: 48
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    color: (appContent.state === "About") ? Theme.colorForeground : "transparent"
+                    color: (appContent.state === "About") ? Theme.colorForeground : Theme.colorBackground
 
                     MouseArea {
                         anchors.fill: parent

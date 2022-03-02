@@ -5,29 +5,13 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Rectangle {
-    id: miniWidget
+    id: miniListItem
     implicitWidth: 640
     height: 48
     anchors.left: parent.left
     anchors.right: parent.right
 
-    property var mediaMiniWidget: null
-    color: (appContent.state === "MediaInfos" && mediaMiniWidget === screenMediaInfos.mediaItem) ? Theme.colorForeground : "transparent"
-
-    Component.onCompleted: initBoxData()
-
-    function initBoxData() {
-        if (mediaMiniWidget.fileType === 1)
-            imageMedia.source = "qrc:/assets/icons_material/outline-insert_music-24px.svg"
-        else if (mediaMiniWidget.fileType === 2)
-            imageMedia.source = "qrc:/assets/icons_material/outline-local_movies-24px.svg"
-        else if (mediaMiniWidget.fileType === 3)
-            imageMedia.source = "qrc:/assets/icons_material/outline-insert_photo-24px.svg" // icons_material/baseline-photo-24px.svg
-        else
-            imageMedia.source = "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
-
-        mediaFilename.text = mediaMiniWidget.name + "." + mediaMiniWidget.ext
-    }
+    color: (appContent.state === "MediaInfos" && modelData === screenMediaInfos.mediaItem) ? Theme.colorForeground : Theme.componentBackground
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -36,36 +20,42 @@ Rectangle {
         acceptedButtons: Qt.LeftButton
 
         onClicked: {
-            if (typeof mediaMiniWidget === "undefined" || !mediaMiniWidget) return
+            if (typeof modelData === "undefined" || !modelData) return
 
             // regular click
-            screenMediaInfos.loadMediaInfos(mediaMiniWidget)
+            screenMediaInfos.loadMediaInfos(modelData)
             appDrawer.close()
         }
     }
 
-    IconSvg {
-        id: imageMedia
+    IconSvg { // mediaIcon
         width: 24
         height: 24
         anchors.left: parent.left
         anchors.leftMargin: screenPaddingLeft + 16
         anchors.verticalCenter: parent.verticalCenter
 
+        source: {
+            if (modelData.fileType === 1) return "qrc:/assets/icons_material/outline-insert_music-24px.svg"
+            if (modelData.fileType === 2) return "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+            if (modelData.fileType === 3) return "qrc:/assets/icons_material/outline-insert_photo-24px.svg" // icons_material/baseline-photo-24px.svg
+            return "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
+        }
         color: Theme.colorIcon
     }
 
-    Text {
-        id: mediaFilename
+    Text { // mediaFilename
         anchors.left: parent.left
         anchors.leftMargin: screenPaddingLeft + 56
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.verticalCenter: parent.verticalCenter
 
-        color: Theme.colorText
-        font.pixelSize: 14
+        text: modelData.name + "." + modelData.ext
+        textFormat: Text.PlainText
+        font.pixelSize: Theme.fontSizeContentSmall
         font.bold: false
+        color: Theme.colorText
         elide: Text.ElideMiddle
     }
 

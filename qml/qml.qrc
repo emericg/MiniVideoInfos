@@ -8,7 +8,7 @@
         <file>MediaList.qml</file>
         <file>MediaWidget.qml</file>
         <file>MiniList.qml</file>
-        <file>MiniWidget.qml</file>
+        <file>MiniListItem.qml</file>
         <file>MediaInfos.qml</file>
         <file>MediaInfos_row.qml</file>
         <file>MediaInfos_swipeview.qml</file>
@@ -29,7 +29,6 @@
 
         <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
-        <file alias="ItemSwipeMenu.qml">components/ItemSwipeMenu.qml</file>
         <file alias="FileDialog.qml">components/FileDialog.qml</file>
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
         <file alias="FileDialog_platformfile.qml">components/FileDialog_platformfile.qml</file>
@@ -41,7 +40,8 @@
         <file alias="ButtonWireframeIconCentered.qml">components_generic/ButtonWireframeIconCentered.qml</file>
         <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
         <file alias="RoundButtonIcon.qml">components_generic/RoundButtonIcon.qml</file>
-        <file alias="MobileMenuItem.qml">components_generic/MobileMenuItem.qml</file>
+        <file alias="MobileMenuItem_horizontal.qml">components_generic/MobileMenuItem_horizontal.qml</file>
+        <file alias="MobileMenuItem_vertical.qml">components_generic/MobileMenuItem_vertical.qml</file>
         <file alias="ToolTipFlat.qml">components_generic/ToolTipFlat.qml</file>
 
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>

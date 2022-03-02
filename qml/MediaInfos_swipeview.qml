@@ -550,70 +550,128 @@ Item {
 
         Row {
             anchors.top: parent.top
-            anchors.topMargin: 8
+            anchors.topMargin: 2
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
 
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuInfos
-                title: qsTr("file")
-                icon: "file"
-                index: 0
+                text: qsTr("file")
+                source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
+
+                property int index: 0
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuVideo1
-                title: qsTr("video")
-                icon: "video"
+                text: qsTr("video")
+                source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuVideo2
-                title: qsTr("video")
-                icon: "video"
+                text: qsTr("video")
+                source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuAudio1
-                title: qsTr("audio")
-                icon: "audio"
+                text: qsTr("audio")
+                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuAudio2
-                title: qsTr("audio")
-                icon: "audio"
+                text: qsTr("audio")
+                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuAudio3
-                title: qsTr("audio")
-                icon: "audio"
+                text: qsTr("audio")
+                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuAudio4
-                title: qsTr("audio")
-                icon: "audio"
+                text: qsTr("audio")
+                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuSubtitles
-                title: qsTr("subtitles")
-                icon: "subtitles"
+                text: qsTr("subtitles")
+                source: "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuAudioTags
-                title: qsTr("tags")
-                icon: "audio_tags"
+                text: qsTr("tags")
+                source: "qrc:/assets/icons_material/outline-insert_music-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuImageTags
-                title: qsTr("tags")
-                icon: "image_tags"
+                text: qsTr("tags")
+                source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuMap
-                title: qsTr("map")
-                icon: "map"
+                text: qsTr("map")
+                source: "qrc:/assets/icons_material/baseline-map-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
-            ItemSwipeMenu {
+            MobileMenuItem_vertical {
                 id: menuExport
-                title: qsTr("export")
-                icon: "export"
+                text: qsTr("export")
+                source: "qrc:/assets/icons_material/outline-archive-24px.svg"
+
+                property int index: -1
+                visible: (index !== -1)
+                selected: (mediaPages.currentIndex === index)
+                onClicked: mediaPages.currentIndex = index
             }
         }
     }

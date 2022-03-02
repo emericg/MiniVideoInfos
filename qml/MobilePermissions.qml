@@ -11,6 +11,8 @@ Item {
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadScreen() {
         // Refresh permissions
         button_storage_read_test.validperm = utilsApp.checkMobileStorageReadPermission()

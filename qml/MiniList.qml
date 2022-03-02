@@ -39,6 +39,6 @@ Column {
         interactive: false
 
         model: mediaManager.mediaList
-        delegate: MiniWidget { mediaMiniWidget: modelData; }
+        delegate: MiniListItem { }
     }
 }

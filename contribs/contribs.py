@@ -88,8 +88,12 @@ if "14.0" in os.getenv('VisualStudioVersion', ''):
     MSVC_GEN_VER = "Visual Studio 14 2015"
 elif "15.0" in os.getenv('VisualStudioVersion', ''):
     MSVC_GEN_VER = "Visual Studio 15 2017"
-else:
+elif "16.0" in os.getenv('VisualStudioVersion', ''):
     MSVC_GEN_VER = "Visual Studio 16 2019"
+elif "17.0" in os.getenv('VisualStudioVersion', ''):
+    MSVC_GEN_VER = "Visual Studio 17 2022"
+else:
+    MSVC_GEN_VER = "Visual Studio 17 2022"
 
 ## ARGUMENTS ###################################################################
 
@@ -117,6 +121,8 @@ if len(sys.argv) > 1:
             MSVC_GEN_VER = "Visual Studio 15 2017"
         elif result.msvcversion == 2019:
             MSVC_GEN_VER = "Visual Studio 16 2019"
+        elif result.msvcversion == 2022:
+            MSVC_GEN_VER = "Visual Studio 17 2022"
 
 ## CLEAN #######################################################################
 
