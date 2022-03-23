@@ -12,7 +12,7 @@ Loader {
 
     // Emulate 'quick dialogs' API
     // https://doc.qt.io/qt-5/qml-qtquick-dialogs-filedialog.html
-    property string title: ""
+    property string title
     property bool sidebarVisible: true
     property bool selectExisting: true
     property bool selectFolder: false
@@ -88,7 +88,7 @@ Loader {
     }
 
     function open() {
-        console.log("FileDialog::open()")
+        //console.log("FileDialog::open()")
         if (title) fileDialogItem.title = title
         if (folder.toString().length) fileDialogItem.folder = UtilsPath.makeUrl(folder)
         else fileDialogItem.folder = utilsApp.getStandardPath_url("")
@@ -103,18 +103,18 @@ Loader {
 
     function close() {
         //console.log("FileDialog::close()")
-        fileDialogItem.close()
+        if (fileDialogItem) fileDialogItem.close()
         fileDialog.focus = false
     }
-
-    Keys.onBackPressed: back()
 
     function back() {
         //console.log("FileDialog::back()")
         if (Qt.platform.os === "android" && !usePlatformDialog) {
-            fileDialogItem.onBackPressed()
+            if (fileDialogItem) fileDialogItem.onBackPressed()
         } else {
             close()
         }
     }
+
+    Keys.onBackPressed: back()
 }

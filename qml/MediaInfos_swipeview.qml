@@ -188,7 +188,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
 
-        // prevent clicks into this area
+        // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         Column {

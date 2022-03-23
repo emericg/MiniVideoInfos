@@ -32,7 +32,7 @@ Item {
             bottomPadding: 16
             spacing: 8
 
-            ////////////////
+            /////////////////
 
             Rectangle {
                 id: rectangleHeader

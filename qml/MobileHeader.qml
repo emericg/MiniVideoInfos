@@ -27,7 +27,7 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    // prevent clicks into this area
+    // prevent clicks below this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
     Item {

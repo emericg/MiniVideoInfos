@@ -171,7 +171,7 @@ Item {
         visible: false
         color: Theme.colorHeader
 
-        // prevent clicks into this area
+        // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         IconSvg {
@@ -321,7 +321,7 @@ Item {
             height: 0
             Behavior on height { NumberAnimation { duration: 133 } }
 
-            // prevent clicks into this area
+            // prevent clicks below this area
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
             IconSvg {

@@ -1,9 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-import QtGraphicalEffects 1.15 // Qt5
-//import Qt5Compat.GraphicalEffects // Qt6
-
 import Qt.labs.folderlistmodel 2.15
 
 import ThemeEngine 1.0
@@ -113,7 +110,7 @@ Rectangle {
         height: 40
         color: Theme.colorHeader
 
-        // prevent clicks into this area
+        // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         Item {

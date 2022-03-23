@@ -196,40 +196,37 @@ if OS_HOST == "Windows":
 
 ## SOFTWARES ###################################################################
 
-## libexif
-## version: git (0.6.22+)
+## libexif (version: git) (0.6.22+)
 FILE_libexif = "libexif-master.zip"
 DIR_libexif = "libexif-master"
 
-if not os.path.exists("src/" + FILE_libexif):
+if not os.path.exists(src_dir + FILE_libexif):
     print("> Downloading " + FILE_libexif + "...")
     urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
-## taglib
-## version: git (1.12)
+## taglib (version: git) (1.12)
 FILE_taglib = "taglib-master.zip"
 DIR_taglib = "taglib-master"
 
-if not os.path.exists("src/" + FILE_taglib):
+if not os.path.exists(src_dir + FILE_taglib):
     print("> Downloading " + FILE_taglib + "...")
     urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/master.zip", src_dir + FILE_taglib)
 
-## minivideo
-## version: git (0.13+)
+## minivideo (version: git) (0.14+)
 FILE_minivideo = "minivideo-master.zip"
 DIR_minivideo = "MiniVideo-master"
 
-if not os.path.exists("src/" + FILE_minivideo):
+if not os.path.exists(src_dir + FILE_minivideo):
     print("> Downloading " + FILE_minivideo + "...")
     urllib.request.urlretrieve("https://github.com/emericg/MiniVideo/archive/master.zip", src_dir + FILE_minivideo)
 
-## Android OpenSSL
+## Android OpenSSL (version: git)
 for TARGET in TARGETS:
     if TARGET[0] == "android":
         FILE_androidopenssl = "android_openssl-master.zip"
         DIR_androidopenssl = "android_openssl"
 
-        if not os.path.exists("src/" + FILE_androidopenssl):
+        if not os.path.exists(src_dir + FILE_androidopenssl):
             print("> Downloading " + FILE_androidopenssl + "...")
             urllib.request.urlretrieve("https://github.com/KDAB/android_openssl/archive/master.zip", src_dir + FILE_androidopenssl)
         if not os.path.isdir("env/" + DIR_androidopenssl):
@@ -237,11 +234,10 @@ for TARGET in TARGETS:
             zipSSL.extractall("env/")
         break
 
-## linuxdeploy
-## version: git
+## linuxdeploy (version: git)
 if OS_HOST == "Linux":
     FILE_linuxdeploy = "linuxdeploy-x86_64.AppImage"
-    if not os.path.exists("src/" + FILE_linuxdeploy):
+    if not os.path.exists(deploy_dir + FILE_linuxdeploy):
         print("> Downloading " + FILE_linuxdeploy + "...")
         urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/" + FILE_linuxdeploy, deploy_dir + FILE_linuxdeploy)
         urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-appimage-x86_64.AppImage")

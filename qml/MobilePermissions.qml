@@ -80,7 +80,6 @@ Item {
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
-
             }
             Text {
                 id: legend_network
