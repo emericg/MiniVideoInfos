@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016 J-P Nurmi
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2022 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,8 +46,10 @@ Q_SIGNALS:
     void navbarUpdated();
 
 public:
-    explicit MobileUI(QObject *parent = nullptr);
+    explicit MobileUI(QObject *parent = nullptr) : QObject(parent) {}
+
     static bool isAvailable();
+    static void registerQML();
 
     enum Theme {
         Light,  //!< DARK TEXT (assumes LIGHT application theme/background)

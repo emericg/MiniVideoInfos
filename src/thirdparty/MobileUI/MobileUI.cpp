@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016 J-P Nurmi
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2022 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,9 @@
 
 #include "MobileUI.h"
 #include "MobileUI_private.h"
+#include <QQmlEngine>
+
+/* ************************************************************************** */
 
 QColor MobileUIPrivate::statusbarColor;
 MobileUI::Theme MobileUIPrivate::statusbarTheme = MobileUI::Light;
@@ -31,9 +34,12 @@ MobileUI::Theme MobileUIPrivate::navbarTheme = MobileUI::Light;
 
 /* ************************************************************************** */
 
-MobileUI::MobileUI(QObject *parent) : QObject(parent)
+void MobileUI::registerQML()
 {
-    //
+    qRegisterMetaType<MobileUI::Theme>("MobileUI::Theme");
+    qRegisterMetaType<MobileUI::Orientation>("MobileUI::Orientation");
+
+    qmlRegisterType<MobileUI>("MobileUI", 1, 0, "MobileUI");
 }
 
 /* ************************************************************************** */
@@ -86,3 +92,5 @@ void MobileUI::setNavbarTheme(Theme theme)
     MobileUIPrivate::navbarTheme = theme;
     MobileUIPrivate::setTheme_navbar(theme);
 }
+
+/* ************************************************************************** */
