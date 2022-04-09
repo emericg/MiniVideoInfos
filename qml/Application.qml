@@ -439,7 +439,7 @@ ApplicationWindow {
         enabled: isDesktop
         //keys: ["text/plain"]
 
-        onEntered: {
+        onEntered: (drag) => {
             if (drag.hasUrls) {
                 dropAreaIndicator.color = Theme.colorWarning
                 dropAreaImage.source = "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
@@ -457,7 +457,7 @@ ApplicationWindow {
         onExited: {
             dropAreaIndicator.opacity = 0
         }
-        onDropped: {
+        onDropped: (drop) =>{
             dropAreaIndicator.opacity = 0
 
             if (drop.hasUrls) {
@@ -502,7 +502,7 @@ ApplicationWindow {
 
         enabled: isDesktop
         acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: {
+        onClicked: (mouse) => {
             if (mouse.button === Qt.BackButton) {
                 backAction()
             } else if (mouse.button === Qt.ForwardButton) {

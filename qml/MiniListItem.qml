@@ -11,7 +11,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    color: (appContent.state === "MediaInfos" && modelData === screenMediaInfos.mediaItem) ? Theme.colorForeground : Theme.componentBackground
+    color: (appContent.state === "MediaInfos" && modelData === screenMediaInfos.mediaItem) ? Theme.colorForeground : Theme.colorComponentBackground
 
     ////////////////////////////////////////////////////////////////////////////
 

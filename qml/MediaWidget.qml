@@ -44,7 +44,7 @@ Item {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
-            onClicked: {
+            onClicked: (mouse) => {
                 if (typeof mediaItem === "undefined" || !mediaItem) return
 
                 // multi selection

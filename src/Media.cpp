@@ -82,11 +82,7 @@ Media::Media(const QString &path, QObject *parent)
         m_file_extension = fi.suffix().toLower();
         m_file_size = static_cast<int64_t>(fi.size());
 
-#if (QT_VERSION_MINOR >= 10)
         m_date_file_c = fi.birthTime();
-#else
-        m_date_file_c = fi.created();
-#endif
         m_date_file_m = fi.lastModified();
     }
 
@@ -419,8 +415,8 @@ bool Media::getMetadataFromPicture()
                 // ex: "45, 41, 24,5662800"
                 exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
                 QString str = entry_buf;
-                double deg = str.midRef(0, 2).toDouble();
-                double min = str.midRef(4, 2).toDouble();
+                double deg = str.mid(0, 2).toDouble();
+                double min = str.mid(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
                 gps_lat = deg + min/60.0 + sec/3600.0;
 
@@ -444,8 +440,8 @@ bool Media::getMetadataFromPicture()
             {
                 exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
                 QString str = entry_buf;
-                double deg = str.midRef(0, 2).toDouble();
-                double min = str.midRef(4, 2).toDouble();
+                double deg = str.mid(0, 2).toDouble();
+                double min = str.mid(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
                 gps_long = deg + min/60.0 + sec/3600.0;
 
@@ -461,7 +457,7 @@ bool Media::getMetadataFromPicture()
                     }
                 }
 
-                gps_long_str = str.midRef(0, 2) + "° " + str.midRef(4, 2) + "` " + str.mid(8, 8) + "`` E";
+                gps_long_str = str.mid(0, 2) + "° " + str.mid(4, 2) + "` " + str.mid(8, 8) + "`` E";
             }
             entry = exif_content_get_entry(ed->ifd[EXIF_IFD_GPS],
                                            static_cast<ExifTag>(EXIF_TAG_GPS_ALTITUDE));
@@ -786,7 +782,7 @@ bool Media::getMetadataFromVideo()
 
         m_duration = static_cast<qint64>(m_media->duration);
 
-        m_date_metadata = QDateTime::fromTime_t(m_media->creation_time);
+        m_date_metadata = QDateTime::fromSecsSinceEpoch(m_media->creation_time);
 
         for (unsigned i = 0; i < m_media->tracks_audio_count; i++)
         {
