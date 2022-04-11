@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2022 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,6 +47,9 @@ public:
     ~SharingApplication();
 
      void registerQML(QQmlContext *context);
+     //Q_INVOKABLE QString filePathDocumentsLocation(const int requestId);
+     //Q_INVOKABLE bool deleteFromDocumentsLocation(const int requestId);
+     //Q_INVOKABLE bool updateFileFromDocumentsLocation(const int requestId);
 
 signals:
      void noDocumentsWorkLocation();

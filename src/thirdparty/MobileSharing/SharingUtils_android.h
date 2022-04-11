@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2022 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,17 @@
 
 #include "SharingUtils.h"
 
+#include <QtGlobal>
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+#include <QCoreApplication>
+#include <QtCore/private/qandroidextras_p.h>
+#include <QJniObject>
+#else
 #include <QtAndroid>
+#include <QAndroidJniObject>
 #include <QAndroidActivityResultReceiver>
+#endif
 
 /* ************************************************************************** */
 
@@ -54,7 +63,11 @@ public:
     void viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
     void editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    void handleActivityResult(int receiverRequestCode, int resultCode, const QJniObject &data) override;
+#else
     void handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data) override;
+#endif
     void onActivityResult(int requestCode, int resultCode);
 
     void checkPendingIntents(const QString &workingDirPath) override;

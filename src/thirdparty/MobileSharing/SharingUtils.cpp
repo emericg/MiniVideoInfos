@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2022 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,9 @@
 
 #include "SharingUtils.h"
 
-#ifdef Q_OS_IOS
+#if defined(Q_OS_IOS)
 #include "SharingUtils_ios.h"
-#endif
-
-#ifdef Q_OS_ANDROID
+#elif defined(Q_OS_ANDROID)
 #include "SharingUtils_android.h"
 #endif
 
@@ -61,7 +59,7 @@ ShareUtils::ShareUtils(QObject *parent) : QObject(parent)
     connectResult = connect(mPlatformShareUtils, &PlatformShareUtils::fileReceivedAndSaved, this, &ShareUtils::onFileReceivedAndSaved);
     Q_ASSERT(connectResult);
 
-    Q_UNUSED(connectResult);
+    Q_UNUSED(connectResult)
 }
 
 /* ************************************************************************** */
@@ -108,32 +106,32 @@ QString ShareUtils::getPathFromURI(const QString &contentURI)
 
 void ShareUtils::onShareEditDone(int requestCode)
 {
-    emit shareEditDone(requestCode);
+    Q_EMIT shareEditDone(requestCode);
 }
 
 void ShareUtils::onShareFinished(int requestCode)
 {
-    emit shareFinished(requestCode);
+    Q_EMIT shareFinished(requestCode);
 }
 
 void ShareUtils::onShareNoAppAvailable(int requestCode)
 {
-    emit shareNoAppAvailable(requestCode);
+    Q_EMIT shareNoAppAvailable(requestCode);
 }
 
 void ShareUtils::onShareError(int requestCode, QString message)
 {
-    emit shareError(requestCode, message);
+    Q_EMIT shareError(requestCode, message);
 }
 
 void ShareUtils::onFileUrlReceived(QString url)
 {
-    emit fileUrlReceived(url);
+    Q_EMIT fileUrlReceived(url);
 }
 
 void ShareUtils::onFileReceivedAndSaved(QString url)
 {
-    emit fileReceivedAndSaved(url);
+    Q_EMIT fileReceivedAndSaved(url);
 }
 
 /* ************************************************************************** */
