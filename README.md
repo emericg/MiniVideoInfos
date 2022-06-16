@@ -40,10 +40,16 @@ You will need:
 - Any C++17 compiler
 - Android NDK 22+
 - Android SDK
-- Qt 6.3+ (with Qt Charts)
 - MiniVideo (0.14+)
 - TagLib
 - libexif
+- Qt 6.3+ (with 'additional librairies')
+
+Qt6 'Additional Librairies':
+- Qt 5 Compatibility Module
+- Qt Positioning
+- Qt Location
+- Qt Charts
 
 ### Building MiniVideo Infos
 
