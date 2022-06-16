@@ -1,6 +1,6 @@
 TARGET  = MiniVideoInfos
 
-VERSION = 0.9
+VERSION = 0.10
 DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
