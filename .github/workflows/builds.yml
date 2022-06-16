@@ -12,10 +12,9 @@ on:
 #--------------------------------------------------------------------------------
 
 env:
-  VERSION: "0.8"
-  EXECUTABLE: "MiniVideoInfos"
-  APPLICATION: "MiniVideoInfos"
   QMAKE_PROJECT: "MiniVideoInfos.pro"
+  APPLICATION: "MiniVideoInfos"
+  VERSION: "0.10"
 
 #--------------------------------------------------------------------------------
 # Workflow jobs
@@ -25,7 +24,7 @@ jobs:
   ## GNU/Linux build ###########################################################
   build-linux:
     name: "Linux CI build"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       # Checkout the repository
       - name: Checkout repository and submodules
@@ -33,40 +32,31 @@ jobs:
         with:
           submodules: recursive
 
-      # Cache Qt
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v1
-        with:
-          path: ../Qt
-          key: ${{runner.os}}-QtCache
-
       # Install Qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '5.15.2'
-          modules: qtcharts
-          cached: ${{steps.cache-qt.outputs.cache-hit}}
+          aqtversion: '==2.1.0'
+          version: '6.3.1'
+          modules: qtcharts qtimageformats qt5compat
+          cached: 'false'
 
-      # Install dependencies
-      - name: Install dependencies
+      # Install dependencies (from package manager)
+      - name: Install dependencies (from package manager)
         run: |
-             sudo apt-get install libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libzstd-dev -y;
              sudo apt-get install libgl1-mesa-dev -y;
+             sudo apt-get install cmake ninja-build libtool automake m4 -y;
+             sudo apt-get install appstream -y;
 
-      # Build dependencies
-      - name: Build dependencies
+      # Build dependencies (from contribs script)
+      - name: Build dependencies (from contribs script)
         run: |
-             brew install ninja automake autoconf libtool pkg-config gettext
-             brew link --force gettext
              cd contribs/
-             python3 contribs.py
+             python3 contribs.py --qt-directory ${{env.Qt6_DIR}}/../.. --targets=linux
              cd ..
 
       # Build application
       - name: Build application
         run: |
-             qmake --version
              qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
              make -j$(nproc)
