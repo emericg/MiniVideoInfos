@@ -10,30 +10,17 @@ Rectangle {
 
     color: Theme.colorHeader
 
-    property int lastPage: 2
     property string entryPoint: "MediaList"
 
     ////////////////////////////////////////////////////////////////////////////
 
-    function open() {
-        entryPoint = "DeviceList"
-
-        if (!tutorialLoader.sourceComponent) {
-            tutorialLoader.sourceComponent = componentTutorial
-        }
-
+    function loadScreen() {
+        entryPoint = "MediaList"
         appContent.state = "Tutorial"
     }
 
-    function reopen() {
-        entryPoint = "About"
-
-        if (!tutorialLoader.sourceComponent) {
-            tutorialLoader.sourceComponent = componentTutorial
-        }
-
-        tutorialLoader.item.reset()
-
+    function loadScreenFrom(screenname) {
+        entryPoint = screenname
         appContent.state = "Tutorial"
     }
 
@@ -43,16 +30,10 @@ Rectangle {
         id: tutorialLoader
         anchors.fill: parent
 
-        sourceComponent: null
-        asynchronous: false
-    }
+        active: (appContent.state === "Tutorial")
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    Component {
-        id: componentTutorial
-
-        Item {
+        asynchronous: true
+        sourceComponent: Item {
             id: itemTutorial
 
             function reset() {
@@ -71,7 +52,7 @@ Rectangle {
                 currentIndex: 0
                 onCurrentIndexChanged: {
                     if (currentIndex < 0) currentIndex = 0
-                    if (currentIndex > lastPage) {
+                    if (currentIndex > count) {
                         currentIndex = 0 // reset
                         appContent.state = entryPoint
                     }
@@ -362,7 +343,7 @@ Rectangle {
                 anchors.rightMargin: 32
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
-                text: (tutorialPages.currentIndex === lastPage) ? qsTr("Allright!") : qsTr("Next")
+                text: (tutorialPages.currentIndex === tutorialPages.count-1) ? qsTr("All right!") : qsTr("Next")
                 textFormat: Text.PlainText
                 color: Theme.colorHeaderContent
                 font.bold: true

@@ -212,7 +212,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_appThemeAuto
                     z: 1
                     anchors.right: parent.right
@@ -262,7 +262,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    source: "qrc:/assets/icons_material/baseline-photo_camera-24px.svg"
                 }
 
                 Text {
@@ -302,6 +302,7 @@ Item {
                     source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
+                    smooth: true
                 }
 
                 Text {
@@ -321,7 +322,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_mediaFilter
                     z: 1
                     anchors.right: parent.right
@@ -372,7 +373,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_mediaPreview
                     z: 1
                     anchors.right: parent.right
@@ -423,7 +424,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedMobile {
+                SwitchThemedDesktop {
                     id: switch_mediaExport
                     z: 1
                     anchors.right: parent.right

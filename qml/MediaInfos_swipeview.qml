@@ -66,7 +66,7 @@ Item {
 
     ////////
 
-    function loadSwipeView() {
+    function loadView() {
         mediaPages.disableAnimation()
         mediaPages.interactive = false
         mediaPages.currentIndex = 0
@@ -177,7 +177,7 @@ Item {
         id: subheader
 
         z: 5
-        height: visible ? 72 : 0
+        height: visible ? 60 : 0
         color: Theme.colorHeader
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)
 
@@ -194,8 +194,8 @@ Item {
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -4
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 4
             spacing: 10
 
             Row {
@@ -337,11 +337,15 @@ Item {
             }
         }
     }
+
+    ////////
+
     Rectangle { // separator
         anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
 
+        z: 5
         height: 2
         opacity: 0.66
         color: Theme.colorHeaderHighlight
@@ -357,7 +361,7 @@ Item {
             gradient: Gradient {
                 orientation: Gradient.Vertical
                 GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
-                GradientStop { position: 1.0; color: Theme.colorBackground; }
+                GradientStop { position: 1.0; color: "transparent"; }
             }
         }
     }
@@ -368,7 +372,7 @@ Item {
         id: mediaPages
 
         anchors.top: parent.top
-        anchors.topMargin: subheader.visible ? subheader.height : 0
+        anchors.topMargin: subheader.height
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -539,6 +543,8 @@ Item {
         opacity: 0.9
         color: Theme.colorForeground
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation) && (mediaPages.count > 1)
+
+        property int hhh: visible ? height : 0
 
         Rectangle {
             height: 1

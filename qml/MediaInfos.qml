@@ -31,10 +31,10 @@ Item {
             content = contentLoader.item
         }
 
-        //
-        content.loadHeader()
-        if (isPhone) content.loadSwipeView()
-        else content.loadRowView()
+        if (contentLoader.status === Loader.Ready) {
+            content.loadHeader()
+            content.loadView()
+        }
 
         // Change screen
         appContent.state = "MediaInfos"
@@ -52,5 +52,7 @@ Item {
     Loader {
         id: contentLoader
         anchors.fill: parent
+
+        asynchronous: false
     }
 }

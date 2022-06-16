@@ -78,6 +78,13 @@ Item {
         exitSelectionMode()
     }
 
+    function backAction() {
+        if (screenMediaList.dialogIsOpen) {
+            screenMediaList.closeDialog()
+            return
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     PopupLoading {
@@ -124,7 +131,7 @@ Item {
         z: 10
         title: qsTr("Media file selection")
 
-        onAccepted: {
+        onAccepted: (fileUrl) => {
             //console.log("FileDialog::onAccepted() << " + fileUrl)
             loadMedia(UtilsPath.cleanUrl(fileUrl))
             closeDialog()
@@ -167,7 +174,7 @@ Item {
         anchors.right: parent.right
 
         z: 5
-        height: visible ? 80 : 0
+        height: visible ? 68 : 0
         visible: false
         color: Theme.colorHeader
 
@@ -181,19 +188,20 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -4
+            anchors.verticalCenterOffset: -2
 
             source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon
+            smooth: true
         }
 
         ButtonWireframe {
-            height: 40
+            height: 36
             anchors.left: image.right
             anchors.leftMargin: 32
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -4
+            anchors.verticalCenterOffset: -2
 
             primaryColor: Theme.colorPrimary
             text: qsTr("OPEN ANOTHER MEDIA")
@@ -221,7 +229,7 @@ Item {
             gradient: Gradient {
                 orientation: Gradient.Vertical
                 GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
-                GradientStop { position: 1.0; color: Theme.colorBackground; }
+                GradientStop { position: 1.0; color: "transparent"; }
             }
         }
     }

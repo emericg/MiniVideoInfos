@@ -5,21 +5,38 @@ import ThemeEngine 1.0
 
 Item {
     id: permissionsScreen
-    width: 480
-    height: 720
     anchors.fill: parent
     anchors.leftMargin: screenPaddingLeft
     anchors.rightMargin: screenPaddingRight
+
+    property string entryPoint: "About"
 
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
         // Refresh permissions
+        refreshPermissions()
+
+        // Change screen
+        appContent.state = "Permissions"
+    }
+
+    function loadScreenFrom(screenname) {
+        entryPoint = screenname
+        loadScreen()
+    }
+
+    function refreshPermissions() {
+        // Refresh permissions
         button_storage_read_test.validperm = utilsApp.checkMobileStorageReadPermission()
         button_storage_write_test.validperm = utilsApp.checkMobileStorageWritePermission()
+    }
 
-        // Load screen
-        appContent.state = "MobilePermissions"
+    Timer {
+        id: retryPermissions
+        interval: 1000
+        repeat: false
+        onTriggered: refreshPermissions()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -137,7 +154,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorError
                     background: true
 
-                    onClicked: validperm = utilsApp.getMobileStorageReadPermission();
+                    onClicked: {
+                        utilsApp.vibrate(25)
+                        validperm = utilsApp.getMobileStorageReadPermission()
+                        retryPermissions.start()
+                    }
                 }
 
                 Text {
@@ -213,7 +234,11 @@ Item {
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     background: true
 
-                    onClicked: validperm = utilsApp.getMobileStorageWritePermission();
+                    onClicked: {
+                        utilsApp.vibrate(25)
+                        validperm = utilsApp.getMobileStorageWritePermission()
+                        retryPermissions.start()
+                    }
                 }
 
                 Text {
@@ -245,6 +270,79 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 8)
+                    anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 8)
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            ////////
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                text: qsTr("Click on the icons to ask for permission.")
+                textFormat: Text.StyledText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: -48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    color: Theme.colorSubText
+                }
+            }
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".") + "<br>" +
+                      qsTr("You can go to the Android \"application info\" panel to change a permission manually.")
+                textFormat: Text.StyledText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ButtonWireframeIcon {
+                height: 36
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+
+                primaryColor: Theme.colorPrimary
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Application info")
+                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                sourceSize: 20
+
+                onClicked: utilsApp.openAndroidAppInfo("com.emeric.watchflower")
             }
 
             ////////

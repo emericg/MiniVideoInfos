@@ -43,7 +43,7 @@ Item {
 
     ////////
 
-    function loadRowView() {
+    function loadView() {
         content_generic.loadGeneric()
 
         videoRepeater.model = null
@@ -106,7 +106,7 @@ Item {
         gradient: Gradient {
             orientation: Gradient.Vertical
             GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
-            GradientStop { position: 1.0; color: Theme.colorBackground; }
+            GradientStop { position: 1.0; color: "transparent"; }
         }
     }
 

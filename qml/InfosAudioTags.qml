@@ -41,7 +41,7 @@ Flickable {
         anchors.right: parent.right
 
         topPadding: 16
-        bottomPadding: 16 + rectangleMenus.height
+        bottomPadding: 16 + rectangleMenus.hhh
         spacing: 8
 
         ////////////////

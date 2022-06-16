@@ -168,15 +168,16 @@ ApplicationWindow {
             gradient: Gradient {
                 orientation: Gradient.Vertical
                 GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
-                GradientStop { position: 1.0; color: Theme.colorBackground; }
+                GradientStop { position: 1.0; color: "transparent"; }
             }
         }
     }
 
     MobileDrawer {
         id: appDrawer
-        width: (Screen.primaryOrientation === 1 || parent.width < 480) ? 0.80 * parent.width : 0.50 * parent.width
-        height: parent.height
+        width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
+        height: appWindow.height
+        interactive: (appContent.state !== "Tutorial")
     }
 
     // Sharing handling ////////////////////////////////////////////////////////
@@ -244,13 +245,19 @@ ApplicationWindow {
     }
 
     function backAction() {
+        if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") {
+            // do nothing
+            return
+        }
+
         if (appContent.state === "Tutorial") {
             appContent.state = screenTutorial.entryPoint
-        } else if (appContent.state === "MobilePermissions") {
-            appContent.state = "About"
+        } else if (appContent.state === "Permissions") {
+            appContent.state = screenPermissions.entryPoint
+        } else if (appContent.state === "MediaList") {
+            screenMediaList.backAction()
         } else {
             appContent.state = "MediaList"
-            screenMediaList.closeDialog()
         }
     }
     function forwardAction() {
@@ -309,7 +316,10 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") return; // do nothing
+            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") {
+                // do nothing
+                return
+            }
 
             if (appContent.state === "MediaList") {
                 if (screenMediaList.selectionList.length !== 0) {
@@ -350,21 +360,26 @@ ApplicationWindow {
             id: screenAbout
         }
 
+        // Start on the tutorial?
+        Component.onCompleted: {
+            if (settingsManager.firstLaunch) {
+                screenTutorial.loadScreen()
+            }
+        }
+
         // Initial state
-        state: settingsManager.firstLaunch ? "Tutorial" : "MediaList"
+        state: "MediaList"
 
         onStateChanged: {
-            if (state === "MediaList") {
-                appHeader.leftMenuMode = "drawer";
-            } else if (state === "Tutorial")
-                appHeader.leftMenuMode = "close";
-            else
-                appHeader.leftMenuMode = "back";
+            screenMediaList.exitSelectionMode()
 
-            if (state === "Tutorial")
-                appDrawer.interactive = false;
-            else
-                appDrawer.interactive = true;
+            if (state === "MediaList") {
+                appHeader.leftMenuMode = "drawer"
+            } else if (state === "Tutorial") {
+                appHeader.leftMenuMode = "close"
+            } else {
+                appHeader.leftMenuMode = "back"
+            }
         }
 
         states: [
@@ -408,7 +423,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "MobilePermissions"
+                name: "Permissions"
                 PropertyChanges { target: appHeader; title: qsTr("Permissions"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
@@ -493,6 +508,7 @@ ApplicationWindow {
 
                 fillMode: Image.PreserveAspectFit
                 color: "white"
+                smooth: true
             }
         }
     }
@@ -531,7 +547,8 @@ ApplicationWindow {
             color: Theme.colorTabletmenuContent
         }
 
-        visible: (isDesktop || isTablet) && (appContent.state != "Tutorial" && appContent.state != "MediaInfos")
+        visible: (isDesktop || isTablet) &&
+                 (appContent.state !== "Tutorial" && appContent.state !== "MediaInfos")
 
         Row {
             id: tabletMenuScreen
@@ -587,26 +604,30 @@ ApplicationWindow {
 
     ////////////////
 
-    Text {
+    Rectangle {
         id: exitWarning
+
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 32
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 12
+
+        height: 40
+        radius: 4
+
+        color: Theme.colorComponentBackground
+        border.color: Theme.colorSeparator
+        border.width: Theme.componentBorderWidth
 
         opacity: 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        Behavior on opacity { OpacityAnimator { duration: 233 } }
 
-        text: qsTr("Press one more time to exit...")
-        textFormat: Text.PlainText
-        font.pixelSize: Theme.fontSizeContent
-        color: Theme.colorForeground
-
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -8
-            z: -1
-            radius: 4
-            color: Theme.colorSubText
+        Text {
+            anchors.centerIn: parent
+            text: qsTr("Press one more time to exit...")
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeContent
+            color: Theme.colorText
         }
     }
 }

@@ -137,7 +137,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: isMobile
+                visible: (isMobile && screenOrientation === Qt.PortraitOrientation)
                 spacing: 16
 
                 ButtonWireframeIconCentered {
@@ -242,7 +242,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: screenTutorial.reopen()
+                    onClicked: screenTutorial.loadScreenFrom("About")
                 }
             }
 
@@ -408,7 +408,7 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("About permissions")
+                    text: qsTr("About app permissions")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -427,7 +427,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: screenPermissions.loadScreen()
+                    onClicked: screenPermissions.loadScreenFrom("About")
                 }
             }
 

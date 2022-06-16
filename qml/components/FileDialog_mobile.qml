@@ -26,12 +26,23 @@ Rectangle {
     property bool onlyShowMedia: settingsManager.mediaFilter
     property bool inited: false
 
+    signal accepted()
+    signal rejected()
+
     ////////////////////////////////////////////////////////////////////////////
 
     function open() {
+
+        utilsApp.getMobileStorageReadPermission()
+
         if (!inited) {
-            folderListModel.rootFolder = fileDialogMobile.folder
-            folderListModel.folder = fileDialogMobile.folder
+            //folderListModel.rootFolder = fileDialogMobile.folder
+            //folderListModel.folder = fileDialogMobile.folder
+
+            folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
+            folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
+            storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
+
             updateHeaderText()
             inited = true
         }
@@ -232,7 +243,7 @@ Rectangle {
             gradient: Gradient {
                 orientation: Gradient.Vertical
                 GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
-                GradientStop { position: 1.0; color: Theme.colorBackground; }
+                GradientStop { position: 1.0; color: "transparent"; }
             }
         }
     }
@@ -372,7 +383,7 @@ Rectangle {
             font.pixelSize: Theme.fontSizeContentSmall
         }
 
-        SwitchThemedMobile {
+        SwitchThemedDesktop {
             id: switch_mediaonly
             z: 1
             anchors.right: parent.right

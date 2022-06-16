@@ -8,7 +8,7 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsString.js" as UtilsString
 
 Item {
-    id: infos_maps
+    id: infosMap
     implicitWidth: 480
     implicitHeight: 720
 
@@ -286,7 +286,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: rectangleMenus.height
+            anchors.bottomMargin: rectangleMenus.hhh
             color: Theme.colorForeground
             opacity: 0.9
 

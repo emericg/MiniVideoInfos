@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtCharts 2.3
+
+import QtCharts
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath
@@ -268,7 +269,7 @@ Flickable {
         anchors.right: parent.right
 
         topPadding: 16
-        bottomPadding: 16 + rectangleMenus.height
+        bottomPadding: 16 + rectangleMenus.hhh
         spacing: 8
 
         ////////////////
@@ -1370,7 +1371,7 @@ Flickable {
                     legend.visible: false
 
                     backgroundRoundness: 0
-                    backgroundColor: "transparent"
+                    backgroundColor: "transparent" // Theme.colorBackground
                     //animationOptions: ChartView.SeriesAnimations
                     ValueAxis { id: axisX0; visible: true; gridVisible: false;
                         labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
