@@ -1,8 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-import QtLocation 5.15
-import QtPositioning 5.15
+import QtLocation
+import QtPositioning
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsString.js" as UtilsString
@@ -117,7 +117,7 @@ Item {
         copyrightsVisible: false
 
         plugin: Plugin {
-            preferred: ["mapboxgl", "osm", "esri"]
+            preferred: ["maplibregl", "osm", "esri"]
             PluginParameter { name: "osm.mapping.highdpi_tiles"; value: "true"; }
         }
 
@@ -125,7 +125,7 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            onWheel: {
+            onWheel: (wheel) => {
                 if (wheel.angleDelta.y < 0) zoomOut()
                 else if (wheel.angleDelta.y > 0) zoomIn()
             }

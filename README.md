@@ -38,9 +38,9 @@ PICTURE file formats:
 
 You will need:
 - Any C++17 compiler
-- Android NDK 20+
+- Android NDK 22+
 - Android SDK
-- Qt 5.15 (with Qt Charts)
+- Qt 6.3+ (with Qt Charts)
 - MiniVideo (0.14+)
 - TagLib
 - libexif

@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
+ * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \author    Emeric Grange <emeric.grange@gmail.com>
- * \date      2020
+ * \date      2022
  */
 
-#include "utils_ios.h"
-
+#ifndef UTILS_BITS_H
+#define UTILS_BITS_H
 /* ************************************************************************** */
 
-//
+#include <cstdint>
+
+uint16_t endian_flip_16(uint16_t src);
+
+uint32_t endian_flip_32(uint32_t src);
+
+uint64_t endian_flip_64(uint64_t src);
 
 /* ************************************************************************** */
+#endif // UTILS_BITS_H

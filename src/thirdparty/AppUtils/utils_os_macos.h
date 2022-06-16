@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
+ * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,29 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \author    Emeric Grange <emeric.grange@gmail.com>
- * \date      2020
+ * \date      2021
  */
 
-#include "utils_ios.h"
+#ifndef UTILS_MACOS_H
+#define UTILS_MACOS_H
 
-#ifdef Q_OS_IOS
+#include <QtGlobal>
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
+#if defined(Q_OS_MACOS)
 /* ************************************************************************** */
 
-void UtilsIos::keepScreenOn(bool on)
+#include <QString>
+
+/*!
+ * \brief macOS utils
+ *
+ * Use with "LIBS += -framework IOKit"
+ */
+class UtilsMacOS
 {
-    if (on)
-    {
-        [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
-    }
-    else
-    {
-        [[UIApplication sharedApplication] setIdleTimerDisabled: NO];
-    }
-}
+public:
+    /*!
+     * - https://developer.apple.com/library/archive/qa/qa1340/_index.html
+     */
+    static uint32_t screenKeepOn(const QString &application, const QString &reason);
+    static void screenKeepAuto(uint32_t screensaverId);
+};
 
 /* ************************************************************************** */
-#endif // Q_OS_IOS
+#endif // Q_OS_MACOS
+#endif // UTILS_MACOS_H

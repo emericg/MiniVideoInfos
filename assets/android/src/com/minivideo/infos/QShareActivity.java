@@ -25,8 +25,8 @@ package com.minivideo.infos;
 
 import com.minivideo.utils.*;
 
-import org.qtproject.qt5.android.QtNative;
-import org.qtproject.qt5.android.bindings.QtActivity;
+import org.qtproject.qt.android.QtNative;
+import org.qtproject.qt.android.bindings.QtActivity;
 import android.os.*;
 import android.app.*;
 import android.content.*;

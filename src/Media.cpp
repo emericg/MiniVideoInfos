@@ -24,7 +24,7 @@
 #include "MediaUtils.h"
 #include "minivideo_utils_qt.h"
 #include "minivideo_textexport_qt.h"
-#include "utils/utils_app.h"
+#include "utils_app.h"
 
 #include "EGM96.h"
 

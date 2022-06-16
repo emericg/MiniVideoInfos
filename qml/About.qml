@@ -545,7 +545,7 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: "- Qt"
+                        text: "- Qt6"
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent

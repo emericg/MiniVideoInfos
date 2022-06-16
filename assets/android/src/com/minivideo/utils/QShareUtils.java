@@ -23,7 +23,7 @@
 
 package com.minivideo.utils;
 
-import org.qtproject.qt5.android.QtNative;
+import org.qtproject.qt.android.QtNative;
 
 import java.lang.String;
 import java.io.File;

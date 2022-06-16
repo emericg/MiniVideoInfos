@@ -1,16 +1,14 @@
 TARGET  = MiniVideoInfos
 
 VERSION = 0.9
+DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
 QT     += core qml quickcontrols2 svg widgets charts location
-android { QT += androidextras }
-ios { QT += gui-private }
 
 # Validate Qt version
-!versionAtLeast(QT_VERSION, 5.15) : error("You need at least Qt version 5.15 for $${TARGET}")
-!versionAtMost(QT_VERSION, 6.0) : error("You can't use Qt 6.0+ for $${TARGET}")
+!versionAtLeast(QT_VERSION, 6.3) : error("You need at least Qt version 6.3 for $${TARGET}")
 
 # Project features #############################################################
 
@@ -22,17 +20,20 @@ ios | android { DEFINES += USE_CONTRIBS }
 
 win32 { DEFINES += _USE_MATH_DEFINES }
 
-# MobileUI and MobileSharing for mobile OS
-include(src/thirdparty/MobileUI/MobileUI.pri)
-include(src/thirdparty/MobileSharing/MobileSharing.pri)
-
 DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
 
+# AppUtils
+include(src/thirdparty/AppUtils/AppUtils.pri)
+
 # EGM96 altitude correction
 include(src/thirdparty/EGM96/EGM96.pri)
+
+# MobileUI and MobileSharing for mobile OS
+include(src/thirdparty/MobileUI/MobileUI.pri)
+include(src/thirdparty/MobileSharing/MobileSharing.pri)
 
 # Project files ################################################################
 
@@ -42,11 +43,7 @@ SOURCES  += src/main.cpp \
             src/SettingsManager.cpp \
             src/minivideo_track_qml.cpp \
             src/minivideo_textexport_qt.cpp \
-            src/minivideo_utils_qt.cpp \
-            src/utils/utils_app.cpp \
-            src/utils/utils_screen.cpp \
-            src/utils/utils_android.cpp \
-            src/utils/utils_ios.cpp
+            src/minivideo_utils_qt.cpp
 
 HEADERS  += src/Media.h \
             src/MediaUtils.h \
@@ -55,11 +52,7 @@ HEADERS  += src/Media.h \
             src/minivideo_qml.h \
             src/minivideo_track_qml.h \
             src/minivideo_textexport_qt.h \
-            src/minivideo_utils_qt.h \
-            src/utils/utils_app.h \
-            src/utils/utils_screen.h \
-            src/utils/utils_android.h \
-            src/utils/utils_ios.h
+            src/minivideo_utils_qt.h
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \
@@ -144,7 +137,6 @@ OBJECTS_DIR = build/$${QT_ARCH}/
 MOC_DIR     = build/$${QT_ARCH}/
 RCC_DIR     = build/$${QT_ARCH}/
 UI_DIR      = build/$${QT_ARCH}/
-QMLCACHE_DIR= build/$${QT_ARCH}/
 
 DESTDIR = bin/
 
@@ -197,26 +189,10 @@ android {
                  $${PWD}/assets/android/gradle.properties \
                  $${PWD}/assets/android/build.gradle
 
-    versionAtLeast(QT_VERSION, "5.14.0") {
-        DEFINES += LIBS_SUFFIX='\\"_$${QT_ARCH}.so\\"'
-        ANDROID_EXTRA_LIBS += \
-            $${PWD}/contribs/env/android_armv7/usr/lib/libexif.so \
-            $${PWD}/contribs/env/android_armv7/usr/lib/libtag.so \
-            $${PWD}/contribs/env/android_armv7/usr/lib/libminivideo.so \
-            $${PWD}/contribs/env/android_armv8/usr/lib/libexif.so \
-            $${PWD}/contribs/env/android_armv8/usr/lib/libtag.so \
-            $${PWD}/contribs/env/android_armv8/usr/lib/libminivideo.so \
-            $${PWD}/contribs/env/android_x86/usr/lib/libexif.so \
-            $${PWD}/contribs/env/android_x86/usr/lib/libtag.so \
-            $${PWD}/contribs/env/android_x86/usr/lib/libminivideo.so \
-            $${PWD}/contribs/env/android_x86_64/usr/lib/libexif.so \
-            $${PWD}/contribs/env/android_x86_64/usr/lib/libtag.so \
-            $${PWD}/contribs/env/android_x86_64/usr/lib/libminivideo.so
-    } else {
-        ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
-        ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
-        ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so
-    }
+    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
+    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
+    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so
+
     include($${PWD}/contribs/env/android_openssl-master/openssl.pri)
 }
 

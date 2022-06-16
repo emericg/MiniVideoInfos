@@ -147,7 +147,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/duotone-library_add-24px.svg"
                         color: Theme.colorIcon
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -188,7 +188,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
                         color: Theme.colorIcon
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -256,7 +256,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
                         color: Theme.colorIcon
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -293,7 +293,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
                         color: Theme.colorIcon
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -349,7 +349,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-settings-24px.svg"
                         color: Theme.colorIcon
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -388,7 +388,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/outline-info-24px.svg"
                         color: Theme.colorIcon
                     }
-                    Label {
+                    Text {
                         anchors.left: parent.left
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
@@ -401,62 +401,6 @@ Drawer {
                 }
 
                 ////////
-
-                Item { // spacer
-                    height: 8
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: isDesktop
-                }
-                Rectangle {
-                    height: 1
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: Theme.colorSeparator
-                    visible: isDesktop
-                }
-                Item {
-                    height: 8
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: isDesktop
-                }
-
-                ////////
-
-                Item {
-                    id: rectangleExit
-                    height: 48
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    visible: isDesktop
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: utilsApp.appExit()
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/duotone-exit_to_app-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Label {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Exit")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
-                    }
-                }
             }
         }
     }

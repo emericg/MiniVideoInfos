@@ -27,8 +27,9 @@
 #include <QFileInfo>
 #include <QDateTime>
 
-#include <QtAndroidExtras/QAndroidJniObject>
-#include <jni.h>
+#include <QCoreApplication>
+#include <QtCore/private/qandroidextras_p.h>
+#include <QJniObject>
 
 /* ************************************************************************** */
 
@@ -60,8 +61,8 @@ AndroidShareUtils *AndroidShareUtils::getInstance()
 
 bool AndroidShareUtils::checkMimeTypeView(const QString &mimeType)
 {
-    QAndroidJniObject jsMime = QAndroidJniObject::fromString(mimeType);
-    jboolean verified = QAndroidJniObject::callStaticMethod<jboolean>(
+    QJniObject jsMime = QJniObject::fromString(mimeType);
+    jboolean verified = QJniObject::callStaticMethod<jboolean>(
                             "com/minivideo/utils/QShareUtils",
                             "checkMimeTypeView",
                             "(Ljava/lang/String;)Z",
@@ -73,8 +74,8 @@ bool AndroidShareUtils::checkMimeTypeView(const QString &mimeType)
 
 bool AndroidShareUtils::checkMimeTypeEdit(const QString &mimeType)
 {
-    QAndroidJniObject jsMime = QAndroidJniObject::fromString(mimeType);
-    jboolean verified = QAndroidJniObject::callStaticMethod<jboolean>(
+    QJniObject jsMime = QJniObject::fromString(mimeType);
+    jboolean verified = QJniObject::callStaticMethod<jboolean>(
                             "com/minivideo/utils/QShareUtils",
                             "checkMimeTypeEdit",
                             "(Ljava/lang/String;)Z",
@@ -86,18 +87,18 @@ bool AndroidShareUtils::checkMimeTypeEdit(const QString &mimeType)
 
 void AndroidShareUtils::share(const QString &text, const QUrl &url)
 {
-    QAndroidJniObject jsText = QAndroidJniObject::fromString(text);
-    QAndroidJniObject jsUrl = QAndroidJniObject::fromString(url.toString());
-    jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>(
-                                        "com/minivideo/utils/QShareUtils",
-                                        "share",
-                                        "(Ljava/lang/String;Ljava/lang/String;)Z",
-                                        jsText.object<jstring>(), jsUrl.object<jstring>());
+    QJniObject jsText = QJniObject::fromString(text);
+    QJniObject jsUrl = QJniObject::fromString(url.toString());
+    jboolean ok = QJniObject::callStaticMethod<jboolean>(
+                      "com/minivideo/utils/QShareUtils",
+                      "share",
+                      "(Ljava/lang/String;Ljava/lang/String;)Z",
+                      jsText.object<jstring>(), jsUrl.object<jstring>());
 
     if (!ok)
     {
         qWarning() << "Unable to resolve activity from Java";
-        emit shareNoAppAvailable(0);
+        Q_EMIT shareNoAppAvailable(0);
     }
 }
 
@@ -117,61 +118,57 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
 
     if (!mAltImpl)
     {
-        QAndroidJniObject jsPath = QAndroidJniObject::fromString(filePath);
-        QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
-        QAndroidJniObject jsMimeType = QAndroidJniObject::fromString(mimeType);
-        jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>(
+        QJniObject jsPath = QJniObject::fromString(filePath);
+        QJniObject jsTitle = QJniObject::fromString(title);
+        QJniObject jsMimeType = QJniObject::fromString(mimeType);
+        jboolean ok = QJniObject::callStaticMethod<jboolean>(
                                             "com/minivideo/utils/QShareUtils",
                                             "sendFile",
                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                            jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(),
-                                            requestId);
+                                            jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
-            emit shareNoAppAvailable(requestId);
+            Q_EMIT shareNoAppAvailable(requestId);
         }
         return;
     }
 
     // THE FILE PATH
     // to get a valid Path we must prefix file://
-    // attention file must be inside Users Documents folder!
+    // attention file must be inside Users Documents folder !
     // trying to send a file from APP DATA will fail
-    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
+    QJniObject jniPath = QJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
     {
-        qWarning() << "QAndroidJniObject jniPath not valid.";
-        emit shareError(requestId, "Share: an Error occured\nFilePath not valid");
+        qWarning() << "QJniObject jniPath not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nFilePath not valid");
         return;
     }
     // next step: convert filePath Java String into Java Uri
-    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri",
-                                                                         "parse",
-                                                                         "(Ljava/lang/String;)Landroid/net/Uri;",
-                                                                         jniPath.object<jstring>());
+    QJniObject jniUri = QJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", jniPath.object<jstring>());
     if (!jniUri.isValid())
     {
-        qWarning() << "QAndroidJniObject jniUri not valid.";
-        emit shareError(requestId, "Share: an Error occured\nURI not valid");
+        qWarning() << "QJniObject jniUri not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nURI not valid");
         return;
     }
 
     // THE INTENT ACTION
     // create a Java String for the ACTION
-    QAndroidJniObject jniAction = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_SEND");
+    QJniObject jniAction = QJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_SEND");
     if (!jniAction.isValid())
     {
-        qWarning() << "QAndroidJniObject jniParam not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniParam not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // then create the Intent Object for this Action
-    QAndroidJniObject jniIntent("android/content/Intent", "(Ljava/lang/String;)V",jniAction.object<jstring>());
+    QJniObject jniIntent("android/content/Intent", "(Ljava/lang/String;)V",jniAction.object<jstring>());
     if (!jniIntent.isValid())
     {
-        qWarning() << "QAndroidJniObject jniIntent not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniIntent not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -179,73 +176,70 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
     if (mimeType.isEmpty())
     {
         qWarning() << "mime type is empty";
-        emit shareError(requestId, "Share: an Error occured\nMimeType is empty");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType is empty");
         return;
     }
     // create a Java String for the File Type (Mime Type)
-    QAndroidJniObject jniMimeType = QAndroidJniObject::fromString(mimeType);
+    QJniObject jniMimeType = QJniObject::fromString(mimeType);
     if (!jniMimeType.isValid())
     {
-        qWarning() << "QAndroidJniObject jniMimeType not valid.";
-        emit shareError(requestId, "Share: an Error occured\nMimeType not valid");
+        qWarning() << "QJniObject jniMimeType not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType not valid");
         return;
     }
     // set Type (MimeType)
-    QAndroidJniObject jniType = jniIntent.callObjectMethod("setType",
-                                                           "(Ljava/lang/String;)Landroid/content/Intent;",
-                                                           jniMimeType.object<jstring>());
+    QJniObject jniType = jniIntent.callObjectMethod("setType", "(Ljava/lang/String;)Landroid/content/Intent;", jniMimeType.object<jstring>());
     if (!jniType.isValid())
     {
-        qWarning() << "QAndroidJniObject jniType not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniType not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
     // THE EXTRA STREAM
     // create a Java String for the EXTRA
-    QAndroidJniObject jniExtra = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "EXTRA_STREAM");
+    QJniObject jniExtra = QJniObject::getStaticObjectField<jstring>("android/content/Intent", "EXTRA_STREAM");
     if (!jniExtra.isValid())
     {
-        qWarning() << "QAndroidJniObject jniExtra not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniExtra not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // put Extra (EXTRA_STREAM and URI)
-    QAndroidJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra",
-                                                                     "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;",
-                                                                     jniExtra.object<jstring>(), jniUri.object<jobject>());
+    //QJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniExtra.object<jstring>());
+    QJniObject jniExtraStreamUri = jniIntent.callObjectMethod("putExtra", "(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;", jniExtra.object<jstring>(), jniUri.object<jobject>());
     if (!jniExtraStreamUri.isValid())
     {
-        qWarning() << "QAndroidJniObject jniExtraStreamUri not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniExtraStreamUri not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
-    QAndroidJniObject activity = QtAndroid::androidActivity();
-    QAndroidJniObject packageManager = activity.callObjectMethod("getPackageManager",
-                                                                 "()Landroid/content/pm/PackageManager;");
-    QAndroidJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
-                                                                 "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
-                                                                 packageManager.object());
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject packageManager = activity.callObjectMethod("getPackageManager",
+                                                          "()Landroid/content/pm/PackageManager;");
+    QJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
+                                                          "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
+                                                          packageManager.object());
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
-        emit shareNoAppAvailable(requestId);
+        Q_EMIT shareNoAppAvailable(requestId);
         return;
     }
 
     if (requestId <= 0)
     {
         // we dont need a result if there's no requestId
-        QtAndroid::startActivity(jniIntent, requestId);
+        QtAndroidPrivate::startActivity(jniIntent, requestId);
     }
     else
     {
         // we have the JNI Object, know the requestId
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
-        // onActivityResult()  method in QShareActivity.java - otherwise you'll get wrong request or result codes
-        QtAndroid::startActivity(jniIntent, requestId, this);
+        // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
+        QtAndroidPrivate::startActivity(jniIntent, requestId, this);
     }
 }
 
@@ -265,18 +259,17 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
 
     if (!mAltImpl)
     {
-        QAndroidJniObject jsPath = QAndroidJniObject::fromString(filePath);
-        QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
-        QAndroidJniObject jsMimeType = QAndroidJniObject::fromString(mimeType);
-        jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
-                                                  "viewFile",
-                                                  "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(),
-                                                  requestId);
+        QJniObject jsPath = QJniObject::fromString(filePath);
+        QJniObject jsTitle = QJniObject::fromString(title);
+        QJniObject jsMimeType = QJniObject::fromString(mimeType);
+        jboolean ok = QJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
+                          "viewFile",
+                          "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
+                          jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
-            emit shareNoAppAvailable(requestId);
+            Q_EMIT shareNoAppAvailable(requestId);
         }
         return;
     }
@@ -285,40 +278,37 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     // to get a valid Path we must prefix file://
     // attention file must be inside Users Documents folder !
     // trying to view or edit a file from APP DATA will fail
-    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
+    QJniObject jniPath = QJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
     {
-        qWarning() << "QAndroidJniObject jniPath not valid.";
-        emit shareError(requestId, "Share: an Error occured\nFilePath not valid");
+        qWarning() << "QJniObject jniPath not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nFilePath not valid");
         return;
     }
     // next step: convert filePath Java String into Java Uri
-    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri",
-                                                                         "parse",
-                                                                         "(Ljava/lang/String;)Landroid/net/Uri;",
-                                                                         jniPath.object<jstring>());
+    QJniObject jniUri = QJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", jniPath.object<jstring>());
     if (!jniUri.isValid())
     {
-        qWarning() << "QAndroidJniObject jniUri not valid.";
-        emit shareError(requestId, "Share: an Error occured\nURI not valid");
+        qWarning() << "QJniObject jniUri not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nURI not valid");
         return;
     }
 
     // THE INTENT ACTION
     // create a Java String for the ACTION
-    QAndroidJniObject jniParam = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_VIEW");
+    QJniObject jniParam = QJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_VIEW");
     if (!jniParam.isValid())
     {
-        qWarning() << "QAndroidJniObject jniParam not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniParam not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // then create the Intent Object for this Action
-    QAndroidJniObject jniIntent("android/content/Intent", "(Ljava/lang/String;)V", jniParam.object<jstring>());
+    QJniObject jniIntent("android/content/Intent", "(Ljava/lang/String;)V", jniParam.object<jstring>());
     if (!jniIntent.isValid())
     {
-        qWarning() << "QAndroidJniObject jniIntent not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniIntent not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -326,53 +316,53 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
     if (mimeType.isEmpty())
     {
         qWarning() << "mime type is empty";
-        emit shareError(requestId, "Share: an Error occured\nMimeType is empty");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType is empty");
         return;
     }
     // create a Java String for the File Type (Mime Type)
-    QAndroidJniObject jniType = QAndroidJniObject::fromString(mimeType);
+    QJniObject jniType = QJniObject::fromString(mimeType);
     if (!jniType.isValid())
     {
-        qWarning() << "QAndroidJniObject jniType not valid.";
-        emit shareError(requestId, "Share: an Error occured\nMimeType not valid");
+        qWarning() << "QJniObject jniType not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType not valid");
         return;
     }
     // set Data (the URI) and Type (MimeType)
-    QAndroidJniObject jniResult = jniIntent.callObjectMethod("setDataAndType",
-                                                             "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
-                                                             jniUri.object<jobject>(), jniType.object<jstring>());
+    QJniObject jniResult = jniIntent.callObjectMethod("setDataAndType",
+                                                      "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
+                                                      jniUri.object<jobject>(), jniType.object<jstring>());
     if (!jniResult.isValid())
     {
-        qWarning() << "QAndroidJniObject jniResult not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniResult not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
-    QAndroidJniObject activity = QtAndroid::androidActivity();
-    QAndroidJniObject packageManager = activity.callObjectMethod("getPackageManager",
-                                                                 "()Landroid/content/pm/PackageManager;");
-    QAndroidJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
-                                                                 "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
-                                                                 packageManager.object());
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject packageManager = activity.callObjectMethod("getPackageManager",
+                                                          "()Landroid/content/pm/PackageManager;");
+    QJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
+                                                          "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
+                                                          packageManager.object());
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
-        emit shareNoAppAvailable(requestId);
+        Q_EMIT shareNoAppAvailable(requestId);
         return;
     }
 
     if (requestId <= 0)
     {
         // we dont need a result if there's no requestId
-        QtAndroid::startActivity(jniIntent, requestId);
+        QtAndroidPrivate::startActivity(jniIntent, requestId);
     }
     else
     {
         // we have the JNI Object, know the requestId
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
-        // onActivityResult()  method in QShareActivity.java - otherwise you'll get wrong request or result codes
-        QtAndroid::startActivity(jniIntent, requestId, this);
+        // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
+        QtAndroidPrivate::startActivity(jniIntent, requestId, this);
     }
 }
 
@@ -397,20 +387,19 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
 
     if (!mAltImpl)
     {
-        QAndroidJniObject jsPath = QAndroidJniObject::fromString(filePath);
-        QAndroidJniObject jsTitle = QAndroidJniObject::fromString(title);
-        QAndroidJniObject jsMimeType = QAndroidJniObject::fromString(mimeType);
+        QJniObject jsPath = QJniObject::fromString(filePath);
+        QJniObject jsTitle = QJniObject::fromString(title);
+        QJniObject jsMimeType = QJniObject::fromString(mimeType);
 
-        jboolean ok = QAndroidJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
-                                                  "editFile",
-                                                  "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
-                                                  jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(),
-                                                  requestId);
+        jboolean ok = QJniObject::callStaticMethod<jboolean>("com/minivideo/utils/QShareUtils",
+                                                             "editFile",
+                                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
+                                                             jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
 
         if (!ok)
         {
             qWarning() << "Unable to resolve activity from Java";
-            emit shareNoAppAvailable(requestId);
+            Q_EMIT shareNoAppAvailable(requestId);
         }
         return;
     }
@@ -419,40 +408,37 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     // to get a valid Path we must prefix file://
     // attention file must be inside Users Documents folder !
     // trying to view or edit a file from APP DATA will fail
-    QAndroidJniObject jniPath = QAndroidJniObject::fromString("file://" + filePath);
+    QJniObject jniPath = QJniObject::fromString("file://" + filePath);
     if (!jniPath.isValid())
     {
-        qWarning() << "QAndroidJniObject jniPath not valid.";
-        emit shareError(requestId, "Share: an Error occured\nFilePath not valid");
+        qWarning() << "QJniObject jniPath not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nFilePath not valid");
         return;
     }
     // next step: convert filePath Java String into Java Uri
-    QAndroidJniObject jniUri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri",
-                                                                         "parse",
-                                                                         "(Ljava/lang/String;)Landroid/net/Uri;",
-                                                                         jniPath.object<jstring>());
+    QJniObject jniUri = QJniObject::callStaticObjectMethod("android/net/Uri", "parse", "(Ljava/lang/String;)Landroid/net/Uri;", jniPath.object<jstring>());
     if (!jniUri.isValid())
     {
-        qWarning() << "QAndroidJniObject jniUri not valid.";
-        emit shareError(requestId, "Share: an Error occured\nURI not valid");
+        qWarning() << "QJniObject jniUri not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nURI not valid");
         return;
     }
 
     // THE INTENT ACTION
     // create a Java String for the ACTION
-    QAndroidJniObject jniParam = QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_EDIT");
+    QJniObject jniParam = QJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_EDIT");
     if (!jniParam.isValid())
     {
-        qWarning() << "QAndroidJniObject jniParam not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniParam not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
     // then create the Intent Object for this Action
-    QAndroidJniObject jniIntent("android/content/Intent", "(Ljava/lang/String;)V", jniParam.object<jstring>());
+    QJniObject jniIntent("android/content/Intent", "(Ljava/lang/String;)V", jniParam.object<jstring>());
     if (!jniIntent.isValid())
     {
-        qWarning() << "QAndroidJniObject jniIntent not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniIntent not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
@@ -460,39 +446,39 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (mimeType.isEmpty())
     {
         qWarning() << "mime type is empty";
-        emit shareError(requestId, "Share: an Error occured\nMimeType is empty");
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType is empty");
         return;
     }
     // create a Java String for the File Type (Mime Type)
-    QAndroidJniObject jniType = QAndroidJniObject::fromString(mimeType);
+    QJniObject jniType = QJniObject::fromString(mimeType);
     if (!jniType.isValid())
     {
-        qWarning() << "QAndroidJniObject jniType not valid.";
-        emit shareError(requestId, "Share: an Error occured\nMimeType not valid");
+        qWarning() << "QJniObject jniType not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured\nMimeType not valid");
         return;
     }
     // set Data (the URI) and Type (MimeType)
-    QAndroidJniObject jniResult = jniIntent.callObjectMethod("setDataAndType",
-                                                             "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
-                                                             jniUri.object<jobject>(),
-                                                             jniType.object<jstring>());
+    QJniObject jniResult = jniIntent.callObjectMethod("setDataAndType",
+                                                      "(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/Intent;",
+                                                      jniUri.object<jobject>(),
+                                                      jniType.object<jstring>());
     if (!jniResult.isValid())
     {
-        qWarning() << "QAndroidJniObject jniResult not valid.";
-        emit shareError(requestId, "Share: an Error occured");
+        qWarning() << "QJniObject jniResult not valid.";
+        Q_EMIT shareError(requestId, "Share: an Error occured");
         return;
     }
 
-    QAndroidJniObject activity = QtAndroid::androidActivity();
-    QAndroidJniObject packageManager = activity.callObjectMethod("getPackageManager",
-                                                                 "()Landroid/content/pm/PackageManager;");
-    QAndroidJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
-                                                                 "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
-                                                                 packageManager.object());
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject packageManager = activity.callObjectMethod("getPackageManager",
+                                                          "()Landroid/content/pm/PackageManager;");
+    QJniObject componentName = jniIntent.callObjectMethod("resolveActivity",
+                                                          "(Landroid/content/pm/PackageManager;)Landroid/content/ComponentName;",
+                                                          packageManager.object());
     if (!componentName.isValid())
     {
         qWarning() << "Unable to resolve activity";
-        emit shareNoAppAvailable(requestId);
+        Q_EMIT shareNoAppAvailable(requestId);
         return;
     }
 
@@ -500,24 +486,24 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
     if (requestId <= 0)
     {
         // we dont need a result if there's no requestId
-        QtAndroid::startActivity(jniIntent, requestId);
+        QtAndroidPrivate::startActivity(jniIntent, requestId);
     }
     else
     {
         // we have the JNI Object, know the requestId
         // and want the Result back into 'this' handleActivityResult(...)
         // attention: to test JNI with QAndroidActivityResultReceiver you must comment or rename
-        // onActivityResult()  method in QShareActivity.java - otherwise you'll get wrong request or result codes
-        QtAndroid::startActivity(jniIntent, requestId, this);
+        // onActivityResult() method in QShareActivity.java - otherwise you'll get wrong request or result codes
+        QtAndroidPrivate::startActivity(jniIntent, requestId, this);
     }
 }
 
 /* ************************************************************************** */
 
 // used from QAndroidActivityResultReceiver
-void AndroidShareUtils::handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data)
+void AndroidShareUtils::handleActivityResult(int receiverRequestCode, int resultCode, const QJniObject &data)
 {
-    Q_UNUSED(data);
+    Q_UNUSED(data)
     qDebug() << "From JNI QAndroidActivityResultReceiver: " << receiverRequestCode << "ResultCode:" << resultCode;
     processActivityResult(receiverRequestCode, resultCode);
 }
@@ -534,7 +520,7 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
     if (resultCode == RESULT_OK)
     {
         // only if edit is done
-        emit shareEditDone(requestCode);
+        Q_EMIT shareEditDone(requestCode);
     }
     else if (resultCode == RESULT_CANCELED)
     {
@@ -544,40 +530,40 @@ void AndroidShareUtils::processActivityResult(int requestCode, int resultCode)
             // Google Fotos will send OK if saved and CANCELED if canceled
             // Some Apps always sends CANCELED even if you modified and Saved the File
             // so you should check the modified Timestamp of the File to know if
-            // you should emit shareEditDone() or shareFinished() !!!
+            // you should Q_EMIT shareEditDone() or shareFinished() !!!
             QFileInfo fileInfo = QFileInfo(mCurrentFilePath);
             qint64 currentModified = fileInfo.lastModified().toSecsSinceEpoch();
             qDebug() << "CURRENT MODIFIED: " << currentModified;
             if (currentModified > mLastModified)
             {
-                emit shareEditDone(requestCode);
+                Q_EMIT shareEditDone(requestCode);
                 return;
             }
         }
-        emit shareFinished(requestCode);
+        Q_EMIT shareFinished(requestCode);
     }
     else
     {
         qDebug() << "wrong result code: " << resultCode << " from request: " << requestCode;
-        emit shareError(requestCode, "Share: an Error occured");
+        Q_EMIT shareError(requestCode, "Share: an Error occured");
     }
 }
 
 void AndroidShareUtils::checkPendingIntents(const QString &workingDirPath)
 {
-    QAndroidJniObject activity = QtAndroid::androidActivity();
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
     if (activity.isValid())
     {
         // create a Java String for the Working Dir Path
-        QAndroidJniObject jniWorkingDir = QAndroidJniObject::fromString(workingDirPath);
+        QJniObject jniWorkingDir = QJniObject::fromString(workingDirPath);
         if (!jniWorkingDir.isValid())
         {
-            qWarning() << "QAndroidJniObject jniWorkingDir not valid.";
-            emit shareError(0, "Share: an Error occured\nWorkingDir not valid");
+            qWarning() << "QJniObject jniWorkingDir not valid.";
+            Q_EMIT shareError(0, "Share: an Error occured\nWorkingDir not valid");
             return;
         }
         activity.callMethod<void>("checkPendingIntents", "(Ljava/lang/String;)V", jniWorkingDir.object<jstring>());
-        qDebug() << "checkPendingIntents: " << workingDirPath;
+        //qDebug() << "checkPendingIntents: " << workingDirPath;
         return;
     }
     qDebug() << "checkPendingIntents: Activity not valid";
@@ -585,18 +571,7 @@ void AndroidShareUtils::checkPendingIntents(const QString &workingDirPath)
 
 QString AndroidShareUtils::getPathFromURI(const QString &contentURI)
 {
-    QAndroidJniObject jniURI = QAndroidJniObject::fromString(contentURI);
-    if (!jniURI.isValid())
-    {
-        qWarning() << "QAndroidJniObject jniPath not valid.";
-    }
-
-    QAndroidJniObject jniString = QAndroidJniObject::callStaticObjectMethod("com/minivideo/utils/QSharePathResolver",
-                                                                            "getRealPathFromSTR",
-                                                                            "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",
-                                                                            QtAndroid::androidContext().object(), jniURI.object<jstring>());
-    QString str = jniString.toString();
-    return str;
+    return QString();
 }
 
 void AndroidShareUtils::setFileUrlReceived(const QString &url)
@@ -604,11 +579,10 @@ void AndroidShareUtils::setFileUrlReceived(const QString &url)
     if (url.isEmpty())
     {
         qWarning() << "setFileUrlReceived: we got an empty URL";
-        emit shareError(0, "Empty URL received");
+        Q_EMIT shareError(0, "Empty URL received");
         return;
     }
     qDebug() << "AndroidShareUtils setFileUrlReceived: we got the File URL from JAVA: " << url;
-
     QString myUrl;
     if (url.startsWith("file://"))
     {
@@ -624,12 +598,12 @@ void AndroidShareUtils::setFileUrlReceived(const QString &url)
     QFileInfo fileInfo = QFileInfo(myUrl);
     if (fileInfo.exists())
     {
-        emit fileUrlReceived(myUrl);
+        Q_EMIT fileUrlReceived(myUrl);
     }
     else
     {
         qDebug() << "setFileUrlReceived: FILE does NOT exist ";
-        emit shareError(0, QString("File does not exist: %1").arg(myUrl));
+        Q_EMIT shareError(0, QString("File does not exist: %1").arg(myUrl));
     }
 }
 
@@ -638,7 +612,7 @@ void AndroidShareUtils::setFileReceivedAndSaved(const QString &url)
     if (url.isEmpty())
     {
         qWarning() << "setFileReceivedAndSaved: we got an empty URL";
-        emit shareError(0, "Empty URL received");
+        Q_EMIT shareError(0, "Empty URL received");
         return;
     }
     qDebug() << "AndroidShareUtils setFileReceivedAndSaved: we got the File URL from JAVA: " << url;
@@ -657,12 +631,12 @@ void AndroidShareUtils::setFileReceivedAndSaved(const QString &url)
     QFileInfo fileInfo = QFileInfo(myUrl);
     if (fileInfo.exists())
     {
-        emit fileReceivedAndSaved(myUrl);
+        Q_EMIT fileReceivedAndSaved(myUrl);
     }
     else
     {
         qDebug() << "setFileReceivedAndSaved: FILE does NOT exist ";
-        emit shareError(0, QString("File does not exist: %1").arg(myUrl));
+        Q_EMIT shareError(0, QString("File does not exist: %1").arg(myUrl));
     }
 }
 
@@ -673,7 +647,7 @@ bool AndroidShareUtils::checkFileExits(const QString &url)
     if (url.isEmpty())
     {
         qWarning() << "checkFileExits: we got an empty URL";
-        emit shareError(0, "Empty URL received");
+        Q_EMIT shareError(0, "Empty URL received");
         return false;
     }
     qDebug() << "AndroidShareUtils checkFileExits: we got the File URL from JAVA: " << url;
@@ -688,7 +662,7 @@ bool AndroidShareUtils::checkFileExits(const QString &url)
         myUrl = url;
     }
 
-    // check if the file exists
+    // check if File exists
     QFileInfo fileInfo = QFileInfo(myUrl);
     if (fileInfo.exists())
     {
@@ -702,19 +676,17 @@ bool AndroidShareUtils::checkFileExits(const QString &url)
     }
 }
 
+// instead of defining all JNICALL as demonstrated below
+// there's another way, making it easier to manage all the methods
+// see https://www.kdab.com/qt-android-episode-5/
+
 /* ************************************************************************** */
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// instead of defining all JNICALL as demonstrated below
-// there's another way, making it easier to manage all the methods
-// see https://www.kdab.com/qt-android-episode-5/
-
 JNIEXPORT void JNICALL
-  Java_com_minivideo_infos_QShareActivity_setFileUrlReceived(JNIEnv *env,
-                                                             jobject obj,
-                                                             jstring url)
+  Java_com_minivideo_infos_QShareActivity_setFileUrlReceived(JNIEnv *env, jobject obj, jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, NULL);
     Q_UNUSED(obj)
@@ -724,9 +696,7 @@ JNIEXPORT void JNICALL
 }
 
 JNIEXPORT void JNICALL
-  Java_com_minivideo_infos_QShareActivity_setFileReceivedAndSaved(JNIEnv *env,
-                                                                  jobject obj,
-                                                                  jstring url)
+  Java_com_minivideo_infos_QShareActivity_setFileReceivedAndSaved(JNIEnv *env, jobject obj, jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, NULL);
     Q_UNUSED(obj)
@@ -736,9 +706,7 @@ JNIEXPORT void JNICALL
 }
 
 JNIEXPORT bool JNICALL
-  Java_com_minivideo_infos_QShareActivity_checkFileExits(JNIEnv *env,
-                                                         jobject obj,
-                                                         jstring url)
+  Java_com_minivideo_infos_QShareActivity_checkFileExits(JNIEnv *env, jobject obj, jstring url)
 {
     const char *urlStr = env->GetStringUTFChars(url, NULL);
     Q_UNUSED(obj)
@@ -748,10 +716,7 @@ JNIEXPORT bool JNICALL
 }
 
 JNIEXPORT void JNICALL
-  Java_com_minivideo_infos_QShareActivity_fireActivityResult(JNIEnv *env,
-                                                             jobject obj,
-                                                             jint requestCode,
-                                                             jint resultCode)
+  Java_com_minivideo_infos_QShareActivity_fireActivityResult(JNIEnv *env, jobject obj, jint requestCode, jint resultCode)
 {
     Q_UNUSED(obj)
     Q_UNUSED(env)

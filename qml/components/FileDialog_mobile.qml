@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-import Qt.labs.folderlistmodel 2.15
+import Qt.labs.folderlistmodel 2.3
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsPath.js" as UtilsPath

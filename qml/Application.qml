@@ -11,7 +11,7 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 800
 
-    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
+    flags: (Qt.platform.os === "ios") ? Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
     color: Theme.colorBackground
     visible: true
 
@@ -262,11 +262,11 @@ ApplicationWindow {
     }
 
     Shortcut {
-        sequence: StandardKey.Back
+        sequences: [StandardKey.Back]
         onActivated: backAction()
     }
     Shortcut {
-        sequence: StandardKey.Forward
+        sequences: [StandardKey.Forward]
         onActivated: forwardAction()
     }
 

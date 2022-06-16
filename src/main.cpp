@@ -20,17 +20,18 @@
  * \date      2019
  */
 
-#include "utils/utils_app.h"
-#include "utils/utils_screen.h"
-#include "utils/utils_language.h"
-#include "minivideo_qml.h"
-
 #include "SettingsManager.h"
 #include "MediaManager.h"
 #include "MediaUtils.h"
 
-#include <MobileUI.h>
-#include <SharingApplication.h>
+#include "minivideo_qml.h"
+
+#include "utils_app.h"
+#include "utils_screen.h"
+#include "utils_language.h"
+
+#include <MobileUI>
+#include <MobileSharing>
 
 #include <QtGlobal>
 #include <QTranslator>
@@ -39,17 +40,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
-#if defined (Q_OS_ANDROID)
-#include <QtAndroid>
-#endif
 
 /* ************************************************************************** */
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-
     SharingApplication app(argc, argv);
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
@@ -63,19 +58,6 @@ int main(int argc, char *argv[])
     app.setOrganizationName("MiniVideo");
     app.setOrganizationDomain("MiniVideo");
 
-    // Keep the StatusBar the same color as the splashscreen until UI starts
-    MobileUI ui;
-    qmlRegisterType<MobileUI>("MobileUI", 1, 0, "MobileUI");
-/*
-    // i18n
-    QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    app.installTranslator(&qtTranslator);
-
-    QTranslator appTranslator;
-    appTranslator.load(":/i18n/mvi.qm");
-    app.installTranslator(&appTranslator);
-*/
     // Init MiniVideoInfos components
     SettingsManager *sm = SettingsManager::getInstance();
     if (!sm) return EXIT_FAILURE;
@@ -89,14 +71,16 @@ int main(int argc, char *argv[])
     UtilsApp *utilsApp = UtilsApp::getInstance();
     if (!utilsApp) return EXIT_FAILURE;
 
-    UtilsScreen *utilsScreen = UtilsScreen::getInstance();
+    UtilsScreen *utilsScreen = UtilsScreen::getInstance(&app);
     if (!utilsScreen) return EXIT_FAILURE;
 
-    //UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
-    //if (!utilsLanguage) return EXIT_FAILURE;
+    UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
+    if (!utilsLanguage) return EXIT_FAILURE;
 
     // ThemeEngine
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
+
+    MobileUI::registerQML();
 
     // Then we start the UI
     QQmlApplicationEngine engine;
@@ -106,7 +90,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("mediaUtils", mediaUtils);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
-    //engine_context->setContextProperty("utilsLanguage", utilsLanguage);
+    engine_context->setContextProperty("utilsLanguage", utilsLanguage);
 
     MiniVideoQML::registerQML();
     app.registerQML(engine_context);
@@ -115,14 +99,14 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty()) return EXIT_FAILURE;
 
     // For i18n retranslate
-    //utilsLanguage->setQmlEngine(&engine);
+    utilsLanguage->setQmlEngine(&engine);
 
     // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 
 #if defined (Q_OS_ANDROID)
-    QtAndroid::hideSplashScreen(333);
+    QNativeInterface::QAndroidApplication::hideSplashScreen(333);
 #endif
 
     return app.exec();

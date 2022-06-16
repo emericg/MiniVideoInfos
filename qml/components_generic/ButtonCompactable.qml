@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
-import QtGraphicalEffects 1.15 // Qt5
-//import Qt5Compat.GraphicalEffects // Qt6
+//import QtGraphicalEffects 1.15 // Qt5
+import Qt5Compat.GraphicalEffects // Qt6
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -34,7 +34,7 @@ Item {
     property string backgroundColor: Theme.colorComponent
 
     // animation
-    property string animation // available: rotate, fade
+    property string animation // available: rotate, fade, both
     property bool animationRunning: false
     property bool hoverAnimation: (isDesktop && !compact)
 
@@ -138,7 +138,8 @@ Item {
             color: control.iconColor
 
             SequentialAnimation on opacity {
-                running: (control.animation === "fade" && control.animationRunning)
+                running: (control.animationRunning &&
+                          (control.animation === "fade" || control.animation === "both"))
                 alwaysRunToEnd: true
                 loops: Animation.Infinite
 
@@ -146,7 +147,8 @@ Item {
                 PropertyAnimation { to: 1; duration: 666; }
             }
             NumberAnimation on rotation {
-                running: (control.animation === "rotate" && control.animationRunning)
+                running: (control.animationRunning &&
+                          (control.animation === "rotate" || control.animation === "both"))
                 alwaysRunToEnd: true
                 loops: Animation.Infinite
 

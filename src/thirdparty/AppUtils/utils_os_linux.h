@@ -1,5 +1,5 @@
 /*!
- * COPYRIGHT (C) 2020 Emeric Grange - All Rights Reserved
+ * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,24 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \author    Emeric Grange <emeric.grange@gmail.com>
- * \date      2020
+ * \date      2021
  */
 
-#ifndef UTILS_IOS_H
-#define UTILS_IOS_H
-/* ************************************************************************** */
+#ifndef UTILS_OS_LINUX_H
+#define UTILS_OS_LINUX_H
 
 #include <QtGlobal>
 
-#ifdef Q_OS_IOS
+#if defined(Q_OS_LINUX)
 /* ************************************************************************** */
 
-class UtilsIos
+#include <QString>
+
+/*!
+ * \brief Linux utils
+ *
+ * Use with "QT += dbus"
+ */
+class UtilsLinux
 {
 public:
-   void keepScreenOn(bool on);
+   static uint32_t screenKeepOn(const QString &application, const QString &reason);
+   static void screenKeepAuto(uint32_t screensaverId);
 };
 
-#endif // Q_OS_IOS
 /* ************************************************************************** */
-#endif // UTILS_IOS_H
+#endif // Q_OS_LINUX
+#endif // UTILS_OS_LINUX_H

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import re
 import os
 import sys
 import platform
@@ -39,16 +40,17 @@ if sys.version_info < (3, 0):
 ## HOST ########################################################################
 
 # Supported platforms / architectures:
+
 # Natives:
 # - Linux
 # - Darwin (macOS)
 # - Windows
 # Cross compilation (from Linux):
 # - Windows (mingw32-w64)
+# Cross compilation (from Linux or macOS):
+# - Android (armv7, armv8, x86, x86_64)
 # Cross compilation (from macOS):
 # - iOS (simulator, armv7, armv8)
-# Cross compilation (from Linux or macOS):
-# - Android (armv7, armv8)
 
 OS_HOST = platform.system()
 ARCH_HOST = platform.machine()
@@ -81,6 +83,9 @@ deploy_dir = contribs_dir + "/deploy/"
 
 clean = False
 rebuild = False
+targetlist = []
+QT_VERSION = "6.3.1"
+QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
 ANDROID_NDK_HOME = os.getenv('ANDROID_NDK_HOME', '')
 
 # MSVC_GEN_VER
@@ -103,8 +108,10 @@ parser = argparse.ArgumentParser(prog='contribs.py',
 
 parser.add_argument('-c', '--clean', help="clean everything and exit (downloaded files and all temporary directories)", action='store_true')
 parser.add_argument('-r', '--rebuild', help="rebuild the contribs even if already built", action='store_true')
-parser.add_argument('--android-ndk', dest='androidndk', help="specify a custom path to the android-ndk (if ANDROID_NDK_HOME environment variable doesn't exists)")
-parser.add_argument('--msvc', dest='msvcversion', help="specify a version for Visual Studio (2015/2017/2019)")
+parser.add_argument('--targets', dest='targets', help="specify build target(s)")
+parser.add_argument('--qt-version', dest='qtversion', help="specify a Qt version to use")
+parser.add_argument('--qt-directory', dest='qtdirectory', help="specify a custom path to the Qt install root dir (if QT_DIRECTORY environment variable isn't set)")
+parser.add_argument('--android-ndk', dest='androidndk', help="specify a custom path to the android-ndk (if ANDROID_NDK_HOME environment variable isn't set)")
 
 if len(sys.argv) > 1:
     result = parser.parse_args()
@@ -112,17 +119,14 @@ if len(sys.argv) > 1:
         clean = result.clean
     if result.rebuild:
         rebuild = result.rebuild
+    if result.targets:
+        targetlist = result.targets.split(',')
+    if result.qtversion:
+        QT_VERSION = result.qtversion
+    if result.qtdirectory:
+        QT_DIRECTORY = result.qtdirectory
     if result.androidndk:
         ANDROID_NDK_HOME = result.androidndk
-    if result.msvcversion:
-        if result.msvcversion == 2015:
-            MSVC_GEN_VER = "Visual Studio 14 2015"
-        elif result.msvcversion == 2017:
-            MSVC_GEN_VER = "Visual Studio 15 2017"
-        elif result.msvcversion == 2019:
-            MSVC_GEN_VER = "Visual Studio 16 2019"
-        elif result.msvcversion == 2022:
-            MSVC_GEN_VER = "Visual Studio 17 2022"
 
 ## CLEAN #######################################################################
 
@@ -167,34 +171,57 @@ def copytree_wildcard(src, dst, symlinks=False, ignore=None):
 
 ## TARGETS #####################################################################
 
-TARGETS = []
+TARGETS = [] # 1: OS_TARGET # 2: ARCH_TARGET # 3: QT_TARGET
 
-if OS_HOST == "Linux":
-    TARGETS.append(["linux", "x86_64"])
+# script arguments
+if len(targetlist):
+    print("TARGETS from script arguments")
+
+    if "linux" in targetlist : TARGETS.append(["linux", "x86_64", "gcc_64"])
+    if "macos" in targetlist : TARGETS.append(["macOS", "x86_64", "macOS"])
+    if "android_armv8" in targetlist : TARGETS.append(["android", "armv8", "android_arm64_v8a"])
+    if "android_armv7" in targetlist : TARGETS.append(["android", "armv7", "android_armv7"])
+    if "android_x86_64" in targetlist : TARGETS.append(["android", "x86_64", "android_x86_64"])
+    if "android_x86" in targetlist : TARGETS.append(["android", "x86", "android_x86"])
+    if "ios_simulator" in targetlist : TARGETS.append(["iOS", "simulator", "iOS"])
+    if "ios_armv7" in targetlist : TARGETS.append(["iOS", "armv7", "iOS"])
+    if "ios_armv8" in targetlist : TARGETS.append(["iOS", "armv77", "iOS"])
+    if "msvc2017" in targetlist : TARGETS.append(["windows", "x86_64", "msvc2017_64"])
+    if "msvc2019" in targetlist : TARGETS.append(["windows", "x86_64", "msvc2019_64"])
+    if "msvc2022" in targetlist : TARGETS.append(["windows", "x86_64", "msvc2022_64"])
+
+# auto-selection
+if len(TARGETS) == 0:
+    print("TARGETS auto-selection")
+
+    if OS_HOST == "Linux":
+        TARGETS.append(["linux", "x86_64", "gcc_64"])
+        #TARGETS.append(["windows", "x86_64", ""]) # Windows cross compilation
+
+    if OS_HOST == "Darwin":
+        TARGETS.append(["macOS", "x86_64", "macOS"])
+        #TARGETS.append(["macOS", "arm64", "macOS"])
+        TARGETS.append(["iOS", "simulator", "iOS"]) # iOS cross compilation
+        TARGETS.append(["iOS", "armv7", "iOS"])
+        TARGETS.append(["iOS", "armv8", "iOS"])
+
+    if OS_HOST == "Windows":
+        if "15.0" in os.getenv('VisualStudioVersion', ''):
+            TARGETS.append(["windows", "x86_64", "msvc2017_64"])
+        elif "16.0" in os.getenv('VisualStudioVersion', ''):
+            TARGETS.append(["windows", "x86_64", "msvc2019_64"])
+        elif "17.0" in os.getenv('VisualStudioVersion', ''):
+            TARGETS.append(["windows", "x86_64", "msvc2022_64"])
+        else:
+            TARGETS.append(["windows", "x86_64", "msvc2019_64"]) # default?
+
     if ANDROID_NDK_HOME: # Android cross compilation
-        TARGETS.append(["android", "armv8"])
-        TARGETS.append(["android", "armv7"])
-        TARGETS.append(["android", "x86_64"])
-        TARGETS.append(["android", "x86"])
-    #TARGETS.append(["windows", "x86_64"]) # Windows cross compilation
+        TARGETS.append(["android", "armv8", "android_arm64_v8a"])
+        TARGETS.append(["android", "armv7", "android_armv7"])
+        TARGETS.append(["android", "x86_64", "android_x86_64"])
+        TARGETS.append(["android", "x86", "android_x86"])
 
-if OS_HOST == "Darwin":
-    TARGETS.append(["macOS", "x86_64"])
-    #TARGETS.append(["macOS", "arm64"])
-    TARGETS.append(["iOS", "simulator"]) # iOS cross compilation
-    TARGETS.append(["iOS", "armv8"])
-    #TARGETS.append(["iOS", "armv7"])
-    if ANDROID_NDK_HOME: # Android cross compilation
-        TARGETS.append(["android", "armv8"])
-        TARGETS.append(["android", "armv7"])
-        TARGETS.append(["android", "x86_64"])
-        TARGETS.append(["android", "x86"])
-
-if OS_HOST == "Windows":
-    TARGETS.append(["windows", "x86_64"])
-    #TARGETS.append(["windows", "x86"])
-
-## SOFTWARES ###################################################################
+## DOWNLOAD SOFTWARES ##########################################################
 
 ## libexif (version: git) (0.6.22+)
 FILE_libexif = "libexif-master.zip"
@@ -220,6 +247,14 @@ if not os.path.exists(src_dir + FILE_minivideo):
     print("> Downloading " + FILE_minivideo + "...")
     urllib.request.urlretrieve("https://github.com/emericg/MiniVideo/archive/master.zip", src_dir + FILE_minivideo)
 
+## QtLocation (version: patched)
+FILE_qtlocation = "qtlocation-dev_" + QT_VERSION.replace('.','') + ".zip"
+DIR_qtlocation = "qtlocation-dev_" + QT_VERSION.replace('.','')
+
+if not os.path.exists(src_dir + FILE_qtlocation):
+    print("> Downloading " + FILE_qtlocation + "...")
+    urllib.request.urlretrieve("https://github.com/emericg/qtlocation/archive/refs/heads/dev_" + QT_VERSION.replace('.','') + ".zip", src_dir + FILE_qtlocation)
+
 ## Android OpenSSL (version: git)
 for TARGET in TARGETS:
     if TARGET[0] == "android":
@@ -232,28 +267,30 @@ for TARGET in TARGETS:
         if not os.path.isdir("env/" + DIR_androidopenssl):
             zipSSL = zipfile.ZipFile(src_dir + FILE_androidopenssl)
             zipSSL.extractall("env/")
-        break
 
 ## linuxdeploy (version: git)
-if OS_HOST == "Linux":
-    FILE_linuxdeploy = "linuxdeploy-x86_64.AppImage"
-    if not os.path.exists(deploy_dir + FILE_linuxdeploy):
-        print("> Downloading " + FILE_linuxdeploy + "...")
-        urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/" + FILE_linuxdeploy, deploy_dir + FILE_linuxdeploy)
-        urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-appimage-x86_64.AppImage")
-        urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-qt-x86_64.AppImage")
-        urllib.request.urlretrieve("https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gstreamer/master/linuxdeploy-plugin-gstreamer.sh", deploy_dir + "linuxdeploy-plugin-gstreamer.sh")
+for TARGET in TARGETS:
+    if TARGET[0] == "linux":
+        FILE_linuxdeploy = "linuxdeploy-x86_64.AppImage"
+        if not os.path.exists(deploy_dir + FILE_linuxdeploy):
+            print("> Downloading " + FILE_linuxdeploy + "...")
+            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/" + FILE_linuxdeploy, deploy_dir + FILE_linuxdeploy)
+            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-appimage-x86_64.AppImage")
+            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-qt-x86_64.AppImage")
+            urllib.request.urlretrieve("https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gstreamer/master/linuxdeploy-plugin-gstreamer.sh", deploy_dir + "linuxdeploy-plugin-gstreamer.sh")
 
-## EXECUTE #####################################################################
+## BUILD SOFTWARES #############################################################
 
 for TARGET in TARGETS:
 
     ## PREPARE environment
     OS_TARGET = TARGET[0]
     ARCH_TARGET = TARGET[1]
+    QT_TARGET = TARGET[2]
 
     build_dir = contribs_dir + "/build/" + OS_TARGET + "_" + ARCH_TARGET + "/"
     env_dir = contribs_dir + "/env/" + OS_TARGET + "_" + ARCH_TARGET + "/"
+    qt6_dir = QT_DIRECTORY + "/" + QT_VERSION + "/" + QT_TARGET + "/bin/"
 
     try:
         os.makedirs(build_dir)
@@ -264,6 +301,7 @@ for TARGET in TARGETS:
     print("> TARGET : " + str(TARGET))
     print("- build_dir : " + build_dir)
     print("- env_dir : " + env_dir)
+    print("- qt6_dir : " + qt6_dir)
 
     ## CMAKE command selection
     CMAKE_cmd = ["cmake"]
@@ -314,9 +352,8 @@ for TARGET in TARGETS:
             else:
                 CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-21"]
 
-    ############################################################################
+    ## EXTRACT #################################################################
 
-    ## EXTRACT
     if not os.path.isdir(build_dir + DIR_libexif):
         zipEX = zipfile.ZipFile(src_dir + FILE_libexif)
         zipEX.extractall(build_dir)
@@ -330,20 +367,44 @@ for TARGET in TARGETS:
         zipMV = zipfile.ZipFile(src_dir + FILE_minivideo)
         zipMV.extractall(build_dir)
 
-    # taglib
+    if not os.path.isdir(build_dir + DIR_qtlocation):
+        zipQtM = zipfile.ZipFile(src_dir + FILE_qtlocation)
+        zipQtM.extractall(build_dir)
+
+    ## BUILD & INSTALL #########################################################
+
     print("> Building taglib")
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
 
-    # libexif
     print("> Building libexif")
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_libexif + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_libexif + "/build")
     subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_libexif + "/build")
 
-    # minivideo
     print("> Building minivideo")
     subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_minivideo + "/minivideo/build")
     subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
     subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
+
+    ## Qt prep work
+    if OS_HOST == "Windows":
+        QT_CONF_MODULE_cmd = qt6_dir + "qt-configure-module.bat"
+        #VCVARS_cmd = "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/" + "vcvarsall.bat"
+        #subprocess.check_call([VCVARS_cmd, "x86_amd64"], cwd="C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/")
+    else:
+        QT_CONF_MODULE_cmd = qt6_dir + "qt-configure-module"
+        if OS_TARGET == "android" or OS_TARGET == "iOS":
+            # GitHub CI + aqt hack
+            if (OS_HOST == "Linux"): os.environ["QT_HOST_PATH"] = str(QT_DIRECTORY + "/" + QT_VERSION + "/gcc_64/")
+            if (OS_HOST == "Darwin"): os.environ["QT_HOST_PATH"] = str(QT_DIRECTORY + "/" + QT_VERSION + "/macOS/")
+
+    ## QtLocation (patched)
+    try: os.makedirs(build_dir + DIR_qtlocation + "/build")
+    except: print() # who cares
+
+    print("> Building QtLocation")
+    subprocess.check_call([QT_CONF_MODULE_cmd, ".."], cwd=build_dir + DIR_qtlocation + "/build")
+    subprocess.check_call(["cmake", "--build", ".", "--target", "all"], cwd=build_dir + DIR_qtlocation + "/build")
+    subprocess.check_call(["cmake", "--install", "."], cwd=build_dir + DIR_qtlocation + "/build")
