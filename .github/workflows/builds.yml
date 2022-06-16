@@ -38,7 +38,7 @@ jobs:
         with:
           aqtversion: '==2.1.0'
           version: '6.3.1'
-          modules: qt5compat qtimageformats qtpositioning qtcharts
+          modules: qt5compat qtimageformats qtpositioning qtcharts qtshadertools
           cached: 'false'
 
       # Install dependencies (from package manager)
