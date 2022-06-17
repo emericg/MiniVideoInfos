@@ -298,18 +298,16 @@ Item {
                 height: parent.height
 
                 Item {
-                    id: item_video
                     width: row.colsize
                     height: parent.height
 
-                    Rectangle {
+                    Rectangle { // background
                         anchors.fill: parent
                         opacity: 0.4
                         color: Theme.colorForeground
                         visible: (mediaItem && index % 2 === 0)
                     }
-                    InfosAV {
-                        id: content_video
+                    InfosAV { // content_video
                         anchors.fill: parent
                         Component.onCompleted: loadTrack(mediaItem.getVideoTrack(index))
                     }
@@ -323,18 +321,16 @@ Item {
                 height: parent.height
 
                 Item {
-                    id: item_audio
                     width: row.colsize
                     height: parent.height
 
-                    Rectangle {
+                    Rectangle { // background
                         anchors.fill: parent
                         opacity: 0.4
                         color: Theme.colorForeground
                         visible: (mediaItem && (mediaItem.videoTracksCount + index) % 2 === 0)
                     }
-                    InfosAV {
-                        id: content_audio
+                    InfosAV { // content_audio
                         anchors.fill: parent
                         Component.onCompleted: loadTrack(mediaItem.getAudioTrack(index))
                     }
@@ -348,7 +344,7 @@ Item {
                 width: row.colsize
                 height: parent.height
 
-                Rectangle {
+                Rectangle { // background
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
@@ -375,8 +371,7 @@ Item {
                 width: row.colsize
                 height: parent.height
 
-                Rectangle {
-                    id: content_audio_tags_bg
+                Rectangle {  // background
                     anchors.fill: parent
                     opacity: 0.4
                     color: Theme.colorForeground
@@ -425,7 +420,6 @@ Item {
                     anchors.fill: parent
                 }
             }
-
 
             ////////
 /*
@@ -508,5 +502,7 @@ Item {
         id: rectangleMenus
         height: 0
         visible: false
+
+        property int hhh: 0
     }
 }

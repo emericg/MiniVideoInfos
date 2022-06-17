@@ -36,7 +36,7 @@
 
 /* ************************************************************************** */
 
-SharingApplication::SharingApplication(int &argc, char **argv) : QGuiApplication(argc, argv)
+SharingApplication::SharingApplication(int &argc, char **argv) : QApplication(argc, argv)
 {
     mShareUtils = new ShareUtils(this);
 

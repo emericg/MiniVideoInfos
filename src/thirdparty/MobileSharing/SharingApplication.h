@@ -25,14 +25,14 @@
 #define SHARINGAPPLICATION_H
 /* ************************************************************************** */
 
-#include <QGuiApplication>
+#include <QApplication>
 
 class QQmlContext;
 class ShareUtils;
 
 /* ************************************************************************** */
 
-class SharingApplication : public QGuiApplication
+class SharingApplication : public QApplication
 {
     Q_OBJECT
 

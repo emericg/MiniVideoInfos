@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
     if (!mm) return EXIT_FAILURE;
 
     MediaUtils *mediaUtils = new MediaUtils();
+    if (!mediaUtils) return EXIT_FAILURE;
 
     // Init MiniVideoInfos utils
     UtilsApp *utilsApp = UtilsApp::getInstance();

@@ -174,10 +174,11 @@ Item {
 
             TextArea {
                 id: textArea
-                readOnly: true
-                text: ""
+
                 textFormat: Text.PlainText
                 color: Theme.colorText
+                readOnly: true
+
                 font.pixelSize: Theme.fontSizeComponent
                 font.family: {
                     if (Qt.platform.os === "android")

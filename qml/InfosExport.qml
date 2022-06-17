@@ -107,7 +107,6 @@ Item {
     ////////////////
 
     Rectangle {
-        id: scrollArea
         anchors.top: titleExport.bottom
         anchors.topMargin: 12
         anchors.left: parent.left
@@ -128,12 +127,13 @@ Item {
 
             TextArea {
                 id: textArea
-                readOnly: true
-                text: ""
+
                 textFormat: Text.PlainText
                 color: Theme.colorText
-                wrapMode: "WordWrap"
+                readOnly: true
+                wrapMode: Text.WordWrap
 
+                font.pixelSize: Theme.fontSizeComponent
                 font.family: {
                     if (Qt.platform.os === "android")
                         return "Droid Sans Mono"

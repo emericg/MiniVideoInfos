@@ -415,8 +415,8 @@ bool Media::getMetadataFromPicture()
                 // ex: "45, 41, 24,5662800"
                 exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
                 QString str = entry_buf;
-                double deg = str.mid(0, 2).toDouble();
-                double min = str.mid(4, 2).toDouble();
+                double deg = QStringView{str}.mid(0, 2).toDouble();
+                double min = QStringView{str}.mid(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
                 gps_lat = deg + min/60.0 + sec/3600.0;
 
@@ -440,8 +440,8 @@ bool Media::getMetadataFromPicture()
             {
                 exif_entry_get_value(entry, entry_buf, sizeof(entry_buf));
                 QString str = entry_buf;
-                double deg = str.mid(0, 2).toDouble();
-                double min = str.mid(4, 2).toDouble();
+                double deg = QStringView{str}.mid(0, 2).toDouble();
+                double min = QStringView{str}.mid(4, 2).toDouble();
                 double sec = str.mid(8, 10).replace(',', '.').toDouble();
                 gps_long = deg + min/60.0 + sec/3600.0;
 

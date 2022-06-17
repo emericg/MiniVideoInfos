@@ -214,28 +214,6 @@ Flickable {
             }
         }
 
-        // Graph (if VBR stream)
-        bitrateGraphItem.visible = (trackItem.bitrateMode > 1)
-        if (trackItem.bitrateMode > 1) {
-            bitrateData.clear()
-            trackItem.getBitrateDataFps(bitrateData, 96);
-
-            // Axis
-            axisX0.min = 0;
-            axisX0.max = bitrateData.count
-            var minmax_of_array = 0
-            for (var i = 0; i < bitrateData.count; i++)
-                if (bitrateData.at(i).y > minmax_of_array)
-                    minmax_of_array = bitrateData.at(i).y
-            if (trackItem.type === 1) { // audio
-                axisBitrate.min = 0;
-                axisBitrate.max = minmax_of_array * 1.0;
-            } else {
-                axisBitrate.min = 0;
-                axisBitrate.max = minmax_of_array * 1.0;
-            }
-        }
-
         // data
         item_bitrate_minmax.visible = (trackItem.bitrateMode > 1)
         info_bitrate.text = UtilsMedia.bitrateToString(trackItem.bitrate_avg)
@@ -258,6 +236,28 @@ Flickable {
             info_idr.text += "  (" + idr_ratio.toFixed(1) + "% of the frames)"
         } else {
             item_idr.visible = false
+        }
+
+        // graph (if VBR stream)
+        bitrateGraphItem.visible = (trackItem.bitrateMode > 1)
+        if (trackItem.bitrateMode > 1) {
+            bitrateData.clear()
+            trackItem.getBitrateDataFps(bitrateData, 96);
+
+            // Axis
+            axisX0.min = 0;
+            axisX0.max = bitrateData.count
+            var minmax_of_array = 0
+            for (var i = 0; i < bitrateData.count; i++)
+                if (bitrateData.at(i).y > minmax_of_array)
+                    minmax_of_array = bitrateData.at(i).y
+            if (trackItem.type === 1) { // audio
+                axisBitrate.min = 0;
+                axisBitrate.max = minmax_of_array * 1.0;
+            } else {
+                axisBitrate.min = 0;
+                axisBitrate.max = minmax_of_array * 1.0;
+            }
         }
     }
 
@@ -1373,6 +1373,7 @@ Flickable {
                     backgroundRoundness: 0
                     backgroundColor: "transparent" // Theme.colorBackground
                     //animationOptions: ChartView.SeriesAnimations
+
                     ValueAxis { id: axisX0; visible: true; gridVisible: false;
                         labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
                     ValueAxis { id: axisBitrate; visible: true; gridVisible: false;
