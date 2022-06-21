@@ -243,6 +243,32 @@ print("TARGETS selected:\n" + str(TARGETS) + "\n")
 # > softwares recap:
 print("SOFTWARES selected:\n" + str(softwares_selected) + "\n")
 
+## DOWNLOAD TOOLS ##############################################################
+
+## Android OpenSSL (version: git)
+for TARGET in TARGETS:
+    if TARGET[0] == "android":
+        FILE_androidopenssl = "android_openssl-master.zip"
+        DIR_androidopenssl = "android_openssl"
+
+        if not os.path.exists(src_dir + FILE_androidopenssl):
+            print("> Downloading " + FILE_androidopenssl + "...")
+            urllib.request.urlretrieve("https://github.com/KDAB/android_openssl/archive/master.zip", src_dir + FILE_androidopenssl)
+        if not os.path.isdir("env/" + DIR_androidopenssl):
+            zipSSL = zipfile.ZipFile(src_dir + FILE_androidopenssl)
+            zipSSL.extractall("env/")
+
+## linuxdeploy (version: git)
+for TARGET in TARGETS:
+    if TARGET[0] == "linux":
+        FILE_linuxdeploy = "linuxdeploy-x86_64.AppImage"
+        if not os.path.exists(deploy_dir + FILE_linuxdeploy):
+            print("> Downloading " + FILE_linuxdeploy + "...")
+            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/" + FILE_linuxdeploy, deploy_dir + FILE_linuxdeploy)
+            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-appimage-x86_64.AppImage")
+            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-qt-x86_64.AppImage")
+            urllib.request.urlretrieve("https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gstreamer/master/linuxdeploy-plugin-gstreamer.sh", deploy_dir + "linuxdeploy-plugin-gstreamer.sh")
+
 ## DOWNLOAD SOFTWARES ##########################################################
 
 ## libexif (version: git) (0.6.22+)
@@ -280,30 +306,6 @@ if "qtlocation" in softwares_selected:
     if not os.path.exists(src_dir + FILE_qtlocation):
         print("> Downloading " + FILE_qtlocation + "...")
         urllib.request.urlretrieve("https://github.com/emericg/qtlocation/archive/refs/heads/dev_" + QT_VERSION.replace('.', '') + ".zip", src_dir + FILE_qtlocation)
-
-## Android OpenSSL (version: git)
-for TARGET in TARGETS:
-    if TARGET[0] == "android":
-        FILE_androidopenssl = "android_openssl-master.zip"
-        DIR_androidopenssl = "android_openssl"
-
-        if not os.path.exists(src_dir + FILE_androidopenssl):
-            print("> Downloading " + FILE_androidopenssl + "...")
-            urllib.request.urlretrieve("https://github.com/KDAB/android_openssl/archive/master.zip", src_dir + FILE_androidopenssl)
-        if not os.path.isdir("env/" + DIR_androidopenssl):
-            zipSSL = zipfile.ZipFile(src_dir + FILE_androidopenssl)
-            zipSSL.extractall("env/")
-
-## linuxdeploy (version: git)
-for TARGET in TARGETS:
-    if TARGET[0] == "linux":
-        FILE_linuxdeploy = "linuxdeploy-x86_64.AppImage"
-        if not os.path.exists(deploy_dir + FILE_linuxdeploy):
-            print("> Downloading " + FILE_linuxdeploy + "...")
-            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/" + FILE_linuxdeploy, deploy_dir + FILE_linuxdeploy)
-            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-appimage-x86_64.AppImage")
-            urllib.request.urlretrieve("https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage", deploy_dir + "linuxdeploy-plugin-qt-x86_64.AppImage")
-            urllib.request.urlretrieve("https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gstreamer/master/linuxdeploy-plugin-gstreamer.sh", deploy_dir + "linuxdeploy-plugin-gstreamer.sh")
 
 ## BUILD SOFTWARES #############################################################
 
@@ -400,10 +402,10 @@ for TARGET in TARGETS:
         else: # ARCH_TARGET == "armv8":
             CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
 
-
     #### EXTRACT, BUILD & INSTALL ####
 
-    if "libexif" in softwares_selected: ########
+    ## libexif
+    if "libexif" in softwares_selected:
         if not os.path.isdir(build_dir + DIR_libexif):
             zipEX = zipfile.ZipFile(src_dir + FILE_libexif)
             zipEX.extractall(build_dir)
@@ -413,8 +415,8 @@ for TARGET in TARGETS:
         subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_libexif + "/build")
         subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_libexif + "/build")
 
-
-    if "taglib" in softwares_selected: ########
+    ## taglib
+    if "taglib" in softwares_selected:
         if not os.path.isdir(build_dir + DIR_taglib):
             zipTL = zipfile.ZipFile(src_dir + FILE_taglib)
             zipTL.extractall(build_dir)
@@ -425,8 +427,8 @@ for TARGET in TARGETS:
         subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
         subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
 
-
-    if "minivideo" in softwares_selected: ########
+    ## minivideo
+    if "minivideo" in softwares_selected:
         if not os.path.isdir(build_dir + DIR_minivideo):
             zipMV = zipfile.ZipFile(src_dir + FILE_minivideo)
             zipMV.extractall(build_dir)
@@ -436,8 +438,8 @@ for TARGET in TARGETS:
         subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
         subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
 
-
-    if "qtlocation" in softwares_selected: ########
+    ## qtlocation
+    if "qtlocation" in softwares_selected:
         if not os.path.isdir(build_dir + DIR_qtlocation):
             zipQtM = zipfile.ZipFile(src_dir + FILE_qtlocation)
             zipQtM.extractall(build_dir)
