@@ -5,7 +5,7 @@ DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
-QT     += core qml quickcontrols2 svg widgets charts location
+QT     += core qml quickcontrols2 svg widgets charts
 
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 6.3) : error("You need at least Qt version 6.3 for $${TARGET}")
@@ -24,6 +24,9 @@ DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
+
+#DEFINES += ENABLE_QT_LOCATION
+contains(DEFINES, ENABLE_QT_LOCATION) { QT += location }
 
 # AppUtils
 include(src/thirdparty/AppUtils/AppUtils.pri)
@@ -72,11 +75,18 @@ contains(DEFINES, USE_CONTRIBS) {
 
     ARCH = "x86_64"
     linux { PLATFORM = "linux" }
-    macx { PLATFORM = "macOS" }
     win32 { PLATFORM = "windows" }
 
+    macx {
+        PLATFORM = "macOS"
+
+        exists($${PWD}/contribs/env/macOS_unified/usr) {
+            ARCH = "unified"
+        }
+    }
     android { # ANDROID_TARGET_ARCH available: x86 x86_64 armeabi-v7a arm64-v8a
         PLATFORM = "android"
+
         equals(ANDROID_TARGET_ARCH, "x86") { ARCH = "x86" }
         equals(ANDROID_TARGET_ARCH, "x86_64") { ARCH = "x86_64" }
         equals(ANDROID_TARGET_ARCH, "armeabi-v7a") { ARCH = "armv7" }
@@ -84,8 +94,12 @@ contains(DEFINES, USE_CONTRIBS) {
     }
     ios { # QMAKE_APPLE_DEVICE_ARCHS available: armv7 arm64
         PLATFORM = "iOS"
-        ARCH = "armv8" # can be simulator, armv7 and armv8
+        ARCH = "armv8" # can be unified, simulator, armv7 and armv8
         QMAKE_APPLE_DEVICE_ARCHS = "arm64" # force 'arm64'
+
+        exists($${PWD}/contribs/env/iOS_unified/usr) {
+            ARCH = "unified"
+        }
     }
 
     CONTRIBS_DIR = $${PWD}/contribs/env/$${PLATFORM}_$${ARCH}/usr
@@ -102,7 +116,7 @@ contains(DEFINES, USE_CONTRIBS) {
 
 } else {
 
-    !unix { warning("Building $${TARGET} without contribs on windows is untested...") }
+    !unix { warning("Building $${TARGET} without contribs on Windows is untested...") }
 
     CONFIG += link_pkgconfig
     macx { PKG_CONFIG = /usr/local/bin/pkg-config } # use pkg-config from brew
@@ -197,9 +211,6 @@ android {
 }
 
 macx {
-    #QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
-    #message("QMAKE_MACOSX_DEPLOYMENT_TARGET: $$QMAKE_MACOSX_DEPLOYMENT_TARGET")
-
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
     QMAKE_BUNDLE = infos
@@ -217,6 +228,12 @@ macx {
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
     ENTITLEMENTS.value = $${PWD}/assets/macos/$$lower($${TARGET}).entitlements
     QMAKE_MAC_XCODE_SETTINGS += ENTITLEMENTS
+
+    # Target architecture(s)
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+
+    # Target OS
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
 
     #======== Automatic bundle packaging
 
@@ -249,12 +266,6 @@ macx {
     QT_BIN_PATH = $$dirname(QMAKE_QMAKE)
     QT_PLUGINS_FOLDER = $$dirname(QT_BIN_PATH)/plugins
     QT_PATH = $$dirname(QT_BIN_PATH)
-
-    # 'xcodeproj' rule / Generate xcode project file
-    # todo
-
-    # 'xcodedeploy' rule / Bundle packaging from XCode archive
-    # todo
 }
 
 ios {

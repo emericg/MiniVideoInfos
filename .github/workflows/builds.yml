@@ -44,15 +44,13 @@ jobs:
       # Install dependencies (from package manager)
       - name: Install dependencies (from package manager)
         run: |
-             sudo apt-get install libgl1-mesa-dev -y;
-             sudo apt-get install cmake ninja-build libtool automake m4 -y;
-             sudo apt-get install appstream -y;
+             sudo apt-get install cmake ninja-build libtool -y;
 
       # Build dependencies (from contribs script)
       - name: Build dependencies (from contribs script)
         run: |
              cd contribs/
-             python3 contribs.py --qt-directory ${{env.Qt6_DIR}}/../.. --targets=linux
+             python3 contribs_builder.py --qt-directory ${{env.Qt6_DIR}}/../.. --targets=linux --softwares taglib,libexif,minivideo
              cd ..
 
       # Build application
