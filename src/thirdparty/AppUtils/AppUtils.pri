@@ -1,3 +1,4 @@
+QT += core
 
 # Generic utils
 SOURCES += $${PWD}/utils_app.cpp \

@@ -5,7 +5,7 @@ DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
-QT     += core qml quickcontrols2 svg widgets charts
+QT     += core qml quickcontrols2 svg widgets charts location
 
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 6.3) : error("You need at least Qt version 6.3 for $${TARGET}")
@@ -24,9 +24,6 @@ DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
-
-#DEFINES += ENABLE_QT_LOCATION
-contains(DEFINES, ENABLE_QT_LOCATION) { QT += location }
 
 # AppUtils
 include(src/thirdparty/AppUtils/AppUtils.pri)

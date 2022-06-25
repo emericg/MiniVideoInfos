@@ -5,12 +5,11 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: miniListItem
-    implicitWidth: 640
-    height: 48
     anchors.left: parent.left
     anchors.right: parent.right
+    height: 48
 
-    color: (appContent.state === "MediaInfos" && modelData === screenMediaInfos.mediaItem) ? Theme.colorForeground : Theme.colorComponentBackground
+    color: (appContent.state === "MediaInfos" && modelData === screenMediaInfos.mediaItem) ? Theme.colorForeground : Theme.colorBackground
 
     ////////////////////////////////////////////////////////////////////////////
 
