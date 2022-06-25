@@ -58,10 +58,6 @@ ApplicationWindow {
             return
         }
 
-        // Statusbar text color hack
-        mobileUI.statusbarTheme = (Theme.themeStatusbar === 0) ? 1 : 0
-        mobileUI.statusbarTheme = Theme.themeStatusbar
-
         // Margins
         var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
         if (safeMargins["total"] === safeMargins["top"]) {
