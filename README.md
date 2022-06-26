@@ -36,39 +36,49 @@ PICTURE file formats:
 
 ### Dependencies
 
-You will need:
-- Any C++17 compiler
-- Android NDK 22+
-- Android SDK
-- MiniVideo (0.14+)
-- TagLib
-- libexif
-- Qt 6.3+ (with 'additional librairies')
-
-Qt6 'Additional Librairies':
+You will need a C++17 compiler and Qt 6.3+ with the following 'additional librairies':  
 - Qt 5 Compatibility Module
 - Qt Positioning
-- Qt Location
+- Qt Location (not yet part of Qt6)
 - Qt Charts
+
+For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (22+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
+For macOS and iOS builds, you'll need Xcode 12+ installed.  
+
+### Building dependencies
+
+You can either use the libraries from your system, or use the `contribs_builder.py` script to build necessary libraries.  
+You will probably need to use this script, because some libraries aren't widely available in package managers. Also, if you wish to cross compile for Android or iOS, the script will make your life so much easier.  
+
+Build dependencies using the `contribs_builder.py` script (optional):
+
+```bash
+$ git clone https://github.com/emericg/MiniVideoInfos.git
+$ cd MiniVideoInfos/contribs/
+$ python3 contribs_builder.py # default invocation
+
+$ python3 contribs_builder.py --softwares taglib,libexif,minivideo # build only selected softwares
+$ python3 contribs_builder.py --qt-directory /home/user/DEV/Qt --android-ndk /home/user/DEV/android-sdk/ndk/22.1.7171670/ --targets=android_armv8,android_armv7,android_x86,android_x86_64 # complex Android cross compilation
+```
 
 ### Building MiniVideo Infos
 
 ```bash
 $ git clone https://github.com/emericg/MiniVideoInfos.git
 $ cd MiniVideoInfos/
-$ cd contribs/ && python3 contribs.py && cd ..
-$ qmake
+$ qmake6 DEFINES+=USE_CONTRIBS # set this flag only if you wish to use the locally built dependencies
 $ make
 ```
 
 ### Third party projects used by MiniVideo Infos
 
-* Qt [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* Qt6 [website](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
 * MiniVideo [website](https://github.com/emericg/MiniVideo) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
 * TagLib [website](https://taglib.org/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
 * libexif [website](https://github.com/libexif/libexif/) ([LGPL 2.1](https://www.gnu.org/licenses/lgpl-2.1.txt))
-* StatusBar [website](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
-* ekkesSHAREexample [website](https://github.com/ekke/ekkesSHAREexample) ([license](https://github.com/ekke/ekkesSHAREexample/blob/master/LICENSE))
+* EGM96 [website](https://github.com/emericg/EGM96) ([zlib](https://github.com/emericg/EGM96/blob/master/LICENSE))
+* MobileUI [README](src/thirdparty/MobileUI/README.md) ([MIT](https://opensource.org/licenses/MIT))
+* MobileSharing [README](src/thirdparty/MobileSharing/README.md) ([MIT](https://opensource.org/licenses/MIT))
 * Graphical resources: [assets/COPYING](assets/COPYING)
 
 
