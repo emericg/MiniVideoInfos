@@ -9,7 +9,7 @@ import "qrc:/js/UtilsPath.js" as UtilsPath
 ApplicationWindow {
     id: appWindow
     minimumWidth: 400
-    minimumHeight: 800
+    minimumHeight: 640
 
     flags: (Qt.platform.os === "ios") ? Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
     color: Theme.colorBackground
