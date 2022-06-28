@@ -16,8 +16,6 @@ HEADERS += $${PWD}/utils_app.h \
            $${PWD}/utils_sysinfo.h \
            $${PWD}/utils_versionchecker.h
 
-INCLUDEPATH += $${PWD}
-
 # Linux OS utils
 linux:!android {
     QT += dbus

@@ -3,14 +3,10 @@ QT += core gui qml
 SOURCES += $${PWD}/SharingUtils.cpp \
            $${PWD}/SharingApplication.cpp
 
-HEADERS += $${PWD}/MobileSharing \
-           $${PWD}/SharingUtils.h \
+HEADERS += $${PWD}/SharingUtils.h \
            $${PWD}/SharingApplication.h
 
-INCLUDEPATH += $${PWD}
-
 android {
-
     versionAtLeast(QT_VERSION, 6.0) {
         QT += core-private
         SOURCES += $${PWD}/SharingUtils_android_qt6.cpp

@@ -26,12 +26,12 @@
 
 #include "minivideo_qml.h"
 
-#include "utils_app.h"
-#include "utils_screen.h"
-#include "utils_language.h"
+#include "AppUtils/utils_app.h"
+#include "AppUtils/utils_screen.h"
+#include "AppUtils/utils_language.h"
 
-#include <MobileUI>
-#include <MobileSharing>
+#include <MobileUI/MobileUI.h>
+#include <MobileSharing/MobileSharing.h>
 
 #include <QtGlobal>
 #include <QTranslator>

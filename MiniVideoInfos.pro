@@ -39,6 +39,8 @@ include(src/thirdparty/EGM96/EGM96.pri)
 include(src/thirdparty/MobileUI/MobileUI.pri)
 include(src/thirdparty/MobileSharing/MobileSharing.pri)
 
+INCLUDEPATH += src/thirdparty/
+
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \

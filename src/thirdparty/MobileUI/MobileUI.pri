@@ -2,11 +2,8 @@ QT += core gui qml
 
 SOURCES += $${PWD}/MobileUI.cpp
 
-HEADERS += $${PWD}/MobileUI \
-           $${PWD}/MobileUI.h \
+HEADERS += $${PWD}/MobileUI.h \
            $${PWD}/MobileUI_private.h
-
-INCLUDEPATH += $${PWD}
 
 android {
     versionAtLeast(QT_VERSION, 6.0) {
