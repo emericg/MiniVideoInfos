@@ -172,16 +172,10 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_path
                     anchors.left: legend_path.right
                     anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
             Item { ////
@@ -202,16 +196,10 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_name
                     anchors.left: legend_name.right
                     anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
             Row { ////
@@ -362,16 +350,10 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_container
                     anchors.left: legend_container.right
                     anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
                 }
             }
             Row { ////
@@ -410,16 +392,10 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_capp
                     anchors.left: legend_capp.right
                     anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
             Item { ////
@@ -440,16 +416,10 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_clib
                     anchors.left: legend_clib.right
                     anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
             ItemTracksGraph {

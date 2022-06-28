@@ -166,7 +166,7 @@ Item {
         anchors.bottomMargin: 12 + rectangleMenus.hhh
 
         clip: true
-        color: "transparent"
+        color: Theme.colorBackground
         border.color: Theme.colorSeparator
 
         ScrollView {
