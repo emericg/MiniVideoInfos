@@ -12,18 +12,22 @@ QT     += core qml quickcontrols2 svg widgets charts location
 
 # Project features #############################################################
 
-# Use Qt Quick compiler
-ios | android { CONFIG += qtquickcompiler }
-
-# Use contribs (otherwise use system libs)
-ios | android { DEFINES += USE_CONTRIBS }
-
-win32 { DEFINES += _USE_MATH_DEFINES }
-
 DEFINES += ENABLE_MINIVIDEO
 DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
+
+DEFINES += USE_CONTRIBS
+
+# Use contribs (otherwise use system libs)
+ios | android { DEFINES += USE_CONTRIBS }
+
+# Use Qt Quick compiler
+ios | android { CONFIG += qtquickcompiler }
+
+win32 { DEFINES += _USE_MATH_DEFINES }
+
+# Project modules ##############################################################
 
 # AppUtils
 include(src/thirdparty/AppUtils/AppUtils.pri)

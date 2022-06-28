@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     UtilsApp *utilsApp = UtilsApp::getInstance();
     if (!utilsApp) return EXIT_FAILURE;
 
-    UtilsScreen *utilsScreen = UtilsScreen::getInstance(&app);
+    UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     if (!utilsScreen) return EXIT_FAILURE;
 
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();

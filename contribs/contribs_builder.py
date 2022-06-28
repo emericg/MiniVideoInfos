@@ -38,7 +38,7 @@ targets = ['linux', 'macos', 'macos_x86_64', 'macos_arm64', 'msvc2019', 'msvc202
            'android_armv8', 'android_armv7', 'android_x86_64', 'android_x86'
            'ios', 'ios_simulator', 'ios_armv7', 'ios_armv8']
 
-softwares = ['taglib', 'libexif', 'minivideo', 'qtlocation']
+softwares = ['libexif', 'taglib', 'minivideo', 'qtlocation']
 
 print("> targets available:")
 print(str(targets))
@@ -47,7 +47,6 @@ print("> softwares available:")
 print(str(softwares))
 
 ## DEPENDENCIES ################################################################
-
 # These software dependencies are needed for this script to run!
 
 ## linux:
