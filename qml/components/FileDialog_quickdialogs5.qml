@@ -1,10 +1,10 @@
 import QtQuick 2.15
-import QtQuick.Dialogs
+import QtQuick.Dialogs 1.3
 
 FileDialog {
     id: fileDialogQuickDialogs
 
-    // 'quick'
+    // 'Quick Dialogs'
     // https://doc.qt.io/qt-5/qml-qtquick-dialogs-filedialog.html
 
     ////////////////////////////////////////////////////////////////////////////

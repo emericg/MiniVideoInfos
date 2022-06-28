@@ -254,7 +254,7 @@ Item {
                 color: Theme.colorForeground
 
                 IconSvg {
-                    id: image_mediasettings
+                    id: image_filechooser
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -262,16 +262,16 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-photo_camera-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-folder_open-24px.svg"
                 }
 
                 Text {
-                    id: text_mediasettings
-                    anchors.left: image_mediasettings.right
+                    id: text_filechooser
+                    anchors.left: image_filechooser.right
                     anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Media")
+                    text: qsTr("File chooser")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     font.bold: false
@@ -314,7 +314,7 @@ Item {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Filter media in file chooser")
+                    text: qsTr("Filter media files")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -334,7 +334,44 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
+
+            Rectangle {
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                color: Theme.colorForeground
+
+                IconSvg {
+                    id: image_mediasettings
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-photo_camera-24px.svg"
+                }
+
+                Text {
+                    id: text_mediasettings
+                    anchors.left: image_mediasettings.right
+                    anchors.leftMargin: 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Media")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            ////////////////
 
             Item {
                 id: element_mediaPreview

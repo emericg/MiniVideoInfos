@@ -6,7 +6,7 @@ Loader {
     anchors.fill: parent
 
     property bool useMediaFilter: false
-    property bool usePlatformDialog: false
+    property bool usePlatformDialog: isDesktop
 
     ////////
 
@@ -37,20 +37,20 @@ Loader {
         } else if (Qt.platform.os === "android") {
             if (usePlatformDialog) {
                 if (selectFolder)
-                    return "FileDialog_platformfolder.qml"
+                    return "FileDialog_quickdialogs6_folder.qml"
                 else
-                    return "FileDialog_platformfile.qml"
+                    return "FileDialog_quickdialogs6_file.qml"
             } else {
                 return "FileDialog_mobile.qml"
             }
         } else {
             if (usePlatformDialog) {
                 if (selectFolder)
-                    return "FileDialog_platformfolder.qml"
+                    return "FileDialog_quickdialogs6_folder.qml"
                 else
-                    return "FileDialog_platformfile.qml"
+                    return "FileDialog_quickdialogs6_file.qml"
              } else {
-                return "FileDialog_quickdialogs.qml"
+                return "FileDialog_quickdialogs5.qml"
             }
         }
     }

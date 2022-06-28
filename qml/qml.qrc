@@ -31,9 +31,9 @@
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
         <file alias="FileDialog.qml">components/FileDialog.qml</file>
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
-        <file alias="FileDialog_platformfile.qml">components/FileDialog_platformfile.qml</file>
-        <file alias="FileDialog_platformfolder.qml">components/FileDialog_platformfolder.qml</file>
-        <file alias="FileDialog_quickdialogs.qml">components/FileDialog_quickdialogs.qml</file>
+        <file alias="FileDialog_quickdialogs6_file.qml">components/FileDialog_quickdialogs6_file.qml</file>
+        <file alias="FileDialog_quickdialogs6_folder.qml">components/FileDialog_quickdialogs6_folder.qml</file>
+        <file alias="FileDialog_quickdialogs5.qml">components/FileDialog_quickdialogs5.qml</file>
 
         <file alias="ButtonWireframe.qml">components_generic/ButtonWireframe.qml</file>
         <file alias="ButtonWireframeIcon.qml">components_generic/ButtonWireframeIcon.qml</file>
