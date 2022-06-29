@@ -102,16 +102,12 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_title
                     anchors.left: legend_title.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
             Row { ////
@@ -129,10 +125,8 @@ Flickable {
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                 }
-                Text {
+                TextEditMVI {
                     id: info_artist
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Item { ////
@@ -156,16 +150,12 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_album
                     anchors.left: legend_album.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
             Row { ////
@@ -182,10 +172,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_year
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -202,10 +190,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_track
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -222,10 +208,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_genre
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Item { ////
@@ -249,16 +233,12 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_comment
                     anchors.left: legend_comment.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
         }
@@ -313,10 +293,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_thumb_size
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
         }

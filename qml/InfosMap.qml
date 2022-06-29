@@ -328,11 +328,8 @@ Item {
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
                         }
-                        Text {
+                        TextEditMVI {
                             id: info_lat
-                            color: Theme.colorText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
                         }
                     }
                 }
@@ -357,11 +354,8 @@ Item {
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
                         }
-                        Text {
+                        TextEditMVI {
                             id: info_long
-                            color: Theme.colorText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
                         }
                     }
                 }
@@ -387,11 +381,8 @@ Item {
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
                         }
-                        Text {
+                        TextEditMVI {
                             id: info_altitude
-                            color: Theme.colorText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
                         }
                     }
 
@@ -407,11 +398,8 @@ Item {
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
                         }
-                        Text {
+                        TextEditMVI {
                             id: info_speed
-                            color: Theme.colorText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
                         }
                     }
                 }
@@ -437,11 +425,8 @@ Item {
                             font.pixelSize: 15
                             wrapMode: Text.WordWrap
                         }
-                        Text {
+                        TextEditMVI {
                             id: info_track
-                            color: Theme.colorText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
                         }
                     }
                 }

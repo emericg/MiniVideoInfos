@@ -176,6 +176,8 @@ Flickable {
                     id: info_path
                     anchors.left: legend_path.right
                     anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
                 }
             }
             Item { ////
@@ -200,6 +202,8 @@ Flickable {
                     id: info_name
                     anchors.left: legend_name.right
                     anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
                 }
             }
             Row { ////
@@ -213,10 +217,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_extension
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -239,7 +241,7 @@ Flickable {
                     source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
                     color: Theme.colorWarning
                 }
-                Text {
+                TextEditMVI {
                     id: info_extension_mismatch
                     color: Theme.colorText
                     font.pixelSize: 15
@@ -258,10 +260,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_date
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -275,10 +275,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_time
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -293,10 +291,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_duration
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -310,10 +306,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_size
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -328,10 +322,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_timecode
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Item { ////
@@ -354,6 +346,8 @@ Flickable {
                     id: info_container
                     anchors.left: legend_container.right
                     anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
                 }
             }
             Row { ////
@@ -368,10 +362,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_containerprofile
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Item { ////
@@ -396,6 +388,8 @@ Flickable {
                     id: info_capp
                     anchors.left: legend_capp.right
                     anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
                 }
             }
             Item { ////
@@ -420,6 +414,8 @@ Flickable {
                     id: info_clib
                     anchors.left: legend_clib.right
                     anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
                 }
             }
             ItemTracksGraph {
@@ -479,10 +475,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_icodec
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -496,10 +490,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_impix
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -514,10 +506,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_iresolution
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -531,10 +521,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_idefinition
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -548,10 +536,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_iaspectratio
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -566,10 +552,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_iorientation
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -584,10 +568,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_iprojection
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -602,10 +584,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_idepth
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -620,10 +600,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_ialpha
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Item {
@@ -733,13 +711,10 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         id: videoCodecText
                         width: parent.width - parent.spacing - videoCodecLegend.width
                         text: modelData.codec
-                        color: Theme.colorText
-                        font.pixelSize: 15
-                        wrapMode: Text.WrapAnywhere
                     }
                 }
                 Row { ////
@@ -753,7 +728,7 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: {
                             var txt = modelData.widthVisible + " x " + modelData.heightVisible
                             if (modelData.width !== modelData.widthVisible ||
@@ -766,8 +741,6 @@ Flickable {
                             }
                             return txt
                         }
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -781,15 +754,13 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: {
                             var txt = UtilsMedia.varToString(modelData.widthVisible, modelData.heightVisible)
                             var ardesc = UtilsMedia.varToDescString(modelData.widthVisible, modelData.heightVisible)
                             if (ardesc.length > 0) txt += "  (" + ardesc + ")"
                             return txt
                         }
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -806,10 +777,8 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: UtilsMedia.projectionToString(modelData.projection)
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -826,10 +795,8 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: UtilsMedia.orientationMp4ToString(modelData.orientation)
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -843,10 +810,8 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: UtilsMedia.framerateToString(modelData.framerate)
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -860,11 +825,9 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
                               "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
             }
@@ -930,14 +893,10 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         id: audioCodecText
                         width: parent.width - parent.spacing - audioCodecLegend.width
-
                         text: modelData.codec
-                        color: Theme.colorText
-                        font.pixelSize: 15
-                        wrapMode: Text.WrapAnywhere
                     }
                 }
                 Row { ////
@@ -951,10 +910,8 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: modelData.audioChannels
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -968,10 +925,8 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: modelData.audioSamplerate + " Hz"
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
                 Row { ////
@@ -985,11 +940,9 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
                               "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
-                        color: Theme.colorText
-                        font.pixelSize: 15
                     }
                 }
             }
@@ -1054,19 +1007,22 @@ Flickable {
                         font.pixelSize: 15
                     }
                     Text {
+                        visible: trackSubtitleTitle.text.length
+                        text: "/"
+                        color: Theme.colorText
+                        font.pixelSize: 15
+                    }
+                    TextEditMVI {
                         id: trackSubtitleTitle
                         width: parent.width - parent.spacing - trackSubtitleId.contentWidth
 
                         text: {
                             var txt = ""
-                            if (modelData.codec.length) txt += "/ " + modelData.codec
-                            if (modelData.language.length) txt += " / " + modelData.language
-                            if (modelData.title.length) txt += " / " + modelData.title
+                            if (modelData.codec.length) txt += modelData.codec
+                            if (modelData.language.length) txt += modelData.language
+                            if (modelData.title.length) txt += modelData.title
                             return txt
                         }
-                        color: Theme.colorText
-                        font.pixelSize: 15
-                        wrapMode: Text.WordWrap
                     }
                 }
             }
@@ -1142,19 +1098,15 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         id: trackOtherTitle
                         width: parent.width - parent.spacing - trackOtherId.contentWidth
-
                         text: {
                             if (modelData.type === 6) // MiniVideo.stream_TMCD
                                 return mediaItem.timecode
                             else
                                 return modelData.title
                         }
-                        color: Theme.colorText
-                        font.pixelSize: 15
-                        wrapMode: Text.WrapAnywhere
                     }
                 }
             }
@@ -1219,19 +1171,20 @@ Flickable {
                         color: Theme.colorSubText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         id: trackChapterName
                         visible: modelData.name.length
                         text: modelData.name
+                    }
+                    Text {
+                        text: "@"
                         color: Theme.colorText
                         font.pixelSize: 15
                     }
-                    Text {
+                    TextEditMVI {
                         id: trackChapterTimestamp
-                        text: "@ " + UtilsString.durationToString_ISO8601_compact(modelData.pts)
+                        text: UtilsString.durationToString_ISO8601_compact(modelData.pts)
                         color: Theme.colorSubText
-                        font.pixelSize: 15
-                        wrapMode: Text.WordWrap
                     }
                 }
             }

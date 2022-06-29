@@ -38,6 +38,7 @@ Flickable {
         item_gps_alt.visible = (mediaItem.altitudeCorrected > 0)
         info_gps_alt.text = UtilsString.altitudeToString(mediaItem.altitudeCorrected, 0, settingsManager.appunits)
         item_gps_alt_egm96.visible = (mediaItem.altitudeCorrected > 0)
+        info_gps_alt_stored.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
         info_gps_alt_egm96.text = UtilsString.altitudeToString(-mediaItem.altitudeCorrection, 0, settingsManager.appunits)
         item_gps_speed.visible =(mediaItem.speed > 0)
         info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
@@ -106,10 +107,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_brand
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -126,10 +125,8 @@ Flickable {
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                 }
-                Text {
+                TextEditMVI {
                     id: info_model
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Item { ////
@@ -152,16 +149,12 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_software
                     anchors.left: legend_software.right
                     anchors.leftMargin: 16
                     anchors.right: parent.right
                     anchors.rightMargin: 8
-
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                    wrapMode: Text.WrapAnywhere
                 }
             }
         }
@@ -213,10 +206,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_mpix
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -232,10 +223,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_focal
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -251,10 +240,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_exposure
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -270,10 +257,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_exposureBias
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -289,10 +274,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_iso
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -301,17 +284,15 @@ Flickable {
                 anchors.leftMargin: 56
                 height: 24
                 spacing: 16
-                visible: (info_flash.text != "false")
+                visible: (info_flash.text !== "false")
 
                 Text {
                     text: qsTr("flash")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_flash
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -327,10 +308,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_lightSource
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -346,10 +325,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_meteringMode
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
         }
@@ -403,10 +380,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_gps_version
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -420,10 +395,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_gps_date
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -437,10 +410,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_gps_lat
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -455,10 +426,8 @@ Flickable {
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                 }
-                Text {
+                TextEditMVI {
                     id: info_gps_long
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -474,10 +443,8 @@ Flickable {
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                 }
-                Text {
+                TextEditMVI {
                     id: info_gps_alt
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -485,18 +452,25 @@ Flickable {
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 height: 24
-                spacing: 16
+                spacing: 12
 
                 Text {
-                    text: qsTr("altitude correction")
+                    text: qsTr("altitude metadata")
                     color: Theme.colorSubText
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                 }
+                TextEditMVI {
+                    id: info_gps_alt_stored
+                }
                 Text {
-                    id: info_gps_alt_egm96
-                    color: Theme.colorText
+                    text: qsTr("EGM96 correction")
+                    color: Theme.colorSubText
                     font.pixelSize: 15
+                    wrapMode: Text.WordWrap
+                }
+                TextEditMVI {
+                    id: info_gps_alt_egm96
                 }
             }
             Row { ////
@@ -512,10 +486,8 @@ Flickable {
                     font.pixelSize: 15
                     wrapMode: Text.WordWrap
                 }
-                Text {
+                TextEditMVI {
                     id: info_gps_speed
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
         }
@@ -568,10 +540,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_thumb_compression
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -585,10 +555,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_thumb_orientation
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
             Row { ////
@@ -602,10 +570,8 @@ Flickable {
                     color: Theme.colorSubText
                     font.pixelSize: 15
                 }
-                Text {
+                TextEditMVI {
                     id: info_thumb_size
-                    color: Theme.colorText
-                    font.pixelSize: 15
                 }
             }
         }
