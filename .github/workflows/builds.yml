@@ -37,7 +37,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-        version: ${{env.QT_VERSION}}
+          version: ${{env.QT_VERSION}}
           modules: qtimageformats qtpositioning qtcharts qtshadertools qt5compat
 
       # Install dependencies (from package manager)
