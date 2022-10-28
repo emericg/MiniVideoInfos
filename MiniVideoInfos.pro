@@ -61,6 +61,7 @@ HEADERS  += src/Media.h \
             src/minivideo_utils_qt.h
 
 RESOURCES   += qml/qml.qrc \
+               qml/components.qrc \
                i18n/i18n.qrc \
                assets/assets.qrc
 
