@@ -120,7 +120,7 @@ clean = False
 rebuild = False
 targets_selected = []
 softwares_selected = []
-QT_VERSION = "6.3.1"
+QT_VERSION = "6.4.0"
 QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
 ANDROID_NDK_HOME = os.getenv('ANDROID_NDK_HOME', '')
 MSVC_GEN_VER = ""
@@ -223,7 +223,7 @@ if len(TARGETS) == 0:
     if OS_HOST == "Windows":
         if "17.0" in os.getenv('VisualStudioVersion', ''):
             MSVC_GEN_VER = "Visual Studio 17 2022"
-            TARGETS.append(["windows", "x86_64", "msvc2022_64"])
+            TARGETS.append(["windows", "x86_64", "msvc2019_64"])
         else: # if "16.0" in os.getenv('VisualStudioVersion', ''):
             MSVC_GEN_VER = "Visual Studio 16 2019"
             TARGETS.append(["windows", "x86_64", "msvc2019_64"])
@@ -279,7 +279,7 @@ if "libexif" in softwares_selected:
         print("> Downloading " + FILE_libexif + "...")
         urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
-## taglib (version: git) (1.12)
+## taglib (version: git) (1.13+)
 FILE_taglib = "taglib-master.zip"
 DIR_taglib = "taglib-master"
 
@@ -440,13 +440,14 @@ for TARGET in TARGETS:
     ## qtlocation
     if "qtlocation" in softwares_selected:
         if not os.path.isdir(build_dir + DIR_qtlocation):
-            zipQtM = zipfile.ZipFile(src_dir + FILE_qtlocation)
-            zipQtM.extractall(build_dir)
+            zipQtLoc = zipfile.ZipFile(src_dir + FILE_qtlocation)
+            zipQtLoc.extractall(build_dir)
 
         try: os.makedirs(build_dir + DIR_qtlocation + "/build")
         except: print() # who cares
 
         print("> Building QtLocation (patched)")
         subprocess.check_call([QT_CONF_MODULE_cmd, ".."], cwd=build_dir + DIR_qtlocation + "/build")
-        subprocess.check_call(["cmake", "--build", ".", "--target", "all"], cwd=build_dir + DIR_qtlocation + "/build")
-        subprocess.check_call(["cmake", "--install", "."], cwd=build_dir + DIR_qtlocation + "/build")
+        subprocess.check_call(["cmake", "--build", ".", "--parallel", "--target", "all"], cwd=build_dir + DIR_qtlocation + "/build")
+        #subprocess.check_call(["cmake", "--install", "."], cwd=build_dir + DIR_qtlocation + "/build")
+        subprocess.check_call(["ninja", "install"], cwd=build_dir + DIR_qtlocation + "/build") # Qt bug 91647

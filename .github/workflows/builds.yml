@@ -12,9 +12,10 @@ on:
 #--------------------------------------------------------------------------------
 
 env:
-  QMAKE_PROJECT: "MiniVideoInfos.pro"
-  APPLICATION: "MiniVideoInfos"
   VERSION: "0.10"
+  APPLICATION: "MiniVideoInfos"
+  QMAKE_PROJECT: "MiniVideoInfos.pro"
+  QT_VERSION: "6.4.0"
 
 #--------------------------------------------------------------------------------
 # Workflow jobs
@@ -28,18 +29,16 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout repository and submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
 
       # Install Qt
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==2.1.0'
-          version: '6.3.1'
-          modules: qt5compat qtimageformats qtpositioning qtcharts qtshadertools
-          cached: 'false'
+        version: ${{env.QT_VERSION}}
+          modules: qtimageformats qtpositioning qtcharts qtshadertools qt5compat
 
       # Install dependencies (from package manager)
       - name: Install dependencies (from package manager)
@@ -51,11 +50,12 @@ jobs:
       - name: Build dependencies (from contribs script)
         run: |
              cd contribs/
-             python3 contribs_builder.py --qt-directory ${{env.Qt6_DIR}}/../.. --targets=linux
+             python3 contribs_builder.py --targets=linux --qt-directory ${{env.Qt6_DIR}}/../.. --qt-version ${{env.QT_VERSION}}
              cd ..
 
       # Build application
       - name: Build application
         run: |
+             qmake --version
              qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
              make -j$(nproc)

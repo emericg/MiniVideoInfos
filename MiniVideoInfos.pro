@@ -66,8 +66,8 @@ RESOURCES   += qml/qml.qrc \
                assets/assets.qrc
 
 OTHER_FILES += .gitignore \
-               .travis.yml \
-               contribs/contribs.py
+               .github/workflows/builds.yml \
+               contribs/contribs_builder.py
 
 #TRANSLATIONS = i18n/xx_fr.ts
 
