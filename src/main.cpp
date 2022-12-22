@@ -44,18 +44,23 @@
 
 int main(int argc, char *argv[])
 {
-    SharingApplication app(argc, argv);
-
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    QIcon appIcon(":/assets/logos/logo.svg");
-    app.setWindowIcon(appIcon);
+#if defined(Q_OS_ANDROID)
+    // Set navbar color, same as the loading screen
+    MobileUI::setNavbarColor("white");
 #endif
+
+    SharingApplication app(argc, argv);
 
     // Application name
     app.setApplicationName("MiniVideo Infos");
     app.setApplicationDisplayName("MiniVideo Infos");
     app.setOrganizationName("MiniVideo");
     app.setOrganizationDomain("MiniVideo");
+
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    QIcon appIcon(":/assets/logos/logo.svg");
+    app.setWindowIcon(appIcon);
+#endif
 
     // Init MiniVideoInfos components
     SettingsManager *sm = SettingsManager::getInstance();
@@ -101,11 +106,11 @@ int main(int argc, char *argv[])
     // For i18n retranslate
     utilsLanguage->setQmlEngine(&engine);
 
-    // QQuickWindow must be valid at this point
+    // Notch handling // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     engine_context->setContextProperty("quickWindow", window);
 
-#if defined (Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);
 #endif
 

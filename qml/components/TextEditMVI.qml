@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 
 TextEdit {
     readOnly: true
-    selectByMouse: true
+    selectByMouse: isDesktop
     selectionColor: Theme.colorPrimary
     color: Theme.colorText
     font.pixelSize: 15
