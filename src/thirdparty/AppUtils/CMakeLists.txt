@@ -31,6 +31,8 @@ set(CORE_SOURCES
     utils_bits.h
     utils_language.cpp
     utils_language.h
+    utils_log.cpp
+    utils_log.h
     utils_maths.cpp
     utils_maths.h
     utils_screen.cpp
@@ -40,17 +42,15 @@ set(CORE_SOURCES
     utils_versionchecker.h)
 
 # OS specific sources & dependencies
-if(!WIN32)
-    set(CORE_LIBRARIES m )
-endif()
-
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+if(NOT ANDROID)
     set(PLATFORM_SOURCES
         utils_os_linux.cpp
         utils_os_linux.h)
 
     find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS DBus)
-    set(PLATFORM_LIBRARIES Qt::DBus)
+    set(PLATFORM_LIBRARIES Qt::DBus m)
+endif()
 endif()
 
 if(ANDROID)
@@ -59,14 +59,14 @@ if(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
         utils_os_android_qt6.cpp
         utils_os_android.h)
 
-    set(PLATFORM_LIBRARIES Qt::CorePrivate)
+    set(PLATFORM_LIBRARIES Qt::CorePrivate m)
 elseif(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
     set(PLATFORM_SOURCES
         utils_os_android_qt5.cpp
         utils_os_android.h)
 
     find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS AndroidExtra)
-    set(PLATFORM_LIBRARIES Qt::AndroidExtra)
+    set(PLATFORM_LIBRARIES Qt::AndroidExtra m)
 endif()
 endif()
 
@@ -83,7 +83,7 @@ if(APPLE AND NOT IOS)
         utils_os_macosdock.mm
         utils_os_macosdock.h)
 
-    set(PLATFORM_LIBRARIES "-framework AppKit")
+    set(PLATFORM_LIBRARIES "-framework AppKit" m)
 endif()
 
 if(IOS)
@@ -94,7 +94,7 @@ if(IOS)
     find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS Quick)
     set(PLATFORM_LIBRARIES Qt::Quick)
     set(PLATFORM_LIBRARIES Qt::GuiPrivate)
-    set(PLATFORM_LIBRARIES "-framework UIKit")
+    set(PLATFORM_LIBRARIES "-framework UIKit" m)
 endif()
 
 ################################################################################

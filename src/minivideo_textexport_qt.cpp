@@ -94,12 +94,12 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
 
     exportData += "\n\nTitle          : ";
     exportData += media.file_name;
-    exportData += "\nDuration       : ";
-    exportData += getDurationQString(media.duration);
     exportData += "\nSize           : ";
     exportData += getSizeQString(media.file_size);
+    exportData += "\nDuration       : ";
+    exportData += getDurationQString(media.duration);
     exportData += "\nContainer      : ";
-    exportData += getContainerString(media.container, true);
+    exportData += getContainerQString(media.container, true);
     if (media.creation_app)
     {
         exportData += "\nCreation app   : ";
@@ -125,8 +125,7 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
     for (unsigned i = 0; i < media.tracks_video_count; i++)
     {
         MediaStream_t *t = media.tracks_video[i];
-        if (t == nullptr)
-            break;
+        if (t == nullptr) break;
 
         // Section title
         if (media.tracks_video_count == 1)
@@ -255,8 +254,7 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
     for (unsigned i = 0; i < media.tracks_audio_count; i++)
     {
         MediaStream_t *t = media.tracks_audio[i];
-        if (t == nullptr)
-            break;
+        if (t == nullptr) break;
 
         // Section title
         if (media.tracks_audio_count == 1)
@@ -339,8 +337,7 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
     for (unsigned i = 0; i < media.tracks_subtitles_count; i++)
     {
         MediaStream_t *t = media.tracks_subt[i];
-        if (t == nullptr)
-            break;
+        if (t == nullptr) break;
 
         // Section title
         exportData += "\n\nSUBTITLES TRACK #" + QString::number(i);
@@ -381,8 +378,7 @@ int textExport::generateExportData_text(MediaFile_t &media, QString &exportData,
     for (unsigned i = 0; i < media.tracks_others_count; i++)
     {
         MediaStream_t *t = media.tracks_others[i];
-        if (t == nullptr)
-            break;
+        if (t == nullptr) break;
 
         // Section title
         if (t->stream_type == stream_TEXT)

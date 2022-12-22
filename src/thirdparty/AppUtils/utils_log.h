@@ -14,47 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2019
  * \author    Emeric Grange <emeric.grange@gmail.com>
+ * \date      2022
  */
 
-#ifndef UTILS_MACOS_DOCK_H
-#define UTILS_MACOS_DOCK_H
-
-#include <QtGlobal>
-
-#if defined(Q_OS_MACOS)
+#ifndef UTILS_LOG_H
+#define UTILS_LOG_H
 /* ************************************************************************** */
 
 #include <QObject>
+#include <QString>
+#include <QFile>
 
-QT_FORWARD_DECLARE_CLASS(QQuickWindow)
+/* ************************************************************************** */
 
-/*!
- * \brief macOS dock click handler
- *
- * Use with "LIBS += -framework AppKit"
- */
-class MacOSDockHandler : public QObject
+class UtilsLog : public QObject
 {
     Q_OBJECT
 
-    QQuickWindow *m_saved_view = nullptr;
+    QString m_logPath;
+    QFile m_logFile;
 
-    MacOSDockHandler();
-    ~MacOSDockHandler();
-
-signals:
-    void dockIconClicked();
+    // Singleton
+    static UtilsLog *instance;
+    UtilsLog();
+    ~UtilsLog();
 
 public:
-    static MacOSDockHandler *getInstance();
+    static UtilsLog *getInstance();
 
-    void setupDock(QQuickWindow *view);
+    bool openLogFile(const QString &path = QString());
 
-    Q_INVOKABLE static void toggleDockIconVisibility(bool show);
+    Q_INVOKABLE void pushLog(const QString &log);
+
+    Q_INVOKABLE QString getLog();
+
+    Q_INVOKABLE void clearLog();
 };
 
 /* ************************************************************************** */
-#endif // Q_OS_MACOS
-#endif // UTILS_MACOS_DOCK_H
+#endif // UTILS_LOG_H
