@@ -42,17 +42,20 @@ Rectangle {
                 tutorialPages.enableAnimation()
             }
 
+            ////////////////
+
             SwipeView {
                 id: tutorialPages
                 anchors.fill: parent
                 anchors.leftMargin: screenPaddingLeft
                 anchors.rightMargin: screenPaddingRight
                 anchors.bottomMargin: 56
+                property int margins: isPhone ? 24 : 40
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
                     if (currentIndex < 0) currentIndex = 0
-                    if (currentIndex > count) {
+                    if (currentIndex > count-1) {
                         currentIndex = 0 // reset
                         appContent.state = entryPoint
                     }
@@ -78,19 +81,19 @@ Rectangle {
 
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("<b>MiniVideo Infos</b> extract a maximum of informations and metadata from <b>multimedia files</b>.")
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            font.pixelSize: 18
+                            font.pixelSize: Theme.fontSizeContentBig
                             color: Theme.colorIcon
                             horizontalAlignment: Text.AlignHCenter
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
-                            height: width
+                            height: width*0.666
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
@@ -100,18 +103,20 @@ Rectangle {
                         }
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("It works with <b>pictures</b> (with EXIF), <b>audio</b> (with various tags) and <b>video</b> files!")
                             color: Theme.colorIcon
-                            font.pixelSize: 18
+                            font.pixelSize: Theme.fontSizeContentBig
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
                     }
                 }
+
+                ////////
 
                 Item {
                     id: page2
@@ -124,19 +129,19 @@ Rectangle {
 
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("To use <b>MiniVideo Infos</b>, open file directly from the application or use the \"open with\" feature of your device!")
                             color: Theme.colorIcon
-                            font.pixelSize: 18
+                            font.pixelSize: Theme.fontSizeContentBig
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
-                            height: width
+                            height: width*0.666
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             source: "qrc:/assets/icons_material/duotone-library_add-24px.svg"
@@ -145,19 +150,21 @@ Rectangle {
                         }
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("You can have many files open at the same time.")
-                            textFormat: Text.PlainText
-                            font.pixelSize: 18
+                            textFormat: Text.StyledText
+                            font.pixelSize: Theme.fontSizeContentBig
                             color: Theme.colorIcon
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
                         }
                     }
                 }
+
+                ////////
 
                 Item {
                     id: page3
@@ -178,7 +185,7 @@ Rectangle {
                             color: Theme.colorIcon
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: 18
+                            font.pixelSize: Theme.fontSizeContentBig
                         }
                         Row {
                             anchors.left: parent.left
@@ -198,7 +205,7 @@ Rectangle {
                                 color: Theme.colorIcon
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.fontSizeContentBig
                             }
                         }
                         Row {
@@ -219,7 +226,7 @@ Rectangle {
                                 color: Theme.colorIcon
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.fontSizeContentBig
                             }
                         }
                         Row {
@@ -240,7 +247,7 @@ Rectangle {
                                 color: Theme.colorIcon
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.fontSizeContentBig
                             }
                         }
                         Row {
@@ -261,7 +268,7 @@ Rectangle {
                                 color: Theme.colorIcon
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.fontSizeContentBig
                             }
                         }
                         Row {
@@ -282,7 +289,7 @@ Rectangle {
                                 color: Theme.colorIcon
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.fontSizeContentBig
                             }
                         }
                         Row {
@@ -303,22 +310,24 @@ Rectangle {
                                 color: Theme.colorIcon
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 18
+                                font.pixelSize: Theme.fontSizeContentBig
                             }
                         }
                     }
                 }
+
+                ////////
             }
 
-            ////////
+            ////////////////
 
             Text {
                 id: pagePrevious
                 anchors.left: parent.left
-                anchors.leftMargin: 32
+                anchors.leftMargin: tutorialPages.margins
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
-                visible: (tutorialPages.currentIndex != 0)
+                visible: (tutorialPages.currentIndex !== 0)
 
                 text: qsTr("Previous")
                 textFormat: Text.PlainText
@@ -326,37 +335,16 @@ Rectangle {
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContent
 
-                Behavior on opacity { OpacityAnimator { duration: 100 } }
+                opacity: 0.8
+                Behavior on opacity { OpacityAnimator { duration: 133 } }
 
                 MouseArea {
                     anchors.fill: parent
                     hoverEnabled: true
-                    onEntered: parent.opacity = 0.8
-                    onExited: parent.opacity = 1
+                    onEntered: parent.opacity = 1
+                    onExited: parent.opacity = 0.8
+                    onCanceled: parent.opacity = 0.8
                     onClicked: tutorialPages.currentIndex--
-                }
-            }
-
-            Text {
-                id: pageNext
-                anchors.right: parent.right
-                anchors.rightMargin: 32
-                anchors.verticalCenter: pageIndicator.verticalCenter
-
-                text: (tutorialPages.currentIndex === tutorialPages.count-1) ? qsTr("All right!") : qsTr("Next")
-                textFormat: Text.PlainText
-                color: Theme.colorHeaderContent
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContent
-
-                Behavior on opacity { OpacityAnimator { duration: 100 } }
-
-                MouseArea {
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onEntered: parent.opacity = 0.8
-                    onExited: parent.opacity = 1
-                    onClicked: tutorialPages.currentIndex++
                 }
             }
 
@@ -364,11 +352,38 @@ Rectangle {
                 id: pageIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 16
+                anchors.bottomMargin: tutorialPages.margins/2
 
                 count: tutorialPages.count
                 currentIndex: tutorialPages.currentIndex
             }
+
+            Text {
+                id: pageNext
+                anchors.right: parent.right
+                anchors.rightMargin: tutorialPages.margins
+                anchors.verticalCenter: pageIndicator.verticalCenter
+
+                text: (tutorialPages.currentIndex === tutorialPages.count-1) ? qsTr("Start") : qsTr("Next")
+                textFormat: Text.PlainText
+                color: Theme.colorHeaderContent
+                font.bold: true
+                font.pixelSize: Theme.fontSizeContent
+
+                opacity: 0.8
+                Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: parent.opacity = 1
+                    onExited: parent.opacity = 0.8
+                    onCanceled: parent.opacity = 0.8
+                    onClicked: tutorialPages.currentIndex++
+                }
+            }
+
+            ////////////////
         }
     }
 }

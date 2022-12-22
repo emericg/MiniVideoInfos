@@ -3,15 +3,28 @@ import QtQuick.Controls 2.15
 
 import ThemeEngine 1.0
 
-Item {
+Loader {
     id: settingsScreen
-    width: 480
-    height: 720
-    anchors.fill: parent
+
+    function loadScreen() {
+        // load screen
+        settingsScreen.active = true
+
+        // change screen
+        appContent.state = "Settings"
+    }
+
+    function backAction() {
+        if (settingsScreen.status === Loader.Ready)
+            settingsScreen.item.backAction()
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Flickable {
+    active: false
+
+    asynchronous: false
+    sourceComponent: Flickable {
         anchors.fill: parent
 
         contentWidth: -1

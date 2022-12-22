@@ -4,22 +4,35 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Item {
+Loader {
     id: aboutScreen
-    width: 480
-    height: 720
-    anchors.fill: parent
+
+    function loadScreen() {
+        // load screen
+        aboutScreen.active = true
+        //aboutScreen.item.loadScreen()
+
+        // change screen
+        appContent.state = "About"
+    }
+
+    function backAction() {
+        if (aboutScreen.status === Loader.Ready)
+            aboutScreen.item.backAction()
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Flickable {
-        anchors.fill: parent
+    active: false
 
+    asynchronous: false
+    sourceComponent: Flickable {
+        anchors.fill: parent
         contentWidth: parent.width
         contentHeight: column.height
 
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
-        ScrollBar.vertical: ScrollBar { visible: isDesktop; }
+        ScrollBar.vertical: ScrollBar { visible: false }
 
         Column {
             id: column
@@ -32,16 +45,15 @@ Item {
             bottomPadding: 16
             spacing: 8
 
-            /////////////////
+            ////////////////
 
-            Rectangle {
-                id: rectangleHeader
+            Rectangle { // header
                 anchors.left: parent.left
                 anchors.leftMargin: -(screenPaddingLeft + 16)
                 anchors.right: parent.right
                 anchors.rightMargin: -(screenPaddingRight + 16)
 
-                height: 80
+                height: 96
                 color: Theme.colorBackground
 
                 Row {
@@ -54,8 +66,7 @@ Item {
                     height: 80
                     spacing: 24
 
-                    Image {
-                        id: imageLogo2
+                    Image { // logo
                         width: 80
                         height: 80
                         anchors.verticalCenter: parent.verticalCenter
@@ -66,7 +77,7 @@ Item {
 
                     Column {
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.verticalCenterOffset: 0
+                        anchors.verticalCenterOffset: 2
                         spacing: 0
 
                         Text {
@@ -77,7 +88,7 @@ Item {
                         Text {
                             color: Theme.colorSubText
                             text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
-                            font.pixelSize: 22
+                            font.pixelSize: Theme.fontSizeContentBig
                         }
                     }
                 }
@@ -124,6 +135,15 @@ Item {
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos")
                     }
                 }
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    height: 1
+                    visible: isDesktop
+                    color: Theme.colorSeparator
+                }
             }
 
             ////////////////
@@ -137,15 +157,14 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                visible: (isMobile && screenOrientation === Qt.PortraitOrientation)
+                visible: !wideWideMode
                 spacing: 16
 
                 ButtonWireframeIconCentered {
-                    id: websiteBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
-                    sourceSize: 26
+                    sourceSize: 28
                     fullColor: true
                     primaryColor: Theme.colorHeaderContent
 
@@ -154,11 +173,10 @@ Item {
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
                 }
                 ButtonWireframeIconCentered {
-                    id: supportBtn
                     width: ((parent.width - 16) / 2)
                     anchors.verticalCenter: parent.verticalCenter
 
-                    sourceSize: 20
+                    sourceSize: 22
                     fullColor: true
                     primaryColor: Theme.colorHeaderContent
 
@@ -168,7 +186,7 @@ Item {
                 }
             }
 
-            ////////
+            ////////////////
 
             Item { height: 1; width: 1; visible: isDesktop; } // spacer
 
@@ -184,9 +202,9 @@ Item {
                     id: descImg
                     width: 32
                     height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.verticalCenter: desc.verticalCenter
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
                     color: Theme.colorIcon
@@ -211,44 +229,6 @@ Item {
             ////////
 
             Item {
-                id: tuto
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 27
-                    height: 27
-                    anchors.left: parent.left
-                    anchors.leftMargin: 2
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
-                    color: Theme.colorIcon
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Open the tutorial")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: screenTutorial.loadScreenFrom("About")
-                }
-            }
-
-            ////////
-
-            Item {
                 id: authors
                 height: 48
                 anchors.left: parent.left
@@ -257,8 +237,9 @@ Item {
                 anchors.rightMargin: 0
 
                 IconSvg {
-                    width: 31
-                    height: 31
+                    id: authorImg
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
@@ -268,23 +249,25 @@ Item {
                 }
 
                 Text {
+                    id: authorTxt
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
 
-                    color: Theme.colorText
-                    linkColor: Theme.colorIcon
-                    font.pixelSize: Theme.fontSizeContent
                     text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a>")
+                    textFormat: Text.StyledText
                     onLinkActivated: Qt.openUrlExternally(link)
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    linkColor: Theme.colorText
 
                     MouseArea {
                         anchors.fill: parent
                         anchors.margins: -12
                         acceptedButtons: Qt.NoButton
-                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        cursorShape: authorTxt.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
                 }
 
@@ -294,10 +277,10 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
-
                     visible: singleColumn
-                    color: Theme.colorIcon
+
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
                 }
             }
 
@@ -311,11 +294,12 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
 
-                //visible: isMobile
+                //visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 IconSvg {
-                    width: 31
-                    height: 31
+                    id: rateImg
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
@@ -325,6 +309,7 @@ Item {
                 }
 
                 Text {
+                    id: rateTxt
                     anchors.left: parent.left
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
@@ -341,10 +326,10 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
-
                     visible: singleColumn
-                    color: Theme.colorIcon
+
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
                 }
 
                 MouseArea {
@@ -357,6 +342,123 @@ Item {
                         else
                             Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/stargazers")
                     }
+                }
+            }
+
+            ////////
+
+            Item {
+                id: releasenotes
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                IconSvg {
+                    id: releasenotesImg
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/outline-new_releases-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                Text {
+                    id: releasenotesTxt
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Release notes")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                }
+
+                IconSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/releases")
+                }
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
+                    anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                id: tuto
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                IconSvg {
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                Text {
+                    id: tutoTxt
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Open the tutorial")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                }
+
+                IconSvg {
+                    width: 24
+                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: -2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: screenTutorial.loadScreenFrom("About")
                 }
             }
 
@@ -461,10 +563,9 @@ Item {
                     id: dependenciesImg
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
                     anchors.left: parent.left
                     anchors.leftMargin: 4
+                    anchors.verticalCenter: dependenciesLabel.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                     color: Theme.colorIcon
@@ -586,6 +687,8 @@ Item {
                     }
                 }
             }
+
+            ////////
         }
     }
 }

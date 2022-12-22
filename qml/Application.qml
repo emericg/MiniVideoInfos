@@ -580,7 +580,7 @@ ApplicationWindow {
                 sourceSize: 24
 
                 selected: (appContent.state === "Settings")
-                onClicked: appContent.state = "Settings"
+                onClicked: screenSettings.loadScreen()
             }
             MobileMenuItem_horizontal {
                 id: menuAbout
@@ -593,7 +593,7 @@ ApplicationWindow {
                 sourceSize: 24
 
                 selected: (appContent.state === "About")
-                onClicked: appContent.state = "About"
+                onClicked: screenAbout.loadScreen()
             }
         }
     }
