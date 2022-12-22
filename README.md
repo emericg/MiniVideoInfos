@@ -1,7 +1,7 @@
 # ![MiniVideo Infos](https://i.imgur.com/eKFauTe.jpg)
 
 [![GitHub release](https://img.shields.io/github/release/emericg/MiniVideoInfos.svg?style=flat-square)](https://github.com/emericg/MiniVideoInfos/releases)
-[![GitHub action](https://img.shields.io/github/workflow/status/emericg/MiniVideoInfos/CI%20builds.svg?style=flat-square)](https://github.com/emericg/MiniVideoInfos/actions)
+[![GitHub action](https://img.shields.io/github/actions/workflow/status/emericg/MiniVideoInfos/builds.yml?style=flat-square)](https://github.com/emericg/MiniVideoInfos/actions)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg?style=flat-square&color=brightgreen)](http://www.gnu.org/licenses/gpl-3.0)
 
 > Get detailed informations about your audio, video and picture files with MiniVideo Infos!
