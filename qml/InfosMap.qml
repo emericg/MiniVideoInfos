@@ -117,8 +117,14 @@ Item {
         copyrightsVisible: false
 
         plugin: Plugin {
-            preferred: ["maplibregl", "osm", "esri"]
+            preferred: ["maplibre", "osm"]
+            //preferred: ["here", "maplibre", "maplibregl", "osm", "esri"]
+
             PluginParameter { name: "osm.mapping.highdpi_tiles"; value: "true"; }
+            //PluginParameter { name: "osm.mapping.custom.host"; value: "https://mappingcustomhost.org"; }
+
+            PluginParameter { name: "mapbox.access_token"; value: ""; }
+            PluginParameter { name: "mapbox.mapping.highdpi_tiles"; value: "true"; }
         }
 
         ////////////////

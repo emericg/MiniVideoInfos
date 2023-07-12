@@ -1,72 +1,111 @@
-import QtQuick 2.15
+import QtQuick
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Rectangle {
-    width: parent.width
-    height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
+    id: appHeader
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    height: screenPaddingStatusbar + headerHeight
     color: Theme.colorHeader
+    clip: false
     z: 10
 
     property int headerHeight: 52
+
+    property int headerPosition: 56
+
+    property string headerTitle: "MiniVideo Infos"
+
     property string appName: "MiniVideo Infos"
-    property string title: "MiniVideo Infos"
+
+    ////////////////////////////////////////////////////////////////////////////
+
     property string leftMenuMode: "drawer" // drawer / back / close
-
     signal leftMenuClicked()
-    signal rightMenuClicked()
 
-    onLeftMenuModeChanged: {
-        if (leftMenuMode === "drawer")
-            leftMenuImg.source = "qrc:/assets/icons_material/baseline-menu-24px.svg"
-        else if (leftMenuMode === "close")
-            leftMenuImg.source = "qrc:/assets/icons_material/baseline-close-24px.svg"
-        else // back
-            leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
-    }
+    property string rightMenuMode: "off" // on / off
+    signal rightMenuClicked()
 
     ////////////////////////////////////////////////////////////////////////////
 
     // prevent clicks below this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-    Item {
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle { // OS statusbar area
         anchors.top: parent.top
-        anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
         anchors.left: parent.left
         anchors.right: parent.right
-        height: headerHeight
 
-        MouseArea {
+        height: screenPaddingStatusbar
+        color: Theme.colorStatusbar
+    }
+
+    Item {
+        anchors.fill: parent
+        anchors.topMargin: screenPaddingStatusbar
+
+        ////////////
+
+        Row { // left area
             id: leftArea
-            width: headerHeight
-            height: headerHeight
             anchors.top: parent.top
             anchors.left: parent.left
+            anchors.leftMargin: 4
             anchors.bottom: parent.bottom
 
-            visible: true
-            onClicked: leftMenuClicked()
+            spacing: 4
 
-            IconSvg {
-                id: leftMenuImg
-                width: headerHeight/2
-                height: headerHeight/2
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
+            ////
 
-                source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
-                color: Theme.colorHeaderContent
+            MouseArea { // left button
+                width: headerHeight
+                height: headerHeight
+
+                visible: true
+                onClicked: leftMenuClicked()
+
+                RippleThemed {
+                    anchor: parent
+                    width: parent.width
+                    height: parent.height
+
+                    pressed: parent.pressed
+                    //active: enabled && parent.containsPress
+                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                }
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: (headerHeight / 2)
+                    height: (headerHeight / 2)
+
+                    source: {
+                        if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                        if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
+                        return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                    }
+                    color: Theme.colorHeaderContent
+                }
             }
+
+            ////
         }
 
-        Text {
+        ////////////
+
+        Text { // header title
             anchors.left: parent.left
-            anchors.leftMargin: 64
+            anchors.leftMargin: headerPosition
+            anchors.right: rightArea.left
+            anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
-            text: title
+            text: headerTitle
             textFormat: Text.PlainText
             color: Theme.colorHeaderContent
             font.bold: false
@@ -75,29 +114,52 @@ Rectangle {
 
         ////////////
 
-        MouseArea {
+        Row { // right area
             id: rightArea
-            width: headerHeight
-            height: headerHeight
             anchors.top: parent.top
             anchors.right: parent.right
+            anchors.rightMargin: 4
             anchors.bottom: parent.bottom
 
-            visible: false
-            onClicked: rightMenuClicked()
+            spacing: 4
 
-            IconSvg {
-                id: rightMenuImg
-                width: headerHeight/2
-                height: headerHeight/2
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+            ////
 
-                source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
-                color: Theme.colorHeaderContent
+            MouseArea { // right button
+                width: headerHeight
+                height: headerHeight
+
+                visible: (appContent.state === "MobileComponents")
+
+                onClicked: {
+                    rightMenuClicked()
+                    actionMenu.open()
+                }
+
+                RippleThemed {
+                    width: parent.width
+                    height: parent.height
+
+                    pressed: parent.pressed
+                    //active: enabled && parent.containsPress
+                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                }
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: (headerHeight / 2)
+                    height: (headerHeight / 2)
+
+                    source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                    color: Theme.colorHeaderContent
+                }
             }
+
+            ////
         }
+
+        ////////////
     }
 
-    ////////////
+    ////////////////////////////////////////////////////////////////////////////
 }

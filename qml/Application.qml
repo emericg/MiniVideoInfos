@@ -9,9 +9,10 @@ import "qrc:/js/UtilsPath.js" as UtilsPath
 ApplicationWindow {
     id: appWindow
     minimumWidth: 400
-    minimumHeight: 640
+    minimumHeight: 720
 
-    flags: (Qt.platform.os === "ios") ? Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
+    //flags: (Qt.platform.os === "ios") ? Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
 
@@ -27,96 +28,69 @@ ApplicationWindow {
     // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
-    onScreenOrientationChanged: handleNotchesTimer.restart()
 
     property int screenPaddingStatusbar: 0
-    property int screenPaddingNotch: 0
+    property int screenPaddingNavbar: 0
+
+    property int screenPaddingTop: 0
     property int screenPaddingLeft: 0
     property int screenPaddingRight: 0
     property int screenPaddingBottom: 0
 
-    Timer {
-        id: handleNotchesTimer
-        interval: 33
-        repeat: false
-        onTriggered: handleNotches()
-    }
+    onScreenOrientationChanged: handleSafeAreas()
+    onVisibilityChanged: handleSafeAreas()
 
-    function handleNotches() {
-/*
-        console.log("handleNotches()")
-        console.log("screen width : " + Screen.width)
-        console.log("screen width avail  : " + Screen.desktopAvailableWidth)
-        console.log("screen height : " + Screen.height)
-        console.log("screen height avail  : " + Screen.desktopAvailableHeight)
-        console.log("screen orientation: " + Screen.orientation)
-        console.log("screen orientation (primary): " + Screen.primaryOrientation)
-*/
-        if (Qt.platform.os !== "ios") return
-        if (typeof quickWindow === "undefined" || !quickWindow) {
-            handleNotchesTimer.restart()
-            return
-        }
+    function handleSafeAreas() {
+        // safe areas are only taken into account when using maximized geometry / full screen mode
+        if (appWindow.visibility === ApplicationWindow.FullScreen ||
+            appWindow.flags & Qt.MaximizeUsingFullscreenGeometryHint) {
 
-        // Margins
-        var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
-        if (safeMargins["total"] === safeMargins["top"]) {
-            screenPaddingStatusbar = safeMargins["top"]
-            screenPaddingNotch = 0
-            screenPaddingLeft = 0
-            screenPaddingRight = 0
-            screenPaddingBottom = 0
-        } else if (safeMargins["total"] > 0) {
-            if (Screen.orientation === Qt.PortraitOrientation) {
-                screenPaddingStatusbar = 20
-                screenPaddingNotch = 12
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 6
-            } else if (Screen.orientation === Qt.InvertedPortraitOrientation) {
-                screenPaddingStatusbar = 12
-                screenPaddingNotch = 20
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 6
-            } else if (Screen.orientation === Qt.LandscapeOrientation) {
+            screenPaddingStatusbar = mobileUI.statusbarHeight
+            screenPaddingNavbar = mobileUI.navbarHeight
+
+            screenPaddingTop = mobileUI.safeAreaTop
+            screenPaddingLeft = mobileUI.safeAreaLeft
+            screenPaddingRight = mobileUI.safeAreaRight
+            screenPaddingBottom = mobileUI.safeAreaBottom
+
+            // hacks
+            if (Qt.platform.os === "android") {
+                if (Screen.primaryOrientation === Qt.PortraitOrientation) {
+                    screenPaddingStatusbar = mobileUI.safeAreaTop
+                    screenPaddingTop = 0
+                } else {
+                    screenPaddingNavbar = 0
+                }
+            }
+            if (Qt.platform.os === "ios") {
+                //
+            }
+            if (visibility === ApplicationWindow.FullScreen) {
                 screenPaddingStatusbar = 0
-                screenPaddingNotch = 0
-                screenPaddingLeft = 32
-                screenPaddingRight = 0
-                screenPaddingBottom = 0
-            } else if (Screen.orientation === Qt.InvertedLandscapeOrientation) {
-                screenPaddingStatusbar = 0
-                screenPaddingNotch = 0
-                screenPaddingLeft = 0
-                screenPaddingRight = 32
-                screenPaddingBottom = 0
-            } else {
-                screenPaddingStatusbar = 0
-                screenPaddingNotch = 0
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 0
+                screenPaddingNavbar = 0
             }
         } else {
             screenPaddingStatusbar = 0
-            screenPaddingNotch = 0
+            screenPaddingNavbar = 0
+            screenPaddingTop = 0
             screenPaddingLeft = 0
             screenPaddingRight = 0
             screenPaddingBottom = 0
         }
 /*
-        console.log("total:" + safeMargins["total"])
-        console.log("top:" + safeMargins["top"])
-        console.log("left:" + safeMargins["left"])
-        console.log("right:" + safeMargins["right"])
-        console.log("bottom:" + safeMargins["bottom"])
-
-        console.log("RECAP screenPaddingStatusbar:" + screenPaddingStatusbar)
-        console.log("RECAP screenPaddingNotch:" + screenPaddingNotch)
-        console.log("RECAP screenPaddingLeft:" + screenPaddingLeft)
-        console.log("RECAP screenPaddingRight:" + screenPaddingRight)
-        console.log("RECAP screenPaddingBottom:" + screenPaddingBottom)
+        console.log("> handleSafeAreas()")
+        console.log("- screen width:        " + Screen.width)
+        console.log("- screen width avail:  " + Screen.desktopAvailableWidth)
+        console.log("- screen height:       " + Screen.height)
+        console.log("- screen height avail: " + Screen.desktopAvailableHeight)
+        console.log("- screen orientation:  " + Screen.orientation)
+        console.log("- screen orientation (primary): " + Screen.primaryOrientation)
+        console.log("- screenSizeStatusbar: " + screenPaddingStatusbar)
+        console.log("- screenSizeNavbar:    " + screenPaddingNavbar)
+        console.log("- screenPaddingTop:    " + screenPaddingTop)
+        console.log("- screenPaddingLeft:   " + screenPaddingLeft)
+        console.log("- screenPaddingRight:  " + screenPaddingRight)
+        console.log("- screenPaddingBottom: " + screenPaddingBottom)
 */
     }
 
@@ -131,7 +105,7 @@ ApplicationWindow {
             if (appContent.state === "Tutorial") return Theme.colorHeader
             if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
                 (appContent.state === "MediaInfos" && isPhone) ||
-                tabletMenuScreen.visible)
+                mobileMenu.visible)
                 return Theme.colorForeground
 
             return Theme.colorBackground
@@ -140,9 +114,6 @@ ApplicationWindow {
 
     MobileHeader {
         id: appHeader
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
     }
     Rectangle { // separator
         anchors.top: appHeader.bottom
@@ -193,7 +164,6 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        handleNotchesTimer.restart()
         mobileUI.isLoading = false
 
         if (isDesktop) {
@@ -273,13 +243,6 @@ ApplicationWindow {
         onActivated: forwardAction()
     }
 
-    Timer {
-        id: exitTimer
-        interval: 3000
-        repeat: false
-        onRunningChanged: exitWarning.opacity = running
-    }
-
     // UI sizes ////////////////////////////////////////////////////////////////
 
     property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
@@ -308,7 +271,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: appTabletMenu.visible ? appTabletMenu.height : 0
+        anchors.bottomMargin: mobileMenu.visible ? mobileMenu.height : 0
 
         focus: true
         Keys.onBackPressed: {
@@ -381,7 +344,7 @@ ApplicationWindow {
         states: [
             State {
                 name: "Tutorial"
-                PropertyChanges { target: appHeader; title: qsTr("Welcome"); }
+                PropertyChanges { target: appHeader; headerTitle: qsTr("Welcome"); }
                 PropertyChanges { target: screenTutorial; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
@@ -391,7 +354,7 @@ ApplicationWindow {
             },
             State {
                 name: "MediaList"
-                PropertyChanges { target: appHeader; title: appHeader.appName; }
+                PropertyChanges { target: appHeader; headerTitle: appHeader.appName; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
@@ -410,7 +373,7 @@ ApplicationWindow {
             },
             State {
                 name: "Settings"
-                PropertyChanges { target: appHeader; title: qsTr("Settings"); }
+                PropertyChanges { target: appHeader; headerTitle: qsTr("Settings"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
@@ -420,7 +383,7 @@ ApplicationWindow {
             },
             State {
                 name: "Permissions"
-                PropertyChanges { target: appHeader; title: qsTr("Permissions"); }
+                PropertyChanges { target: appHeader; headerTitle: qsTr("Permissions"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
@@ -430,7 +393,7 @@ ApplicationWindow {
             },
             State {
                 name: "About"
-                PropertyChanges { target: appHeader; title: qsTr("About"); }
+                PropertyChanges { target: appHeader; headerTitle: qsTr("About"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
@@ -525,32 +488,50 @@ ApplicationWindow {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: appTabletMenu
+    Item {
+        id: mobileMenu
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        color: Theme.colorTabletmenu
-        width: parent.width
-        height: 48
+        property int hhh: (appWindow.isPhone ? 36 : 48)
+        property int hhi: (hhh * 0.666)
+        property int hhv: visible ? hhh : 0
+
+        z: 10
+        height: hhh + screenPaddingNavbar + screenPaddingBottom
+
+        ////////////////////////////////////////////////////////////////////////////
+
+        Rectangle {
+            anchors.fill: parent
+            opacity: 0.5
+            color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
+        }
 
         Rectangle {
             anchors.top: parent.top
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             height: 1
-            opacity: 0.5
+            opacity: 0.66
+            visible: !appWindow.isPhone
             color: Theme.colorTabletmenuContent
         }
+
+        // prevent clicks below this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
+        ////////////////////////////////////////////////////////////////////////////
 
         visible: (isDesktop || isTablet) &&
                  (appContent.state !== "Tutorial" && appContent.state !== "MediaInfos")
 
         Row {
-            id: tabletMenuScreen
-            anchors.centerIn: parent
-            height: parent.height
-            spacing: 24
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: (-screenPaddingNavbar -screenPaddingBottom) / 2
+            spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
             visible: (appContent.state === "MediaList" ||
                       appContent.state === "Settings" ||
@@ -566,7 +547,7 @@ ApplicationWindow {
                 source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
                 sourceSize: 24
 
-                selected: (appContent.state === "MediaList")
+                highlighted: (appContent.state === "MediaList")
                 onClicked: appContent.state = "MediaList"
             }
             MobileMenuItem_horizontal {
@@ -579,7 +560,7 @@ ApplicationWindow {
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 sourceSize: 24
 
-                selected: (appContent.state === "Settings")
+                highlighted: (appContent.state === "Settings")
                 onClicked: screenSettings.loadScreen()
             }
             MobileMenuItem_horizontal {
@@ -592,7 +573,7 @@ ApplicationWindow {
                 source: "qrc:/assets/icons_material/outline-info-24px.svg"
                 sourceSize: 24
 
-                selected: (appContent.state === "About")
+                highlighted: (appContent.state === "About")
                 onClicked: screenAbout.loadScreen()
             }
         }
@@ -600,30 +581,39 @@ ApplicationWindow {
 
     ////////////////
 
+    Timer {
+        id: exitTimer
+        interval: 3333
+        running: false
+        repeat: false
+    }
     Rectangle {
         id: exitWarning
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: 12
+        anchors.margins: Theme.componentMargin + screenPaddingBottom
 
-        height: 40
-        radius: 4
+        height: Theme.componentHeight
+        radius: Theme.componentRadius
 
         color: Theme.colorComponentBackground
         border.color: Theme.colorSeparator
         border.width: Theme.componentBorderWidth
 
-        opacity: 0
+        opacity: exitTimer.running ? 1 : 0
         Behavior on opacity { OpacityAnimator { duration: 233 } }
 
         Text {
             anchors.centerIn: parent
+
             text: qsTr("Press one more time to exit...")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContent
             color: Theme.colorText
         }
     }
+
+    ////////////////
 }

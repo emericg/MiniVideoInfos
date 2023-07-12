@@ -145,8 +145,8 @@ Item {
         //console.log("FileDialog::openDialog()")
         if (!dialogIsOpen) {
             if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
-                dialogHeaderSaved = appHeader.title
-                appHeader.title = qsTr("Media file selection")
+                dialogHeaderSaved = appHeader.headerTitle
+                appHeader.headerTitle = qsTr("Media file selection")
                 appHeader.leftMenuMode = "back"
                 dialogIsOpen = true
             }
@@ -157,7 +157,7 @@ Item {
         //console.log("FileDialog::closeDialog()")
         if (dialogIsOpen) {
             if (Qt.platform.os === "android" && !fileDialog.usePlatformDialog) {
-                appHeader.title = dialogHeaderSaved
+                appHeader.headerTitle = dialogHeaderSaved
                 appHeader.leftMenuMode = "drawer"
                 dialogIsOpen = false
             }

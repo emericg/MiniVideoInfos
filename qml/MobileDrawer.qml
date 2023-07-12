@@ -1,19 +1,20 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Drawer {
-    width: parent.width*0.8
-    height: parent.height
+    width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480)
+            ? 0.8 * appWindow.width : 0.5 * appWindow.width
+    height: appWindow.height
 
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
         color: Theme.colorBackground
 
-        Rectangle {
-            x: parent.width - 1
+        Rectangle { // left border
+            x: parent.width
             width: 1
             height: parent.height
             color: Theme.colorSeparator
@@ -31,40 +32,19 @@ Drawer {
             anchors.right: parent.right
             z: 5
 
-            Connections {
-                target: appWindow
-                function onScreenPaddingStatusbarChanged() { rectangleHeader.updateIOSHeader() }
-            }
-            Connections {
-                target: Theme
-                function onCurrentThemeChanged() { rectangleHeader.updateIOSHeader() }
-            }
-
-            function updateIOSHeader() {
-                if (Qt.platform.os === "ios") {
-                    if (screenPaddingStatusbar != 0)
-                        rectangleStatusbar.height = screenPaddingStatusbar
-                    else
-                        rectangleStatusbar.height = 0
-                }
-            }
-
             ////////
 
             Rectangle {
                 id: rectangleStatusbar
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorBackground // "red" // to hide flickable content
-                height: screenPaddingStatusbar
+
+                height: Math.max(screenPaddingTop, screenPaddingStatusbar)
+                color: Theme.colorBackground // to hide flickable content
             }
-            Rectangle {
-                id: rectangleNotch
-                anchors.left: parent.left
-                anchors.right: parent.right
-                color: Theme.colorBackground // "yellow" // to hide flickable content
-                height: screenPaddingNotch
-            }
+
+            ////////
+
             Rectangle {
                 id: rectangleLogo
                 anchors.left: parent.left
@@ -100,7 +80,6 @@ Drawer {
                 }
             }
         }
-        MouseArea { anchors.fill: rectangleHeader; acceptedButtons: Qt.AllButtons; }
 
         ////////////////
 
@@ -404,4 +383,6 @@ Drawer {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

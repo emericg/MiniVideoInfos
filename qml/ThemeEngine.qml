@@ -14,6 +14,15 @@ Item {
 
     ////////////////
 
+    property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
+    property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
+    property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
+    property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize < 7.0))
+    property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize >= 7.0))
+
+    ////////////////
+
+    // Status bar (mobile)
     property int themeStatusbar
     property color colorStatusbar
 
@@ -22,7 +31,7 @@ Item {
     property color colorHeaderContent
     property color colorHeaderHighlight
 
-    // Sidebar
+    // Sidebar (desktop)
     property color colorSidebar
     property color colorSidebarContent
     property color colorSidebarHighlight
@@ -32,7 +41,7 @@ Item {
     property color colorActionbarContent
     property color colorActionbarHighlight
 
-    // Tablet bar
+    // Tablet bar (mobile)
     property color colorTabletmenu
     property color colorTabletmenuContent
     property color colorTabletmenuHighlight
@@ -57,30 +66,18 @@ Item {
 
     // App specific
 
-    // Qt Quick controls & theming
-    property color colorComponent
-    property color colorComponentText
-    property color colorComponentContent
-    property color colorComponentBorder
-    property color colorComponentDown
-    property color colorComponentBackground
-
-    property int componentHeight: 40
-    property int componentRadius: 4
-    property int componentBorderWidth: 1
-
     ////////////////
 
     // Palette colors
-    property color colorLightGreen: "#09debc" // unused
+    property color colorLightGreen: "#09debc"
     property color colorGreen
-    property color colorDarkGreen: "#1ea892" // unused
+    property color colorDarkGreen: "#1ea892"
     property color colorBlue
     property color colorYellow
     property color colorOrange
     property color colorRed
-    property color colorGrey: "#555151" // unused
-    property color colorLightGrey: "#a9bcb8" // unused
+    property color colorGrey: "#555151"
+    property color colorLightGrey: "#a9bcb8"
 
     // Fixed colors
     readonly property color colorMaterialBlue: "#2196f3"
@@ -92,27 +89,48 @@ Item {
     readonly property color colorMaterialOrange: "#ff9800"
     readonly property color colorMaterialLightGreen: "#8bc34a"
 
-    readonly property color colorMaterialLightGrey: "#fafafa"
+    readonly property color colorMaterialLightGrey: "#f8f8f8"
     readonly property color colorMaterialGrey: "#eeeeee"
-    readonly property color colorMaterialDarkGrey: "#d0d0d0"
+    readonly property color colorMaterialDarkGrey: "#ececec"
+
     readonly property color colorNeutralDay: "#e4e4e4"
     readonly property color colorNeutralNight: "#ffb300"
 
-    // ios blue "#077aff"
-    // ios red "#ff3b30"
-    // ios grey "#f8f8f8"
+    ////////////////
+
+    // Qt Quick Controls & theming
+    property color colorComponent
+    property color colorComponentText
+    property color colorComponentContent
+    property color colorComponentBorder
+    property color colorComponentDown
+    property color colorComponentBackground
+
+    property int componentMargin: isHdpi ? 12 : 16
+    property int componentMarginL: isHdpi ? 16 : 20
+    property int componentMarginXL: isHdpi ? 20 : 24
+
+    property int componentHeight: (isDesktop && isHdpi) ? 36 : 40
+    property int componentHeightL: (isDesktop && isHdpi) ? 44 : 48
+    property int componentHeightXL: (isDesktop && isHdpi) ? 48 : 56
+
+    property int componentRadius: 4
+    property int componentBorderWidth: 2
+
+    property int componentFontSize: isMobile ? 14 : 15
 
     ////////////////
 
-    // Fonts (sizes in pixel) (WIP)
-    readonly property int fontSizeHeader: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 22 : 26
-    readonly property int fontSizeTitle: 24
+    // Fonts (sizes in pixel)
+    readonly property int fontSizeHeader: isMobile ? 22 : 26
+    readonly property int fontSizeTitle: isMobile ? 24 : 28
+    readonly property int fontSizeContentVeryVerySmall: 10
     readonly property int fontSizeContentVerySmall: 12
     readonly property int fontSizeContentSmall: 14
     readonly property int fontSizeContent: 16
     readonly property int fontSizeContentBig: 18
     readonly property int fontSizeContentVeryBig: 20
-    readonly property int fontSizeComponent: (Qt.platform.os === "ios" || Qt.platform.os === "android") ? 14 : 15
+    readonly property int fontSizeContentVeryVeryBig: 22
 
     ////////////////////////////////////////////////////////////////////////////
 

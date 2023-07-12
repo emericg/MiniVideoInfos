@@ -41,9 +41,9 @@ Item {
 
         // Set header title
         if (!isPhone || mediaItem.name.length < 24) {
-            appHeader.title = mediaItem.name + "." + mediaItem.ext
+            appHeader.headerTitle = mediaItem.name + "." + mediaItem.ext
         } else {
-            appHeader.title = appHeader.appName
+            appHeader.headerTitle = appHeader.appName
         }
     }
 
