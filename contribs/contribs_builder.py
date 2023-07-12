@@ -38,7 +38,7 @@ targets = ['linux', 'macos', 'macos_x86_64', 'macos_arm64', 'msvc2019', 'msvc202
            'android_armv8', 'android_armv7', 'android_x86_64', 'android_x86'
            'ios', 'ios_simulator', 'ios_armv7', 'ios_armv8']
 
-softwares = ['libexif', 'taglib', 'minivideo', 'qtlocation']
+softwares = ['libexif', 'taglib', 'minivideo']
 
 print("> targets available:")
 print(str(targets))
@@ -51,14 +51,13 @@ print(str(softwares))
 
 ## linux:
 # python3 cmake ninja libtool automake m4
-# libudev-dev
 
 ## macOS:
 # brew install python cmake automake ninja
 # brew install libtool pkg-config
 # brew install gettext iconv libudev
 # brew link --force gettext
-# xcode (12+)
+# xcode (13+)
 
 ## Windows:
 # python3 (https://www.python.org/downloads/)
@@ -120,9 +119,10 @@ clean = False
 rebuild = False
 targets_selected = []
 softwares_selected = []
-QT_VERSION = "6.4.0"
+QT_VERSION = "6.5.1"
 QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
-ANDROID_NDK_HOME = os.getenv('ANDROID_NDK_HOME', '')
+ANDROID_SDK_ROOT = os.getenv('ANDROID_SDK_ROOT', '')
+ANDROID_NDK_ROOT = os.getenv('ANDROID_NDK_ROOT', '')
 MSVC_GEN_VER = ""
 
 ## ARGUMENTS ###################################################################
@@ -137,7 +137,8 @@ parser.add_argument('--targets', dest='targets', help="specify target(s) platfor
 parser.add_argument('--softwares', dest='softwares', help="specify software(s) to build")
 parser.add_argument('--qt-version', dest='qtversion', help="specify a Qt version to use")
 parser.add_argument('--qt-directory', dest='qtdirectory', help="specify a custom path to the Qt install root dir (if QT_DIRECTORY environment variable isn't set)")
-parser.add_argument('--android-ndk', dest='androidndk', help="specify a custom path to the android-ndk (if ANDROID_NDK_HOME environment variable isn't set)")
+parser.add_argument('--android-sdk', dest='androidsdk', help="specify a custom path to the android-sdk (if ANDROID_SDK_ROOT environment variable isn't set)")
+parser.add_argument('--android-ndk', dest='androidndk', help="specify a custom path to the android-ndk (if ANDROID_NDK_ROOT environment variable isn't set)")
 
 if len(sys.argv) > 1:
     result = parser.parse_args()
@@ -153,8 +154,10 @@ if len(sys.argv) > 1:
         QT_VERSION = result.qtversion
     if result.qtdirectory:
         QT_DIRECTORY = result.qtdirectory
+    if result.androidsdk:
+        ANDROID_SDK_ROOT = result.androidsdk
     if result.androidndk:
-        ANDROID_NDK_HOME = result.androidndk
+        ANDROID_NDK_ROOT = result.androidndk
 
 if len(softwares_selected) == 0:
     softwares_selected = softwares
@@ -228,7 +231,7 @@ if len(TARGETS) == 0:
             MSVC_GEN_VER = "Visual Studio 16 2019"
             TARGETS.append(["windows", "x86_64", "msvc2019_64"])
 
-    if ANDROID_NDK_HOME: # Android cross compilation
+    if ANDROID_NDK_ROOT: # Android cross compilation
         TARGETS.append(["android", "armv8", "android_arm64_v8a"])
         TARGETS.append(["android", "armv7", "android_armv7"])
         TARGETS.append(["android", "x86_64", "android_x86_64"])
@@ -296,15 +299,6 @@ if "minivideo" in softwares_selected:
     if not os.path.exists(src_dir + FILE_minivideo):
         print("> Downloading " + FILE_minivideo + "...")
         urllib.request.urlretrieve("https://github.com/emericg/MiniVideo/archive/master.zip", src_dir + FILE_minivideo)
-
-## QtLocation (version: patched)
-FILE_qtlocation = "qtlocation-dev_" + QT_VERSION.replace('.', '') + ".zip"
-DIR_qtlocation = "qtlocation-dev_" + QT_VERSION.replace('.', '')
-
-if "qtlocation" in softwares_selected:
-    if not os.path.exists(src_dir + FILE_qtlocation):
-        print("> Downloading " + FILE_qtlocation + "...")
-        urllib.request.urlretrieve("https://github.com/emericg/qtlocation/archive/refs/heads/dev_" + QT_VERSION.replace('.', '') + ".zip", src_dir + FILE_qtlocation)
 
 ## BUILD SOFTWARES #############################################################
 
@@ -393,13 +387,13 @@ for TARGET in TARGETS:
 
     if OS_TARGET == "android":
         if ARCH_TARGET == "x86":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86", "-DANDROID_PLATFORM=android-23"]
         elif ARCH_TARGET == "x86_64":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86_64", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86_64", "-DANDROID_PLATFORM=android-23"]
         elif ARCH_TARGET == "armv7":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-23"]
         else: # ARCH_TARGET == "armv8":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_HOME + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
 
     #### EXTRACT, BUILD & INSTALL ####
 
@@ -436,18 +430,3 @@ for TARGET in TARGETS:
         subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_minivideo + "/minivideo/build")
         subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
         subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_minivideo + "/minivideo/build")
-
-    ## qtlocation
-    if "qtlocation" in softwares_selected:
-        if not os.path.isdir(build_dir + DIR_qtlocation):
-            zipQtLoc = zipfile.ZipFile(src_dir + FILE_qtlocation)
-            zipQtLoc.extractall(build_dir)
-
-        try: os.makedirs(build_dir + DIR_qtlocation + "/build")
-        except: print() # who cares
-
-        print("> Building QtLocation (patched)")
-        subprocess.check_call([QT_CONF_MODULE_cmd, ".."], cwd=build_dir + DIR_qtlocation + "/build")
-        subprocess.check_call(["cmake", "--build", ".", "--parallel", "--target", "all"], cwd=build_dir + DIR_qtlocation + "/build")
-        #subprocess.check_call(["cmake", "--install", "."], cwd=build_dir + DIR_qtlocation + "/build")
-        subprocess.check_call(["ninja", "install"], cwd=build_dir + DIR_qtlocation + "/build") # Qt bug 91647

@@ -113,7 +113,7 @@ Item {
         //activeMapType: MapType.TerrainMap
 
         property bool moove: false
-        gesture.enabled: moove
+        //gesture.enabled: moove
         copyrightsVisible: false
 
         plugin: Plugin {
