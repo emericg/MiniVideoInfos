@@ -1,6 +1,6 @@
-/*
+/*!
  * Copyright (c) 2016 J-P Nurmi
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2023 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,17 +32,7 @@
 class MobileUIPrivate
 {
 public:
-    static bool isAvailable_sys();
-
-    static int getDeviceTheme_sys();
-
-    static void setColor_statusbar(const QColor &color);
-    static void setTheme_statusbar(MobileUI::Theme theme);
-
-    static void setColor_navbar(const QColor &color);
-    static void setTheme_navbar(MobileUI::Theme theme);
-
-    static bool areIosSlotsConnected;
+    static bool areRefreshSlotsConnected;
 
     static MobileUI::Theme deviceTheme;
 
@@ -52,7 +42,33 @@ public:
     static QColor navbarColor;
     static MobileUI::Theme navbarTheme;
 
-    static void keepScreenOn(bool on);
+    static bool screenAlwaysOn;
+
+    static MobileUI::ScreenOrientation screenOrientation;
+
+    static int getDeviceTheme();
+
+    static void refreshUI_async();
+
+    static void setColor_statusbar(const QColor &color);
+    static void setTheme_statusbar(const MobileUI::Theme theme);
+
+    static void setColor_navbar(const QColor &color);
+    static void setTheme_navbar(const MobileUI::Theme theme);
+
+    static int getStatusbarHeight();
+    static int getNavbarHeight();
+
+    static int getSafeAreaTop();
+    static int getSafeAreaLeft();
+    static int getSafeAreaRight();
+    static int getSafeAreaBottom();
+
+    static void setScreenAlwaysOn(const bool on);
+
+    static void setScreenOrientation(const MobileUI::ScreenOrientation orientation);
+
+    static void vibrate();
 };
 
 /* ************************************************************************** */
