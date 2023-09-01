@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import Qt.labs.platform 1.1
+import QtQuick
+import QtQuick.Dialogs
 
 FileDialog {
     id: fileDialogPlatformFile
@@ -7,7 +7,11 @@ FileDialog {
     // 'platform'
     // https://doc.qt.io/qt-5/qml-qt-labs-platform-filedialog.html
 
+    // 'dialog'
+    // https://doc.qt.io/qt-6/qml-qtquick-dialogs-filedialog.html
+
     // compatibility
+    property url folder: ""
     property bool sidebarVisible: true // not supported
     property bool selectExisting: true
     property bool selectFolder: false // not supported
@@ -35,10 +39,10 @@ FileDialog {
     ////////////////////////////////////////////////////////////////////////////
 
     onAccepted: {
-        if (Qt.platform.os === "android") file = utilsShare.getPathFromURI(file)
+        //if (Qt.platform.os === "android") file = utilsShare.getPathFromURI(selectedFile)
 
-        if (selectMultiple) fileDialog.accepted(files)
-        else fileDialog.accepted(file)
+        if (selectMultiple) fileDialog.accepted(selectedFiles)
+        else fileDialog.accepted(selectedFile)
         fileDialog.close()
     }
     onRejected: {

@@ -1,11 +1,9 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Rectangle {
-    width: 480
-    height: 720
     anchors.fill: parent
 
     color: Theme.colorHeader

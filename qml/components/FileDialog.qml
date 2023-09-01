@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick
 import "qrc:/js/UtilsPath.js" as UtilsPath
 
 Loader {
@@ -23,10 +23,15 @@ Loader {
     signal accepted(url fileUrl)
     signal rejected()
 
+    Keys.onBackPressed: back()
+
     ////////////////////////////////////////////////////////////////////////////
 
     property var fileDialogItem: null
+
+    active: true
     asynchronous: true
+
     source: {
         if (Qt.platform.os === "ios") {
             usePlatformDialog = true
@@ -116,5 +121,5 @@ Loader {
         }
     }
 
-    Keys.onBackPressed: back()
+    ////////////////////////////////////////////////////////////////////////////
 }

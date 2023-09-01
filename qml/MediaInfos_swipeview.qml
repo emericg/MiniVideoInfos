@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsString.js" as UtilsString
 
 Item {
@@ -566,7 +566,7 @@ Item {
                 source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
 
                 property int index: 0
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -576,7 +576,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -586,7 +586,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -596,7 +596,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -606,7 +606,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -616,7 +616,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -626,7 +626,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -636,7 +636,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -646,7 +646,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -656,7 +656,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -666,7 +666,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
             MobileMenuItem_vertical {
@@ -676,7 +676,7 @@ Item {
 
                 property int index: -1
                 visible: (index !== -1)
-                selected: (mediaPages.currentIndex === index)
+                highlighted: (mediaPages.currentIndex === index)
                 onClicked: mediaPages.currentIndex = index
             }
         }

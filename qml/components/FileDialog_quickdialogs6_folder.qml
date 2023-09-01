@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import Qt.labs.platform 1.1
+import QtQuick
+import QtQuick.Dialogs
 
 FolderDialog {
     id: fileDialogPlatformFolder
@@ -7,7 +7,11 @@ FolderDialog {
     // 'platform'
     // https://doc.qt.io/qt-5/qml-qt-labs-platform-folderdialog.html
 
+    // 'dialog'
+    // https://doc.qt.io/qt-6/qml-qtquick-dialogs-folderdialog.html
+
     // compatibility
+    property url folder: ""
     property bool sidebarVisible: true // not supported
     property bool selectExisting: true
     property bool selectFolder: false
@@ -27,7 +31,7 @@ FolderDialog {
     ////////////////////////////////////////////////////////////////////////////
 
     onAccepted: {
-        fileDialog.accepted(currentFolder)
+        fileDialog.accepted(selectedFolder)
         fileDialog.close()
     }
     onRejected: {

@@ -1,10 +1,9 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
-//import QtGraphicalEffects 1.15 // Qt5
 import Qt5Compat.GraphicalEffects // Qt6
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsPath.js" as UtilsPath
 import "qrc:/js/UtilsString.js" as UtilsString
 import "qrc:/js/UtilsMedia.js" as UtilsMedia

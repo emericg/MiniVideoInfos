@@ -1,9 +1,10 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Window 2.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
 
-import ThemeEngine 1.0
-import MobileUI 1.0
+import ThemeEngine
+import MobileUI
+
 import "qrc:/js/UtilsPath.js" as UtilsPath
 
 ApplicationWindow {
@@ -431,7 +432,7 @@ ApplicationWindow {
         onExited: {
             dropAreaIndicator.opacity = 0
         }
-        onDropped: (drop) =>{
+        onDropped: (drop) => {
             dropAreaIndicator.opacity = 0
 
             if (drop.hasUrls) {
@@ -615,5 +616,5 @@ ApplicationWindow {
         }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 }

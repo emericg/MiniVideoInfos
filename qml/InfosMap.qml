@@ -1,10 +1,10 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
 import QtLocation
 import QtPositioning
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsString.js" as UtilsString
 
 Item {
@@ -177,13 +177,13 @@ Item {
                 width: 40
                 height: 40
 
-                background: true
+                backgroundVisible: true
                 backgroundColor: Theme.colorHeader
                 highlightMode: "color"
                 iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
                 source: "qrc:/assets/icons_material/baseline-open_with-24px.svg"
 
-                selected: map.moove
+                highlighted: map.moove
                 onClicked: {
                     map.moove = !map.moove
 
@@ -200,7 +200,7 @@ Item {
                 opacity: (map.center !== QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: 200 } }
 
-                background: true
+                backgroundVisible: true
                 backgroundColor: Theme.colorHeader
                 highlightMode: "color"
                 iconColor: Theme.colorText
@@ -224,7 +224,7 @@ Item {
 
                 highlightMode: "color"
                 iconColor: Theme.colorText
-                background: true
+                backgroundVisible: true
                 backgroundColor: Theme.colorHeader
 
                 source: "qrc:/assets/icons_material/baseline-zoom_out-24px.svg"
@@ -238,7 +238,7 @@ Item {
 
                 highlightMode: "color"
                 iconColor: Theme.colorText
-                background: true
+                backgroundVisible: true
                 backgroundColor: Theme.colorHeader
 
                 source: "qrc:/assets/icons_material/baseline-zoom_in-24px.svg"

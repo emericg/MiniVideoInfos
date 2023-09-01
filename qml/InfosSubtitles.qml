@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsPath.js" as UtilsPath
 import "qrc:/js/UtilsString.js" as UtilsString
 import "qrc:/js/UtilsMedia.js" as UtilsMedia
@@ -179,7 +179,7 @@ Item {
                 color: Theme.colorText
                 readOnly: true
 
-                font.pixelSize: Theme.fontSizeComponent
+                font.pixelSize: Theme.componentFontSize
                 font.family: {
                     if (Qt.platform.os === "android")
                         return "Droid Sans Mono"

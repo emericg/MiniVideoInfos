@@ -1,9 +1,9 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
 import Qt.labs.folderlistmodel 2.3
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsPath.js" as UtilsPath
 import "qrc:/js/UtilsString.js" as UtilsString
 
@@ -369,7 +369,9 @@ Rectangle {
         z: 1
         height: 40
         visible: !selectFolder
-        color: Theme.colorTabletmenu
+
+        opacity: 0.8
+        color: Theme.colorHeader
 
         Text {
             id: rectangleErrorText
