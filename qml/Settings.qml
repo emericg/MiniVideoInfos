@@ -7,12 +7,14 @@ Loader {
     id: settingsScreen
     anchors.fill: parent
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadScreen() {
         // load screen
         settingsScreen.active = true
 
         // change screen
-        appContent.state = "Settings"
+        appContent.state = "ScreenSettings"
     }
 
     function backAction() {
@@ -23,63 +25,40 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
-
     asynchronous: false
+
     sourceComponent: Flickable {
         anchors.fill: parent
 
         contentWidth: -1
-        contentHeight: column.height
+        contentHeight: contentColumn.height
 
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
         ScrollBar.vertical: ScrollBar { visible: isDesktop; }
 
+        function backAction() {
+            //
+        }
+
         Column {
-            id: column
+            id: contentColumn
             anchors.left: parent.left
             anchors.leftMargin: screenPaddingLeft
             anchors.right: parent.right
             anchors.rightMargin: screenPaddingRight
 
-            topPadding: 16
-            bottomPadding: 16
+            topPadding: Theme.componentMargin + 8
+            bottomPadding: Theme.componentMargin
             spacing: 8
+
+            property int padIcon: singleColumn ? Theme.componentMarginL : Theme.componentMarginL
+            property int padText: appHeader.headerPosition
 
             ////////////////
 
-            Rectangle {
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                color: Theme.colorForeground
-
-                IconSvg {
-                    id: image_appsettings
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                }
-
-                Text {
-                    id: text_appsettings
-                    anchors.left: image_appsettings.right
-                    anchors.leftMargin: 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Application")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
+            ListTitle {
+                text: qsTr("Application")
+                icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
             }
 
             ////////////////
@@ -260,39 +239,9 @@ Loader {
 
             ////////////////
 
-            Rectangle {
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                color: Theme.colorForeground
-
-                IconSvg {
-                    id: image_filechooser
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-folder_open-24px.svg"
-                }
-
-                Text {
-                    id: text_filechooser
-                    anchors.left: image_filechooser.right
-                    anchors.leftMargin: 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("File chooser")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
+            ListTitle {
+                text: qsTr("File chooser")
+                icon: "qrc:/assets/icons_material/baseline-folder_open-24px.svg"
             }
 
             ////////////////
@@ -348,41 +297,62 @@ Loader {
                 }
             }
 
-            ////////////////
-
-            Rectangle {
+            Item {
+                id: element_nativeChooser
                 height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-
-                color: Theme.colorForeground
+                anchors.rightMargin: screenPaddingRight
 
                 IconSvg {
-                    id: image_mediasettings
+                    id: image_nativeChooser
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
+                    source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                    fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-photo_camera-24px.svg"
+                    smooth: true
                 }
 
                 Text {
-                    id: text_mediasettings
-                    anchors.left: image_mediasettings.right
+                    id: text_nativeChooser
+                    height: 40
+                    anchors.left: image_nativeChooser.right
                     anchors.leftMargin: 24
+                    anchors.right: switch_nativeChooser.left
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Media")
+                    text: qsTr("Use native file chooser")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
                     color: Theme.colorText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                 }
+
+                SwitchThemedDesktop {
+                    id: switch_nativeChooser
+                    z: 1
+                    anchors.right: parent.right
+                    anchors.rightMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    Component.onCompleted: checked = settingsManager.mediaNativeFilePicker
+                    onCheckedChanged: settingsManager.mediaNativeFilePicker = checked
+                }
+            }
+
+            ////////////////
+
+            ListTitle {
+                text: qsTr("Media")
+                icon: "qrc:/assets/icons_material/baseline-photo_camera-24px.svg"
             }
 
             ////////////////
@@ -460,12 +430,12 @@ Loader {
 
                 Text {
                     id: text_mediaExport
-                    height: 40
                     anchors.right: switch_mediaExport.left
                     anchors.rightMargin: 16
                     anchors.left: image_mediaExport.right
                     anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Enable export tab")
                     textFormat: Text.PlainText
@@ -491,11 +461,11 @@ Loader {
 
             Item {
                 id: element_unit
-                height: 48
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_unit
@@ -526,55 +496,22 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                Row {
+                SelectorMenu {
                     id: row_unit
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: 8
+                    height: 32
 
-                    RadioButtonThemed {
-                        id: radioDelegateMetric
-                        height: 40
-
-                        z: 1
-                        text: qsTr("Metric")
-                        font.pixelSize: 14
-
-                        checked: {
-                            if (settingsManager.unitSystem === 1) {
-                                radioDelegateMetric.checked = true
-                                radioDelegateImperial.checked = false
-                            } else {
-                                radioDelegateMetric.checked = false
-                                radioDelegateImperial.checked = true
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true) settingsManager.unitSystem = 1
-                        }
+                    model: ListModel {
+                        ListElement { idx: 0; txt: qsTr("Metric"); src: ""; sz: 16; }
+                        ListElement { idx: 1; txt: qsTr("Imperial"); src: ""; sz: 16; }
                     }
 
-                    RadioButtonThemed {
-                        id: radioDelegateImperial
-                        height: 40
-
-                        z: 1
-                        text: qsTr("Imperial")
-                        font.pixelSize: 14
-
-                        checked: {
-                            if (settingsManager.unitSystem !== 1) {
-                                radioDelegateMetric.checked = false
-                                radioDelegateImperial.checked = true
-                            } else {
-                                radioDelegateImperial.checked = false
-                                radioDelegateMetric.checked = true
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true) settingsManager.unitSystem = 2
-                        }
+                    currentSelection: settingsManager.unitSystem
+                    onMenuSelected: (index) => {
+                        currentSelection = index
+                        settingsManager.unitSystem = index
                     }
                 }
             }
@@ -583,11 +520,11 @@ Loader {
 
             Item {
                 id: element_sizes
-                height: 48
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_sizes
@@ -617,76 +554,26 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                Row {
+                SelectorMenu {
                     id: row_sizes
-                    height: 40
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: 8
+                    height: 32
 
-                    RadioButtonThemed {
-                        id: radioDelegateKB
-                        height: 40
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        z: 1
-                        text: qsTr("KB")
-                        font.pixelSize: 14
-
-                        checked: {
-                            if (settingsManager.unitSizes === 0) {
-                                radioDelegateKB.checked = true
-                                radioDelegateKiB.checked = false
-                                radioDelegateBoth.checked = false
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true) settingsManager.unitSizes = 0
-                        }
+                    model: ListModel {
+                        ListElement { idx: 0; txt: qsTr("KB"); src: ""; sz: 16; }
+                        ListElement { idx: 1; txt: qsTr("KiB"); src: ""; sz: 16; }
+                        //ListElement { idx: 2; txt: qsTr("Both"); src: ""; sz: 16; }
                     }
-                    RadioButtonThemed {
-                        id: radioDelegateKiB
-                        height: 40
-                        anchors.verticalCenter: parent.verticalCenter
 
-                        z: 1
-                        text: qsTr("KiB")
-                        font.pixelSize: 14
-
-                        checked: {
-                            if (settingsManager.unitSizes === 1) {
-                                radioDelegateKB.checked = false
-                                radioDelegateKiB.checked = true
-                                radioDelegateBoth.checked = false
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true) settingsManager.unitSizes = 1
-                        }
-                    }
-                    RadioButtonThemed {
-                        id: radioDelegateBoth
-                        height: 40
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        z: 1
-                        text: qsTr("Both")
-                        visible: false
-                        font.pixelSize: 14
-
-                        checked: {
-                            if (settingsManager.unitSizes === 2) {
-                                radioDelegateKB.checked = false
-                                radioDelegateKiB.checked = false
-                                radioDelegateBoth.checked = true
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true) settingsManager.unitSizes = 2
-                        }
+                    currentSelection: settingsManager.unitSizes
+                    onMenuSelected: (index) => {
+                        currentSelection = index
+                        settingsManager.unitSizes = index
                     }
                 }
+
             }
             Text {
                 id: legend_sizes
@@ -694,9 +581,9 @@ Loader {
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + 16
+
                 topPadding: -12
                 bottomPadding: 8
-
                 visible: (element_sizes.visible)
 
                 text: qsTr("1 KB = 1000 bytes. Uses powers of 10 (10^3) in decimal number system.\n" +
@@ -707,5 +594,9 @@ Loader {
                 font.pixelSize: 14
             }
         }
+
+        ////////
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

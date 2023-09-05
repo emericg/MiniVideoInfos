@@ -12,12 +12,11 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 720
 
-    //flags: (Qt.platform.os === "ios") ? Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
 
-    property bool isHdpi: (utilsScreen.screenDpi > 128)
+    property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
     property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize < 7.0))
@@ -57,18 +56,25 @@ ApplicationWindow {
             // hacks
             if (Qt.platform.os === "android") {
                 if (Screen.primaryOrientation === Qt.PortraitOrientation) {
-                    screenPaddingStatusbar = mobileUI.safeAreaTop
-                    screenPaddingTop = 0
+                    if (appWindow.visibility === Window.FullScreen) {
+                        screenPaddingStatusbar = 0
+                        screenPaddingNavbar = 0
+                    } else {
+                        screenPaddingStatusbar = mobileUI.safeAreaTop
+                        screenPaddingTop = 0
+                    }
                 } else {
                     screenPaddingNavbar = 0
                 }
             }
+            // hacks
             if (Qt.platform.os === "ios") {
-                //
-            }
-            if (visibility === ApplicationWindow.FullScreen) {
-                screenPaddingStatusbar = 0
-                screenPaddingNavbar = 0
+                if (appWindow.visibility === Window.FullScreen) {
+                    screenPaddingStatusbar = 0
+                } else {
+                    screenPaddingStatusbar = mobileUI.safeAreaTop
+                    screenPaddingTop = 0
+                }
             }
         } else {
             screenPaddingStatusbar = 0
@@ -122,7 +128,7 @@ ApplicationWindow {
         anchors.right: parent.right
 
         height: 2
-        opacity: 0.66
+        opacity: 0.5
         color: Theme.colorHeaderHighlight
 
         Rectangle { // shadow
@@ -131,7 +137,7 @@ ApplicationWindow {
             anchors.right: parent.right
 
             height: 8
-            opacity: 0.66
+            opacity: 0.5
 
             gradient: Gradient {
                 orientation: Gradient.Vertical
@@ -219,8 +225,8 @@ ApplicationWindow {
 
         if (appContent.state === "Tutorial") {
             appContent.state = screenTutorial.entryPoint
-        } else if (appContent.state === "Permissions") {
-            appContent.state = screenPermissions.entryPoint
+        } else if (appContent.state === "ScreenAboutPermissions") {
+            appContent.state = screenAboutPermissions.entryPoint
         } else if (appContent.state === "MediaList") {
             screenMediaList.backAction()
         } else {
@@ -268,13 +274,13 @@ ApplicationWindow {
 
     FocusScope {
         id: appContent
+
         anchors.top: appHeader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: mobileMenu.visible ? mobileMenu.height : 0
+        anchors.bottomMargin: mobileMenu.height
 
-        focus: true
         Keys.onBackPressed: {
             if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") {
                 // do nothing
@@ -296,27 +302,21 @@ ApplicationWindow {
         }
 
         Tutorial {
-            anchors.fill: parent
             id: screenTutorial
         }
         MediaList {
-            anchors.fill: parent
             id: screenMediaList
         }
         MediaInfos {
-            anchors.fill: parent
             id: screenMediaInfos
         }
         Settings {
-            anchors.fill: parent
             id: screenSettings
         }
         MobilePermissions {
-            anchors.fill: parent
-            id: screenPermissions
+            id: screenAboutPermissions
         }
         About {
-            anchors.fill: parent
             id: screenAbout
         }
 
@@ -340,6 +340,8 @@ ApplicationWindow {
             } else {
                 appHeader.leftMenuMode = "back"
             }
+
+            focus = true
         }
 
         states: [
@@ -350,7 +352,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -360,7 +362,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
@@ -369,40 +371,44 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: true; visible: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "Settings"
+                name: "ScreenSettings"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Settings"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; }
-                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "Permissions"
+                name: "ScreenAboutPermissions"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Permissions"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenPermissions; visible: true; enabled: true; }
+                PropertyChanges { target: screenAboutPermissions; visible: true; enabled: true; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
-                name: "About"
+                name: "ScreenAbout"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("About"); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; }
             }
         ]
+    }
+
+    MobileMenu {
+        id: mobileMenu
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -489,102 +495,9 @@ ApplicationWindow {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item {
-        id: mobileMenu
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        property int hhh: (appWindow.isPhone ? 36 : 48)
-        property int hhi: (hhh * 0.666)
-        property int hhv: visible ? hhh : 0
-
-        z: 10
-        height: hhh + screenPaddingNavbar + screenPaddingBottom
-
-        ////////////////////////////////////////////////////////////////////////////
-
-        Rectangle {
-            anchors.fill: parent
-            opacity: 0.5
-            color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
-        }
-
-        Rectangle {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 1
-            opacity: 0.66
-            visible: !appWindow.isPhone
-            color: Theme.colorTabletmenuContent
-        }
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        ////////////////////////////////////////////////////////////////////////////
-
-        visible: (isDesktop || isTablet) &&
-                 (appContent.state !== "Tutorial" && appContent.state !== "MediaInfos")
-
-        Row {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: (-screenPaddingNavbar -screenPaddingBottom) / 2
-            spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
-
-            visible: (appContent.state === "MediaList" ||
-                      appContent.state === "Settings" ||
-                      appContent.state === "About")
-
-            MobileMenuItem_horizontal {
-                id: menuMedia
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                text: qsTr("Media")
-                source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
-                sourceSize: 24
-
-                highlighted: (appContent.state === "MediaList")
-                onClicked: appContent.state = "MediaList"
-            }
-            MobileMenuItem_horizontal {
-                id: menuSettings
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                text: qsTr("Settings")
-                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                sourceSize: 24
-
-                highlighted: (appContent.state === "Settings")
-                onClicked: screenSettings.loadScreen()
-            }
-            MobileMenuItem_horizontal {
-                id: menuAbout
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                text: qsTr("About")
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                sourceSize: 24
-
-                highlighted: (appContent.state === "About")
-                onClicked: screenAbout.loadScreen()
-            }
-        }
-    }
-
-    ////////////////
-
     Timer {
         id: exitTimer
-        interval: 3333
+        interval: 2222
         running: false
         repeat: false
     }
@@ -592,11 +505,13 @@ ApplicationWindow {
         id: exitWarning
 
         anchors.left: parent.left
+        anchors.leftMargin: Theme.componentMargin
         anchors.right: parent.right
+        anchors.rightMargin: Theme.componentMargin
         anchors.bottom: parent.bottom
-        anchors.margins: Theme.componentMargin + screenPaddingBottom
+        anchors.bottomMargin: Theme.componentMargin + screenPaddingNavbar + screenPaddingBottom
 
-        height: Theme.componentHeight
+        height: Theme.componentHeightL
         radius: Theme.componentRadius
 
         color: Theme.colorComponentBackground

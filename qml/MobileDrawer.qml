@@ -48,19 +48,19 @@ Drawer {
             Rectangle {
                 id: rectangleLogo
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                color: Theme.colorBackground
+
                 height: 80
+                color: Theme.colorBackground
 
                 Image {
                     id: imageHeader
-                    width: 40
-                    height: 40
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
+                    width: 40
+                    height: 40
                     source: "qrc:/assets/logos/logo.svg"
                     sourceSize: Qt.size(width, height)
                 }
@@ -90,92 +90,36 @@ Drawer {
             anchors.bottom: parent.bottom
 
             contentWidth: -1
-            contentHeight: column.height
+            contentHeight: contentColumn.height
 
             Column {
-                id: column
+                id: contentColumn
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 ////////
 
-                Rectangle {
-                    id: rectangleLoad
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ? Theme.colorForeground : Theme.colorBackground
+                DrawerItem {
+                    highlighted: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen)
+                    text: qsTr("Open media")
+                    iconSource: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            appContent.state = "MediaList"
-                            screenMediaList.openDialog()
-                            appDrawer.close()
-                        }
-                    }
-
-                    IconSvg {
-                        id: buttonLoadImg
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/duotone-library_add-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Open media")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
+                    onClicked: {
+                        appContent.state = "MediaList"
+                        screenMediaList.openDialog()
+                        appDrawer.close()
                     }
                 }
 
-                ////////
+                DrawerItem {
+                    highlighted: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen)
+                    text: qsTr("Media")
+                    iconSource: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
 
-                Rectangle {
-                    id: rectangleHome
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen) ? Theme.colorForeground : Theme.colorBackground
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            appContent.state = "MediaList"
-                            screenMediaList.closeDialog()
-                            appDrawer.close()
-                        }
-                    }
-
-                    IconSvg {
-                        id: buttonMediaImg
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Media")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
+                    onClicked: {
+                        appContent.state = "MediaList"
+                        screenMediaList.closeDialog()
+                        appDrawer.close()
                     }
                 }
 
@@ -191,193 +135,35 @@ Drawer {
 
                 ////////
 
-                Item { // spacer
-                    height: 8
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
-                Rectangle {
-                    height: 1
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: Theme.colorSeparator
-                }
-                Item {
-                    height: 8
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
+                ListSeparatorPadded { }
 
                 ////////
-/*
-                Rectangle {
-                    id: rectangleTool1
-                    height: 48
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    color: (appContent.state === "Tool1") ? Theme.colorForeground : Theme.colorBackground
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            appContent.state = "Tool1"
-                            appDrawer.close()
-                        }
-                    }
+                DrawerItem {
+                    highlighted: (appContent.state === "ScreenSettings")
+                    text: qsTr("Settings")
+                    iconSource: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Tool1")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
+                    onClicked: {
+                        screenSettings.loadScreen()
+                        appDrawer.close()
                     }
                 }
 
-                Rectangle {
-                    id: rectangleTool2
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: (appContent.state === "Tool2") ? Theme.colorForeground : Theme.colorBackground
+                DrawerItem {
+                    highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
+                    text: qsTr("About")
+                    iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            appContent.state = "Tool2"
-                            appDrawer.close()
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Tool2")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
-                    }
-                }
-
-                Item { // spacer
-                    height: 8
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                }
-                Rectangle {
-                    height: 1
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    color: Theme.colorSeparator
-                }
-                Item {
-                    height: 8
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                }
-*/
-                ////////
-
-                Rectangle {
-                    id: rectangleSettings
-                    height: 48
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    color: (appContent.state === "Settings") ? Theme.colorForeground : Theme.colorBackground
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            screenSettings.loadScreen()
-                            appDrawer.close()
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Settings")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
+                    onClicked: {
+                        screenAbout.loadScreen()
+                        appDrawer.close()
                     }
                 }
 
                 ////////
 
-                Rectangle {
-                    id: rectangleAbout
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: (appContent.state === "About") ? Theme.colorForeground : Theme.colorBackground
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            screenAbout.loadScreen()
-                            appDrawer.close()
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                        color: Theme.colorIcon
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("About")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
-                    }
-                }
+                ListSeparatorPadded { }
 
                 ////////
             }

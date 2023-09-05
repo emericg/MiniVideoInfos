@@ -11,7 +11,9 @@ Flickable {
     contentWidth: width
     contentHeight: columnMain.height
 
-    ScrollBar.vertical: ScrollBar {}
+    ScrollBar.vertical: ScrollBar { visible: isDesktop }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadTags(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
@@ -576,4 +578,6 @@ Flickable {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

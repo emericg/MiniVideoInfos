@@ -13,7 +13,9 @@ Flickable {
     contentWidth: width
     contentHeight: columnMain.height
 
-    ScrollBar.vertical: ScrollBar {}
+    ScrollBar.vertical: ScrollBar { visible: isDesktop }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadTrack(trackItem) {
         if (typeof trackItem === "undefined" || !trackItem) return
@@ -1302,4 +1304,6 @@ Flickable {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

@@ -3,6 +3,7 @@
         <file>Application.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
+        <file>MobileMenu.qml</file>
         <file>MobilePermissions.qml</file>
         <file>Tutorial.qml</file>
         <file>MediaList.qml</file>
@@ -27,13 +28,14 @@
         <file alias="PopupImage.qml">popups/PopupImage.qml</file>
         <file alias="PopupLoading.qml">popups/PopupLoading.qml</file>
 
-        <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
-        <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
         <file alias="FileDialog.qml">components/FileDialog.qml</file>
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
         <file alias="FileDialog_quickdialogs6_file.qml">components/FileDialog_quickdialogs6_file.qml</file>
         <file alias="FileDialog_quickdialogs6_folder.qml">components/FileDialog_quickdialogs6_folder.qml</file>
         <file alias="FileDialog_quickdialogs5.qml">components/FileDialog_quickdialogs5.qml</file>
+
+        <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
+        <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
         <file alias="TextEditMVI.qml">components/TextEditMVI.qml</file>
     </qresource>
 </RCC>

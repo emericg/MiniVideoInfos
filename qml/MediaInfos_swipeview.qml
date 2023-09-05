@@ -392,12 +392,12 @@ Item {
         }
 
         function removePage(page) {
-            for (var n = 0; n < count; n++) { if (page === itemAt(n)) { removeItem(n) } }
+            for (var n = 0; n < mediaPages.count; n++) { if (page === itemAt(n)) { removeItem(n) } }
             page.visible = false
         }
 
         function removePages() {
-            for (var n = 0; n < count; n++) {
+            for (var n = 0; n < mediaPages.count; n++) {
                 itemAt(0).visible = false
                 removeItem(0)
             }
@@ -532,17 +532,23 @@ Item {
     Rectangle {
         id: rectangleMenus
         anchors.left: parent.left
-        anchors.leftMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: 0
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
 
         z: 5
-        height: 56
-        opacity: 0.9
-        color: Theme.colorForeground
+        height: 48
+        opacity: 0.85
+        color: Theme.colorHeader
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation) && (mediaPages.count > 1)
+
+        Rectangle {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 2
+            opacity: 0.33
+            color: Theme.colorHeaderHighlight
+        }
 
         property int hhh: visible ? height : 0
 
@@ -555,8 +561,6 @@ Item {
         }
 
         Row {
-            anchors.top: parent.top
-            anchors.topMargin: 2
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -681,4 +685,6 @@ Item {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

@@ -124,7 +124,7 @@ Item {
     property bool dialogIsOpen: false
     property string dialogHeaderSaved: appHeader.appName
 
-    FileDialog {
+    FileDialog { // custom chooser
         id: fileDialog
         anchors.fill: parent
 
@@ -141,6 +141,7 @@ Item {
             closeDialog()
         }
     }
+
     function openDialog() {
         //console.log("FileDialog::openDialog()")
         if (!dialogIsOpen) {

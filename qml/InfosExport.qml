@@ -12,6 +12,8 @@ Item {
     implicitWidth: 480
     implicitHeight: 720
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadExport(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
@@ -104,7 +106,7 @@ Item {
         }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
         anchors.top: titleExport.bottom
@@ -149,4 +151,6 @@ Item {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

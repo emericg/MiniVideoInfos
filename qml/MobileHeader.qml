@@ -10,7 +10,7 @@ Rectangle {
 
     height: screenPaddingStatusbar + headerHeight
     color: Theme.colorHeader
-    clip: false
+    clip: true
     z: 10
 
     property int headerHeight: 52
@@ -76,7 +76,7 @@ Rectangle {
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
-                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
                 }
 
                 IconSvg {
@@ -142,7 +142,7 @@ Rectangle {
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
-                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
                 }
 
                 IconSvg {

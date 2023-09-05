@@ -200,7 +200,7 @@ Item {
             colorComponent = "#f0f0f0"
             colorComponentText = "black"
             colorComponentContent = "black"
-            colorComponentBorder = "#c4c4c4"
+            colorComponentBorder = "#d0d0d0"
             colorComponentDown = "#e0e0e0"
             colorComponentBackground = "white"
 

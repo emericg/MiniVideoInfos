@@ -12,6 +12,8 @@ Item {
     implicitWidth: 480
     implicitHeight: 720
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadSubtitles(mediaItem) {
         if (typeof mediaItem === "undefined" || !mediaItem) return
 
@@ -195,4 +197,6 @@ Item {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

@@ -11,7 +11,9 @@ Flickable {
     contentWidth: width
     contentHeight: columnMain.height
 
-    ScrollBar.vertical: ScrollBar {}
+    ScrollBar.vertical: ScrollBar { visible: isDesktop }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadGeneric() {
         info_name.text = mediaItem.name
@@ -1190,4 +1192,6 @@ Flickable {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

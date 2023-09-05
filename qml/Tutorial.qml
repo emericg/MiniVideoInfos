@@ -48,6 +48,7 @@ Rectangle {
                 anchors.leftMargin: screenPaddingLeft
                 anchors.rightMargin: screenPaddingRight
                 anchors.bottomMargin: 56
+
                 property int margins: isPhone ? 24 : 40
 
                 currentIndex: 0
