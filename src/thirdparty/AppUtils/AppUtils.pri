@@ -2,6 +2,7 @@
 # Generic utils
 SOURCES += $${PWD}/utils_app.cpp \
            $${PWD}/utils_bits.cpp \
+           $${PWD}/utils_fpsmonitor.cpp \
            $${PWD}/utils_language.cpp \
            $${PWD}/utils_log.cpp \
            $${PWD}/utils_maths.cpp \
@@ -10,6 +11,7 @@ SOURCES += $${PWD}/utils_app.cpp \
 
 HEADERS += $${PWD}/utils_app.h \
            $${PWD}/utils_bits.h \
+           $${PWD}/utils_fpsmonitor.h \
            $${PWD}/utils_language.h \
            $${PWD}/utils_log.h \
            $${PWD}/utils_maths.h \
@@ -62,7 +64,7 @@ android {
 
 # iOS OS utils
 ios {
-    QT      += gui-private quick
+    QT      += quick
     LIBS    += -framework UIKit
 
     SOURCES += $${PWD}/utils_os_ios.mm
