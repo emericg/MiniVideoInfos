@@ -15,7 +15,7 @@ env:
   VERSION: "0.10"
   APPLICATION: "MiniVideoInfos"
   QMAKE_PROJECT: "MiniVideoInfos.pro"
-  QT_VERSION: "6.4.0"
+  QT_VERSION: "6.5.2"
 
 #--------------------------------------------------------------------------------
 # Workflow jobs

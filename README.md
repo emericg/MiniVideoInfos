@@ -36,14 +36,14 @@ PICTURE file formats:
 
 ### Dependencies
 
-You will need a C++17 compiler and Qt 6.3+ with the following 'additional librairies':  
+You will need a C++17 compiler and Qt 6.5+ with the following 'additional librairies':  
 - Qt 5 Compatibility Module
 - Qt Positioning
-- Qt Location (not yet part of Qt6)
+- Qt Location (Qt 6.5+)
 - Qt Charts
 
-For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (22+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
-For macOS and iOS builds, you'll need Xcode 12+ installed.  
+For Android builds, you'll need the appropriates JDK (17) SDK (24+) and NDK (25+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
+For macOS and iOS builds, you'll need Xcode 13+ installed.  
 
 ### Building dependencies
 
