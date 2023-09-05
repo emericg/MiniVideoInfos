@@ -119,6 +119,65 @@ bool UtilsAndroid::getPermission_storage_write()
 
 /* ************************************************************************** */
 
+bool UtilsAndroid::checkPermission_storage_filesystem()
+{
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 30)
+    {
+        return QJniObject::callStaticMethod<jboolean>("android/os/Environment", "isExternalStorageManager");
+    }
+
+    return false;
+}
+
+bool UtilsAndroid::getPermission_storage_filesystem(const QString &packageName)
+{
+    //qDebug() << "> getPermission_storage_filesystem(" << packageName << ")";
+
+    bool status = false;
+
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 30)
+    {
+        if (!checkPermission_storage_filesystem())
+        {
+            QJniObject jpackageName = QJniObject::fromString("package:" + packageName);
+            QJniObject jintentObject = QJniObject::getStaticObjectField("android/provider/Settings",
+                                                                        "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION",
+                                                                        "Ljava/lang/String;");
+
+            QJniObject juri = QJniObject::callStaticObjectMethod("android/net/Uri", "parse",
+                                                                 "(Ljava/lang/String;)Landroid/net/Uri;",
+                                                                 jpackageName.object<jstring>());
+            if (!juri.isValid())
+            {
+                qWarning("Unable to create Uri object for APPLICATION_DETAILS_SETTINGS");
+                return false;
+            }
+
+            QJniObject intent("android/content/Intent", "(Ljava/lang/String;)V", jintentObject.object());
+            if (!intent.isValid())
+            {
+                qWarning("Unable to create Intent object for APPLICATION_DETAILS_SETTINGS");
+                return false;
+            }
+
+            intent.callObjectMethod("setData", "(Landroid/net/Uri;)Landroid/content/Intent;",
+                                    juri.object<jobject>());
+
+            QtAndroidPrivate::startActivity(intent, 0);
+
+            status = checkPermission_storage_filesystem();
+        }
+    }
+    else
+    {
+        qWarning() << "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION is not available";
+    }
+
+    return status;
+}
+
+/* ************************************************************************** */
+
 bool UtilsAndroid::checkPermission_camera()
 {
     QFuture<QtAndroidPrivate::PermissionResult> cam = QtAndroidPrivate::checkPermission("android.permission.CAMERA");

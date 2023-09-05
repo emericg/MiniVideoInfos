@@ -380,6 +380,28 @@ bool UtilsApp::getMobileStorageWritePermission()
 #endif
 }
 
+bool UtilsApp::checkMobileStorageFileSystemPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::checkPermission_storage_filesystem();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileStorageFileSystemPermission(const QString &packageName)
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::getPermission_storage_filesystem(packageName);
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
 bool UtilsApp::checkMobilePhoneStatePermission()
 {
 #if defined(Q_OS_ANDROID)

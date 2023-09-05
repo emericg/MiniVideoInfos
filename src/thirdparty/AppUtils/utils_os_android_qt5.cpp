@@ -100,6 +100,41 @@ bool UtilsAndroid::getPermission_storage_write()
 
 /* ************************************************************************** */
 
+bool UtilsAndroid::checkPermission_storage_filesystem()
+{
+    if (QtAndroid::androidSdkVersion() >= 30)
+    {
+        return QAndroidJniObject::callStaticMethod<jboolean>("android/os/Environment", "isExternalStorageManager");
+    }
+
+    return false;
+}
+
+bool UtilsAndroid::getPermission_storage_filesystem(const QString &packageName)
+{
+    //qDebug() << "> getPermission_storage_filesystem(" << packageName << ")";
+
+    bool status = false;
+
+    if (QtAndroid::androidSdkVersion() >= 30)
+    {
+        if (!checkPermission_storage_filesystem())
+        {
+            // TODO
+
+            status = checkPermission_storage_filesystem();
+        }
+    }
+    else
+    {
+        qWarning() << "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION is not available";
+    }
+
+    return status;
+}
+
+/* ************************************************************************** */
+
 bool UtilsAndroid::checkPermission_camera()
 {
     QtAndroid::PermissionResult cam = QtAndroid::checkPermission("android.permission.CAMERA");

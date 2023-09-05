@@ -69,6 +69,9 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/appThemeAuto"))
             m_appThemeAuto = settings.value("settings/appThemeAuto").toBool();
 
+        if (settings.contains("settings/mediaNativeFilePicker"))
+            m_mediaNativeFilePicker = settings.value("settings/mediaNativeFilePicker").toBool();
+
         if (settings.contains("settings/mediaFilter"))
             m_mediaFilter = settings.value("settings/mediaFilter").toBool();
 
@@ -121,6 +124,7 @@ bool SettingsManager::writeSettings()
     {
         settings.setValue("settings/appTheme", m_appTheme);
         settings.setValue("settings/appThemeAuto", m_appThemeAuto);
+        settings.setValue("settings/mediaNativeFilePicker", m_mediaNativeFilePicker);
         settings.setValue("settings/mediaFilter", m_mediaFilter);
         settings.setValue("settings/mediaPreview", m_mediaPreview);
         settings.setValue("settings/exportEnabled", m_exportEnabled);
@@ -186,6 +190,16 @@ void SettingsManager::setAppThemeAuto(const bool value)
         m_appThemeAuto = value;
         writeSettings();
         Q_EMIT appThemeAutoChanged();
+    }
+}
+
+void SettingsManager::setMediaNativeFilePicker(const bool value)
+{
+    if (m_mediaNativeFilePicker != value)
+    {
+        m_mediaNativeFilePicker = value;
+        writeSettings();
+        Q_EMIT mediaNativeFilePickerChanged();
     }
 }
 

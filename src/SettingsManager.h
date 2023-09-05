@@ -41,6 +41,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
     Q_PROPERTY(bool appThemeAuto READ getAppThemeAuto WRITE setAppThemeAuto NOTIFY appThemeAutoChanged)
 
+    Q_PROPERTY(bool mediaNativeFilePicker READ getMediaNativeFilePicker WRITE setMediaNativeFilePicker NOTIFY mediaNativeFilePickerChanged)
     Q_PROPERTY(bool mediaFilter READ getMediaFilter WRITE setMediaFilter NOTIFY mediaFilterChanged)
     Q_PROPERTY(bool mediaPreview READ getMediaPreview WRITE setMediaPreview NOTIFY mediaPreviewChanged)
     Q_PROPERTY(bool exportEnabled READ getExportEnabled WRITE setExportEnabled NOTIFY exportEnabledChanged)
@@ -54,6 +55,7 @@ class SettingsManager: public QObject
     bool m_appThemeAuto = false;
 
     // Application specific
+    bool m_mediaNativeFilePicker = false;
     bool m_mediaFilter = true;
     bool m_mediaPreview = true;
     bool m_exportEnabled = false;
@@ -72,6 +74,7 @@ Q_SIGNALS:
     void firstLaunchChanged();
     void appThemeChanged();
     void appThemeAutoChanged();
+    void mediaNativeFilePickerChanged();
     void mediaFilterChanged();
     void mediaPreviewChanged();
     void exportEnabledChanged();
@@ -88,6 +91,9 @@ public:
 
     bool getAppThemeAuto() const { return m_appThemeAuto; }
     void setAppThemeAuto(const bool value);
+
+    bool getMediaNativeFilePicker() const { return m_mediaNativeFilePicker; }
+    void setMediaNativeFilePicker(const bool value);
 
     bool getMediaFilter() const { return m_mediaFilter; }
     void setMediaFilter(const bool value);
