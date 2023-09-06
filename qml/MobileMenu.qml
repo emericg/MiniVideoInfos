@@ -47,8 +47,7 @@ Item {
                   appContent.state === "ScreenAbout")
 
         Row { // main menu
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
 
             spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -8 : 24
 
