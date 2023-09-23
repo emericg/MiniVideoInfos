@@ -283,13 +283,13 @@ if "libexif" in softwares_selected:
         urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
 ## taglib (version: git) (1.13+)
-FILE_taglib = "taglib-master.zip"
-DIR_taglib = "taglib-master"
+FILE_taglib = "taglib-1.13.1.zip"
+DIR_taglib = "taglib-1.13.1"
 
 if "taglib" in softwares_selected:
     if not os.path.exists(src_dir + FILE_taglib):
         print("> Downloading " + FILE_taglib + "...")
-        urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/master.zip", src_dir + FILE_taglib)
+        urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/refs/tags/v1.13.1.zip", src_dir + FILE_taglib)
 
 ## minivideo (version: git) (0.14+)
 FILE_minivideo = "minivideo-master.zip"
@@ -387,13 +387,13 @@ for TARGET in TARGETS:
 
     if OS_TARGET == "android":
         if ARCH_TARGET == "x86":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=x86", "-DANDROID_PLATFORM=android-23"]
         elif ARCH_TARGET == "x86_64":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=x86_64", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=x86_64", "-DANDROID_PLATFORM=android-23"]
         elif ARCH_TARGET == "armv7":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-23"]
         else: # ARCH_TARGET == "armv8":
-            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
+            CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
 
     #### EXTRACT, BUILD & INSTALL ####
 
