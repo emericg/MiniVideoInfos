@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 
 import ThemeEngine
 
@@ -35,7 +34,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item { // main menu
+    Item { // menu area
         id: mainmenu
         anchors.top: parent.top
         anchors.left: parent.left

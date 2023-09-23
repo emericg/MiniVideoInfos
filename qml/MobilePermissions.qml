@@ -188,6 +188,23 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
             }
 
+            ButtonWireframeIcon {
+                anchors.left: parent.left
+                anchors.leftMargin: appHeader.headerPosition
+                height: 36
+
+                visible: utilsApp.getAndroidSdkVersion() >= 30
+
+                primaryColor: Theme.colorPrimary
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Permission info")
+                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                sourceSize: 20
+
+                onClicked: utilsApp.openAndroidStorageSettings("com.minivideo.infos")
+            }
+
             ////////
 
             ListSeparatorPadded {

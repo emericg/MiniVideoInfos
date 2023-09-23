@@ -3,30 +3,13 @@ import QtQuick.Controls
 
 import ThemeEngine
 
-Drawer {
-    width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480)
-            ? 0.8 * appWindow.width : 0.5 * appWindow.width
-    height: appWindow.height
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    background: Rectangle {
-        color: Theme.colorBackground
-
-        Rectangle { // left border
-            x: parent.width
-            width: 1
-            height: parent.height
-            color: Theme.colorSeparator
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
+DrawerThemed {
     contentItem: Item {
 
+        ////////////////
+
         Column {
-            id: rectangleHeader
+            id: headerColumn
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -34,8 +17,7 @@ Drawer {
 
             ////////
 
-            Rectangle {
-                id: rectangleStatusbar
+            Rectangle { // statusbar area
                 anchors.left: parent.left
                 anchors.right: parent.right
 
@@ -45,8 +27,7 @@ Drawer {
 
             ////////
 
-            Rectangle {
-                id: rectangleLogo
+            Rectangle { // header area
                 anchors.left: parent.left
                 anchors.right: parent.right
 
@@ -79,12 +60,14 @@ Drawer {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
+
+            ////////
         }
 
         ////////////////
 
         Flickable {
-            anchors.top: rectangleHeader.bottom
+            anchors.top: headerColumn.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
@@ -96,6 +79,10 @@ Drawer {
                 id: contentColumn
                 anchors.left: parent.left
                 anchors.right: parent.right
+
+                ////////
+
+                ListSeparatorPadded { }
 
                 ////////
 
@@ -168,7 +155,7 @@ Drawer {
                 ////////
             }
         }
-    }
 
-    ////////////////////////////////////////////////////////////////////////////
+        ////////////////
+    }
 }

@@ -6,15 +6,15 @@ name: "CI builds"
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 #--------------------------------------------------------------------------------
 # Define application name & version
 #--------------------------------------------------------------------------------
 
 env:
-  VERSION: "0.10"
-  APPLICATION: "MiniVideoInfos"
-  QMAKE_PROJECT: "MiniVideoInfos.pro"
+  APP_NAME: "MiniVideoInfos"
+  APP_VERSION: "0.10"
   QT_VERSION: "6.5.2"
 
 #--------------------------------------------------------------------------------
@@ -57,5 +57,5 @@ jobs:
       - name: Build application
         run: |
              qmake --version
-             qmake ${{env.QMAKE_PROJECT}} DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
+             qmake ${{env.APP_NAME}}.pro DEFINES+=USE_CONTRIBS CONFIG+=release PREFIX=/usr
              make -j$(nproc)

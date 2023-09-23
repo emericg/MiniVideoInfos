@@ -60,6 +60,7 @@
         <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
         <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
         <file alias="DialThemed.qml">components_themed/DialThemed.qml</file>
+        <file alias="DrawerThemed.qml">components_themed/DrawerThemed.qml</file>
         <file alias="ItemDelegateThemed.qml">components_themed/ItemDelegateThemed.qml</file>
         <file alias="MiddleSliderThemed.qml">components_themed/MiddleSliderThemed.qml</file>
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>

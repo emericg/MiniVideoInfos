@@ -25,8 +25,6 @@ ios | android { DEFINES += USE_CONTRIBS }
 # Use Qt Quick compiler
 ios | android { CONFIG += qtquickcompiler }
 
-win32 { DEFINES += _USE_MATH_DEFINES }
-
 # Project modules ##############################################################
 
 # AppUtils
@@ -145,9 +143,11 @@ unix {
     #QMAKE_LFLAGS += -fsanitize=address,undefined
 }
 
+win32 { DEFINES += _USE_MATH_DEFINES }
+
 DEFINES += QT_DEPRECATED_WARNINGS
 
-CONFIG(release, debug|release) : DEFINES += QT_NO_DEBUG_OUTPUT
+CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 
 # Build artifacts ##############################################################
 
@@ -158,8 +158,8 @@ UI_DIR      = build/$${QT_ARCH}/
 
 DESTDIR = bin/
 
-################################################################################
-# Application deployment and installation steps
+
+# Application deployment steps #################################################
 
 linux:!android {
     TARGET = $$lower($${TARGET})
