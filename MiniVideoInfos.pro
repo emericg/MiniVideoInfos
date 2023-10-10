@@ -1,6 +1,6 @@
 TARGET  = MiniVideoInfos
-
 VERSION = 0.10
+
 DEFINES += APP_NAME=\\\"$$TARGET\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
@@ -147,17 +147,17 @@ win32 { DEFINES += _USE_MATH_DEFINES }
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+# Debug indication macros
 CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 
 # Build artifacts ##############################################################
 
-OBJECTS_DIR = build/$${QT_ARCH}/
-MOC_DIR     = build/$${QT_ARCH}/
-RCC_DIR     = build/$${QT_ARCH}/
-UI_DIR      = build/$${QT_ARCH}/
+OBJECTS_DIR = build/$${QT_ARCH}/obj/
+MOC_DIR     = build/$${QT_ARCH}/moc/
+RCC_DIR     = build/$${QT_ARCH}/rcc/
+UI_DIR      = build/$${QT_ARCH}/ui/
 
 DESTDIR = bin/
-
 
 # Application deployment steps #################################################
 
