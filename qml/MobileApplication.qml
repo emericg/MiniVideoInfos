@@ -55,15 +55,8 @@ ApplicationWindow {
 
             // hacks
             if (Qt.platform.os === "android") {
-                if (Screen.primaryOrientation === Qt.PortraitOrientation) {
-                    if (appWindow.visibility === Window.FullScreen) {
-                        screenPaddingStatusbar = 0
-                        screenPaddingNavbar = 0
-                    } else {
-                        screenPaddingStatusbar = mobileUI.safeAreaTop
-                        screenPaddingTop = 0
-                    }
-                } else {
+                if (appWindow.visibility === Window.FullScreen) {
+                    screenPaddingStatusbar = 0
                     screenPaddingNavbar = 0
                 }
             }
@@ -71,9 +64,6 @@ ApplicationWindow {
             if (Qt.platform.os === "ios") {
                 if (appWindow.visibility === Window.FullScreen) {
                     screenPaddingStatusbar = 0
-                } else {
-                    screenPaddingStatusbar = mobileUI.safeAreaTop
-                    screenPaddingTop = 0
                 }
             }
         } else {
@@ -407,10 +397,6 @@ ApplicationWindow {
         ]
     }
 
-    MobileMenu {
-        id: mobileMenu
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     DropArea {
@@ -495,6 +481,12 @@ ApplicationWindow {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    MobileMenu {
+        id: mobileMenu
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Timer {
         id: exitTimer
         interval: 2222
@@ -509,7 +501,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.rightMargin: Theme.componentMargin
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.componentMargin + screenPaddingNavbar + screenPaddingBottom
+        anchors.bottomMargin: Theme.componentMargin + mobileMenu.height
 
         height: Theme.componentHeightL
         radius: Theme.componentRadius
@@ -519,7 +511,7 @@ ApplicationWindow {
         border.width: Theme.componentBorderWidth
 
         opacity: exitTimer.running ? 1 : 0
-        Behavior on opacity { OpacityAnimator { duration: 233 } }
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
 
         Text {
             anchors.centerIn: parent

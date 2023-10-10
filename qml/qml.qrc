@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/qml">
-        <file>Application.qml</file>
+        <file>MobileApplication.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
         <file>MobileMenu.qml</file>

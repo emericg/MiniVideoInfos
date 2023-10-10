@@ -536,36 +536,23 @@ Item {
         anchors.bottom: parent.bottom
 
         z: 5
-        height: 48
-        opacity: 0.85
-        color: Theme.colorHeader
+        height: 56
+        opacity: 0.90
+        color: mobileMenu.color
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation) && (mediaPages.count > 1)
 
-        Rectangle {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 2
-            opacity: 0.33
-            color: Theme.colorHeaderHighlight
-        }
-
-        property int hhh: visible ? height : 0
-
-        Rectangle {
-            height: 1
-            color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorSeparator : Theme.colorMaterialDarkGrey
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.left: parent.left
-        }
-
         Row {
-            anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: isPhone ? 3 : 0
+
+            spacing: Theme.componentMargin / 3
 
             MobileMenuItem_vertical {
                 id: menuInfos
+                width: 56
+                height: 56
+
                 text: qsTr("file")
                 source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
 
@@ -575,6 +562,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuVideo1
+                width: 56
+                height: 56
+
                 text: qsTr("video")
                 source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
 
@@ -585,6 +575,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuVideo2
+                width: 56
+                height: 56
+
                 text: qsTr("video")
                 source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
 
@@ -595,6 +588,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuAudio1
+                width: 56
+                height: 56
+
                 text: qsTr("audio")
                 source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
 
@@ -605,6 +601,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuAudio2
+                width: 56
+                height: 56
+
                 text: qsTr("audio")
                 source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
 
@@ -615,6 +614,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuAudio3
+                width: 56
+                height: 56
+
                 text: qsTr("audio")
                 source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
 
@@ -625,6 +627,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuAudio4
+                width: 56
+                height: 56
+
                 text: qsTr("audio")
                 source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
 
@@ -635,6 +640,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuSubtitles
+                width: 56
+                height: 56
+
                 text: qsTr("subtitles")
                 source: "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
 
@@ -645,6 +653,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuAudioTags
+                width: 56
+                height: 56
+
                 text: qsTr("tags")
                 source: "qrc:/assets/icons_material/outline-insert_music-24px.svg"
 
@@ -655,6 +666,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuImageTags
+                width: 56
+                height: 56
+
                 text: qsTr("tags")
                 source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
 
@@ -665,6 +679,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuMap
+                width: 56
+                height: 56
+
                 text: qsTr("map")
                 source: "qrc:/assets/icons_material/baseline-map-24px.svg"
 
@@ -675,6 +692,9 @@ Item {
             }
             MobileMenuItem_vertical {
                 id: menuExport
+                width: 56
+                height: 56
+
                 text: qsTr("export")
                 source: "qrc:/assets/icons_material/outline-archive-24px.svg"
 

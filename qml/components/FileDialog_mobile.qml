@@ -371,7 +371,7 @@ Rectangle {
         visible: !selectFolder
 
         opacity: 0.8
-        color: Theme.colorHeader
+        color: mobileMenu.color
 
         Text {
             id: rectangleErrorText
@@ -409,4 +409,6 @@ Rectangle {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

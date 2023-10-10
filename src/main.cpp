@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     MiniVideoQML::registerQML();
     app.registerQML(engine_context);
 
-    engine.load(QUrl(QStringLiteral("qrc:/qml/Application.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
     if (engine.rootObjects().isEmpty()) return EXIT_FAILURE;
 
     // For i18n retranslate
