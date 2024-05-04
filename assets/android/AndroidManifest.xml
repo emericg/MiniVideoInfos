@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto"
-          package="com.minivideo.infos" android:versionName="0.10" android:versionCode="0010001">
+          package="io.emeric.minivideoinfos" android:versionName="-- %%INSERT_VERSION_NAME%% --" android:versionCode="-- %%INSERT_VERSION_CODE%% --">
 
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
 
@@ -12,13 +12,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application android:name="org.qtproject.qt.android.bindings.QtApplication"
-                 android:extractNativeLibs="true" android:hardwareAccelerated="true" android:allowNativeHeapPointerTagging="false"
-                 android:label="MiniVideo Infos" android:requestLegacyExternalStorage="true"
-                 android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
+                 android:requestLegacyExternalStorage="true"
+                 android:theme="@style/AppTheme" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round"
+                 android:label="MiniVideo Infos">
 
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
-                  android:theme="@style/AppTheme" android:screenOrientation="unspecified" android:launchMode="singleTop" android:exported="true"
-                  android:name="com.minivideo.infos.QShareActivity" android:label="MiniVideo Infos">
+        <activity android:name="com.minivideo.infos.QShareActivity"
+                  android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
+                  android:launchMode="singleTop" android:screenOrientation="unspecified" android:exported="true"
+                  android:label="MiniVideo Infos">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -51,6 +51,7 @@ print(str(softwares))
 
 ## linux:
 # python3 cmake ninja libtool automake m4
+# utf8cpp
 
 ## macOS:
 # brew install python cmake automake ninja
@@ -119,7 +120,7 @@ clean = False
 rebuild = False
 targets_selected = []
 softwares_selected = []
-QT_VERSION = "6.6.0"
+QT_VERSION = "6.7.0"
 QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
 ANDROID_SDK_ROOT = os.getenv('ANDROID_SDK_ROOT', '')
 ANDROID_NDK_ROOT = os.getenv('ANDROID_NDK_ROOT', '')
@@ -282,14 +283,14 @@ if "libexif" in softwares_selected:
         print("> Downloading " + FILE_libexif + "...")
         urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
-## taglib (version: git) (1.13+)
-FILE_taglib = "taglib-1.13.1.zip"
-DIR_taglib = "taglib-1.13.1"
+## taglib (version: git) (2.0+)
+FILE_taglib = "taglib-master.zip"
+DIR_taglib = "taglib-master"
 
 if "taglib" in softwares_selected:
     if not os.path.exists(src_dir + FILE_taglib):
         print("> Downloading " + FILE_taglib + "...")
-        urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/refs/tags/v1.13.1.zip", src_dir + FILE_taglib)
+        urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/master.zip", src_dir + FILE_taglib)
 
 ## minivideo (version: git) (0.14+)
 FILE_minivideo = "minivideo-master.zip"

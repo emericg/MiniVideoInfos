@@ -1,17 +1,17 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.2'
+        classpath 'com.android.tools.build:gradle:8.1.4'
     }
 }
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 apply plugin: 'com.android.application'
@@ -21,6 +21,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core:1.6.1'
 }
+
+def getTimestampStr() { return new Date().format('yyyyMMddHHmmss') }
+def timestampInt = (int)(new Date().getTime() / 1000 / 1)
 
 android {
     /*******************************************************
@@ -36,9 +39,7 @@ android {
      * Changing them manually might break the compilation!
      *******************************************************/
 
-    namespace 'com.minivideo.infos'
-
-    compileSdkVersion androidCompileSdkVersion.toInteger()
+    compileSdkVersion androidCompileSdkVersion
     buildToolsVersion androidBuildToolsVersion
     ndkVersion androidNdkVersion
 
@@ -60,8 +61,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     packagingOptions {
@@ -82,7 +83,20 @@ android {
     defaultConfig {
         resConfig "en"
         minSdkVersion 23 // qtMinSdkVersion
-        targetSdkVersion 33 // qtTargetSdkVersion
+        targetSdkVersion 34 // qtTargetSdkVersion
         ndk.abiFilters = qtTargetAbiList.split(",")
+
+        namespace 'com.minivideo.infos'
+        versionName "0.10"
+        versionCode timestampInt
+        //manifestPlaceholders = [versionName: versionName, versionCode: versionCode]
+
+        packagingOptions {
+            // generic
+            exclude 'lib/*/*_qmltooling_*'
+            exclude 'lib/*/*_Controls_Fusion_*'
+            exclude 'lib/*/*_Controls_Imagine_*'
+            exclude 'lib/*/*_Controls_Universal_*'
+        }
     }
 }
