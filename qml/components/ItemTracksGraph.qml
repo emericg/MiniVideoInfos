@@ -1,13 +1,12 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Controls
 
-import Qt5Compat.GraphicalEffects // Qt6
-
 import ThemeEngine
-import "qrc:/js/UtilsPath.js" as UtilsPath
-import "qrc:/js/UtilsString.js" as UtilsString
-import "qrc:/js/UtilsMedia.js" as UtilsMedia
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsString.js" as UtilsString
+import "qrc:/utils/UtilsMedia.js" as UtilsMedia
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: elementTracks
@@ -88,13 +87,20 @@ Item {
         }
 
         layer.enabled: true
-        layer.effect: OpacityMask {
-            maskSource: Rectangle {
-                x: rectangleTracks.x
-                y: rectangleTracks.y
-                width: rectangleTracks.width
-                height: rectangleTracks.height
-                radius: rectangleTracks.radius
+        layer.effect: MultiEffect {
+            maskEnabled: true
+            maskInverted: false
+            maskThresholdMin: 0.5
+            maskSpreadAtMin: 1.0
+            maskSpreadAtMax: 0.0
+            maskSource: ShaderEffectSource {
+                sourceItem: Rectangle {
+                    x: rectangleTracks.x
+                    y: rectangleTracks.y
+                    width: rectangleTracks.width
+                    height: rectangleTracks.height
+                    radius: rectangleTracks.radius
+                }
             }
         }
     }

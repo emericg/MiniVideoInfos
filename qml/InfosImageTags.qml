@@ -2,10 +2,10 @@ import QtQuick
 import QtQuick.Controls
 
 import ThemeEngine
-import "qrc:/js/UtilsPath.js" as UtilsPath
-import "qrc:/js/UtilsString.js" as UtilsString
-import "qrc:/js/UtilsMedia.js" as UtilsMedia
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsString.js" as UtilsString
+import "qrc:/utils/UtilsMedia.js" as UtilsMedia
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Flickable {
     contentWidth: width

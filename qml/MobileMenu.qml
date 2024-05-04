@@ -22,7 +22,7 @@ Item {
     Rectangle { // background
         anchors.fill: parent
 
-        opacity: (appContent.state === "Tutorial") ? 1 : 0.90
+        opacity: (appContent.state === "ScreenTutorial") ? 1 : 0.90
         color: mobileMenu.color
 
         Rectangle {

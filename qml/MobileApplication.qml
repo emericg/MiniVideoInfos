@@ -5,7 +5,7 @@ import QtQuick.Window
 import ThemeEngine
 import MobileUI
 
-import "qrc:/js/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsPath.js" as UtilsPath
 
 ApplicationWindow {
     id: appWindow
@@ -99,7 +99,7 @@ ApplicationWindow {
         statusbarColor: isLoading ? "white" : Theme.colorStatusbar
         navbarColor: {
             if (isLoading) return "white"
-            if (appContent.state === "Tutorial") return Theme.colorHeader
+            if (appContent.state === "ScreenTutorial") return Theme.colorHeader
             if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
                 (appContent.state === "MediaInfos" && isPhone) ||
                 mobileMenu.visible)
@@ -141,7 +141,7 @@ ApplicationWindow {
         id: appDrawer
         width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
         height: appWindow.height
-        interactive: (appContent.state !== "Tutorial")
+        interactive: (appContent.state !== "ScreenTutorial")
     }
 
     // Sharing handling ////////////////////////////////////////////////////////
@@ -208,12 +208,12 @@ ApplicationWindow {
     }
 
     function backAction() {
-        if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") {
+        if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "MediaList") {
             // do nothing
             return
         }
 
-        if (appContent.state === "Tutorial") {
+        if (appContent.state === "ScreenTutorial") {
             appContent.state = screenTutorial.entryPoint
         } else if (appContent.state === "ScreenAboutPermissions") {
             appContent.state = screenAboutPermissions.entryPoint
@@ -272,7 +272,7 @@ ApplicationWindow {
         anchors.bottomMargin: mobileMenu.height
 
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "MediaList") {
+            if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "MediaList") {
                 // do nothing
                 return
             }
@@ -291,7 +291,7 @@ ApplicationWindow {
             }
         }
 
-        Tutorial {
+        ScreenTutorial {
             id: screenTutorial
         }
         MediaList {
@@ -300,14 +300,14 @@ ApplicationWindow {
         MediaInfos {
             id: screenMediaInfos
         }
-        Settings {
+        ScreenSettings {
             id: screenSettings
+        }
+        ScreenAbout {
+            id: screenAbout
         }
         MobilePermissions {
             id: screenAboutPermissions
-        }
-        About {
-            id: screenAbout
         }
 
         // Start on the tutorial?
@@ -325,7 +325,7 @@ ApplicationWindow {
 
             if (state === "MediaList") {
                 appHeader.leftMenuMode = "drawer"
-            } else if (state === "Tutorial") {
+            } else if (state === "ScreenTutorial") {
                 appHeader.leftMenuMode = "close"
             } else {
                 appHeader.leftMenuMode = "back"
@@ -336,14 +336,14 @@ ApplicationWindow {
 
         states: [
             State {
-                name: "Tutorial"
+                name: "ScreenTutorial"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Welcome"); }
                 PropertyChanges { target: screenTutorial; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
             },
             State {
                 name: "MediaList"
@@ -352,8 +352,8 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
             },
             State {
                 name: "MediaInfos"
@@ -361,8 +361,8 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: true; visible: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
             },
             State {
                 name: "ScreenSettings"
@@ -371,18 +371,8 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
-                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
-            },
-            State {
-                name: "ScreenAboutPermissions"
-                PropertyChanges { target: appHeader; headerTitle: qsTr("Permissions"); }
-                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
-                PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
-                PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
-                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAboutPermissions; visible: true; enabled: true; }
-                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
             },
             State {
                 name: "ScreenAbout"
@@ -391,8 +381,18 @@ ApplicationWindow {
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
-                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; }
+                PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
+            },
+            State {
+                name: "ScreenAboutPermissions"
+                PropertyChanges { target: appHeader; headerTitle: qsTr("Permissions"); }
+                PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
+                PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
+                PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenAboutPermissions; visible: true; enabled: true; }
             }
         ]
     }

@@ -89,7 +89,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen)
                     text: qsTr("Open media")
-                    iconSource: "qrc:/assets/icons/material-symbols/media/image.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                     onClicked: {
                         appContent.state = "MediaList"
@@ -101,7 +101,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen)
                     text: qsTr("Media")
-                    iconSource: "qrc:/assets/icons/material-symbols/media/image.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                     onClicked: {
                         appContent.state = "MediaList"
@@ -129,7 +129,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenSettings")
                     text: qsTr("Settings")
-                    iconSource: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -140,7 +140,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
                     text: qsTr("About")
-                    iconSource: "qrc:/assets/icons/material-icons/duotone/info.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/info.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()

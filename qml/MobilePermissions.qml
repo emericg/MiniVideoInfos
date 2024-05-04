@@ -188,15 +188,12 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
             }
 
-            ButtonWireframeIcon {
+            ButtonWireframe {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 height: 36
 
                 visible: utilsApp.getAndroidSdkVersion() >= 30
-
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
 
                 text: qsTr("Permission info")
                 source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
@@ -393,13 +390,10 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
             }
 
-            ButtonWireframeIcon {
+            ButtonWireframe {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 height: 36
-
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
 
                 text: qsTr("Application info")
                 source: "qrc:/assets/icons/material-icons/duotone/tune.svg"

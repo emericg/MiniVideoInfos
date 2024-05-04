@@ -59,8 +59,8 @@ HEADERS  += src/Media.h \
             src/minivideo_utils_qt.h
 
 RESOURCES   += assets/assets.qrc assets/icons.qrc
-
-RESOURCES   += qml/qml.qrc qml/components.qrc
+RESOURCES   += qml/ComponentLibrary/ComponentLibrary.qrc
+RESOURCES   += qml/qml.qrc
 
 OTHER_FILES += .gitignore \
                .github/workflows/builds.yml \

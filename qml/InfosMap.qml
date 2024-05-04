@@ -5,7 +5,7 @@ import QtLocation
 import QtPositioning
 
 import ThemeEngine
-import "qrc:/js/UtilsString.js" as UtilsString
+import "qrc:/utils/UtilsString.js" as UtilsString
 
 Item {
     id: infosMap

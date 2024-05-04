@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ThemeEngine
-import "qrc:/js/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsPath.js" as UtilsPath
 
 Item {
     id: screenMediaList
@@ -204,7 +204,6 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -2
 
-            primaryColor: Theme.colorPrimary
             text: qsTr("OPEN ANOTHER MEDIA")
             onClicked: openDialog()
         }
@@ -263,25 +262,23 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: isPhone ? 6 : 12
 
-                ButtonWireframeIcon {
+                ButtonFlat {
                     id: buttonUpdate2
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
+                    color: Theme.colorActionbarHighlight
                     text: qsTr("Update")
                     onClicked: updateSelectedMedia()
                     source: "qrc:/assets/icons/material-symbols/refresh.svg"
                 }
 
-                ButtonWireframeIcon {
+                ButtonFlat {
                     id: buttonClose2
                     height: 32
                     anchors.verticalCenter: parent.verticalCenter
 
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
+                    color: Theme.colorActionbarHighlight
                     text: qsTr("Close")
                     onClicked: removeSelectedMedia()
                     source: "qrc:/assets/icons/material-symbols/close.svg"

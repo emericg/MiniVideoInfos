@@ -2,10 +2,10 @@ import QtQuick
 import QtQuick.Controls
 
 import ThemeEngine
-import "qrc:/js/UtilsPath.js" as UtilsPath
-import "qrc:/js/UtilsString.js" as UtilsString
-import "qrc:/js/UtilsMedia.js" as UtilsMedia
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsString.js" as UtilsString
+import "qrc:/utils/UtilsMedia.js" as UtilsMedia
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: infos_subtitles
@@ -95,15 +95,14 @@ Item {
                 }
             }
 
-            ButtonWireframe {
+            ButtonFlat {
                 id: buttonExport
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
                 property int exportState: 0
 
-                fullColor: (exportState === 0) ? false : true
-                primaryColor: {
+                color: {
                     if (exportState === 0) return Theme.colorPrimary
                     if (exportState === 1) return Theme.colorGreen
                     if (exportState === 2) return Theme.colorRed

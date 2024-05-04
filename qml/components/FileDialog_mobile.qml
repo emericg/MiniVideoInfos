@@ -4,8 +4,8 @@ import QtQuick.Controls
 import Qt.labs.folderlistmodel 2.3
 
 import ThemeEngine
-import "qrc:/js/UtilsPath.js" as UtilsPath
-import "qrc:/js/UtilsString.js" as UtilsString
+import "qrc:/utils/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsString.js" as UtilsString
 
 Rectangle {
     id: fileDialogMobile

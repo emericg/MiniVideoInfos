@@ -1,5 +1,5 @@
 import QtQuick
-import "qrc:/js/UtilsPath.js" as UtilsPath
+import "qrc:/utils/UtilsPath.js" as UtilsPath
 
 Loader {
     id: fileDialog
