@@ -51,7 +51,6 @@ print(str(softwares))
 
 ## linux:
 # python3 cmake ninja libtool automake m4
-# utf8cpp
 
 ## macOS:
 # brew install python cmake automake ninja
@@ -284,6 +283,7 @@ if "libexif" in softwares_selected:
         urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
 ## taglib (version: git) (2.0+)
+FILE_taglib_utfcpp = "utfcpp-v4.0.5.zip"
 FILE_taglib = "taglib-master.zip"
 DIR_taglib = "taglib-master"
 
@@ -291,6 +291,9 @@ if "taglib" in softwares_selected:
     if not os.path.exists(src_dir + FILE_taglib):
         print("> Downloading " + FILE_taglib + "...")
         urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/master.zip", src_dir + FILE_taglib)
+    if not os.path.exists(src_dir + FILE_taglib_utfcpp):
+        print("> Downloading " + FILE_taglib_utfcpp + "...")
+        urllib.request.urlretrieve("https://github.com/nemtrif/utfcpp/archive/refs/tags/v4.0.5.zip", src_dir + FILE_taglib_utfcpp)
 
 ## minivideo (version: git) (0.14+)
 FILE_minivideo = "minivideo-master.zip"
@@ -414,7 +417,12 @@ for TARGET in TARGETS:
         if not os.path.isdir(build_dir + DIR_taglib):
             zipTL = zipfile.ZipFile(src_dir + FILE_taglib)
             zipTL.extractall(build_dir)
+            os.rmdir(build_dir + DIR_taglib + "/3rdparty/utfcpp/")
             os.makedirs(build_dir + DIR_taglib + "/build")
+        if not os.path.isdir(build_dir + DIR_taglib + "/3rdparty/utfcpp/"):
+            zipUTFCPP = zipfile.ZipFile(src_dir + FILE_taglib_utfcpp)
+            zipUTFCPP.extractall(build_dir+ DIR_taglib + "/3rdparty/")
+            os.rename(build_dir + DIR_taglib + "/3rdparty/utfcpp-4.0.5/", build_dir + DIR_taglib + "/3rdparty/utfcpp/")
 
         print("> Building taglib")
         subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")

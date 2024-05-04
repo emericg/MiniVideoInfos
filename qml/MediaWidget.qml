@@ -19,11 +19,11 @@ Item {
 
     function initBoxData() {
         if (mediaItem.fileType === 1)
-            imageMedia.source = "qrc:/assets/icons/material-symbols/insert_music.svg"
+            imageMedia.source = "qrc:/assets/icons/material-symbols/media/album.svg"
         else if (mediaItem.fileType === 2)
             imageMedia.source = "qrc:/assets/icons/material-symbols/media/movie.svg"
         else if (mediaItem.fileType === 3)
-            imageMedia.source = "qrc:/assets/icons/material-symbols/media/image.svg" // icons_material/baseline-photo-24px.svg
+            imageMedia.source = "qrc:/assets/icons/material-symbols/media/image.svg"
         else
             imageMedia.source = "qrc:/assets/icons/material-symbols/media/broken_image.svg"
 

@@ -12,7 +12,7 @@ Item {
 
     property color color: {
         if (isPhone && Qt.platform.os === "ios") return Theme.colorBackground
-        if (isPhone && Theme.currentTheme === Theme.THEME_DARK) return Theme.colorForeground
+        if (isPhone && Theme.isDark) return Theme.colorForeground
         if (isPhone) return "#f0f3f8"
         return Theme.colorHeader
     }
@@ -22,7 +22,7 @@ Item {
     Rectangle { // background
         anchors.fill: parent
 
-        opacity: (appContent.state === "ScreenTutorial") ? 1 : 0.90
+        opacity: (appContent.state === "ScreenTutorial") ? 1 : 0.95
         color: mobileMenu.color
 
         Rectangle {

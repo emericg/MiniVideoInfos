@@ -197,8 +197,7 @@ Item {
             smooth: true
         }
 
-        ButtonWireframe {
-            height: 36
+        ButtonClear {
             anchors.left: image.right
             anchors.leftMargin: 32
             anchors.verticalCenter: parent.verticalCenter

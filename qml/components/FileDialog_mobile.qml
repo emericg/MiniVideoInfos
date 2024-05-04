@@ -41,7 +41,7 @@ Rectangle {
 
             folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
             folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-            storageIcon.source = "qrc:/assets/icons/material-symbols/smartphone.svg"
+            storageIcon.source = "qrc:/assets/icons/material-symbols/hardware/smartphone.svg"
 
             updateHeaderText()
             inited = true
@@ -151,7 +151,7 @@ Rectangle {
                 height: 26
                 anchors.centerIn: parent
 
-                source: "qrc:/assets/icons/material-symbols/smartphone.svg"
+                source: "qrc:/assets/icons/material-symbols/hardware/smartphone.svg"
                 color: Theme.colorIcon
             }
 
@@ -167,7 +167,7 @@ Rectangle {
                     if (storageChooser.storageIndex === 0) {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-                        storageIcon.source = "qrc:/assets/icons/material-symbols/smartphone.svg"
+                        storageIcon.source = "qrc:/assets/icons/material-symbols/hardware/smartphone.svg"
                     } else {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal()
@@ -288,16 +288,16 @@ Rectangle {
                     if (fileIsDir) {
                         if (fileName === "DCIM" || fileName === "Download" ||
                             fileName === "Movies" || fileName === "Pictures" || fileName === "Music")
-                            source = "qrc:/assets/icons/material-symbols/folder.svg"
+                            source = "qrc:/assets/icons/material-symbols/folder-fill.svg"
                         else
                             source = "qrc:/assets/icons/material-symbols/folder.svg"
                     } else {
                         if (UtilsPath.isVideoFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/slideshow.svg"
+                            source = "qrc:/assets/icons/material-symbols/media/slideshow.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/music.svg"
+                            source = "qrc:/assets/icons/material-symbols/media/album.svg"
                         } else if (UtilsPath.isPictureFile(fileName, )) {
-                            source = "qrc:/assets/icons/material-symbols/photo.svg"
+                            source = "qrc:/assets/icons/material-symbols/media/image.svg"
                         } else {
                             if (onlyShowMedia) {
                                 listItem.visible = false

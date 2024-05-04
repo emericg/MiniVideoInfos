@@ -62,7 +62,7 @@ Item {
             anchors.rightMargin: 16
             spacing: 16
 
-            ButtonWireframe {
+            ButtonClear {
                 id: buttonOpen
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter

@@ -23,10 +23,9 @@ Item {
             color: Theme.colorIcon
         }
 
-        ButtonWireframe {
-            height: 40
+        ButtonClear {
             anchors.horizontalCenter: parent.horizontalCenter
-
+            height: 40
             text: qsTr("OPEN MEDIA FILE")
             onClicked: itemNoFile.clicked()
         }

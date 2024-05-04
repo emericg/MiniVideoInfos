@@ -207,9 +207,9 @@ android {
                  $${PWD}/assets/android/gradle.properties \
                  $${PWD}/assets/android/build.gradle
 
-    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so
-    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so
-    ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so
+    contains(DEFINES, ENABLE_LIBEXIF) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so }
+    contains(DEFINES, ENABLE_TAGLIB) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so }
+    contains(DEFINES, ENABLE_MINIVIDEO) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so }
 
     include($${PWD}/contribs/env/android_openssl-master/openssl.pri)
 }

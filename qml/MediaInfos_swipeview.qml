@@ -392,7 +392,7 @@ Item {
         }
 
         function removePage(page) {
-            for (var n = 0; n < mediaPages.count; n++) { if (page === itemAt(n)) { removeItem(n) } }
+            for (var n = 0; n < mediaPages.count; n++) { if (page === itemAt(n)) { /*removeItem(n)*/ } } // FIXME
             page.visible = false
         }
 
@@ -657,7 +657,7 @@ Item {
                 height: 56
 
                 text: qsTr("tags")
-                source: "qrc:/assets/icons/material-symbols/insert_music.svg"
+                source: "qrc:/assets/icons/material-symbols/media/album.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -683,7 +683,7 @@ Item {
                 height: 56
 
                 text: qsTr("map")
-                source: "qrc:/assets/icons/material-symbols/map.svg"
+                source: "qrc:/assets/icons/material-symbols/location/map-fill.svg"
 
                 property int index: -1
                 visible: (index !== -1)

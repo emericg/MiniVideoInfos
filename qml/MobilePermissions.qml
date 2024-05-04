@@ -191,7 +191,6 @@ Item {
             ButtonWireframe {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
-                height: 36
 
                 visible: utilsApp.getAndroidSdkVersion() >= 30
 
@@ -393,7 +392,6 @@ Item {
             ButtonWireframe {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
-                height: 36
 
                 text: qsTr("Application info")
                 source: "qrc:/assets/icons/material-icons/duotone/tune.svg"

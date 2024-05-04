@@ -34,9 +34,9 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: {
-            if (modelData.fileType === 1) return "qrc:/assets/icons/material-symbols/insert_music.svg"
+            if (modelData.fileType === 1) return "qrc:/assets/icons/material-symbols/media/album.svg"
             if (modelData.fileType === 2) return "qrc:/assets/icons/material-symbols/media/movie.svg"
-            if (modelData.fileType === 3) return "qrc:/assets/icons/material-symbols/media/image.svg" // icons_material/baseline-photo-24px.svg
+            if (modelData.fileType === 3) return "qrc:/assets/icons/material-symbols/media/image.svg"
             return "qrc:/assets/icons/material-symbols/media/broken_image.svg"
         }
         color: Theme.colorIcon
