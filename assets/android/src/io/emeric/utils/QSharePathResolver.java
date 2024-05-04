@@ -21,30 +21,26 @@
  * SOFTWARE.
  */
 
-package com.minivideo.utils;
+package io.emeric.utils;
 
 import android.content.Context;
-import android.content.ContentUris;
-import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.content.ContentUris;
+import android.os.Environment;
+import android.content.ContentResolver;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.FileOutputStream;
 
 import android.util.Log;
 import java.lang.NumberFormatException;
 
 public class QSharePathResolver
 {
-    public static String getRealPathFromSTR(final Context context, final String str) {
-        return getRealPathFromURI(context, Uri.parse(str));
-    }
-
     public static String getRealPathFromURI(final Context context, final Uri uri) {
 
         if (DocumentsContract.isDocumentUri(context, uri)) { // DocumentProvider
@@ -62,8 +58,7 @@ public class QSharePathResolver
                     Log.d("QSharePathResolver", " Storage type: " + type + " ," + split[1]);
                     return "/storage/" + type + "/" + split[1];
                 }
-
-            } else if (isDownloadsDocument(uri)) { // DownloadsProvider
+            } else if (isDownloadsDocument(uri)) {
                 Log.d("QSharePathResolver", " isDownloadsDocument");
 
                 final String id = DocumentsContract.getDocumentId(uri);
@@ -79,8 +74,7 @@ public class QSharePathResolver
                         Uri.parse("content://downloads/public_downloads"), longId);
 
                 return getDataColumn(context, contentUri, null, null);
-
-            } else if (isMediaDocument(uri)) { // MediaProvider
+            } else if (isMediaDocument(uri)) {
                 Log.d("QSharePathResolver", " isMediaDocument");
 
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -100,15 +94,13 @@ public class QSharePathResolver
                 final String[] selectionArgs = new String[] { split[1] };
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
-
-            } else if ("content".equalsIgnoreCase(uri.getScheme())) { // MediaStore (and general)
+            } else if ("content".equalsIgnoreCase(uri.getScheme())) {
                 Log.d("QSharePathResolver", " is uri.getScheme()");
 
                 // Return the remote address
                 if (isGooglePhotosUri(uri)) return uri.getLastPathSegment();
 
                 return getDataColumn(context, uri, null, null);
-
             } else {
                 Log.d("QSharePathResolver", " is Other Provider");
 
@@ -227,6 +219,6 @@ public class QSharePathResolver
      * @return Whether the Uri authority is Google Photos.
      */
     public static boolean isGooglePhotosUri(Uri uri) {
-        return "com.google.android.apps.photos.contentprovider".equals(uri.getAuthority());
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 }
