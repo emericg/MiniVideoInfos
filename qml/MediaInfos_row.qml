@@ -159,7 +159,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/duotone-av_timer-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/av_timer.svg"
                         }
                         Text {
                             id: textDuration
@@ -185,7 +185,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/duotone-data_usage-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/data_usage.svg"
                         }
                         Text {
                             id: textSize
@@ -212,7 +212,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
                         }
                         Text {
                             id: textGeometry
@@ -238,7 +238,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/duotone-speaker-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/speaker.svg"
                         }
                         Text {
                             id: textChannels
@@ -264,7 +264,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
                         }
                         Text {
                             id: textGPS

@@ -191,7 +191,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: -2
 
-            source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+            source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon
             smooth: true
@@ -272,7 +272,7 @@ Item {
                     primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Update")
                     onClicked: updateSelectedMedia()
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/refresh.svg"
                 }
 
                 ButtonWireframeIcon {
@@ -284,7 +284,7 @@ Item {
                     primaryColor: Theme.colorActionbarHighlight
                     text: qsTr("Close")
                     onClicked: removeSelectedMedia()
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/close.svg"
                 }
             }
 
@@ -312,7 +312,7 @@ Item {
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/subdirectory_arrow_left.svg"
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenMediaList.exitSelectionMode()
@@ -342,7 +342,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorActionbarContent
-                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/warning.svg"
             }
 
             Text {

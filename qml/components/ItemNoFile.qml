@@ -19,7 +19,7 @@ Item {
             height: 200
             anchors.horizontalCenter: parent.horizontalCenter
 
-            source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+            source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
             color: Theme.colorIcon
         }
 

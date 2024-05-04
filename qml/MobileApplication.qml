@@ -409,12 +409,12 @@ ApplicationWindow {
         onEntered: (drag) => {
             if (drag.hasUrls) {
                 dropAreaIndicator.color = Theme.colorWarning
-                dropAreaImage.source = "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
+                dropAreaImage.source = "qrc:/assets/icons/material-symbols/media/broken_image.svg"
                 dropAreaIndicator.opacity = 1
 
                 for (var i = 0; i < drag.urls.length; i++) {
                     if (UtilsPath.isMediaFile(drag.urls[i])) {
-                        dropAreaImage.source = "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                        dropAreaImage.source = "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                         dropAreaIndicator.color = Theme.colorGreen
                         break
                     }

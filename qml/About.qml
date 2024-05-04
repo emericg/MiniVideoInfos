@@ -67,7 +67,7 @@ Loader {
                         width: 80
                         height: 80
 
-                        source: "qrc:/assets/logos/logo.svg"
+                        source: "qrc:/assets/gfx/logos/logo.svg"
                         sourceSize: Qt.size(width, height)
                     }
 
@@ -105,7 +105,7 @@ Loader {
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         text: qsTr("WEBSITE")
-                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/link.svg"
                         onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
                     }
 
@@ -116,7 +116,7 @@ Loader {
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         text: qsTr("SUPPORT")
-                        source: "qrc:/assets/icons_material/baseline-support-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/support.svg"
                         onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
                     }
 
@@ -128,7 +128,7 @@ Loader {
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         text: qsTr("GitHub")
-                        source: "qrc:/assets/logos/github.svg"
+                        source: "qrc:/assets/gfx/logos/github.svg"
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos")
                     }
                 }
@@ -156,7 +156,7 @@ Loader {
                     primaryColor: Theme.colorHeaderContent
 
                     text: qsTr("WEBSITE")
-                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/link.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
                 }
                 ButtonWireframeIconCentered {
@@ -168,7 +168,7 @@ Loader {
                     primaryColor: Theme.colorHeaderContent
 
                     text: qsTr("SUPPORT")
-                    source: "qrc:/assets/icons_material/baseline-support-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/support.svg"
                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
                 }
             }
@@ -178,15 +178,15 @@ Loader {
             ListItem { // description
                 width: parent.width
                 text: qsTr("Get detailed informations about all kind of multimedia files!")
-                iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
+                iconSource: "qrc:/assets/icons/material-symbols/info.svg"
             }
 
             ListItemClickable { // authors
                 width: parent.width
 
                 text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a>")
-                iconSource: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                iconSource: "qrc:/assets/icons/material-symbols/supervised_user_circle.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://emeric.io")
             }
@@ -196,8 +196,8 @@ Loader {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("Rate the application")
-                iconSource: "qrc:/assets/icons_material/baseline-stars-24px.svg"
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                iconSource: "qrc:/assets/icons/material-symbols/stars-fill.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: {
                     if (Qt.platform.os === "android")
@@ -213,9 +213,9 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Release notes")
-                iconSource: "qrc:/assets/icons_material/outline-new_releases-24px.svg"
+                iconSource: "qrc:/assets/icons/material-symbols/new_releases.svg"
                 iconSize: 28
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/releases")
             }
@@ -228,9 +228,9 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Open the tutorial")
-                iconSource: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                iconSource: "qrc:/assets/icons/material-symbols/import_contacts-fill.svg"
                 iconSize: 24
-                indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: screenTutorial.loadScreenFrom("ScreenAbout")
             }
@@ -245,8 +245,8 @@ Loader {
 
                 text: qsTr("About app permissions")
                 iconSize: 24
-                iconSource: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
-                indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                iconSource: "qrc:/assets/icons/material-symbols/flaky.svg"
+                indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: screenAboutPermissions.loadScreenFrom("ScreenAbout")
             }
@@ -270,7 +270,7 @@ Loader {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: dependenciesText.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    source: "qrc:/assets/icons/material-symbols/settings.svg"
                     color: Theme.colorSubText
                 }
 

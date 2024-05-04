@@ -40,9 +40,9 @@ Flickable {
         info_containerprofile.text = mediaItem.containerProfile
 
         if (mediaItem.projection > 0)
-            imgGeometry.source = "qrc:/assets/icons_material/duotone-spherical-24px.svg"
+            imgGeometry.source = "qrc:/assets/icons/material-icons/duotone/spherical.svg"
         else
-            imgGeometry.source = "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
+            imgGeometry.source = "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
 
         if (mediaItem.fileType === 3) { //// IMAGE
             columnImage.visible = true
@@ -142,7 +142,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/file.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -240,7 +240,7 @@ Flickable {
                     height: 24
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 4
-                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/warning.svg"
                     color: Theme.colorWarning
                 }
                 TextEditMVI {
@@ -452,7 +452,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -685,7 +685,7 @@ Flickable {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/media/movie.svg"
                     }
                     Text {
                         anchors.left: parent.left
@@ -863,7 +863,7 @@ Flickable {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
                     }
                     Text {
                         anchors.left: parent.left
@@ -974,7 +974,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -1054,7 +1054,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/duotone-list-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/list.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -1139,7 +1139,7 @@ Flickable {
                     rotation: 90
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/baseline-label_important-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/label_important.svg"
                 }
                 Text {
                     anchors.left: parent.left

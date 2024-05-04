@@ -19,13 +19,13 @@ Item {
 
     function initBoxData() {
         if (mediaItem.fileType === 1)
-            imageMedia.source = "qrc:/assets/icons_material/outline-insert_music-24px.svg"
+            imageMedia.source = "qrc:/assets/icons/material-symbols/insert_music.svg"
         else if (mediaItem.fileType === 2)
-            imageMedia.source = "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+            imageMedia.source = "qrc:/assets/icons/material-symbols/media/movie.svg"
         else if (mediaItem.fileType === 3)
-            imageMedia.source = "qrc:/assets/icons_material/outline-insert_photo-24px.svg" // icons_material/baseline-photo-24px.svg
+            imageMedia.source = "qrc:/assets/icons/material-symbols/media/image.svg" // icons_material/baseline-photo-24px.svg
         else
-            imageMedia.source = "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
+            imageMedia.source = "qrc:/assets/icons/material-symbols/media/broken_image.svg"
 
         mediaFilename.text = mediaItem.name + "." + mediaItem.ext
         mediaPath.text = mediaItem.path
@@ -209,7 +209,7 @@ Item {
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
                 color: Theme.colorIcon
                 fillMode: Image.PreserveAspectFit
             }

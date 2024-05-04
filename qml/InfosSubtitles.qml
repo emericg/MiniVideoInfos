@@ -59,7 +59,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             color: Theme.colorPrimary
-            source: "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
         }
 
         Text {

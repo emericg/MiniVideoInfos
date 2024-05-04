@@ -65,7 +65,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Media")
-                source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "MediaList")
@@ -76,7 +76,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                source: "qrc:/assets/icons/material-symbols/settings.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenSettings")
@@ -87,7 +87,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("About")
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/info.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenAbout")
@@ -125,7 +125,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Media")
-                source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "MediaList")
@@ -139,7 +139,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                source: "qrc:/assets/icons/material-symbols/settings.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenSettings")
@@ -153,7 +153,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("About")
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/info.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenAbout")

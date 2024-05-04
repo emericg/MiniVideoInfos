@@ -149,8 +149,8 @@ Item {
                 width: 64
                 height: 64
                 source: {
-                    if (mediaItem.direction) return "qrc:/assets/others/gps_marker_direction.svg"
-                    return "qrc:/assets/others/gps_marker.svg"
+                    if (mediaItem.direction) return "qrc:/assets/gfx/others/gps_marker_bearing.svg"
+                    return "qrc:/assets/gfx/others/gps_marker.svg"
                 }
                 sourceSize: Qt.size(width, height)
             }
@@ -181,7 +181,7 @@ Item {
                 backgroundColor: Theme.colorHeader
                 highlightMode: "color"
                 iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-open_with-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/open_with.svg"
 
                 highlighted: map.moove
                 onClicked: {
@@ -204,7 +204,7 @@ Item {
                 backgroundColor: Theme.colorHeader
                 highlightMode: "color"
                 iconColor: Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-gps_fixed-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/location/my_location-fill.svg"
 
                 onClicked: map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
             }
@@ -227,7 +227,7 @@ Item {
                 backgroundVisible: true
                 backgroundColor: Theme.colorHeader
 
-                source: "qrc:/assets/icons_material/baseline-zoom_out-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/loupe_minus.svg"
                 onClicked: zoomOut()
             }
 
@@ -241,7 +241,7 @@ Item {
                 backgroundVisible: true
                 backgroundColor: Theme.colorHeader
 
-                source: "qrc:/assets/icons_material/baseline-zoom_in-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/loupe_plus.svg"
                 onClicked: zoomIn()
             }
         }
@@ -304,7 +304,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorPrimary
-                source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
             }
 
             Column {

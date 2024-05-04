@@ -34,10 +34,10 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
 
         source: {
-            if (modelData.fileType === 1) return "qrc:/assets/icons_material/outline-insert_music-24px.svg"
-            if (modelData.fileType === 2) return "qrc:/assets/icons_material/outline-local_movies-24px.svg"
-            if (modelData.fileType === 3) return "qrc:/assets/icons_material/outline-insert_photo-24px.svg" // icons_material/baseline-photo-24px.svg
-            return "qrc:/assets/icons_material/baseline-broken_image-24px.svg"
+            if (modelData.fileType === 1) return "qrc:/assets/icons/material-symbols/insert_music.svg"
+            if (modelData.fileType === 2) return "qrc:/assets/icons/material-symbols/media/movie.svg"
+            if (modelData.fileType === 3) return "qrc:/assets/icons/material-symbols/media/image.svg" // icons_material/baseline-photo-24px.svg
+            return "qrc:/assets/icons/material-symbols/media/broken_image.svg"
         }
         color: Theme.colorIcon
     }

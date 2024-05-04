@@ -42,7 +42,7 @@ DrawerThemed {
 
                     width: 40
                     height: 40
-                    source: "qrc:/assets/logos/logo.svg"
+                    source: "qrc:/assets/gfx/logos/logo.svg"
                     sourceSize: Qt.size(width, height)
                 }
                 Text {
@@ -89,7 +89,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen)
                     text: qsTr("Open media")
-                    iconSource: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                    iconSource: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                     onClicked: {
                         appContent.state = "MediaList"
@@ -101,7 +101,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen)
                     text: qsTr("Media")
-                    iconSource: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                    iconSource: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                     onClicked: {
                         appContent.state = "MediaList"
@@ -129,7 +129,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenSettings")
                     text: qsTr("Settings")
-                    iconSource: "qrc:/assets/icons_material/outline-settings-24px.svg"
+                    iconSource: "qrc:/assets/icons/material-icons/duotone/tune.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -140,7 +140,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
                     text: qsTr("About")
-                    iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    iconSource: "qrc:/assets/icons/material-icons/duotone/info.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()

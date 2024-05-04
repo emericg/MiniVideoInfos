@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("MiniVideo");
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    QIcon appIcon(":/assets/logos/logo.svg");
+    QIcon appIcon(":/assets/gfx/logos/logo.svg");
     app.setWindowIcon(appIcon);
 #endif
 

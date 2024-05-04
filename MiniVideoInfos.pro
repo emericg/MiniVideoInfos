@@ -58,15 +58,15 @@ HEADERS  += src/Media.h \
             src/minivideo_textexport_qt.h \
             src/minivideo_utils_qt.h
 
-RESOURCES   += qml/qml.qrc \
-               qml/components.qrc \
-               i18n/i18n.qrc \
-               assets/assets.qrc
+RESOURCES   += assets/assets.qrc assets/icons.qrc
+
+RESOURCES   += qml/qml.qrc qml/components.qrc
 
 OTHER_FILES += .gitignore \
                .github/workflows/builds.yml \
                contribs/contribs_builder.py
 
+RESOURCES   += i18n/i18n.qrc
 #TRANSLATIONS = i18n/xx_fr.ts
 
 lupdate_only { SOURCES += qml/*.qml qml/*.js qml/components/*.qml }
@@ -176,7 +176,7 @@ linux:!android {
     isEmpty(PREFIX) { PREFIX = /usr/local }
     target_app.files       += $${OUT_PWD}/$${DESTDIR}/$$lower($${TARGET})
     target_app.path         = $${PREFIX}/bin/
-    target_icon.files      += $${OUT_PWD}/assets/logos/$$lower($${TARGET}).svg
+    target_icon.files      += $${OUT_PWD}/assets/gfx/logos/$$lower($${TARGET}).svg
     target_icon.path        = $${PREFIX}/share/pixmaps/
     target_appentry.files  += $${OUT_PWD}/assets/linux/$$lower($${TARGET}).desktop
     target_appentry.path    = $${PREFIX}/share/applications

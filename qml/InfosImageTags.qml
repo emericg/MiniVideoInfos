@@ -83,7 +83,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-photo_camera-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/photo_camera.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -183,7 +183,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/baseline-exposure-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/exposure.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -355,7 +355,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -518,7 +518,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
                 }
                 Text {
                     anchors.left: parent.left

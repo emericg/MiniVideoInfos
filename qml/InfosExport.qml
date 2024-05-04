@@ -40,7 +40,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             color: Theme.colorPrimary
-            source: "qrc:/assets/icons_material/outline-archive-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/archive.svg"
         }
 
         Text {

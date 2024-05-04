@@ -41,7 +41,7 @@ Rectangle {
 
             folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
             folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-            storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
+            storageIcon.source = "qrc:/assets/icons/material-symbols/smartphone.svg"
 
             updateHeaderText()
             inited = true
@@ -151,7 +151,7 @@ Rectangle {
                 height: 26
                 anchors.centerIn: parent
 
-                source: "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/smartphone.svg"
                 color: Theme.colorIcon
             }
 
@@ -167,11 +167,11 @@ Rectangle {
                     if (storageChooser.storageIndex === 0) {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-                        storageIcon.source = "qrc:/assets/icons_material/baseline-smartphone-24px.svg"
+                        storageIcon.source = "qrc:/assets/icons/material-symbols/smartphone.svg"
                     } else {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal()
-                        storageIcon.source = "qrc:/assets/icons_material/duotone-sd_card-24px.svg"
+                        storageIcon.source = "qrc:/assets/icons/material-icons/duotone/sd_card.svg"
                     }
 
                     updateHeaderText()
@@ -209,7 +209,7 @@ Rectangle {
                 height: 24
 
                 color: Theme.colorIcon
-                source: "qrc:/assets/icons_material/baseline-subdirectory_arrow_left-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/subdirectory_arrow_left.svg"
             }
 
             MouseArea {
@@ -288,22 +288,22 @@ Rectangle {
                     if (fileIsDir) {
                         if (fileName === "DCIM" || fileName === "Download" ||
                             fileName === "Movies" || fileName === "Pictures" || fileName === "Music")
-                            source = "qrc:/assets/icons_material/baseline-folder-24px.svg"
+                            source = "qrc:/assets/icons/material-symbols/folder.svg"
                         else
-                            source = "qrc:/assets/icons_material/outline-folder-24px.svg"
+                            source = "qrc:/assets/icons/material-symbols/folder.svg"
                     } else {
                         if (UtilsPath.isVideoFile(fileName)) {
-                            source = "qrc:/assets/icons_material/baseline-slideshow-24px.svg"
+                            source = "qrc:/assets/icons/material-symbols/slideshow.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
-                            source = "qrc:/assets/icons_material/baseline-music-24px.svg"
+                            source = "qrc:/assets/icons/material-symbols/music.svg"
                         } else if (UtilsPath.isPictureFile(fileName, )) {
-                            source = "qrc:/assets/icons_material/baseline-photo-24px.svg"
+                            source = "qrc:/assets/icons/material-symbols/photo.svg"
                         } else {
                             if (onlyShowMedia) {
                                 listItem.visible = false
                                 listItem.height = 0
                             } else {
-                                source = "qrc:/assets/icons_material/outline-insert_empty-24px.svg"
+                                source = "qrc:/assets/icons/material-symbols/insert_empty.svg"
                             }
                         }
                     }

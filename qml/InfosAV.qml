@@ -198,17 +198,17 @@ Flickable {
             speakers_lfe.visible = trackItem.audioChannels > 5
 
             if (trackItem.audioChannels === 10) {
-                speakers.source = "qrc:/speakers/9_0_surround.svg"
+                speakers.source = "qrc:/assets/gfx/speakers/9_0_surround.svg"
             } else if (trackItem.audioChannels === 8) {
-                speakers.source = "qrc:/speakers/7_0_surround.svg"
+                speakers.source = "qrc:/assets/gfx/speakers/7_0_surround.svg"
             } else if (trackItem.audioChannels === 6) {
-                speakers.source = "qrc:/speakers/5_0_surround.svg"
+                speakers.source = "qrc:/assets/gfx/speakers/5_0_surround.svg"
             } else if (trackItem.audioChannels === 4) {
-                speakers.source = "qrc:/speakers/4_0_quad.svg"
+                speakers.source = "qrc:/assets/gfx/speakers/4_0_quad.svg"
             } else if (trackItem.audioChannels === 2) {
-                speakers.source = "qrc:/speakers/2_0_stereo.svg"
+                speakers.source = "qrc:/assets/gfx/speakers/2_0_stereo.svg"
             } else if (trackItem.audioChannels === 1) {
-                speakers.source = "qrc:/speakers/1_0.svg"
+                speakers.source = "qrc:/assets/gfx/speakers/1_0.svg"
             } else {
                 item_speakerBox.visible = false
                 speakers.visible = false
@@ -296,7 +296,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/duotone-list-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/list.svg"
                 }
                 Text {
                     id: titleTrackText
@@ -471,7 +471,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/movie.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -698,7 +698,7 @@ Flickable {
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 4
                         color: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/duotone-rotate_90_degrees_ccw-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/rotate_90_degrees_ccw.svg"
                     }
                     IconSvg {
                         id: img_display_resize
@@ -709,7 +709,7 @@ Flickable {
                         anchors.right: parent.right
                         anchors.rightMargin: 4
                         color: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
                     }
                 }
                 Rectangle {
@@ -731,7 +731,7 @@ Flickable {
                         anchors.bottom: parent.bottom
                         anchors.bottomMargin: 4
                         color: Theme.colorWarning
-                        source: "qrc:/assets/icons_material/duotone-settings_overscan-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/settings_overscan.svg"
                     }
                 }
             }
@@ -939,7 +939,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -1105,7 +1105,7 @@ Flickable {
                 IconSvg {
                     id: speakers_lfe
                     anchors.fill: parent
-                    source: "qrc:/speakers/LFE.svg"
+                    source: "qrc:/assets/gfx/speakers/LFE.svg"
                     color: Theme.colorIcon
                 }
                 IconSvg {
@@ -1140,7 +1140,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/duotone-sd_card-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/sd_card.svg"
                 }
                 Text {
                     anchors.left: parent.left

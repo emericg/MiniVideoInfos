@@ -85,9 +85,9 @@ Rectangle {
                     height: (headerHeight / 2)
 
                     source: {
-                        if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
-                        if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
-                        return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                        if (leftMenuMode === "drawer") return "qrc:/assets/icons/material-symbols/menu.svg"
+                        if (leftMenuMode === "close") return "qrc:/assets/icons/material-symbols/close.svg"
+                        return "qrc:/assets/icons/material-symbols/arrow_back.svg"
                     }
                     color: Theme.colorHeaderContent
                 }
@@ -150,7 +150,7 @@ Rectangle {
                     width: (headerHeight / 2)
                     height: (headerHeight / 2)
 
-                    source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/more_vert.svg"
                     color: Theme.colorHeaderContent
                 }
             }

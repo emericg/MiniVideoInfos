@@ -95,7 +95,7 @@ Rectangle {
                             height: width*0.666
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                            source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                             fillMode: Image.PreserveAspectFit
                             color: Theme.colorIcon
                             smooth: true
@@ -143,7 +143,7 @@ Rectangle {
                             height: width*0.666
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/icons_material/duotone-library_add-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/library_add.svg"
                             color: Theme.colorIcon
                             smooth: true
                         }
@@ -194,7 +194,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons_material/baseline-4k-24px.svg"
+                                source: "qrc:/assets/icons/material-symbols/4k.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -215,7 +215,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
+                                source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -236,7 +236,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
+                                source: "qrc:/assets/icons/material-icons/duotone/insert_chart.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -257,7 +257,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -278,7 +278,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons_material/outline-insert_music-24px.svg"
+                                source: "qrc:/assets/icons/material-symbols/insert_music.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -299,7 +299,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                                source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
                                 color: Theme.colorIcon
                             }
                             Text {

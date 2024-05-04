@@ -213,7 +213,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-av_timer-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/av_timer.svg"
                     }
                     Text {
                         id: textDuration
@@ -239,7 +239,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-data_usage-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/data_usage.svg"
                     }
                     Text {
                         id: textSize
@@ -266,7 +266,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-aspect_ratio-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
                     }
                     Text {
                         id: textGeometry
@@ -292,7 +292,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-speaker-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/speaker.svg"
                     }
                     Text {
                         id: textChannels
@@ -318,7 +318,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
                     }
                     Text {
                         id: textGPS
@@ -554,7 +554,7 @@ Item {
                 height: 56
 
                 text: qsTr("file")
-                source: "qrc:/assets/icons_material/outline-insert_drive_file-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/file.svg"
 
                 property int index: 0
                 highlighted: (mediaPages.currentIndex === index)
@@ -566,7 +566,7 @@ Item {
                 height: 56
 
                 text: qsTr("video")
-                source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/movie.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -579,7 +579,7 @@ Item {
                 height: 56
 
                 text: qsTr("video")
-                source: "qrc:/assets/icons_material/outline-local_movies-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/movie.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -592,7 +592,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -605,7 +605,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -618,7 +618,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -631,7 +631,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons_material/outline-speaker-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -644,7 +644,7 @@ Item {
                 height: 56
 
                 text: qsTr("subtitles")
-                source: "qrc:/assets/icons_material/outline-closed_caption-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -657,7 +657,7 @@ Item {
                 height: 56
 
                 text: qsTr("tags")
-                source: "qrc:/assets/icons_material/outline-insert_music-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/insert_music.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -670,7 +670,7 @@ Item {
                 height: 56
 
                 text: qsTr("tags")
-                source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -683,7 +683,7 @@ Item {
                 height: 56
 
                 text: qsTr("map")
-                source: "qrc:/assets/icons_material/baseline-map-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/map.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -696,7 +696,7 @@ Item {
                 height: 56
 
                 text: qsTr("export")
-                source: "qrc:/assets/icons_material/outline-archive-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/archive.svg"
 
                 property int index: -1
                 visible: (index !== -1)

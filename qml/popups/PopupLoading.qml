@@ -32,7 +32,7 @@ Popup {
                 height: 128
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                source: "qrc:/assets/icons_material/baseline-hourglass_empty-24px.svg"
+                source: "qrc:/assets/icons/material-icons/outlined/hourglass_empty.svg"
                 color: Theme.colorIcon
             }
 

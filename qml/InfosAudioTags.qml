@@ -68,7 +68,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
                 }
                 Text {
                     anchors.left: parent.left
@@ -269,7 +269,7 @@ Flickable {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
                 }
                 Text {
                     anchors.left: parent.left

@@ -58,7 +58,7 @@ Loader {
 
             ListTitle {
                 text: qsTr("Application")
-                icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                icon: "qrc:/assets/icons/material-symbols/settings.svg"
             }
 
             ////////////////
@@ -80,7 +80,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/duotone-style-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/style.svg"
                 }
 
                 Text {
@@ -185,7 +185,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/brightness_4.svg"
                 }
 
                 Text {
@@ -241,7 +241,7 @@ Loader {
 
             ListTitle {
                 text: qsTr("File chooser")
-                icon: "qrc:/assets/icons_material/baseline-folder_open-24px.svg"
+                icon: "qrc:/assets/icons/material-symbols/folder_open.svg"
             }
 
             ////////////////
@@ -262,7 +262,7 @@ Loader {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                    source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
                     smooth: true
@@ -313,7 +313,7 @@ Loader {
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_fontawesome/photo-video-duotone.svg"
+                    source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
                     smooth: true
@@ -352,7 +352,7 @@ Loader {
 
             ListTitle {
                 text: qsTr("Media")
-                icon: "qrc:/assets/icons_material/baseline-photo_camera-24px.svg"
+                icon: "qrc:/assets/icons/material-symbols/media/photo_camera.svg"
             }
 
             ////////////////
@@ -374,7 +374,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/outline-insert_photo-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
                 }
 
                 Text {
@@ -425,7 +425,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/outline-archive-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/archive.svg"
                 }
 
                 Text {
@@ -476,7 +476,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
                 }
 
                 Text {
@@ -535,7 +535,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/outline-save-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/save.svg"
                 }
 
                 Text {

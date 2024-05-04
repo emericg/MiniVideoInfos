@@ -1,14 +1,8 @@
 
 # Application logo and icons:
-- assets/logos/logo.svg                     // JuMo <jujumo@gmail.com> // CC BY-ND 4.0
+- assets/gfx/logos/logo.svg                     // JuMo <jujumo@gmail.com> // CC BY-ND 4.0
 
 # Others:
-- assets/other/gps_marker.svg               // Emeric Grange // CC BY-SA 4.0
-- assets/other/gps_marker_direction.svg     // Emeric Grange // CC BY-SA 4.0
-- assets/speakers/*.svg                     // Emeric Grange // CC BY-SA 4.0
-
-# Google Material Design icons:
-- assets/icons_material/*                   // Google // CC BY-SA 4.0
-
-# Font Awesome icons:
-- assets/icons_fontawesome/*                // Font Awesome // CC BY 4.0
+- assets/gfx/other/gps_marker.svg               // Emeric Grange // CC BY-SA 4.0
+- assets/gfx/other/gps_marker_bearing.svg       // Emeric Grange // CC BY-SA 4.0
+- assets/gfx/speakers/*.svg                     // Emeric Grange // CC BY-SA 4.0

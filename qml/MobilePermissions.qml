@@ -79,7 +79,7 @@ Item {
 
                     property bool validperm: true
 
-                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -144,7 +144,7 @@ Item {
 
                     property bool validperm: false
 
-                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorError
                     backgroundVisible: true
@@ -199,7 +199,7 @@ Item {
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Permission info")
-                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
                 sourceSize: 20
 
                 onClicked: utilsApp.openAndroidStorageSettings("com.minivideo.infos")
@@ -233,7 +233,7 @@ Item {
 
                     property bool validperm: false
 
-                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorError
                     backgroundVisible: true
@@ -305,7 +305,7 @@ Item {
 
                     property bool validperm: false
 
-                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -374,7 +374,7 @@ Item {
                     width: 32
                     height: 32
 
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/info.svg"
                     color: Theme.colorSubText
                 }
             }
@@ -402,7 +402,7 @@ Item {
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Application info")
-                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
                 sourceSize: 20
 
                 onClicked: utilsApp.openAndroidAppInfo("com.minivideo.infos")
