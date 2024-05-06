@@ -3,8 +3,10 @@
         <file>gfx/logos/logo.svg</file>
         <file>gfx/logos/github.svg</file>
 
-        <file>gfx/others/gps_marker.svg</file>
-        <file>gfx/others/gps_marker_bearing.svg</file>
+        <file>gfx/maps/gps_marker.svg</file>
+        <file>gfx/maps/gps_marker_bearing.svg</file>
+        <file>gfx/maps/compass_top.svg</file>
+        <file>gfx/maps/compass_bottom.svg</file>
 
         <file>gfx/speakers/LFE.svg</file>
         <file>gfx/speakers/1_0.svg</file>

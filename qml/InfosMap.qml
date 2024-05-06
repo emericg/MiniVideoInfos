@@ -3,6 +3,7 @@ import QtQuick.Controls
 
 import QtLocation
 import QtPositioning
+import Qt.labs.animation
 
 import ThemeEngine
 import "qrc:/utils/UtilsString.js" as UtilsString
@@ -22,10 +23,6 @@ Item {
             map.moove = false
             map.zoomLevel = 12
 
-            // buttons
-            button_map_dezoom.enabled = true
-            button_map_zoom.enabled = true
-
             // map marker
             mapMarker.visible = true
             mapMarker.rotation = mediaItem.direction
@@ -43,56 +40,7 @@ Item {
             //info_track.text = mediaItem.gpscount
 
             // scale indicator
-            calculateScale()
-        }
-    }
-
-    property variant scaleLengths: [5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000, 2000000]
-
-    function calculateScale() {
-        //console.log("calculateScale(zoom: " + map.zoomLevel + ")")
-
-        var coord1, coord2, dist, f
-        f = 0
-        coord1 = map.toCoordinate(Qt.point(0, mapScale.y))
-        coord2 = map.toCoordinate(Qt.point(100, mapScale.y))
-        dist = Math.round(coord1.distanceTo(coord2))
-
-        if (dist === 0) {
-            mapScale.visible = false
-            mapScale.width = 100
-        } else {
-            for (var i = 0; i < scaleLengths.length-1; i++) {
-                if (dist < (scaleLengths[i] + scaleLengths[i+1]) / 2 ) {
-                    f = scaleLengths[i] / dist
-                    dist = scaleLengths[i]
-                    break
-                }
-            }
-            if (f === 0) {
-                f = dist / scaleLengths[i]
-                dist = scaleLengths[i]
-            }
-
-            mapScale.visible = true
-            mapScale.width = 100 * f
-            mapScaleText.text = UtilsString.distanceToString(dist, 0, settingsManager.appUnits)
-        }
-    }
-
-    function zoomIn() {
-        if (map.zoomLevel < Math.round(map.maximumZoomLevel)) {
-            map.zoomLevel = Math.round(map.zoomLevel + 1)
-            if (!map.moove) map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
-            calculateScale()
-        }
-    }
-
-    function zoomOut() {
-        if (map.zoomLevel > Math.round(map.minimumZoomLevel)) {
-            map.zoomLevel = Math.round(map.zoomLevel - 1)
-            if (!map.moove) map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
-            calculateScale()
+            mapScale.computeScale()
         }
     }
 
@@ -100,60 +48,154 @@ Item {
 
     Map {
         id: map
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        //z: parent.z + 1
+        anchors.fill: parent
 
-        tilt: 0
-        fieldOfView: 45
-        zoomLevel: 9
-        center: QtPositioning.coordinate(45.5, 6)
-        //activeMapType: MapType.TerrainMap
+        ////////////////
+
+        property real zoomLevel_minimum: 14
+        property real zoomLevel_maximum: 18
+
+        property real tiltLevel_minimum: 0
+        property real tiltLevel_maximum: 66
+
+        property real fovLevel_minimum: 20
+        property real fovLevel_maximum: 120
 
         property bool moove: false
-        //gesture.enabled: moove
-        copyrightsVisible: false
+
+        tilt: 0
+        fieldOfView: 0
+        zoomLevel: 9
+        center: QtPositioning.coordinate(45.5, 6)
+
+        ////////////////
 
         plugin: Plugin {
             preferred: ["maplibre", "osm"]
-            //preferred: ["here", "maplibre", "maplibregl", "osm", "esri"]
 
-            PluginParameter { name: "osm.mapping.highdpi_tiles"; value: "true"; }
+            PluginParameter { name: "maplibre.map.styles"; value: "https://tiles.versatiles.org/styles/colorful.json" }
+
+            PluginParameter { name: "osm.mapping.highdpi_tiles"; value: "true" }
             //PluginParameter { name: "osm.mapping.custom.host"; value: "https://mappingcustomhost.org"; }
-
-            PluginParameter { name: "mapbox.access_token"; value: ""; }
-            PluginParameter { name: "mapbox.mapping.highdpi_tiles"; value: "true"; }
         }
+        copyrightsVisible: false
 
         ////////////////
 
-        MouseArea {
+        function zoomIn() {
+            if (map.zoomLevel < Math.round(map.maximumZoomLevel)) {
+                map.zoomLevel = Math.round(map.zoomLevel + 1)
+                if (!map.moove) map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
+                mapScale.computeScale()
+            }
+        }
+
+        function zoomOut() {
+            if (map.zoomLevel > Math.round(map.minimumZoomLevel)) {
+                map.zoomLevel = Math.round(map.zoomLevel - 1)
+                if (!map.moove) map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
+                mapScale.computeScale()
+            }
+        }
+
+        Timer {
+            id: reactivateSwipe
+            interval: 333
+            running: false
+            repeat: false
+            onTriggered: {
+                mediaPages.interactive = true
+            }
+        }
+
+        BoundaryRule on zoomLevel {
+            id: br
+            minimum: map.zoomLevel_minimum
+            maximum: map.zoomLevel_maximum
+        }
+
+        Item {
+            id: controlsArea
             anchors.fill: parent
-            onWheel: (wheel) => {
-                if (wheel.angleDelta.y < 0) zoomOut()
-                else if (wheel.angleDelta.y > 0) zoomIn()
+            anchors.bottomMargin: 0
+
+            property int controlSize: isPhone ? 44 : 48
+
+            DragHandler {
+                id: dragHandler
+                target: null
+
+                enabled: map.moove && !pinchHandler.active
+
+                onActiveChanged: {
+                    console.log("dragHandler.onActiveChanged")
+                    if (active) {
+                        mediaPages.interactive = false
+                    } else {
+                        reactivateSwipe.start()
+                    }
+                }
+                onTranslationChanged: (delta) => {
+                    //console.log("pan map: " + delta)
+
+                    if (!pinchHandler.active) {
+                        map.pan(-delta.x, -delta.y)
+                    }
+                }
+            }
+            PinchHandler {
+                id: pinchHandler
+                target: null
+
+                onActiveChanged: {
+                    console.log("pinchHandler.onActiveChanged")
+                    if (active) {
+                        mediaPages.interactive = false
+                    } else {
+                        reactivateSwipe.start()
+                    }
+                }
+                onScaleChanged: (delta) => {
+                    //console.log("zoom map: " + delta)
+
+                    map.zoomLevel += Math.log2(delta)
+                    mapScale.computeScale()
+                }
+                onRotationChanged: (delta) => {
+                    map.bearing -= delta
+                    //map.alignCoordinateToPoint(map.startCentroid, centroid.position)
+                }
+                //grabPermissions: PointerHandler.TakeOverForbidden
+            }
+        }
+        WheelHandler {
+            rotationScale: 1/120
+            property: "zoomLevel"
+
+            // workaround for QTBUG-87646 / QTBUG-112394 / QTBUG-112432
+            acceptedDevices: Qt.platform.pluginName === "cocoa" || Qt.platform.pluginName === "wayland"
+                             ? PointerDevice.Mouse | PointerDevice.TouchPad
+                             : PointerDevice.Mouse
+
+            onWheel: (event) => {
+                //console.log("rotation", event.angleDelta.y,
+                //            "scaled", rotation, "@", point.position,
+                //            "=>", parent.rotation)
+
+                //map.zoomLevel += Math.log2(event.angleDelta.y) // TODO
+                if (!map.moove) map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
+                mapScale.computeScale()
             }
         }
 
         ////////////////
 
-        MapQuickItem {
+        MapMarker {
             id: mapMarker
             visible: false
-            anchorPoint.x: (mapMarkerImg.width / 2)
-            anchorPoint.y: (mapMarkerImg.height / 2)
-            sourceItem: Image {
-                id: mapMarkerImg
-                width: 64
-                height: 64
-                source: {
-                    if (mediaItem.direction) return "qrc:/assets/gfx/others/gps_marker_bearing.svg"
-                    return "qrc:/assets/gfx/others/gps_marker.svg"
-                }
-                sourceSize: Qt.size(width, height)
-            }
+
+            source: "qrc:/assets/gfx/maps/gps_marker.svg"
+            source_bearing:  "qrc:/assets/gfx/maps/gps_marker_bearing.svg"
         }
 
         MapPolyline {
@@ -172,159 +214,105 @@ Item {
             anchors.leftMargin: 16
             spacing: 16
 
-            RoundButtonIcon {
-                id: button_map_moove
-                width: 40
-                height: 40
+            MapButton { // Moove
+                width: controlsArea.controlSize
+                height: controlsArea.controlSize
 
-                backgroundVisible: true
-                backgroundColor: Theme.colorHeader
-                highlightMode: "color"
-                iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
                 source: "qrc:/assets/icons/material-symbols/open_with.svg"
+                iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
 
-                highlighted: map.moove
                 onClicked: {
                     map.moove = !map.moove
-
-                    // also disable swiping through tabs?
-                    //mediaPages.interactive = !map.moove
+                    mediaPages.interactive = !map.moove // disable swiping through tabs
                 }
             }
-            RoundButtonIcon {
-                id: button_map_center
-                width: 40
-                height: 40
+
+            MapButton { // GPS
+                width: controlsArea.controlSize
+                height: controlsArea.controlSize
 
                 visible: (opacity > 0)
                 opacity: (map.center !== QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: 200 } }
 
-                backgroundVisible: true
-                backgroundColor: Theme.colorHeader
-                highlightMode: "color"
-                iconColor: Theme.colorText
                 source: "qrc:/assets/icons/material-symbols/location/my_location-fill.svg"
 
                 onClicked: map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
             }
         }
 
-        Row {
+        Column { // top-right
             anchors.top: parent.top
             anchors.topMargin: 16
             anchors.right: parent.right
             anchors.rightMargin: 16
             spacing: 16
 
-            RoundButtonIcon {
-                id: button_map_dezoom
-                width: 40
-                height: 40
+            MapButtonCompass { // compass
+                width: controlsArea.controlSize
+                height: controlsArea.controlSize
 
-                highlightMode: "color"
-                iconColor: Theme.colorText
-                backgroundVisible: true
-                backgroundColor: Theme.colorHeader
+                source_top: "qrc:/assets/gfx/maps/compass_top.svg"
+                source_bottom: "qrc:/assets/gfx/maps/compass_bottom.svg"
 
-                source: "qrc:/assets/icons/material-symbols/loupe_minus.svg"
-                onClicked: zoomOut()
+                onClicked: map.bearing = 0
+                sourceRotation: -map.bearing
             }
 
-            RoundButtonIcon {
-                id: button_map_zoom
-                width: 40
-                height: 40
+            MapButtonZoom { // zoom buttons
+                width: controlsArea.controlSize
+                height: controlsArea.controlSize*2
 
-                highlightMode: "color"
-                iconColor: Theme.colorText
-                backgroundVisible: true
-                backgroundColor: Theme.colorHeader
+                zoomLevel: map.zoomLevel
+                zoomLevel_minimum: map.zoomLevel_minimum
+                zoomLevel_maximum: map.zoomLevel_maximum
 
-                source: "qrc:/assets/icons/material-symbols/loupe_plus.svg"
-                onClicked: zoomIn()
+                onMapZoomIn: map.zoomIn()
+                onMapZoomOut: map.zoomOut()
             }
         }
 
         ////////////////
 
-        Item {
-            id: mapScale
-            width: 100
-            height: 16
+        Column { // bottom-left
             anchors.left: parent.left
             anchors.leftMargin: 16
-            anchors.bottom: rectangleCoordinates.top
-            anchors.bottomMargin: 16
-
-            Text {
-                id: mapScaleText
-                anchors.centerIn: parent
-                text: "100m"
-                color: "#555"
-                font.pixelSize: 12
-            }
-
-            Rectangle {
-                width: 2; height: 6;
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                color: "#555"
-            }
-            Rectangle {
-                width: parent.width; height: 2;
-                anchors.bottom: parent.bottom
-                color: "#555"
-            }
-            Rectangle {
-                width: 2; height: 6;
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                color: "#555"
-            }
-        }
-
-        ////////////////
-
-        Rectangle {
-            id: rectangleCoordinates
-            height: columnCoordinates.height + 16
-            anchors.left: parent.left
-            anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: rectangleMenus.hhh
-            color: Theme.colorForeground
-            opacity: 0.9
+            anchors.bottomMargin: 16 + mobileMenu.height
+            spacing: 16
 
-            IconSvg {
-                width: 32
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-
-                color: Theme.colorPrimary
-                source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+            MapScale {
+                id: mapScale
+                map: map
             }
 
-            Column {
-                id: columnCoordinates
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.right: parent.right
+            MapFrameArea {
+                id: rectangleCoordinates
 
-                Item { ////
-                    id: item_lat
-                    height: 20
+                width: Math.max(item_lat.width, item_long.width, row_altspd.width, item_track.width) + 80
+                height: columnCoordinates.height + 12
+                visible: false
+
+                IconSvg {
+                    width: 32
+                    height: 32
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorPrimary
+                    source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                }
+
+                Column {
+                    id: columnCoordinates
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 56
+                    anchors.leftMargin: 48
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
 
-                    Row {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.verticalCenter: parent.verticalCenter
+                    Row { ////
+                        id: item_lat
+
+                        height: 20
                         spacing: 16
 
                         Text {
@@ -338,19 +326,9 @@ Item {
                             id: info_lat
                         }
                     }
-                }
-                Item { ////
-                    id: item_long
-                    height: 20
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    Row {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.verticalCenter: parent.verticalCenter
+                    Row { ////
+                        id: item_long
+                        height: 20
                         spacing: 16
 
                         Text {
@@ -364,64 +342,48 @@ Item {
                             id: info_long
                         }
                     }
-                }
-                Row { ////
-                    id: row_altspd
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    Row { ////
+                        id: row_altspd
+                        height: 20
+                        spacing: 20
 
-                    height: 20
-                    spacing: 24
+                        Row {
+                            id: row_altitude
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 16
 
-                    Row {
-                        id: row_altitude
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 16
-
-                        Text {
-                            text: qsTr("altitude")
-                            textFormat: Text.PlainText
-                            color: Theme.colorSubText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
+                            Text {
+                                text: qsTr("altitude")
+                                textFormat: Text.PlainText
+                                color: Theme.colorSubText
+                                font.pixelSize: 15
+                                wrapMode: Text.WordWrap
+                            }
+                            TextEditMVI {
+                                id: info_altitude
+                            }
                         }
-                        TextEditMVI {
-                            id: info_altitude
-                        }
-                    }
 
-                    Row {
-                        id: row_speed
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 16
+                        Row {
+                            id: row_speed
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 16
 
-                        Text {
-                            text: qsTr("speed")
-                            textFormat: Text.PlainText
-                            color: Theme.colorSubText
-                            font.pixelSize: 15
-                            wrapMode: Text.WordWrap
-                        }
-                        TextEditMVI {
-                            id: info_speed
+                            Text {
+                                text: qsTr("speed")
+                                textFormat: Text.PlainText
+                                color: Theme.colorSubText
+                                font.pixelSize: 15
+                                wrapMode: Text.WordWrap
+                            }
+                            TextEditMVI {
+                                id: info_speed
+                            }
                         }
                     }
-                }
-                Item { ////
-                    id: item_track
-                    height: 20
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    Row {
-                        id: row_track
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-                        anchors.verticalCenter: parent.verticalCenter
+                    Row { ////
+                        id: item_track
+                        height: 20
                         spacing: 16
 
                         Text {
@@ -438,5 +400,9 @@ Item {
                 }
             }
         }
+
+        ////////////////
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }
