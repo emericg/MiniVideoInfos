@@ -13,55 +13,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadHeader() {
-        if (mediaItem.fileType === 1 || mediaItem.fileType === 2) {
-            columnDuration.visible = true
-            textDuration.text = UtilsString.durationToString_compact(mediaItem.duration)
-        } else {
-            columnDuration.visible = false
-        }
-
-        columnSize.visible = true
-        textSize.text = UtilsString.bytesToString_short(mediaItem.size, settingsManager.unitSizes)
-
-        if (mediaItem.fileType === 2 || mediaItem.fileType === 3) {
-            columnGeometry.visible = true
-            textGeometry.text = mediaItem.widthVisible + " x " + mediaItem.heightVisible
-        } else {
-            columnGeometry.visible = false
-        }
-
-        if (mediaItem.fileType === 1 || mediaItem.audioCodec.length) {
-            columnChannels.visible = true
-            if (mediaItem.audioChannels === 1)
-                textChannels.text = qsTr("mono")
-            else if (mediaItem.audioChannels === 2)
-                textChannels.text = qsTr("stereo")
-            else
-                textChannels.text = mediaItem.audioChannels + " " + qsTr("chan.")
-        } else {
-            columnChannels.visible = false
-        }
-
-        columnGPS.visible = mediaItem.hasGPS
-
-        computeColumnsSize()
-    }
-
-    onWidthChanged: computeColumnsSize()
-    function computeColumnsSize() {
-        var headercolumncount = 1
-        if (mediaItem.fileType === 1 || mediaItem.fileType === 2) headercolumncount++;
-        if (mediaItem.fileType === 2 || mediaItem.fileType === 3) headercolumncount++;
-        if (mediaItem.fileType === 1 || mediaItem.audioCodec.length) headercolumncount++;
-        if (mediaItem.hasGPS) headercolumncount++;
-
-        var headercolumnwidth = ((subheader.width - 48) / headercolumncount)
-        if (headercolumnwidth > 128) headercolumnwidth = 128
-        columnDuration.width = headercolumnwidth
-        columnSize.width = headercolumnwidth
-        columnGeometry.width = headercolumnwidth
-        columnChannels.width = headercolumnwidth
-        columnGPS.width = headercolumnwidth
+        //
     }
 
     ////////
@@ -95,6 +47,7 @@ Item {
         menuMap.index = -1
         menuExport.index = -1
 
+        content_generic.loadSubHeader()
         content_generic.loadGeneric()
 
         if (mediaItem.hasVideo) {
@@ -173,184 +126,17 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: subheader
-
-        z: 5
-        height: visible ? 60 : 0
-        color: Theme.colorHeader
-        visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)
-
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        Column {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 4
-            spacing: 10
-
-            Row {
-                id: rowIcons
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8
-
-                Column {
-                    id: columnDuration
-                    width: 96
-
-                    IconSvg {
-                        width: 40
-                        height: 40
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/av_timer.svg"
-                    }
-                    Text {
-                        id: textDuration
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-
-                        color: Theme.colorIcon
-                        text: ""
-                        horizontalAlignment: Text.AlignHCenter
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 14
-                    }
-                }
-                Column {
-                    id: columnSize
-                    width: 96
-
-                    IconSvg {
-                        width: 40
-                        height: 40
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/data_usage.svg"
-                    }
-                    Text {
-                        id: textSize
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-
-                        color: Theme.colorIcon
-                        text: ""
-                        horizontalAlignment: Text.AlignHCenter
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 14
-                    }
-                }
-                Column {
-                    id: columnGeometry
-                    width: 96
-
-                    IconSvg {
-                        id: imgGeometry
-                        width: 40
-                        height: 40
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
-                    }
-                    Text {
-                        id: textGeometry
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-
-                        text: ""
-                        horizontalAlignment: Text.AlignHCenter
-                        color: Theme.colorIcon
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 14
-                    }
-                }
-                Column {
-                    id: columnChannels
-                    width: 96
-
-                    IconSvg {
-                        width: 40
-                        height: 40
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/speaker.svg"
-                    }
-                    Text {
-                        id: textChannels
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-
-                        text: ""
-                        horizontalAlignment: Text.AlignHCenter
-                        color: Theme.colorIcon
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 14
-                    }
-                }
-                Column {
-                    id: columnGPS
-                    width: 96
-
-                    IconSvg {
-                        width: 40
-                        height: 40
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
-                    }
-                    Text {
-                        id: textGPS
-                        anchors.right: parent.right
-                        anchors.rightMargin: 0
-                        anchors.left: parent.left
-                        anchors.leftMargin: 0
-
-                        text: qsTr("GPS")
-                        horizontalAlignment: Text.AlignHCenter
-                        color: Theme.colorIcon
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 14
-                    }
-                }
-            }
-        }
-    }
-
-    ////////
-
     Rectangle { // separator
-        anchors.top: subheader.bottom
+        anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
 
         z: 5
         height: 2
         opacity: 0.66
-        color: Theme.colorHeaderHighlight
+        color: Theme.colorSeparator
 
-        Rectangle { // shadow
+        Rectangle { // fake shadow
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -360,7 +146,7 @@ Item {
 
             gradient: Gradient {
                 orientation: Gradient.Vertical
-                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 0.0; color: Theme.colorHeader; }
                 GradientStop { position: 1.0; color: "transparent"; }
             }
         }
@@ -537,9 +323,12 @@ Item {
 
         z: 5
         height: 56
-        opacity: 0.90
+        opacity: 0.95
         color: mobileMenu.color
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation) && (mediaPages.count > 1)
+
+        // prevent clicks below this area
+        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
         Row {
             anchors.horizontalCenter: parent.horizontalCenter

@@ -90,7 +90,7 @@ Flickable {
             elementTracks.visible = false
         }
 
-        // VIDEO tracks
+        // Video tracks
         columnVideo.model = mediaItem.videoTracks
 
         // Audio tracks
@@ -109,7 +109,59 @@ Flickable {
         repeaterOther.model = mediaItem.otherTracks
     }
 
+    function loadSubHeader() {
+        if (mediaItem.fileType === 1 || mediaItem.fileType === 2) {
+            columnDuration.visible = true
+            textDuration.text = UtilsString.durationToString_compact(mediaItem.duration)
+        } else {
+            columnDuration.visible = false
+        }
+
+        columnSize.visible = true
+        textSize.text = UtilsString.bytesToString_short(mediaItem.size, settingsManager.unitSizes)
+
+        if (mediaItem.fileType === 2 || mediaItem.fileType === 3) {
+            columnGeometry.visible = true
+            textGeometry.text = mediaItem.widthVisible + " x " + mediaItem.heightVisible
+        } else {
+            columnGeometry.visible = false
+        }
+
+        if (mediaItem.fileType === 1 || mediaItem.audioCodec.length) {
+            columnChannels.visible = true
+            if (mediaItem.audioChannels === 1)
+                textChannels.text = qsTr("mono")
+            else if (mediaItem.audioChannels === 2)
+                textChannels.text = qsTr("stereo")
+            else
+                textChannels.text = mediaItem.audioChannels + " " + qsTr("chan.")
+        } else {
+            columnChannels.visible = false
+        }
+
+        columnGPS.visible = mediaItem.hasGPS
+
+        computeColumnsSize()
+    }
+
     ////////////////////////////////////////////////////////////////////////////
+
+    onWidthChanged: computeColumnsSize()
+    function computeColumnsSize() {
+        var headercolumncount = 1
+        if (mediaItem.fileType === 1 || mediaItem.fileType === 2) headercolumncount++;
+        if (mediaItem.fileType === 2 || mediaItem.fileType === 3) headercolumncount++;
+        if (mediaItem.fileType === 1 || mediaItem.audioCodec.length) headercolumncount++;
+        if (mediaItem.hasGPS) headercolumncount++;
+
+        var headercolumnwidth = ((subheader.width - 48) / headercolumncount)
+        if (headercolumnwidth > 128) headercolumnwidth = 128
+        columnDuration.width = headercolumnwidth
+        columnSize.width = headercolumnwidth
+        columnGeometry.width = headercolumnwidth
+        columnChannels.width = headercolumnwidth
+        columnGPS.width = headercolumnwidth
+    }
 
     Column {
         id: columnMain
@@ -117,8 +169,161 @@ Flickable {
         anchors.right: parent.right
 
         topPadding: 16
-        bottomPadding: 16 + rectangleMenus.hhh
+        bottomPadding: 16 + mobileMenu.height
         spacing: 8
+
+        ////////////////
+
+        Rectangle {
+            id: subheader
+            anchors.left: parent.left
+            anchors.leftMargin: 16
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+
+            clip: true
+            height: 72
+            radius: 8
+            color: Theme.colorHeader
+            visible: (isPhone && appWindow.screenOrientation === Qt.PortraitOrientation)
+
+            Row {
+                anchors.centerIn: parent
+                spacing: 8
+
+                Column {
+                    id: columnDuration
+                    width: 96
+
+                    IconSvg {
+                        width: 40
+                        height: 40
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-icons/duotone/av_timer.svg"
+                    }
+                    Text {
+                        id: textDuration
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        color: Theme.colorIcon
+                        text: ""
+                        horizontalAlignment: Text.AlignHCenter
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: 14
+                    }
+                }
+                Column {
+                    id: columnSize
+                    width: 96
+
+                    IconSvg {
+                        width: 40
+                        height: 40
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-icons/duotone/data_usage.svg"
+                    }
+                    Text {
+                        id: textSize
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        color: Theme.colorIcon
+                        text: ""
+                        horizontalAlignment: Text.AlignHCenter
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: 14
+                    }
+                }
+                Column {
+                    id: columnGeometry
+                    width: 96
+
+                    IconSvg {
+                        id: imgGeometry
+                        width: 40
+                        height: 40
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
+                    }
+                    Text {
+                        id: textGeometry
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        text: ""
+                        horizontalAlignment: Text.AlignHCenter
+                        color: Theme.colorIcon
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: 14
+                    }
+                }
+                Column {
+                    id: columnChannels
+                    width: 96
+
+                    IconSvg {
+                        width: 40
+                        height: 40
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-icons/duotone/speaker.svg"
+                    }
+                    Text {
+                        id: textChannels
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        text: ""
+                        horizontalAlignment: Text.AlignHCenter
+                        color: Theme.colorIcon
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: 14
+                    }
+                }
+                Column {
+                    id: columnGPS
+                    width: 96
+
+                    IconSvg {
+                        width: 40
+                        height: 40
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                    }
+                    Text {
+                        id: textGPS
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+
+                        text: qsTr("GPS")
+                        horizontalAlignment: Text.AlignHCenter
+                        color: Theme.colorIcon
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: 14
+                    }
+                }
+            }
+        }
 
         ////////////////
 

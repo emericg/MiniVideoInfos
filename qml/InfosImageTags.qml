@@ -58,7 +58,7 @@ Flickable {
         anchors.right: parent.right
 
         topPadding: 16
-        bottomPadding: 16 + rectangleMenus.hhh
+        bottomPadding: 16 + mobileMenu.height
         spacing: 8
 
         ////////////////
@@ -449,30 +449,44 @@ Flickable {
                     id: info_gps_alt
                 }
             }
-            Row { ////
+            Flow { ////
                 id: item_gps_alt_egm96
                 anchors.left: parent.left
                 anchors.leftMargin: 56
+                anchors.right: parent.right
                 height: 24
-                spacing: 12
+                spacing: ((amd_altrow.width + amd_egm.width + 16) > width) ? 2 : 16
 
-                Text {
-                    text: qsTr("altitude metadata")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
+                Row {
+                    id: amd_altrow
+                    height: 24
+                    spacing: 12
+
+                    Text {
+                        text: qsTr("altitude metadata")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                        wrapMode: Text.WordWrap
+                    }
+                    TextEditMVI {
+                        id: info_gps_alt_stored
+                    }
                 }
-                TextEditMVI {
-                    id: info_gps_alt_stored
-                }
-                Text {
-                    text: qsTr("EGM96 correction")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
-                }
-                TextEditMVI {
-                    id: info_gps_alt_egm96
+
+                Row {
+                    id: amd_egm
+                    height: 24
+                    spacing: 12
+
+                    Text {
+                        text: qsTr("EGM96 correction")
+                        color: Theme.colorSubText
+                        font.pixelSize: 15
+                        wrapMode: Text.WordWrap
+                    }
+                    TextEditMVI {
+                        id: info_gps_alt_egm96
+                    }
                 }
             }
             Row { ////

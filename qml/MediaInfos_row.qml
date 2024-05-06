@@ -81,7 +81,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        z: 4
+        z: 5
         height: 4
         color: Theme.colorForeground
 
@@ -92,21 +92,22 @@ Item {
 
             height: 2
             opacity: 0.66
-            color: Theme.colorHeaderHighlight
-        }
-    }
-    Rectangle { // shadow
-        anchors.top: fakeHeader.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+            color: Theme.colorSeparator
 
-        height: 8
-        opacity: 0.66
+            Rectangle { // fake shadow
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
 
-        gradient: Gradient {
-            orientation: Gradient.Vertical
-            GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
-            GradientStop { position: 1.0; color: "transparent"; }
+                height: 8
+                opacity: 0.66
+
+                gradient: Gradient {
+                    orientation: Gradient.Vertical
+                    GradientStop { position: 0.0; color: Theme.colorHeader; }
+                    GradientStop { position: 1.0; color: "transparent"; }
+                }
+            }
         }
     }
 
@@ -493,16 +494,10 @@ Item {
                     anchors.fill: parent
                 }
             }
+
+            ////////
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
-
-    Item { // compatibility
-        id: rectangleMenus
-        height: 0
-        visible: false
-
-        property int hhh: 0
-    }
 }

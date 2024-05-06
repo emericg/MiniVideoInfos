@@ -8,13 +8,13 @@ Item {
     anchors.right: parent.right
     anchors.bottom: parent.bottom
 
-    height: mainmenu_tablet.visible + mainmenu_phone.height + screenPaddingNavbar + screenPaddingBottom
+    height: mainmenu_tablet.height + mainmenu_phone.height + screenPaddingNavbar + screenPaddingBottom
 
     property color color: {
+        if (appContent.state === "ScreenTutorial") return Theme.colorHeader
         if (isPhone && Qt.platform.os === "ios") return Theme.colorBackground
         if (isPhone && Theme.isDark) return Theme.colorForeground
-        if (isPhone) return "#f0f3f8"
-        return Theme.colorHeader
+        return Theme.colorTabletmenu
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ Item {
     Rectangle { // background
         anchors.fill: parent
 
-        opacity: (appContent.state === "ScreenTutorial") ? 1 : 0.95
+        opacity: 0.95
         color: mobileMenu.color
 
         Rectangle {

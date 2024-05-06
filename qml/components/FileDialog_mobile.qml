@@ -223,6 +223,7 @@ Rectangle {
             }
         }
     }
+
     Rectangle { // separator
         anchors.top: subheader.bottom
         anchors.left: parent.left
@@ -230,9 +231,9 @@ Rectangle {
 
         height: 2
         opacity: 0.66
-        color: Theme.colorHeaderHighlight
+        color: Theme.colorSeparator
 
-        Rectangle { // shadow
+        Rectangle { // fake shadow
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -242,7 +243,7 @@ Rectangle {
 
             gradient: Gradient {
                 orientation: Gradient.Vertical
-                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 0.0; color: Theme.colorHeader; }
                 GradientStop { position: 1.0; color: "transparent"; }
             }
         }

@@ -4,6 +4,7 @@ import ThemeEngine
 
 Rectangle {
     id: appHeader
+
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
@@ -41,18 +42,17 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: screenPaddingStatusbar
+        height: Math.max(screenPaddingTop, screenPaddingStatusbar)
         color: Theme.colorStatusbar
     }
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: screenPaddingStatusbar
+        anchors.topMargin: Math.max(screenPaddingTop, screenPaddingStatusbar)
 
         ////////////
 
         Row { // left area
-            id: leftArea
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.leftMargin: 4
@@ -76,7 +76,7 @@ Rectangle {
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
-                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
+                    color: Qt.rgba(Theme.colorHeaderHighlight.r, Theme.colorHeaderHighlight.g, Theme.colorHeaderHighlight.b, 0.33)
                 }
 
                 IconSvg {
@@ -110,6 +110,8 @@ Rectangle {
             color: Theme.colorHeaderContent
             font.bold: false
             font.pixelSize: Theme.fontSizeHeader
+            font.capitalization: Font.Capitalize
+            verticalAlignment: Text.AlignVCenter
         }
 
         ////////////
@@ -142,7 +144,7 @@ Rectangle {
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
-                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
+                    color: Qt.rgba(Theme.colorHeaderHighlight.r, Theme.colorHeaderHighlight.g, Theme.colorHeaderHighlight.b, 0.33)
                 }
 
                 IconSvg {

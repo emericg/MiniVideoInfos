@@ -115,7 +115,7 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 12 + rectangleMenus.hhh
+        anchors.bottomMargin: 12 + mobileMenu.height
 
         clip: true
         color: "transparent"

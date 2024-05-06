@@ -12,6 +12,9 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 720
 
+    width: isMobile ? Screen.width : 1440
+    height: isMobile ? Screen.height : 720
+
     flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
     color: Theme.colorBackground
     visible: true
@@ -93,17 +96,13 @@ ApplicationWindow {
 
     MobileUI {
         id: mobileUI
-        property bool isLoading: true
 
         statusbarTheme: Theme.themeStatusbar
-        statusbarColor: isLoading ? "white" : Theme.colorStatusbar
         navbarColor: {
-            if (isLoading) return "white"
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader
             if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
                 (appContent.state === "MediaInfos" && isPhone) ||
-                mobileMenu.visible)
-                return Theme.colorForeground
+                mobileMenu.visible) return Theme.colorForeground
 
             return Theme.colorBackground
         }
@@ -112,26 +111,32 @@ ApplicationWindow {
     MobileHeader {
         id: appHeader
     }
+
     Rectangle { // separator
         anchors.top: appHeader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: 2
-        opacity: 0.5
-        color: Theme.colorHeaderHighlight
+        visible: (appContent.state !== "ScreenTutorial")
+        z: (appContent.state === "ScreenSettings" ||
+            appContent.state === "ScreenAbout" ||
+            appContent.state === "ScreenAboutPermissions") ? 5 : 0
 
-        Rectangle { // shadow
+        height: 2
+        opacity: 0.66
+        color: Theme.colorSeparator
+
+        Rectangle { // fake shadow
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
 
             height: 8
-            opacity: 0.5
+            opacity: 0.66
 
             gradient: Gradient {
                 orientation: Gradient.Vertical
-                GradientStop { position: 0.0; color: Theme.colorHeaderHighlight; }
+                GradientStop { position: 0.0; color: Theme.colorHeader; }
                 GradientStop { position: 1.0; color: "transparent"; }
             }
         }
@@ -159,15 +164,6 @@ ApplicationWindow {
     }
 
     // Events handling /////////////////////////////////////////////////////////
-
-    Component.onCompleted: {
-        mobileUI.isLoading = false
-
-        if (isDesktop) {
-            width = 1280
-            height = 720
-        }
-    }
 
     Connections {
         target: Qt.application
@@ -489,7 +485,7 @@ ApplicationWindow {
 
     Timer {
         id: exitTimer
-        interval: 2222
+        interval: 3000
         running: false
         repeat: false
     }
@@ -497,21 +493,21 @@ ApplicationWindow {
         id: exitWarning
 
         anchors.left: parent.left
-        anchors.leftMargin: Theme.componentMargin
+        anchors.leftMargin: Theme.componentMarginL
         anchors.right: parent.right
-        anchors.rightMargin: Theme.componentMargin
+        anchors.rightMargin: Theme.componentMarginL
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.componentMargin + mobileMenu.height
+        anchors.bottomMargin: Theme.componentMarginL + mobileMenu.height
 
         height: Theme.componentHeightL
         radius: Theme.componentRadius
 
-        color: Theme.colorComponentBackground
+        color: mobileMenu.color
         border.color: Theme.colorSeparator
-        border.width: Theme.componentBorderWidth
+        border.width: 0 // Theme.componentBorderWidth
 
         opacity: exitTimer.running ? 1 : 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        Behavior on opacity { OpacityAnimator { duration: 233 } }
 
         Text {
             anchors.centerIn: parent
@@ -519,7 +515,7 @@ ApplicationWindow {
             text: qsTr("Press one more time to exit...")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContent
-            color: Theme.colorText
+            color: Theme.colorTabletmenuContent
         }
     }
 
