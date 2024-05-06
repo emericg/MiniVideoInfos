@@ -55,7 +55,7 @@ print(str(softwares))
 ## macOS:
 # brew install python cmake automake ninja
 # brew install libtool pkg-config
-# brew install gettext iconv libudev
+# brew install gettext iconv libudev utf8cpp
 # brew link --force gettext
 # xcode (13+)
 
@@ -425,7 +425,7 @@ for TARGET in TARGETS:
             os.rename(build_dir + DIR_taglib + "/3rdparty/utfcpp-4.0.5/", build_dir + DIR_taglib + "/3rdparty/utfcpp/")
 
         print("> Building taglib")
-        subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
+        subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_PREFIX_PATH=" + build_dir + DIR_taglib + "/3rdparty/utfcpp/source/", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
         subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
         subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
 

@@ -7,13 +7,17 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 CONFIG += c++17
 QT     += core qml quickcontrols2 svg widgets charts location
 
+# Bundle name
+QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
+QMAKE_BUNDLE = infos
+
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 6.5) : error("You need at least Qt version 6.5 for $${TARGET}")
 
 # Project features #############################################################
 
 DEFINES += ENABLE_MINIVIDEO
-DEFINES += ENABLE_TAGLIB
+#DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
 
@@ -161,6 +165,52 @@ DESTDIR = bin/
 
 # Application deployment steps #################################################
 
+android {
+    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
+    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
+
+    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
+
+    OTHER_FILES += assets/android/src/com/minivideo/infos/QShareActivity.java \
+                   assets/android/src/com/minivideo/utils/QShareUtils.java \
+                   assets/android/src/com/minivideo/utils/QSharePathResolver.java
+
+    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
+                 $${PWD}/assets/android/gradle.properties \
+                 $${PWD}/assets/android/build.gradle
+
+    contains(DEFINES, ENABLE_LIBEXIF) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so }
+    contains(DEFINES, ENABLE_TAGLIB) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so }
+    contains(DEFINES, ENABLE_MINIVIDEO) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so }
+
+    include($${PWD}/contribs/env/android_openssl-master/openssl.pri)
+}
+
+ios {
+    #QMAKE_IOS_DEPLOYMENT_TARGET = 13.0
+    #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
+
+    # OS icons
+    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
+    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
+
+    # OS infos
+    QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
+
+    # Target devices
+    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal
+
+    # iOS developer settings
+    exists($${PWD}/assets/ios/ios_signature.pri) {
+        # Must contain values for:
+        # QMAKE_DEVELOPMENT_TEAM
+        # QMAKE_PROVISIONING_PROFILE
+        include($${PWD}/assets/ios/ios_signature.pri)
+    }
+}
+
+# Application deployment steps #################################################
+
 linux:!android {
     TARGET = $$lower($${TARGET})
 
@@ -189,35 +239,7 @@ linux:!android {
     #QMAKE_CLEAN += $${OUT_PWD}/appdir/
 }
 
-android {
-    # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
-    #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
-
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
-    QMAKE_BUNDLE = infos
-
-    ANDROID_PACKAGE_SOURCE_DIR = $${PWD}/assets/android
-
-    OTHER_FILES += assets/android/src/com/minivideo/infos/QShareActivity.java \
-                   assets/android/src/com/minivideo/utils/QShareUtils.java \
-                   assets/android/src/com/minivideo/utils/QSharePathResolver.java
-
-    DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
-                 $${PWD}/assets/android/gradle.properties \
-                 $${PWD}/assets/android/build.gradle
-
-    contains(DEFINES, ENABLE_LIBEXIF) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libexif.so }
-    contains(DEFINES, ENABLE_TAGLIB) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libtag.so }
-    contains(DEFINES, ENABLE_MINIVIDEO) { ANDROID_EXTRA_LIBS += $${CONTRIBS_DIR}/lib/libminivideo.so }
-
-    include($${PWD}/contribs/env/android_openssl-master/openssl.pri)
-}
-
 macx {
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
-    QMAKE_BUNDLE = infos
     CONFIG += app_bundle
 
     # OS icons
@@ -237,25 +259,7 @@ macx {
     QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
 
     # Target OS
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
-
-    #======== Automatic bundle packaging
-
-    # Deploy step (app bundle packaging)
-    deploy.commands = macdeployqt $${OUT_PWD}/$${DESTDIR}/$${TARGET}.app -qmldir=qml/ -appstore-compliant
-    install.depends = deploy
-    QMAKE_EXTRA_TARGETS += install deploy
-
-    # Installation step (note: app bundle packaging)
-    isEmpty(PREFIX) { PREFIX = /usr/local }
-    target.files += $${OUT_PWD}/${DESTDIR}/${TARGET}.app
-    target.path = $$(HOME)/Applications
-    INSTALLS += target
-
-    # Clean step
-    QMAKE_DISTCLEAN += -r $${OUT_PWD}/${DESTDIR}/${TARGET}.app
-
-    #======== XCode
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 11.0
 
     # macOS developer settings
     exists($${PWD}/assets/macos/macos_signature.pri) {
@@ -265,54 +269,9 @@ macx {
         # QMAKE_XCODE_CODE_SIGN_IDENTITY (optional)
         include($${PWD}/assets/macos/macos_signature.pri)
     }
-
-    # Paths and folders
-    QT_BIN_PATH = $$dirname(QMAKE_QMAKE)
-    QT_PLUGINS_FOLDER = $$dirname(QT_BIN_PATH)/plugins
-    QT_PATH = $$dirname(QT_BIN_PATH)
-}
-
-ios {
-    #QMAKE_IOS_DEPLOYMENT_TARGET = 12.0
-    #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
-
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
-    QMAKE_BUNDLE = infos
-
-    # OS icons
-    #QMAKE_ASSET_CATALOGS = $${PWD}/assets/ios/Images.xcassets
-    #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
-
-    #Q_ENABLE_BITCODE.name = ENABLE_BITCODE
-    #Q_ENABLE_BITCODE.value = NO
-    #QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
-
-    # OS infos
-    QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist
-    QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2 # 1: iPhone / 2: iPad / 1,2: Universal
-
-    # iOS developer settings
-    exists($${PWD}/assets/ios/ios_signature.pri) {
-        # Must contain values for:
-        # QMAKE_DEVELOPMENT_TEAM
-        # QMAKE_PROVISIONING_PROFILE
-        include($${PWD}/assets/ios/ios_signature.pri)
-    }
 }
 
 win32 {
     # OS icon
     RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
-
-    # Deploy step
-    deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)
-    install.depends = deploy
-    QMAKE_EXTRA_TARGETS += install deploy
-
-    # Installation step
-    # TODO?
-
-    # Clean step
-    # TODO
 }
