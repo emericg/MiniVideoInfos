@@ -166,7 +166,7 @@ bool MediaTrackQml::getForced() const
 
 QString MediaTrackQml::getFcc() const
 {
-    if (mv_stream)
+    if (mv_stream && mv_stream->stream_fcc)
     {
         char fcc_str[5];
         return QString::fromUtf8(getFccString_le(mv_stream->stream_fcc, fcc_str), 4);
@@ -175,13 +175,13 @@ QString MediaTrackQml::getFcc() const
     return QString();
 }
 QString MediaTrackQml::getTcc() const
-{/*
-    if (mv_stream)
-    {
-        char tcc_str[3];
-        return QString::fromUtf8(getFccString_le(mv_stream->stream_tcc, tcc_str), 2);
-    }
-*/
+{
+    //if (mv_stream && mv_stream->stream_tcc)
+    //{
+    //    char tcc_str[3];
+    //    return QString::fromUtf8(getFccString_le(mv_stream->stream_tcc, tcc_str), 2);
+    //}
+
     return QString();
 }
 
