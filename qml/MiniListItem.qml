@@ -9,7 +9,8 @@ Rectangle {
     anchors.right: parent.right
     height: 48
 
-    color: (appContent.state === "MediaInfos" && modelData === screenMediaInfos.mediaItem) ? Theme.colorForeground : Theme.colorBackground
+    color: (appContent.state === "ScreenMediaInfos" && modelData === screenMediaInfos.mediaItem)
+            ? Theme.colorForeground : Theme.colorBackground
 
     ////////////////////////////////////////////////////////////////////////////
 

@@ -23,20 +23,16 @@ Flickable {
         info_extension_mismatch.text = qsTr("should be %1").arg(mediaItem.containerExt)
         info_date.text = mediaItem.date.toLocaleDateString()
         info_time.text = mediaItem.date.toLocaleTimeString()
-        item_duration.visible = (mediaItem.duration > 0)
+        info_duration.visible = (mediaItem.duration > 0)
         info_duration.text = UtilsString.durationToString_long(mediaItem.duration)
         info_size.text = UtilsString.bytesToString(mediaItem.size, settingsManager.unitSizes)
-        item_timecode.visible = (mediaItem.timecode.length > 0)
         info_timecode.text = mediaItem.timecode
 
-        item_capp.visible = (mediaItem.creation_app.length > 0)
         info_capp.text = mediaItem.creation_app
-        item_clib.visible = (mediaItem.creation_lib.length > 0 && mediaItem.creation_lib !== mediaItem.creation_app)
+        info_clib.visible = (mediaItem.creation_lib.length > 0 && mediaItem.creation_lib !== mediaItem.creation_app)
         info_clib.text = mediaItem.creation_lib
 
-        item_container.visible = (mediaItem.container.length > 0)
         info_container.text = mediaItem.container
-        item_containerprofile.visible = (mediaItem.containerProfile.length > 0)
         info_containerprofile.text = mediaItem.containerProfile
 
         if (mediaItem.projection > 0)
@@ -57,13 +53,13 @@ Flickable {
             }
             info_iaspectratio.text = UtilsMedia.varToString(mediaItem.widthVisible, mediaItem.heightVisible)
             info_iresolution.text = (mediaItem.resolution) ? (mediaItem.resolution + " " + qsTr("dpi")) : ""
-            item_iorientation.visible = (mediaItem.transformation !== 0)
+            info_iorientation.visible = (mediaItem.transformation !== 0)
             info_iorientation.text = UtilsMedia.orientationQtToString(mediaItem.transformation)
-            item_iprojection.visible = (mediaItem.projection > 0)
+            info_iprojection.visible = (mediaItem.projection > 0)
             info_iprojection.text = UtilsMedia.projectionToString(mediaItem.projection)
-            item_idepth.visible = (mediaItem.depth > 0)
+            info_idepth.visible = (mediaItem.depth > 0)
             info_idepth.text = mediaItem.depth
-            item_ialpha.visible = mediaItem.alpha
+            info_ialpha.visible = mediaItem.alpha
             info_ialpha.text = mediaItem.alpha
 
             if (settingsManager.mediaPreview) {
@@ -182,7 +178,7 @@ Flickable {
             anchors.rightMargin: 16
 
             clip: true
-            height: 72
+            height: 80
             radius: 8
             color: Theme.colorHeader
             visible: (isPhone && appWindow.screenOrientation === Qt.PortraitOrientation)
@@ -333,100 +329,22 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
-                id: titleFile
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/file.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("FILE")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/file.svg"
+                text: qsTr("FILE")
             }
 
-            Item { ////
-                id: item_path
-                height: Math.max(UtilsNumber.alignTo(info_path.contentHeight + 4, 4), 24)
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: legend_path
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("path")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_path
-                    anchors.left: legend_path.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_path
+                legend: qsTr("path")
             }
-            Item { ////
-                id: item_name
-                height: Math.max(UtilsNumber.alignTo(info_name.contentHeight + 4, 4), 24)
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: legend_name
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("name")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_name
-                    anchors.left: legend_name.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_name
+                legend: qsTr("name")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("extension")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_extension
-                }
+            InfoRow { ////
+                id: info_extension
+                legend: qsTr("extension")
             }
             Row { ////
                 id: item_extension_mismatch
@@ -456,175 +374,43 @@ Flickable {
                 }
             }
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("date")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_date
-                }
+            InfoRow { ////
+                id: info_date
+                legend: qsTr("date")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("time")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_time
-                }
+            InfoRow { ////
+                id: info_time
+                legend: qsTr("time")
             }
-            Row { ////
-                id: item_duration
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("duration")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_duration
-                }
+            InfoRow { ////
+                id: info_duration
+                legend: qsTr("duration")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("size")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_size
-                }
+            InfoRow { ////
+                id: info_size
+                legend: qsTr("size")
             }
-            Row { ////
-                id: item_timecode
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("SMPTE timecode")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_timecode
-                }
+            InfoRow { ////
+                id: info_timecode
+                legend: qsTr("SMPTE timecode")
             }
-            Item { ////
-                id: item_container
-                height: Math.max(UtilsNumber.alignTo(info_container.contentHeight + 4, 4), 24)
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-
-                Text {
-                    id: legend_container
-                    height: 24
-                    anchors.left: parent.left
-
-                    text: qsTr("container")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_container
-                    anchors.left: legend_container.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_container
+                legend: qsTr("container")
             }
-            Row { ////
-                id: item_containerprofile
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("profile")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_containerprofile
-                }
+            InfoRow { ////
+                id: info_containerprofile
+                legend: qsTr("profile")
             }
-            Item { ////
-                id: item_capp
-                height: Math.max(UtilsNumber.alignTo(info_capp.contentHeight + 4, 4), 24)
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: legend_capp
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("creation app.")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_capp
-                    anchors.left: legend_capp.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_capp
+                legend: qsTr("creation app.")
             }
-            Item { ////
-                id: item_clib
-                height: Math.max(UtilsNumber.alignTo(info_clib.contentHeight + 4, 4), 24)
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: legend_clib
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("creation lib.")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_clib
-                    anchors.left: legend_clib.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_clib
+                legend: qsTr("creation lib.")
             }
+
             ItemTracksGraph {
                 id: elementTracks
                 anchors.left: parent.left
@@ -643,174 +429,48 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
-                id: titleImage
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("IMAGE")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                text: qsTr("IMAGE")
             }
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("codec")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_icodec
-                }
+            InfoRow { ////
+                id: info_icodec
+                legend: qsTr("codec")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("megapixel")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_impix
-                }
+            InfoRow { ////
+                id: info_impix
+                legend: qsTr("megapixel")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_iresolution.text.length > 0)
-
-                Text {
-                    text: qsTr("resolution")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_iresolution
-                }
+            InfoRow { ////
+                id: info_iresolution
+                legend: qsTr("resolution")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("definition")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_idefinition
-                }
+            InfoRow { ////
+                id: info_idefinition
+                legend: qsTr("definition")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_iaspectratio
-                }
+            InfoRow { ////
+                id: info_iaspectratio
+                legend: qsTr("aspect ratio")
             }
-            Row { ////
-                id: item_iorientation
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("orientation")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_iorientation
-                }
+            InfoRow { ////
+                id: info_iorientation
+                legend: qsTr("orientation")
             }
-            Row { ////
-                id: item_iprojection
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("projection")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_iprojection
-                }
+            InfoRow { ////
+                id: info_iprojection
+                legend: qsTr("projection")
             }
-            Row { ////
-                id: item_idepth
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("bit depth")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_idepth
-                }
+            InfoRow { ////
+                id: info_idepth
+                legend: qsTr("bit depth")
             }
-            Row { ////
-                id: item_ialpha
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("alpha channel")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_ialpha
-                }
+            InfoRow { ////
+                id: info_ialpha
+                legend: qsTr("alpha channel")
             }
+
             Item {
                 id: item_preview ////
                 anchors.left: parent.left
@@ -876,166 +536,57 @@ Flickable {
                 anchors.right: parent.right
                 spacing: 2
 
-                Item { ////
-                    id: titleVideo
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    IconSvg {
-                        width: 32
-                        height: 32
-                        anchors.left: parent.left
-                        anchors.leftMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        color: Theme.colorPrimary
-                        source: "qrc:/assets/icons/material-symbols/media/movie.svg"
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("VIDEO")
-                        color: Theme.colorPrimary
-                        font.pixelSize: 18
-                        font.bold: true
-                    }
+                InfoTitle { ////
+                    source: "qrc:/assets/icons/material-symbols/media/movie.svg"
+                    text: qsTr("VIDEO")
                 }
 
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    height: Math.max(UtilsNumber.alignTo(videoCodecText.height + 4, 4), 24)
-                    spacing: 16
-
-                    Text {
-                        id: videoCodecLegend
-                        text: qsTr("codec")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        id: videoCodecText
-                        width: parent.width - parent.spacing - videoCodecLegend.width
-                        text: modelData.codec
-                    }
+                InfoRow { ////
+                    legend: qsTr("codec")
+                    text: modelData.codec
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("definition")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: {
-                            var txt = modelData.widthVisible + " x " + modelData.heightVisible
-                            if (modelData.width !== modelData.widthVisible ||
-                                modelData.height !== modelData.heightVisible) {
-                                if (modelData.orientation) {
-                                    txt += " (" + qsTr("rotated") + ")"
-                                } else {
-                                    txt += " (" + qsTr("stretched") + ")"
-                                }
+                InfoRow { ////
+                    legend: qsTr("definition")
+                    text: {
+                        var txt = modelData.widthVisible + " x " + modelData.heightVisible
+                        if (modelData.width !== modelData.widthVisible ||
+                            modelData.height !== modelData.heightVisible) {
+                            if (modelData.orientation) {
+                                txt += " (" + qsTr("rotated") + ")"
+                            } else {
+                                txt += " (" + qsTr("stretched") + ")"
                             }
-                            return txt
                         }
+                        return txt
                     }
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("aspect ratio")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: {
-                            var txt = UtilsMedia.varToString(modelData.widthVisible, modelData.heightVisible)
-                            var ardesc = UtilsMedia.varToDescString(modelData.widthVisible, modelData.heightVisible)
-                            if (ardesc.length > 0) txt += "  (" + ardesc + ")"
-                            return txt
-                        }
+                InfoRow { ////
+                    legend: qsTr("aspect ratio")
+                    text: {
+                        var txt = UtilsMedia.varToString(modelData.widthVisible, modelData.heightVisible)
+                        var ardesc = UtilsMedia.varToDescString(modelData.widthVisible, modelData.heightVisible)
+                        if (ardesc.length > 0) txt += "  (" + ardesc + ")"
+                        return txt
                     }
                 }
-                Row { ////
-                    id: item_vprojection
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
+                InfoRow { ////
                     visible: (modelData.projection > 0)
-
-                    Text {
-                        text: qsTr("projection")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: UtilsMedia.projectionToString(modelData.projection)
-                    }
+                    legend: qsTr("projection")
+                    text: UtilsMedia.projectionToString(modelData.projection)
                 }
-                Row { ////
-                    id: item_vorientation
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
+                InfoRow { ////
                     visible: (modelData.orientation > 0)
-
-                    Text {
-                        text: qsTr("orientation")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: UtilsMedia.orientationMp4ToString(modelData.orientation)
-                    }
+                    legend: qsTr("orientation")
+                    text: UtilsMedia.orientationMp4ToString(modelData.orientation)
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("framerate")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: UtilsMedia.framerateToString(modelData.framerate)
-                    }
+                InfoRow { ////
+                    legend: qsTr("framerate")
+                    text: UtilsMedia.framerateToString(modelData.framerate)
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("bitrate")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
-                              "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
-                    }
+                InfoRow { ////
+                    legend: qsTr("bitrate")
+                    text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
+                          "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
                 }
             }
         }
@@ -1053,104 +604,32 @@ Flickable {
                 anchors.right: parent.right
                 spacing: 2
 
-                Item {
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    IconSvg {
-                        width: 32
-                        height: 32
-                        anchors.left: parent.left
-                        anchors.leftMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        color: Theme.colorPrimary
-                        source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: {
-                            if (columnAudio.model.length > 1)
-                                return qsTr("AUDIO") + " #" + (index + 1)
-                            else
-                                return qsTr("AUDIO")
-                        }
-                        color: Theme.colorPrimary
-                        font.pixelSize: 18
-                        font.bold: true
+                InfoTitle { ////
+                    source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                    text: {
+                        if (columnAudio.model.length > 1)
+                            return qsTr("AUDIO") + " #" + (index + 1)
+                        else
+                            return qsTr("AUDIO")
                     }
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    height: Math.max(UtilsNumber.alignTo(audioCodecText.height + 4, 4), 24)
-                    spacing: 16
 
-                    Text {
-                        id: audioCodecLegend
-                        text: qsTr("codec")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        id: audioCodecText
-                        width: parent.width - parent.spacing - audioCodecLegend.width
-                        text: modelData.codec
-                    }
+                InfoRow { ////
+                    legend: qsTr("codec")
+                    text: modelData.codec
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("channels")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: modelData.audioChannels
-                    }
+                InfoRow { ////
+                    legend: qsTr("channels")
+                    text: modelData.audioChannels
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("samplerate")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: modelData.audioSamplerate + " Hz"
-                    }
+                InfoRow { ////
+                    legend: qsTr("samplerate")
+                    text: modelData.audioSamplerate + " Hz"
                 }
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    height: 24
-                    spacing: 16
-
-                    Text {
-                        text: qsTr("bitrate")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
-                              "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
-                    }
+                InfoRow { ////
+                    legend: qsTr("bitrate")
+                    text: UtilsMedia.bitrateToString(modelData.bitrate_avg) +
+                          "  (" + UtilsMedia.bitrateModeToString(modelData.bitrateMode) + ")"
                 }
             }
         }
@@ -1163,34 +642,9 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item {
-                id: titleSubtitles
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("SUBTITLES")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
+                text: qsTr("SUBTITLES")
             }
 
             Repeater {
@@ -1198,38 +652,14 @@ Flickable {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    height: Math.max(UtilsNumber.alignTo(trackSubtitleTitle.contentHeight + 4, 4), 24)
-                    spacing: 8
-
-                    Text {
-                        id: trackSubtitleId
-                        text: qsTr("subtitles track #") + (index + 1)
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                    }
-                    Text {
-                        visible: trackSubtitleTitle.text.length
-                        text: "/"
-                        color: Theme.colorText
-                        font.pixelSize: 15
-                    }
-                    TextEditMVI {
-                        id: trackSubtitleTitle
-                        width: parent.width - parent.spacing - trackSubtitleId.contentWidth
-
-                        text: {
-                            var txt = ""
-                            if (modelData.codec.length) txt += modelData.codec
-                            if (modelData.language.length) txt += modelData.language
-                            if (modelData.title.length) txt += modelData.title
-                            return txt
-                        }
+                InfoRow { ////
+                    legend: qsTr("sub. track #") + (index + 1)
+                    text: {
+                        var txt = ""
+                        if (modelData.codec.length) txt += modelData.codec
+                        if (modelData.language.length) txt += modelData.language
+                        if (modelData.title.length) txt += modelData.title
+                        return txt
                     }
                 }
             }
@@ -1243,34 +673,9 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item {
-                id: titleOther
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-icons/duotone/list.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("OTHER")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-icons/duotone/list.svg"
+                text: qsTr("OTHER")
             }
 
             Repeater {
@@ -1279,41 +684,24 @@ Flickable {
                 anchors.right: parent.right
                 //model: mediaItem.getOtherTracks()
 
-                Row { ////
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-
-                    height: Math.max(UtilsNumber.alignTo(trackOtherTitle.contentHeight + 4, 4), 24)
-                    spacing: 16
-
-                    Text {
-                        id: trackOtherId
-                        text: {
-                            if (modelData.type === 5) // MiniVideo.stream_MENU
-                                return qsTr("menu track #") + modelData.id
-                            else if (modelData.type === 6) // MiniVideo.stream_TMCD
-                                return qsTr("SMPTE timecode")
-                            else if (modelData.type === 7) // MiniVideo.stream_META
-                                return qsTr("metadata track")
-                            else if (modelData.type === 8) // MiniVideo.stream_HINT
-                                return qsTr("hint track")
-                            else
-                                return qsTr("Unknown track type")
-                        }
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
+                InfoRow { ////
+                    legend: {
+                        if (modelData.type === 5) // MiniVideo.stream_MENU
+                            return qsTr("menu track #") + modelData.id
+                        else if (modelData.type === 6) // MiniVideo.stream_TMCD
+                            return qsTr("SMPTE timecode")
+                        else if (modelData.type === 7) // MiniVideo.stream_META
+                            return qsTr("metadata track")
+                        else if (modelData.type === 8) // MiniVideo.stream_HINT
+                            return qsTr("hint track")
+                        else
+                            return qsTr("Unknown track type")
                     }
-                    TextEditMVI {
-                        id: trackOtherTitle
-                        width: parent.width - parent.spacing - trackOtherId.contentWidth
-                        text: {
-                            if (modelData.type === 6) // MiniVideo.stream_TMCD
-                                return mediaItem.timecode
-                            else
-                                return modelData.title
-                        }
+                    text: {
+                        if (modelData.type === 6) // MiniVideo.stream_TMCD
+                            return mediaItem.timecode
+                        else
+                            return modelData.title
                     }
                 }
             }
@@ -1327,35 +715,9 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item {
-                id: titleChapters
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 28
-                    height: 28
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-                    rotation: 90
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/label_important.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("CHAPTERS")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/label_important.svg"
+                text: qsTr("CHAPTERS")
             }
 
             Repeater {

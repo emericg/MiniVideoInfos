@@ -51,7 +51,7 @@ Item {
 
         height: visible ? 48 : 0
         visible: isTablet &&
-                 ((appContent.state === "MediaList" && !screenMediaList.dialogIsOpen) ||
+                 ((appContent.state === "ScreenMediaList" && !screenMediaList.dialogIsOpen) ||
                   appContent.state === "ScreenSettings" ||
                   appContent.state === "ScreenAbout")
 
@@ -68,8 +68,8 @@ Item {
                 source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                 sourceSize: 24
 
-                highlighted: (appContent.state === "MediaList")
-                onClicked: appContent.state = "MediaList"
+                highlighted: (appContent.state === "ScreenMediaList")
+                onClicked: appContent.state = "ScreenMediaList"
             }
             MobileMenuItem_horizontal {
                 colorContent: Theme.colorTabletmenuContent
@@ -106,7 +106,7 @@ Item {
 
         height: visible ? 56 : 0
         visible: isPhone &&
-                 ((appContent.state === "MediaList" && !screenMediaList.dialogIsOpen) ||
+                 ((appContent.state === "ScreenMediaList" && !screenMediaList.dialogIsOpen) ||
                   appContent.state === "ScreenSettings" ||
                   appContent.state === "ScreenAbout")
 
@@ -128,8 +128,8 @@ Item {
                 source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                 sourceSize: 24
 
-                highlighted: (appContent.state === "MediaList")
-                onClicked: appContent.state = "MediaList"
+                highlighted: (appContent.state === "ScreenMediaList")
+                onClicked: appContent.state = "ScreenMediaList"
             }
             MobileMenuItem_vertical {
                 width: 56

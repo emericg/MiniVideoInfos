@@ -87,24 +87,24 @@ DrawerThemed {
                 ////////
 
                 DrawerItem {
-                    highlighted: (appContent.state === "MediaList" && screenMediaList.dialogIsOpen)
+                    highlighted: (appContent.state === "ScreenMediaList" && screenMediaList.dialogIsOpen)
                     text: qsTr("Open media")
                     source: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                     onClicked: {
-                        appContent.state = "MediaList"
+                        appContent.state = "ScreenMediaList"
                         screenMediaList.openDialog()
                         appDrawer.close()
                     }
                 }
 
                 DrawerItem {
-                    highlighted: (appContent.state === "MediaList" && !screenMediaList.dialogIsOpen)
+                    highlighted: (appContent.state === "ScreenMediaList" && !screenMediaList.dialogIsOpen)
                     text: qsTr("Media")
                     source: "qrc:/assets/icons/material-symbols/media/image.svg"
 
                     onClicked: {
-                        appContent.state = "MediaList"
+                        appContent.state = "ScreenMediaList"
                         screenMediaList.closeDialog()
                         appDrawer.close()
                     }

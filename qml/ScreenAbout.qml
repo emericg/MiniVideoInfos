@@ -322,6 +322,8 @@ Loader {
                 }
             }
 
+            ListSeparator { }
+
             ////////////////
         }
     }

@@ -6,11 +6,7 @@ import "qrc:/utils/UtilsPath.js" as UtilsPath
 
 Item {
     id: screenMediaList
-    width: 480
-    height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenPaddingLeft
-    anchors.rightMargin: screenPaddingRight
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -94,7 +90,7 @@ Item {
     property string pathToLoad: ""
     Timer {
         id: ttt
-        interval: 140
+        interval: 40
         running: false
         repeat: false
         onTriggered: loadMedia2()
@@ -398,4 +394,6 @@ Item {
         model: mediaManager.mediaList
         delegate: MediaWidget { mediaItem: modelData; }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

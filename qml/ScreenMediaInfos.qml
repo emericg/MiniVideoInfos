@@ -5,18 +5,16 @@ import ThemeEngine
 
 Item {
     id: screenMediaInfos
-    width: 480
-    height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenPaddingLeft
-    anchors.rightMargin: screenPaddingRight
+
+    ////////////////////////////////////////////////////////////////////////////
 
     property var mediaItem: null
     property var content: null
 
     function loadMediaInfos(newmedia) {
         if (typeof newmedia === "undefined" || !newmedia) { return; }
-        if (newmedia === mediaItem) { appContent.state = "MediaInfos"; return; }
+        if (newmedia === mediaItem) { appContent.state = "ScreenMediaInfos"; return; }
 
         //console.log("screenMediaInfos.loadMediaInfos(" + newmedia + ")")
         mediaItem = newmedia
@@ -37,7 +35,7 @@ Item {
         }
 
         // Change screen
-        appContent.state = "MediaInfos"
+        appContent.state = "ScreenMediaInfos"
 
         // Set header title
         if (!isPhone || mediaItem.name.length < 24) {
@@ -55,4 +53,6 @@ Item {
 
         asynchronous: false
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

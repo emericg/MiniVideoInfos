@@ -8,12 +8,12 @@ Rectangle {
 
     color: Theme.colorHeader
 
-    property string entryPoint: "MediaList"
+    property string entryPoint: "ScreenMediaList"
 
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
-        entryPoint = "MediaList"
+        entryPoint = "ScreenMediaList"
         appContent.state = "ScreenTutorial"
     }
 

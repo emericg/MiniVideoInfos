@@ -158,7 +158,6 @@ Item {
         id: mediaPages
 
         anchors.top: parent.top
-        anchors.topMargin: subheader.height
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -178,14 +177,16 @@ Item {
         }
 
         function removePage(page) {
-            for (var n = 0; n < mediaPages.count; n++) { if (page === itemAt(n)) { /*removeItem(n)*/ } } // FIXME
+            for (var n = 0; n < mediaPages.count; n++) {
+                if (page === itemAt(n)) { takeItem(n) }
+            }
             page.visible = false
         }
 
         function removePages() {
             for (var n = 0; n < mediaPages.count; n++) {
                 itemAt(0).visible = false
-                removeItem(0)
+                takeItem(0)
             }
         }
 

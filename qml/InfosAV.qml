@@ -21,23 +21,20 @@ Flickable {
         if (typeof trackItem === "undefined" || !trackItem) return
 
         // track
-        titleTrackText.text = (trackItem.type === 1 ? qsTr("AUDIO") : qsTr("VIDEO")) + " " + qsTr("TRACK")
+        //titleTrackText.text = (trackItem.type === 1 ? qsTr("AUDIO") : qsTr("VIDEO")) + " " + qsTr("TRACK")
+        titleTrack.text = (trackItem.type === 1 ? qsTr("AUDIO") : qsTr("VIDEO")) + " " + qsTr("TRACK")
         info_id.text = trackItem.id
         info_size.text = UtilsString.bytesToString_short(trackItem.size, settingsManager.unitSizes)
         info_duration.text = UtilsString.durationToString_long(trackItem.duration)
-        item_delay.visible = (trackItem.delay !== 0)
+        info_delay.visible = (trackItem.delay !== 0)
         info_delay.text = UtilsString.durationToString_short(trackItem.delay)
 
-        //item_title.height = (info_title.height > 24) ? info_title.height + 4 : 24
-        item_title.visible = (trackItem.title.length > 0)
         info_title.text = trackItem.title
-
-        item_language.visible = (trackItem.language.length > 0)
         info_language.text = trackItem.language
 
-        item_visible.visible = (trackItem.visible)
+        info_visible.visible = (trackItem.visible)
         info_visible.text = trackItem.visible
-        item_forced.visible = (trackItem.forced)
+        info_forced.visible = (trackItem.forced)
         info_forced.text = trackItem.forced
 
         // video
@@ -46,10 +43,9 @@ Flickable {
             columnAudio.visible = false
 
             // Codec
+            info_vcodecfcc.text = trackItem.fcc
             info_vcodec.text = trackItem.codec
-            item_vcodecprofile.visible = (trackItem.codecProfileAndLevel.length > 0)
             info_vcodecprofile.text = trackItem.codecProfileAndLevel
-            item_vcodecfeatures.visible = (trackItem.codecFeatures.length > 0)
             info_vcodecfeatures.text = trackItem.codecFeatures
 
             //console.log("GEOMETRY : " + trackItem.width + " * " + trackItem.height)
@@ -67,8 +63,8 @@ Flickable {
             var geomismatch = ((trackItem.widthVisible + trackItem.heightVisible) > 0 &&
                                (trackItem.widthVisible !== trackItem.width || trackItem.heightVisible !== trackItem.height))
 
-            item_vdefinition_display.visible = geomismatch
-            item_dar.visible = geomismatch
+            info_vdefinition_display.visible = geomismatch
+            info_dar.visible = geomismatch
             item_resBox.visible = geomismatch
 
             if (geomismatch) {
@@ -133,27 +129,27 @@ Flickable {
             }
 
             // Geometry // PAR
-            item_par.visible = (trackItem.par != 1.0)
+            info_par.visible = (trackItem.par != 1.0)
             info_par.text = trackItem.par.toFixed(2).replace(/[.,]00$/, "") + ":1"
             item_parBox.visible = (trackItem.par != 1.0)
             item_parBox.www = 1 * (item_parBox.height/3) * trackItem.par
             item_parBox.hhh = 1 * (item_parBox.height/3)
 
             // Geometry // projection
-            item_vprojection.visible = (trackItem.projection > 0)
+            info_vprojection.visible = (trackItem.projection > 0)
             info_vprojection.text = UtilsMedia.projectionToString(trackItem.projection)
-            item_vorientation.visible = (trackItem.orientation > 0)
+            info_vorientation.visible = (trackItem.orientation > 0)
             info_vorientation.text = UtilsMedia.orientationMp4ToString(trackItem.orientation)
 
-            item_vscan.visible = (trackItem.scanmode > 0)
+            info_vscan.visible = (trackItem.scanmode > 0)
             info_vscan.text = UtilsMedia.scanmodeToString(trackItem.scanmode)
 
             // Colors
-            item_vcolordepth.visible = (trackItem.colorDepth > 0)
-            item_vcolorrange.visible = (trackItem.colorDepth > 0)
-            item_vcolorprimaries.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
-            item_vcolortransfer.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
-            item_vcolormatrix.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+            info_vcolordepth.visible = (trackItem.colorDepth > 0)
+            info_vcolorrange.visible = (trackItem.colorDepth > 0)
+            info_vcolorprimaries.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+            info_vcolortransfer.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+            info_vcolormatrix.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
 
             if (trackItem.colorDepth > 0) {
                 info_vcolordepth.text = trackItem.colorDepth + " bits"
@@ -179,18 +175,18 @@ Flickable {
             columnVideo.visible = false
             columnAudio.visible = true
 
+            info_acodecfcc.text = trackItem.fcc
             info_acodec.text = trackItem.codec
-            item_acodecprofile.visible = (trackItem.codecProfile.length > 0)
             info_acodecprofile.text = trackItem.codecProfile
 
             info_achannels.text = trackItem.audioChannels
             info_asamplerate.text = trackItem.audioSamplerate + " Hz"
             info_abpp.text = trackItem.audioBitPerSample + " bpp"
-            item_aframeduration.visible = true
+            info_aframeduration.visible = true
             info_aframeduration.text = (trackItem.duration / trackItem.sampleCount).toFixed(2) + " ms"
-            item_asampleduration.visible = true
+            info_asampleduration.visible = true
             info_asampleduration.text = trackItem.sampleDuration.toFixed(2) + " µs"
-            item_asampleperframe.visible = (trackItem.audioSamplePerFrame > 0)
+            info_asampleperframe.visible = (trackItem.audioSamplePerFrame > 0)
             info_asampleperframe.text = trackItem.audioSamplePerFrame
 
             item_speakerBox.visible = true
@@ -217,27 +213,27 @@ Flickable {
         }
 
         // data
-        item_bitrate_minmax.visible = (trackItem.bitrateMode > 1)
         info_bitrate.text = UtilsMedia.bitrateToString(trackItem.bitrate_avg)
         info_bitrate.text += "  (" + UtilsMedia.bitrateModeToString(trackItem.bitrateMode) + ")"
-        info_bitrate_min.text = UtilsMedia.bitrateToString(trackItem.bitrate_min)
-        info_bitrate_max.text = UtilsMedia.bitrateToString(trackItem.bitrate_max)
+        info_bitrate_minmax.visible = (trackItem.bitrateMode > 1)
+        info_bitrate_minmax.text1 = UtilsMedia.bitrateToString(trackItem.bitrate_min)
+        info_bitrate_minmax.text2 = UtilsMedia.bitrateToString(trackItem.bitrate_max)
         info_compression.text = trackItem.compressionRatio + ":1"
 
-        item_samplecount.visible = (trackItem.sampleCount !== trackItem.frameCount)
+        info_samplecount.visible = (trackItem.sampleCount !== trackItem.frameCount)
         info_samplecount.text = trackItem.sampleCount
 
         info_framecount.visible = true
         info_framecount.text = trackItem.frameCount
 
         if (trackItem.frameCountIdr > 0 && trackItem.frameCountIdr !== trackItem.frameCount) {
-            item_idr.visible = true
+            info_idr.visible = true
             info_idr.text = trackItem.frameCountIdr
 
             var idr_ratio = (trackItem.frameCountIdr / trackItem.frameCount) * 100
             info_idr.text += "  (" + idr_ratio.toFixed(1) + "% of the frames)"
         } else {
-            item_idr.visible = false
+            info_idr.visible = false
         }
 
         // graph (if VBR stream)
@@ -282,170 +278,43 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
+            InfoTitle { ////
                 id: titleTrack
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-icons/duotone/list.svg"
-                }
-                Text {
-                    id: titleTrackText
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+                source: "qrc:/assets/icons/material-icons/duotone/list.svg"
+                text: qsTr("TAGS")
             }
 
-            ////////////////
-
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("internal id")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_id
-                }
+            InfoRow { ////
+                id: info_id
+                legend: qsTr("internal id")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("data size")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_size
-                }
+            InfoRow { ////
+                id: info_size
+                legend: qsTr("data size")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("duration")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_duration
-                }
+            InfoRow { ////
+                id: info_duration
+                legend: qsTr("duration")
             }
-            Row { ////
-                id: item_delay
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("delay")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_delay
-                }
+            InfoRow { ////
+                id: info_delay
+                legend: qsTr("delay")
             }
-            Item { ////
-                id: item_title
-                height: (info_title.height > 24) ? (info_title.height + 0) : 24
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                Text {
-                    id: legend_title
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("title")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_title
-                    anchors.left: legend_title.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_title
+                legend: qsTr("title")
             }
-            Row { ////
-                id: item_language
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("language")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_language
-                }
+            InfoRow { ////
+                id: info_language
+                legend: qsTr("language")
             }
-            Row { ////
-                id: item_visible
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("track visible")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_visible
-                }
+            InfoRow { ////
+                id: info_visible
+                legend: qsTr("track visible")
             }
-            Row { ////
-                id: item_forced
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("track forced")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_forced
-                }
+            InfoRow { ////
+                id: info_forced
+                legend: qsTr("track forced")
             }
         }
 
@@ -457,208 +326,56 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
-                id: titleVideo
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/movie.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("VIDEO")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/movie.svg"
+                text: qsTr("VIDEO")
             }
 
-            Item { ////
-                id: item_vcodec
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                height: Math.max(UtilsNumber.alignTo(info_vcodec.contentHeight + 4, 4), 24)
-
-                Text {
-                    id: legend_vcodec
-                    height: 24
-                    text: qsTr("codec")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcodec
-                    anchors.left: legend_vcodec.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_vcodecfcc
+                legend: qsTr("codec fourcc")
             }
-            Item { ////
-                id: item_vcodecprofile
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                height: Math.max(UtilsNumber.alignTo(info_vcodecprofile.contentHeight + 4, 4), 24)
-
-                Text {
-                    id: legend_vcodecprofile
-                    height: 24
-                    text: qsTr("profile")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcodecprofile
-                    anchors.left: legend_vcodecprofile.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_vcodec
+                legend: qsTr("codec")
             }
-            Item { ////
-                id: item_vcodecfeatures
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                height: Math.max(UtilsNumber.alignTo(info_vcodecfeatures.contentHeight + 4, 4), 24)
-
-                Text {
-                    id: legend_vcodecfeatures
-                    height: 24
-                    text: qsTr("features")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcodecfeatures
-                    anchors.left: legend_vcodecfeatures.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_vcodecprofile
+                legend: qsTr("profile")
+            }
+            InfoRow { ////
+                id: info_vcodecfeatures
+                legend: qsTr("features")
             }
 
             Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("definition")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vdefinition
-                }
+            InfoRow { ////
+                id: info_vdefinition
+                legend: qsTr("definition")
             }
-            Row { ////
-                id: itemSar
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    id: legend_sar
-                    text: qsTr("aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_sar
-                }
+            InfoRow { ////
+                id: info_sar
+                legend: qsTr("aspect ratio")
             }
-
-            Row { ////
-                id: item_vprojection
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("projection")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vprojection
-                }
+            InfoRow { ////
+                id: info_vprojection
+                legend: qsTr("projection")
             }
-            Row { ////
-                id: item_vorientation
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("orientation")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vorientation
-                }
+            InfoRow { ////
+                id: info_vorientation
+                legend: qsTr("orientation")
             }
 
             //Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                id: item_vdefinition_display
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("display definition")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                Text {
-                    id: info_vdefinition_display
-                    color: Theme.colorText
-                    font.pixelSize: 15
-                }
+            InfoRow { ////
+                id: info_vdefinition_display
+                legend: qsTr("display definition")
             }
-
-            Row { ////
-                id: item_dar
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("display aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_dar
-                }
+            InfoRow { ////
+                id: info_dar
+                legend: qsTr("display aspect ratio")
             }
 
             Item { ////
@@ -736,21 +453,9 @@ Flickable {
                 }
             }
 
-            Row { ////
-                id: item_par
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("pixel aspect ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_par
-                }
+            InfoRow { ////
+                id: info_par
+                legend: qsTr("pixel aspect ratio")
             }
 
             Grid { ////
@@ -781,137 +486,43 @@ Flickable {
 
             //Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                id: item_vscan
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("scan type")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vscan
-                }
+            InfoRow { ////
+                id: info_vscan
+                legend: qsTr("scan type")
             }
 
             Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("framerate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vframerate
-                }
+            InfoRow { ////
+                id: info_vframerate
+                legend: qsTr("framerate")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("frame duration")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vframeduration
-                }
+            InfoRow { ////
+                id: info_vframeduration
+                legend: qsTr("frame duration")
             }
 
             Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                id: item_vcolordepth
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("color depth")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcolordepth
-                }
+            InfoRow { ////
+                id: info_vcolordepth
+                legend: qsTr("color depth")
             }
-            Row { ////
-                id: item_vcolorrange
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("color range")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcolorrange
-                }
+            InfoRow { ////
+                id: info_vcolorrange
+                legend: qsTr("color range")
             }
-            Row { ////
-                id: item_vcolorprimaries
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("color primaries")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcolorprimaries
-                }
+            InfoRow { ////
+                id: info_vcolorprimaries
+                legend: qsTr("color primaries")
             }
-            Row { ////
-                id: item_vcolortransfer
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("transfer characteristics")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcolortransfer
-                }
+            InfoRow { ////
+                id: info_vcolortransfer
+                legend: qsTr("transfer characteristics")
             }
-            Row { ////
-                id: item_vcolormatrix
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("color matrix")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_vcolormatrix
-                }
+            InfoRow { ////
+                id: info_vcolormatrix
+                legend: qsTr("color matrix")
             }
         }
 
@@ -923,177 +534,52 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item {
-                id: titleAudio
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("AUDIO")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                text: qsTr("AUDIO")
             }
-            Item { ////
-                id: item_acodec
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                height: Math.max(UtilsNumber.alignTo(info_acodec.contentHeight + 4, 4), 24)
 
-                Text {
-                    id: legend_acodec
-                    text: qsTr("codec")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_acodec
-                    anchors.left: legend_acodec.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_acodecfcc
+                legend: qsTr("codec fourcc")
             }
-            Item { ////
-                id: item_acodecprofile
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                height: Math.max(UtilsNumber.alignTo(info_acodecprofile.contentHeight + 4, 4), 24)
-
-                Text {
-                    id: legend_acodecprofile
-                    text: qsTr("profile")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_acodecprofile
-                    anchors.left: legend_acodecprofile.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_acodec
+                legend: qsTr("codec")
+            }
+            InfoRow { ////
+                id: info_acodecprofile
+                legend: qsTr("profile")
             }
 
             Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("samplerate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_asamplerate
-                }
+            InfoRow { ////
+                id: info_asamplerate
+                legend: qsTr("samplerate")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("bit per sample")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_abpp
-                }
+            InfoRow { ////
+                id: info_abpp
+                legend: qsTr("bit per sample")
             }
-            Row { ////
-                id: item_aframeduration
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("frame duration")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_aframeduration
-                }
+            InfoRow { ////
+                id: info_aframeduration
+                legend: qsTr("frame duration")
             }
-            Row { ////
-                id: item_asampleduration
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("sample duration")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_asampleduration
-                }
+            InfoRow { ////
+                id: info_asampleduration
+                legend: qsTr("sample duration")
             }
-            Row { ////
-                id: item_asampleperframe
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("sample per frame")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_asampleperframe
-                }
+            InfoRow { ////
+                id: info_asampleperframe
+                legend: qsTr("sample per frame")
             }
 
             Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("channels")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_achannels
-                }
+            InfoRow { ////
+                id: info_achannels
+                legend: qsTr("channels")
             }
             Item { ////
                 id: item_speakerBox
@@ -1124,141 +610,38 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item {
-                id: titleData
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-icons/duotone/sd_card.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("DATA")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-icons/duotone/sd_card.svg"
+                text: qsTr("DATA")
             }
 
-            Row { ////
-                id: item_samplecount
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("sample count")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_samplecount
-                }
+            InfoRow { ////
+                id: info_samplecount
+                legend: qsTr("sample count")
             }
-            Row { ////
-                id: item_framecount
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("frame count")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_framecount
-                }
+            InfoRow { ////
+                id: info_framecount
+                legend: qsTr("frame count")
             }
-            Row { ////
-                id: item_idr
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("frame sync count")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_idr
-                }
+            InfoRow { ////
+                id: info_idr
+                legend: qsTr("frame sync count")
             }
-
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("compression ratio")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_compression
-                }
+            InfoRow { ////
+                id: info_compression
+                legend: qsTr("compression ratio")
             }
 
             Item { width: 4; height: 4; } // spacer
 
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("bitrate")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_bitrate
-                }
+            InfoRow { ////
+                id: info_bitrate
+                legend: qsTr("bitrate")
             }
-            Row { ////
-                id: item_bitrate_minmax
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("min")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_bitrate_min
-                }
-                Text {
-                    text: qsTr("max")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_bitrate_max
-                }
+            InfoFlow { ////
+                id: info_bitrate_minmax
+                legend1: qsTr("min")
+                legend2: qsTr("max")
             }
 
             Item {

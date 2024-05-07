@@ -100,8 +100,8 @@ ApplicationWindow {
         statusbarTheme: Theme.themeStatusbar
         navbarColor: {
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader
-            if ((appContent.state === "MediaList" && screenMediaList.dialogIsOpen) ||
-                (appContent.state === "MediaInfos" && isPhone) ||
+            if ((appContent.state === "ScreenMediaList" && screenMediaList.dialogIsOpen) ||
+                (appContent.state === "ScreenMediaInfos" && isPhone) ||
                 mobileMenu.visible) return Theme.colorForeground
 
             return Theme.colorBackground
@@ -204,7 +204,7 @@ ApplicationWindow {
     }
 
     function backAction() {
-        if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "MediaList") {
+        if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "ScreenMediaList") {
             // do nothing
             return
         }
@@ -213,16 +213,16 @@ ApplicationWindow {
             appContent.state = screenTutorial.entryPoint
         } else if (appContent.state === "ScreenAboutPermissions") {
             appContent.state = screenAboutPermissions.entryPoint
-        } else if (appContent.state === "MediaList") {
+        } else if (appContent.state === "ScreenMediaList") {
             screenMediaList.backAction()
         } else {
-            appContent.state = "MediaList"
+            appContent.state = "ScreenMediaList"
         }
     }
     function forwardAction() {
-        if (appContent.state === "MediaList") {
-            if (screenMediaInfos.mediaItem != null) {
-                appContent.state = "MediaInfos"
+        if (appContent.state === "ScreenMediaList") {
+            if (screenMediaInfos.mediaItem !== null) {
+                appContent.state = "ScreenMediaInfos"
             }
         }
     }
@@ -268,12 +268,12 @@ ApplicationWindow {
         anchors.bottomMargin: mobileMenu.height
 
         Keys.onBackPressed: {
-            if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "MediaList") {
+            if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "ScreenMediaList") {
                 // do nothing
                 return
             }
 
-            if (appContent.state === "MediaList") {
+            if (appContent.state === "ScreenMediaList") {
                 if (screenMediaList.selectionList.length !== 0) {
                     screenMediaList.exitSelectionMode()
                 } else {
@@ -290,10 +290,10 @@ ApplicationWindow {
         ScreenTutorial {
             id: screenTutorial
         }
-        MediaList {
+        ScreenMediaList {
             id: screenMediaList
         }
-        MediaInfos {
+        ScreenMediaInfos {
             id: screenMediaInfos
         }
         ScreenSettings {
@@ -314,12 +314,12 @@ ApplicationWindow {
         }
 
         // Initial state
-        state: "MediaList"
+        state: "ScreenMediaList"
 
         onStateChanged: {
             screenMediaList.exitSelectionMode()
 
-            if (state === "MediaList") {
+            if (state === "ScreenMediaList") {
                 appHeader.leftMenuMode = "drawer"
             } else if (state === "ScreenTutorial") {
                 appHeader.leftMenuMode = "close"
@@ -342,7 +342,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
             },
             State {
-                name: "MediaList"
+                name: "ScreenMediaList"
                 PropertyChanges { target: appHeader; headerTitle: appHeader.appName; }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
@@ -352,7 +352,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenAboutPermissions; visible: false; enabled: false; }
             },
             State {
-                name: "MediaInfos"
+                name: "ScreenMediaInfos"
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaInfos; enabled: true; visible: true; }

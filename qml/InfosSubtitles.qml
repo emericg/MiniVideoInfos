@@ -45,33 +45,16 @@ Item {
 
     Item {
         id: titleSubtitles
-        height: 32
+
         anchors.top: parent.top
         anchors.topMargin: 16
         anchors.left: parent.left
         anchors.right: parent.right
+        height: 32
 
-        IconSvg {
-            width: 32
-            height: 32
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
-
-            color: Theme.colorPrimary
+        InfoTitle { ////
             source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
-        }
-
-        Text {
-            anchors.left: parent.left
-            anchors.leftMargin: 56
-            anchors.verticalCenter: parent.verticalCenter
-
             text: qsTr("SUBTITLES")
-            textFormat: Text.PlainText
-            color: Theme.colorPrimary
-            font.pixelSize: 18
-            font.bold: true
         }
 
         ////
@@ -155,44 +138,38 @@ Item {
 
     ////////////////
 
-    Rectangle {
-        id: scrollArea
+    ScrollView {
         anchors.top: selectorSubtitles.bottom
-        anchors.topMargin: 12
+        anchors.topMargin: 16
         anchors.left: parent.left
-        anchors.leftMargin: 12
+        anchors.leftMargin: 16
         anchors.right: parent.right
-        anchors.rightMargin: 12
+        anchors.rightMargin: 16
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 12 + mobileMenu.height
+        anchors.bottomMargin: 16 + mobileMenu.height
 
-        clip: true
-        color: Theme.colorBackground
-        border.color: Theme.colorSeparator
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-        ScrollView {
-            anchors.fill: parent
+        TextAreaThemed {
+            id: textArea
 
-            TextArea {
-                id: textArea
+            textFormat: Text.PlainText
+            color: Theme.colorText
+            readOnly: true
 
-                textFormat: Text.PlainText
-                color: Theme.colorText
-                readOnly: true
-
-                font.pixelSize: Theme.componentFontSize
-                font.family: {
-                    if (Qt.platform.os === "android")
-                        return "Droid Sans Mono"
-                    else if (Qt.platform.os === "ios")
-                        return "Menlo-Regular"
-                    else if (Qt.platform.os === "osx")
-                        return "Andale Mono"
-                    else if (Qt.platform.os === "windows")
-                        return "Lucida Console"
-                    else
-                        return "Monospace"
-                }
+            font.pixelSize: Theme.componentFontSize
+            font.family: {
+                if (Qt.platform.os === "android")
+                    return "Droid Sans Mono"
+                else if (Qt.platform.os === "ios")
+                    return "Menlo-Regular"
+                else if (Qt.platform.os === "osx")
+                    return "Andale Mono"
+                else if (Qt.platform.os === "windows")
+                    return "Lucida Console"
+                else
+                    return "Monospace"
             }
         }
     }

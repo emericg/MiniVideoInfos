@@ -87,9 +87,9 @@ Loader {
                     id: text_appTheme
                     height: 40
                     anchors.left: image_appTheme.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: theme_selector.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application theme")
@@ -192,9 +192,9 @@ Loader {
                     id: text_appThemeAuto
                     height: 40
                     anchors.left: image_appThemeAuto.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: switch_appThemeAuto.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Automatic dark mode")
@@ -222,9 +222,9 @@ Loader {
             Text {
                 id: legend_appThemeAuto
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 64
+                anchors.leftMargin: screenPaddingLeft + 56
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: screenPaddingRight + 8
                 topPadding: -12
                 bottomPadding: 8
 
@@ -272,9 +272,9 @@ Loader {
                     id: text_mediaFilter
                     height: 40
                     anchors.left: image_mediaFilter.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: switch_mediaFilter.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Filter media files")
@@ -323,9 +323,9 @@ Loader {
                     id: text_nativeChooser
                     height: 40
                     anchors.left: image_nativeChooser.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: switch_nativeChooser.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Use native file chooser")
@@ -381,9 +381,9 @@ Loader {
                     id: text_mediaPreview
                     height: 40
                     anchors.left: image_mediaPreview.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: switch_mediaPreview.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Preview media")
@@ -430,10 +430,10 @@ Loader {
 
                 Text {
                     id: text_mediaExport
-                    anchors.right: switch_mediaExport.left
-                    anchors.rightMargin: 16
                     anchors.left: image_mediaExport.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
+                    anchors.right: switch_mediaExport.left
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     height: 40
 
@@ -483,9 +483,9 @@ Loader {
                     id: text_unit
                     height: 40
                     anchors.left: image_unit.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: row_unit.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Unit system")
@@ -542,9 +542,9 @@ Loader {
                     id: text_sizes
                     height: 40
                     anchors.left: image_sizes.right
-                    anchors.leftMargin: 24
+                    anchors.leftMargin: 16
                     anchors.right: row_sizes.left
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Sizes unit")
@@ -578,16 +578,16 @@ Loader {
             Text {
                 id: legend_sizes
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 64
+                anchors.leftMargin: screenPaddingLeft + 56
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 16
+                anchors.rightMargin: screenPaddingRight + 8
 
                 topPadding: -12
                 bottomPadding: 8
                 visible: (element_sizes.visible)
 
-                text: qsTr("1 KB = 1000 bytes. Uses powers of 10 (10^3) in decimal number system.\n" +
-                           "1 KiB = 1024 bytes. Uses powers of 2 (2^10) in binary number system.")
+                text: qsTr("1 KB = 1000 bytes.\nUses powers of 10 (10^3) in decimal number system. SI unit.\n" +
+                           "1 KiB = 1024 bytes.\nUses powers of 2 (2^10) in binary number system.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

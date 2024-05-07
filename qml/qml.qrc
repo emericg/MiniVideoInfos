@@ -8,11 +8,11 @@
         <file>ScreenAbout.qml</file>
         <file>ScreenSettings.qml</file>
         <file>ScreenTutorial.qml</file>
-        <file>MediaList.qml</file>
+        <file>ScreenMediaList.qml</file>
+        <file>ScreenMediaInfos.qml</file>
         <file>MediaWidget.qml</file>
         <file>MiniList.qml</file>
         <file>MiniListItem.qml</file>
-        <file>MediaInfos.qml</file>
         <file>MediaInfos_row.qml</file>
         <file>MediaInfos_swipeview.qml</file>
 
@@ -24,17 +24,20 @@
         <file>InfosMap.qml</file>
         <file>InfosExport.qml</file>
 
-        <file alias="PopupImage.qml">popups/PopupImage.qml</file>
-        <file alias="PopupLoading.qml">popups/PopupLoading.qml</file>
-
         <file alias="FileDialog.qml">components/FileDialog.qml</file>
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
         <file alias="FileDialog_quickdialogs6_file.qml">components/FileDialog_quickdialogs6_file.qml</file>
         <file alias="FileDialog_quickdialogs6_folder.qml">components/FileDialog_quickdialogs6_folder.qml</file>
         <file alias="FileDialog_quickdialogs5.qml">components/FileDialog_quickdialogs5.qml</file>
 
+        <file alias="PopupImage.qml">popups/PopupImage.qml</file>
+        <file alias="PopupLoading.qml">popups/PopupLoading.qml</file>
         <file alias="ItemTracksGraph.qml">components/ItemTracksGraph.qml</file>
         <file alias="ItemNoFile.qml">components/ItemNoFile.qml</file>
+
+        <file alias="InfoFlow.qml">components/InfoFlow.qml</file>
+        <file alias="InfoRow.qml">components/InfoRow.qml</file>
+        <file alias="InfoTitle.qml">components/InfoTitle.qml</file>
         <file alias="TextEditMVI.qml">components/TextEditMVI.qml</file>
     </qresource>
 </RCC>

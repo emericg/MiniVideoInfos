@@ -37,15 +37,13 @@ Flickable {
         info_gps_date.text = mediaItem.dateGPS
         info_gps_lat.text = mediaItem.latitudeString
         info_gps_long.text = mediaItem.longitudeString
-        item_gps_alt.visible = (mediaItem.altitudeCorrected > 0)
-        info_gps_alt.text = UtilsString.altitudeToString(mediaItem.altitudeCorrected, 0, settingsManager.appunits)
-        item_gps_alt_egm96.visible = (mediaItem.altitudeCorrected > 0)
-        info_gps_alt_stored.text = UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits)
-        info_gps_alt_egm96.text = UtilsString.altitudeToString(-mediaItem.altitudeCorrection, 0, settingsManager.appunits)
-        item_gps_speed.visible =(mediaItem.speed > 0)
-        info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
-        item_gps_speed.visible =(mediaItem.speed > 0)
-        info_gps_speed.text = UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits)
+        //info_gps_alt.visible = (mediaItem.altitudeCorrected > 0)
+        info_gps_alt.text = (mediaItem.altitudeCorrected > 0) ? UtilsString.altitudeToString(mediaItem.altitudeCorrected, 0, settingsManager.appunits) : ""
+        //info_gps_alt_egm96.visible = (mediaItem.altitudeCorrected > 0)
+        info_gps_alt_egm96.text1 =(mediaItem.altitudeCorrected > 0) ? UtilsString.altitudeToString(mediaItem.altitude, 0, settingsManager.appunits) : ""
+        info_gps_alt_egm96.text2 =(mediaItem.altitudeCorrected > 0) ? UtilsString.altitudeToString(-mediaItem.altitudeCorrection, 0, settingsManager.appunits) : ""
+        //item_gps_speed.visible = (mediaItem.speed > 0)
+        info_gps_speed.text = (mediaItem.speed > 0) ? UtilsString.speedToString_km(mediaItem.speed, 1, settingsManager.appUnits) : ""
 
         columnThumbnail.visible = false
     }
@@ -69,95 +67,21 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
-                id: titleCamera
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/photo_camera.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("CAMERA")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/photo_camera.svg"
+                text: qsTr("CAMERA")
             }
-            Row { ////
-                id: item_brand
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_brand.text.length > 0)
-
-                Text {
-                    text: qsTr("brand")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_brand
-                }
+            InfoRow { ////
+                id: info_brand
+                legend: qsTr("brand")
             }
-            Row { ////
-                id: item_model
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_model.text.length > 0)
-
-                Text {
-                    text: qsTr("model")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
-                }
-                TextEditMVI {
-                    id: info_model
-                }
+            InfoRow { ////
+                id: info_model
+                legend: qsTr("model")
             }
-            Item { ////
-                id: item_software
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                height: (info_software.height > 24) ? (info_software.height + 0) : 24
-                visible: (info_software.text.length > 0)
-
-                Text {
-                    id: legend_software
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    text: qsTr("software")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_software
-                    anchors.left: legend_software.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                }
+            InfoRow { ////
+                id: info_software
+                legend: qsTr("software")
             }
         }
 
@@ -169,167 +93,42 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
-                id: titleImage
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/exposure.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("IMAGE")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/exposure.svg"
+                text: qsTr("IMAGE")
             }
-
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("megapixel")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_mpix
-                }
+            InfoRow { ////
+                id: info_mpix
+                legend: qsTr("megapixel")
             }
-            Row { ////
-                id: item_focal
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_focal.text.length > 0)
-
-                Text {
-                    text: qsTr("focal")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_focal
-                }
+            InfoRow { ////
+                id: info_focal
+                legend: qsTr("focal")
             }
-            Row { ////
-                id: item_exposure
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_exposure.text.length > 0)
-
-                Text {
-                    text: qsTr("exposure time")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_exposure
-                }
+            InfoRow { ////
+                id: info_exposure
+                legend: qsTr("exposure time")
             }
-            Row { ////
-                id: item_exposureBias
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_exposureBias.text.length > 0)
-
-                Text {
-                    text: qsTr("exposure bias")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_exposureBias
-                }
+            InfoRow { ////
+                id: info_exposureBias
+                legend: qsTr("exposure bias")
             }
-            Row { ////
-                id: item_iso
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_iso.text.length > 0)
-
-                Text {
-                    text: qsTr("ISO")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_iso
-                }
+            InfoRow { ////
+                id: info_iso
+                legend: qsTr("ISO")
             }
-            Row { ////
-                id: item_flash
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
+            InfoRow { ////
+                id: info_flash
+                legend: qsTr("flash")
                 visible: (info_flash.text !== "false")
-
-                Text {
-                    text: qsTr("flash")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_flash
-                }
             }
-            Row { ////
-                id: item_lightSource
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_lightSource.text.length > 0)
-
-                Text {
-                    text: qsTr("light source")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_lightSource
-                }
+            InfoRow { ////
+                id: info_lightSource
+                legend: qsTr("light source")
             }
-            Row { ////
-                id: item_meteringMode
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_meteringMode.text.length > 0)
-
-                Text {
-                    text: qsTr("metering mode")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_meteringMode
-                }
+            InfoRow { ////
+                id: info_meteringMode
+                legend: qsTr("metering mode")
             }
         }
 
@@ -341,170 +140,39 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item { ////
-                id: titleGPS
-                height: 32
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("GPS")
-                    font.pixelSize: 18
-                    font.bold: true
-                    color: Theme.colorPrimary
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                text: qsTr("GPS")
             }
 
-            Row { ////
-                id: item_gps_version
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-                visible: (info_gps_version.length > 0)
-
-                Text {
-                    text: qsTr("version")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_gps_version
-                }
+            InfoRow { ////
+                id: info_gps_version
+                legend: qsTr("version")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("date")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_gps_date
-                }
+            InfoRow { ////
+                id: info_gps_date
+                legend: qsTr("date")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("latitude")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_gps_lat
-                }
+            InfoRow { ////
+                id: info_gps_lat
+                legend: qsTr("latitude")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("longitude")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
-                }
-                TextEditMVI {
-                    id: info_gps_long
-                }
+            InfoRow { ////
+                id: info_gps_long
+                legend: qsTr("longitude")
             }
-            Row { ////
-                id: item_gps_alt
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("altitude")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
-                }
-                TextEditMVI {
-                    id: info_gps_alt
-                }
+            InfoRow { ////
+                id: info_gps_alt
+                legend: qsTr("altitude")
             }
-            Flow { ////
-                id: item_gps_alt_egm96
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                anchors.right: parent.right
-                height: 24
-                spacing: ((amd_altrow.width + amd_egm.width + 16) > width) ? 2 : 16
-
-                Row {
-                    id: amd_altrow
-                    height: 24
-                    spacing: 12
-
-                    Text {
-                        text: qsTr("altitude metadata")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                        wrapMode: Text.WordWrap
-                    }
-                    TextEditMVI {
-                        id: info_gps_alt_stored
-                    }
-                }
-
-                Row {
-                    id: amd_egm
-                    height: 24
-                    spacing: 12
-
-                    Text {
-                        text: qsTr("EGM96 correction")
-                        color: Theme.colorSubText
-                        font.pixelSize: 15
-                        wrapMode: Text.WordWrap
-                    }
-                    TextEditMVI {
-                        id: info_gps_alt_egm96
-                    }
-                }
+            InfoFlow { ////
+                id: info_gps_alt_egm96
+                legend1: qsTr("altitude metadata")
+                legend2: qsTr("EGM96 correction")
             }
-            Row { ////
-                id: item_gps_speed
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("speed")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                    wrapMode: Text.WordWrap
-                }
-                TextEditMVI {
-                    id: info_gps_speed
-                }
+            InfoRow { ////
+                id: info_gps_speed
+                legend: qsTr("speed")
             }
         }
 
@@ -516,79 +184,22 @@ Flickable {
             anchors.right: parent.right
             spacing: 2
 
-            Item {
-                id: titleThumbnail
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                IconSvg {
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("TUMBNAIL")
-                    color: Theme.colorPrimary
-                    font.pixelSize: 18
-                    font.bold: true
-                }
+            InfoTitle { ////
+                source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                text: qsTr("TUMBNAIL")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
 
-                Text {
-                    text: qsTr("compression")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_thumb_compression
-                }
+            InfoRow { ////
+                id: info_thumb_compression
+                legend: qsTr("compression")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("orientation")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_thumb_orientation
-                }
+            InfoRow { ////
+                id: info_thumb_orientation
+                legend: qsTr("orientation")
             }
-            Row { ////
-                anchors.left: parent.left
-                anchors.leftMargin: 56
-                height: 24
-                spacing: 16
-
-                Text {
-                    text: qsTr("size")
-                    color: Theme.colorSubText
-                    font.pixelSize: 15
-                }
-                TextEditMVI {
-                    id: info_thumb_size
-                }
+            InfoRow { ////
+                id: info_thumb_size
+                legend: qsTr("size")
             }
         }
     }
