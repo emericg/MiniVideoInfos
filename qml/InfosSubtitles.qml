@@ -107,39 +107,30 @@ Item {
         }
     }
 
-    Item {
-        id: selectorSubtitles
-        height: 32
+    ComboBoxThemed {
+        id: comboboxSubtitles
         anchors.top: titleSubtitles.bottom
         anchors.topMargin: 12
         anchors.left: parent.left
+        anchors.leftMargin: 16
         anchors.right: parent.right
+        anchors.rightMargin: 16
 
-        ComboBoxThemed {
-            id: comboboxSubtitles
-            height: 32
-            anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.right: parent.right
-            anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
+        model: ListModel {
+            id: cbSubtitles
+            ListElement { text: "srt"; }
+        }
 
-            model: ListModel {
-                id: cbSubtitles
-                ListElement { text: "srt"; }
-            }
-
-            onCurrentIndexChanged: {
-                buttonExport.exportState = 0
-                loadSubtitlesTrack(currentIndex)
-            }
+        onCurrentIndexChanged: {
+            buttonExport.exportState = 0
+            loadSubtitlesTrack(currentIndex)
         }
     }
 
     ////////////////
 
-    ScrollView {
-        anchors.top: selectorSubtitles.bottom
+    Flickable {
+        anchors.top: comboboxSubtitles.bottom
         anchors.topMargin: 16
         anchors.left: parent.left
         anchors.leftMargin: 16
@@ -148,15 +139,16 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16 + mobileMenu.height
 
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+        ScrollBar.vertical: ScrollBar { }
+        boundsBehavior: Flickable.StopAtBounds
 
-        TextAreaThemed {
+        TextArea.flickable: TextAreaThemed {
             id: textArea
 
-            textFormat: Text.PlainText
-            color: Theme.colorText
             readOnly: true
+            color: Theme.colorText
+            textFormat: Text.PlainText
+            wrapMode: Text.WordWrap
 
             font.pixelSize: Theme.componentFontSize
             font.family: {

@@ -10,21 +10,6 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Connections {
-        target: mediaManager
-        function onMediaUpdated() {
-            if (mediaManager.areMediaAvailable()) {
-                subheader.visible = true
-                itemNoFile.visible = false
-                mediaView.visible = true
-            } else {
-                subheader.visible = false
-                itemNoFile.visible = true
-                mediaView.visible = false
-            }
-        }
-    }
-
     property bool selectionMode: false
     property var selectionList: []
     property int selectionCount: 0
@@ -90,7 +75,7 @@ Item {
     property string pathToLoad: ""
     Timer {
         id: ttt
-        interval: 40
+        interval: 66
         running: false
         repeat: false
         onTriggered: loadMedia2()
@@ -164,76 +149,8 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: subheader
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        z: 5
-        height: visible ? 68 : 0
-        visible: false
-        color: Theme.colorHeader
-
-        // prevent clicks below this area
-        MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-        IconSvg {
-            id: image
-            width: 64
-            height: 64
-            anchors.left: parent.left
-            anchors.leftMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -2
-
-            source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
-            fillMode: Image.PreserveAspectFit
-            color: Theme.colorIcon
-            smooth: true
-        }
-
-        ButtonClear {
-            anchors.left: image.right
-            anchors.leftMargin: 32
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -2
-
-            text: qsTr("OPEN ANOTHER MEDIA")
-            onClicked: openDialog()
-        }
-
-        Rectangle { // separator
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-
-            height: 2
-            opacity: 0.66
-            color: Theme.colorSeparator
-
-            Rectangle { // fake shadow
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                height: 8
-                opacity: 0.66
-
-                gradient: Gradient {
-                    orientation: Gradient.Vertical
-                    GradientStop { position: 0.0; color: Theme.colorHeader; }
-                    GradientStop { position: 1.0; color: "transparent"; }
-                }
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     Column {
         id: bars
-        anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         z: 4
@@ -377,7 +294,7 @@ Item {
         anchors.centerIn: parent
         anchors.verticalCenterOffset: isDesktop ? -26 : -13
 
-        visible: true
+        visible: !mediaManager.mediaAvailable
         onClicked: openDialog()
     }
 
@@ -390,9 +307,25 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        visible: false
+        visible: mediaManager.mediaAvailable
         model: mediaManager.mediaList
         delegate: MediaWidget { mediaItem: modelData; }
+    }
+
+    ////////
+
+    ButtonFab {
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: Theme.componentMarginXL
+        z: 10
+
+        visible: mediaManager.mediaAvailable && !screenMediaList.dialogIsOpen
+        source: "qrc:/assets/icons/material-symbols/add.svg"
+
+        onClicked: {
+            openDialog()
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

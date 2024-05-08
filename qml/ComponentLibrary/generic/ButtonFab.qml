@@ -14,8 +14,8 @@ T.Button {
     //anchors.margins: Theme.componentMarginXL
     //z: 10
 
-    implicitWidth: Theme.componentHeightL
-    implicitHeight: Theme.componentHeightL
+    implicitWidth: implicitBackgroundWidth
+    implicitHeight: implicitBackgroundHeight
 
     focusPolicy: Qt.NoFocus
 
@@ -24,7 +24,7 @@ T.Button {
     property int shapeRadius: (shape === "rounded") ? 2 : 4
 
     // icon
-    property url source
+    property url source: "qrc:/assets/icons/material-symbols/add.svg"
     property int sourceSize: 32
     property int sourceRotation: 0
 
@@ -40,8 +40,8 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        implicitWidth: Theme.componentHeightL
-        implicitHeight: Theme.componentHeightL
+        implicitWidth: Theme.componentHeightXL
+        implicitHeight: Theme.componentHeightXL
 
         Rectangle {
             anchors.fill: parent

@@ -49,8 +49,8 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        implicitWidth: Theme.componentHeightL
-        implicitHeight: Theme.componentHeightL
+        implicitWidth: Theme.componentHeightXL
+        implicitHeight: Theme.componentHeightXL
 
         Rectangle {
             anchors.fill: parent

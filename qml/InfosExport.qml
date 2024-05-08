@@ -90,7 +90,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    ScrollView {
+    Flickable {
         anchors.top: titleExport.bottom
         anchors.topMargin: 16
         anchors.left: parent.left
@@ -100,15 +100,15 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 16 + mobileMenu.height
 
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+        ScrollBar.vertical: ScrollBar { }
+        boundsBehavior: Flickable.StopAtBounds
 
-        TextAreaThemed {
+        TextArea.flickable: TextAreaThemed {
             id: textArea
 
-            textFormat: Text.PlainText
-            color: Theme.colorText
             readOnly: true
+            color: Theme.colorText
+            textFormat: Text.PlainText
             wrapMode: Text.WordWrap
 
             font.pixelSize: Theme.componentFontSize

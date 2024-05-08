@@ -25,7 +25,7 @@ Item {
         opacity: 0.95
         color: mobileMenu.color
 
-        Rectangle {
+        Rectangle { // tablet separator
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -35,6 +35,13 @@ Item {
             height: 2
             opacity: 0.33
             color: Theme.colorHeaderHighlight
+        }
+        Rectangle { // phone separator
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 1
+            visible: mainmenu_phone.visible
+            color: Theme.colorSeparator
         }
     }
 

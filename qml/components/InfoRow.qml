@@ -30,8 +30,14 @@ RowLayout {
     TextEditMVI {
         id: t
 
-        Layout.fillWidth: true
+        Layout.maximumWidth: parent.width - l.width - 16
         Layout.minimumHeight: 24
         Layout.alignment: Qt.AlignVCenter
+    }
+
+    Item {
+        Layout.minimumWidth: 0
+        Layout.minimumHeight: 24
+        Layout.fillWidth: true
     }
 }

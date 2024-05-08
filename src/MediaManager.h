@@ -41,7 +41,7 @@ class MediaManager: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool media READ areMediaAvailable NOTIFY mediaUpdated)
+    Q_PROPERTY(bool mediaAvailable READ areMediaAvailable NOTIFY mediaUpdated)
     Q_PROPERTY(QVariant mediaList READ getMedia NOTIFY mediaUpdated)
 
     //Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)

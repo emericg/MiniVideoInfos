@@ -664,8 +664,20 @@ Flickable {
                     legend.visible: false
 
                     backgroundRoundness: 0
-                    backgroundColor: "transparent" // Theme.colorBackground
-                    //animationOptions: ChartView.SeriesAnimations
+                    backgroundColor: "transparent"
+                    animationOptions: ChartView.SeriesAnimations
+
+                    Rectangle {
+                        id: legend_area_under
+
+                        width: bitrateGraph.plotArea.width
+                        height: bitrateGraph.plotArea.height
+                        x: bitrateGraph.plotArea.x
+                        y: bitrateGraph.plotArea.y
+                        z: -1
+                        color: Theme.colorComponentBackground
+                        opacity: 0.5
+                    }
 
                     ValueAxis { id: axisX0; visible: true; gridVisible: false;
                         labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
@@ -686,6 +698,8 @@ Flickable {
                 }
             }
         }
+
+        ////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////
