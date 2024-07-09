@@ -96,6 +96,15 @@ Media::~Media()
     //
 }
 
+bool Media::load()
+{
+    if (!m_valid) m_valid = getMetadataFromVideo();
+    if (!m_valid) m_valid = getMetadataFromPicture();
+    if (!m_valid || (m_valid && tracksVideo.length() == 0 && tracksAudio.length() > 0)) m_valid = getMetadataFromAudio();
+
+    return m_valid;
+}
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 /*
@@ -927,11 +936,11 @@ bool Media::getMetadataFromVideo()
             }
         }
 
+        // Post processing
+        computeAdditionalMetadata();
+
         status = true;
     }
-
-    // Post processing
-    computeAdditionalMetadata();
 
     return status;
 }

@@ -133,7 +133,7 @@ static bool isDefinitelyGreaterThan(TReal a, TReal b, TReal tolerance = std::num
 //for example, if you want to see if a is 1.0 by checking if its within
 //10 closest representable floating point numbers around 1.0.
 template<typename TReal>
-static bool isWithinPrecisionInterval(TReal a, TReal b, unsigned int interval_size = 1)
+static bool isWithinPrecisionInterval(TReal a, TReal b, unsigned interval_size = 1)
 {
     TReal min_a = a - (a - std::nextafter(a, std::numeric_limits<TReal>::lowest())) * interval_size;
     TReal max_a = a + (std::nextafter(a, std::numeric_limits<TReal>::max()) - a) * interval_size;

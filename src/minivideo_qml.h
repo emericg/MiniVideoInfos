@@ -38,7 +38,7 @@ class MiniVideoQML : public QObject
 
 public:
     MiniVideoQML() = default;
-   ~MiniVideoQML() = default;
+    ~MiniVideoQML() = default;
 
     static void registerQML()
     {
@@ -52,6 +52,7 @@ public:
 
     Q_ENUM(FramerateMode_e)
     Q_ENUM(Projection_e)
+    Q_ENUM(HdrMode_e)
     Q_ENUM(ScanType_e)
     Q_ENUM(Rotation_e)
     Q_ENUM(StereoMode_e)

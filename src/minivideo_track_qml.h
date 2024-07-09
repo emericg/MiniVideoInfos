@@ -98,8 +98,8 @@ class MediaTrackQml: public QObject
 
     Q_PROPERTY(int bitrateMode READ getBitrateMode NOTIFY trackUpdated)
     Q_PROPERTY(int bitrate_avg READ getBitrate_avg NOTIFY trackUpdated)
-    Q_PROPERTY(int bitrate_min READ getBitrate_min NOTIFY trackUpdated)
-    Q_PROPERTY(int bitrate_max READ getBitrate_max NOTIFY trackUpdated)
+    Q_PROPERTY(int bitrate_min READ getBitrate_min NOTIFY bitrateUpdated)
+    Q_PROPERTY(int bitrate_max READ getBitrate_max NOTIFY bitrateUpdated)
     Q_PROPERTY(int compressionRatio READ getCompressionRatio NOTIFY trackUpdated)
 
     Q_PROPERTY(int sampleCount READ getSampleCount NOTIFY trackUpdated)
@@ -108,23 +108,8 @@ class MediaTrackQml: public QObject
 
     MediaStream_t *mv_stream = nullptr;
 
-Q_SIGNALS:
-    void trackUpdated();
-
-public:
-    MediaTrackQml(QObject *parent = nullptr);
-    ~MediaTrackQml();
-
-    bool isValid() const { if (mv_stream) return true; else return false; }
-
-    bool loadMediaStream(MediaStream_t *stream);
-
-    Q_INVOKABLE void getBitrateData(QLineSeries *bitrateData);
-    Q_INVOKABLE void getBitrateDataFps(QLineSeries *bitrateData, float fps);
-    //Q_INVOKABLE void getBitrateData(QChart *chart, QLineSeries *bitrateData);
-    QVector<QPointF> points;
-
-private:
+    QVector <QPointF> points_bitrate_data;
+    QVector <QPointF> points_bitrate_mean;
 
     //
     unsigned getType() const;
@@ -187,6 +172,20 @@ private:
     int64_t getFrameCount() const;
     int64_t getFrameCountIdr() const;
     double getFrameDuration() const;
+
+Q_SIGNALS:
+    void trackUpdated();
+    void bitrateUpdated();
+
+public:
+    MediaTrackQml(QObject *parent = nullptr);
+    ~MediaTrackQml();
+
+    bool isValid() const { if (mv_stream) return true; else return false; }
+
+    bool loadMediaStream(MediaStream_t *stream);
+
+    Q_INVOKABLE void getBitrateData(QLineSeries *bitrateData, QLineSeries *bitrateMean, float freq);
 };
 
 /* ************************************************************************** */
@@ -213,8 +212,8 @@ public:
     MediaChapterQml(int64_t pts, const QString &name, QObject *parent = nullptr);
     ~MediaChapterQml();
 
-    qint64 getPts() const { return m_pts; };
-    QString getName() const { return m_name; };
+    qint64 getPts() const { return m_pts; }
+    QString getName() const { return m_name; }
 };
 
 /* ************************************************************************** */

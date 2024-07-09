@@ -33,15 +33,15 @@ Item {
             trackCurrent = [mediaItem.getAudioTrack(i).type, i, (mediaItem.getAudioTrack(i).size / mediaItem.size) * 1]
             trackTable.push(trackCurrent)
         }
-/*
+
         var otherSize = 0
-        for (i = 0; i < mediaItem.getSubtitlesTrackCount(); i++) {
+        for (i = 0; i < mediaItem.subtitlesTrackCount; i++) {
             otherSize += mediaItem.getSubtitlesTrack(i).size
         }
-        for (i = 0; i < mediaItem.getOtherTrackCount(); i++) {
+        for (i = 0; i < mediaItem.otherTrackCount; i++) {
             otherSize += mediaItem.getOtherTrack(i).size
         }
-*/
+
         trackCurrent = [0, 0, ((mediaItem.size - dataSize) / mediaItem.size) * 1]
         trackTable.push(trackCurrent)
 

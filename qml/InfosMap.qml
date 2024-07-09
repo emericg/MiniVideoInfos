@@ -123,8 +123,8 @@ Item {
 
             DragHandler {
                 id: dragHandler
-                target: null
 
+                target: null
                 enabled: map.moove && !pinchHandler.active
 
                 onActiveChanged: {
@@ -145,6 +145,7 @@ Item {
             }
             PinchHandler {
                 id: pinchHandler
+
                 target: null
 
                 onActiveChanged: {

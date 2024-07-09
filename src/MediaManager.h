@@ -24,8 +24,6 @@
 #define MEDIA_MANAGER_H
 /* ************************************************************************** */
 
-#include "SettingsManager.h"
-
 class Media;
 
 #include <QObject>

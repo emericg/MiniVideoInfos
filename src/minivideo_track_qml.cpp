@@ -45,6 +45,7 @@ MediaTrackQml::~MediaTrackQml()
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 bool MediaTrackQml::loadMediaStream(MediaStream_t *stream)
 {
@@ -63,7 +64,12 @@ bool MediaTrackQml::loadMediaStream(MediaStream_t *stream)
 
 unsigned MediaTrackQml::getType() const
 {
-    return mv_stream->stream_type;
+    if (mv_stream)
+    {
+        return mv_stream->stream_type;
+    }
+
+    return 0;
 }
 
 int MediaTrackQml::getId() const
@@ -174,6 +180,7 @@ QString MediaTrackQml::getFcc() const
 
     return QString();
 }
+
 QString MediaTrackQml::getTcc() const
 {
     //if (mv_stream && mv_stream->stream_tcc)
@@ -236,7 +243,10 @@ QString MediaTrackQml::getCodecFeatures() const
             else
                 str = "CAVLC";
 
-            if (mv_stream->h264_feature_8x8)
+            if (mv_stream->h264_feature_b_frames)
+                str += " / " + tr("B frames");
+
+            if (mv_stream->h264_feature_8x8_blocks)
                 str += " / " + tr("8x8 blocks");
 
             if (mv_stream->max_ref_frames > 0)
@@ -629,82 +639,64 @@ double MediaTrackQml::getFrameDuration() const
 
 /* ************************************************************************** */
 
-Q_INVOKABLE void MediaTrackQml::getBitrateData(QLineSeries *bitrateData)
+Q_INVOKABLE void MediaTrackQml::getBitrateData(QLineSeries *bitrateData, QLineSeries *bitrateMean, float freq)
 {
     if (!bitrateData) return;
+    if (!bitrateMean) return;
 
     if (mv_stream)
     {
-        if (points.size() == 0)
-        {
-            points.reserve(mv_stream->sample_count/10);
-            int j = 0;
-            for (unsigned i = 0; i < mv_stream->sample_count; i+=10)
-            {
-                points.insert(j, QPointF(j, mv_stream->sample_size[i]));j++;
-            }
-        }
-
-        bitrateData->replace(points);
-    }
-}
-
-Q_INVOKABLE void MediaTrackQml::getBitrateDataFps(QLineSeries *bitrateData, float fpfs)
-{
-    Q_UNUSED(fpfs)
-    if (!bitrateData) return;
-
-    if (mv_stream)
-    {
-        if (points.size() == 0)
+        if (points_bitrate_data.size() == 0)
         {
             // min/max
             double fps = 0;
             if (mv_stream->stream_duration_ms > 0)
                 fps = (static_cast<double>(mv_stream->sample_count) / (static_cast<double>(mv_stream->stream_duration_ms)/1000.0));
+
             bitrateMinMax btc(fps);
             uint32_t bitratemin = 0, bitratemax = 0;
 
-            //
-            unsigned freq = 96; // std::round(mv_stream->framerate) * 4;
+            // graph frequency
+            unsigned skip = 8;
 
-            if (mv_stream->sample_count < 1000)
-                freq = 1;
-            else if (mv_stream->sample_count < 2000)
-                freq = 2;
-            else if (mv_stream->sample_count < 4000)
-                freq = 4;
-            else if (mv_stream->sample_count < 8000)
-                freq = 8;
-            else if (mv_stream->sample_count < 16000)
-                freq = 16;
+            if (mv_stream->stream_type == 1) skip = 32; // audio
+            if (mv_stream->stream_type == 2) skip = std::round(mv_stream->framerate) - 1; // video
 
-            points.reserve(mv_stream->sample_count/freq);
+            points_bitrate_data.reserve(mv_stream->sample_count/skip);
 
             int serie_id = 0;
-            for (unsigned sample_id = 0; sample_id < mv_stream->sample_count; sample_id+=freq)
+            for (unsigned sample_id = 0; sample_id < mv_stream->sample_count; sample_id+=skip)
             {
-                if ((sample_id+freq) > mv_stream->sample_count)
-                    break; // freq = mv_stream->sample_count - sample_id;
+                if ((sample_id+skip) > mv_stream->sample_count) break;
 
                 int fff = 0;
-                for (unsigned k = 0; k < freq; k++)
+                for (unsigned k = 0; k < skip; k++)
                 {
-                     fff += mv_stream->sample_size[sample_id+k];
-                     btc.pushSampleSize(mv_stream->sample_size[sample_id+k]);
-
+                    fff += mv_stream->sample_size[sample_id+k];
+                    btc.pushSampleSize(mv_stream->sample_size[sample_id+k]);
                 }
+                //fff *= (skip);
 
-                points.insert(serie_id, QPointF(serie_id, fff));
+                points_bitrate_data.insert(serie_id, QPointF(serie_id, fff));
                 serie_id++;
             }
+
+            bitrateData->replace(points_bitrate_data);
 
             btc.getMinMax(bitratemin, bitratemax);
             mv_stream->bitrate_min = bitratemin;
             mv_stream->bitrate_max = bitratemax;
+            Q_EMIT bitrateUpdated();
         }
 
-        bitrateData->replace(points);
+        if (points_bitrate_mean.size() == 0)
+        {
+            points_bitrate_mean.reserve(2);
+            points_bitrate_mean.insert(0, QPointF(0, mv_stream->bitrate_avg));
+            points_bitrate_mean.insert(1, QPointF(1, mv_stream->bitrate_avg));
+
+            bitrateMean->replace(points_bitrate_mean);
+        }
     }
 }
 
@@ -722,4 +714,5 @@ MediaChapterQml::~MediaChapterQml()
     //
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */

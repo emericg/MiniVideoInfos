@@ -84,7 +84,7 @@ Rectangle {
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
 
-                            text: qsTr("<b>MiniVideo Infos</b> extract a maximum of informations and metadata from <b>multimedia files</b>.")
+                            text: qsTr("<b>MiniVideo Infos</b> extract a maximum of information and metadata from <b>multimedia files</b>.")
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             font.pixelSize: Theme.fontSizeContentBig
                             color: Theme.colorIcon

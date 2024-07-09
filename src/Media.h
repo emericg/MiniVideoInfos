@@ -292,6 +292,8 @@ public:
     Media(const QString &path, QObject *parent = nullptr);
     ~Media();
 
+    bool load();
+
     bool hasAudio() const { return (tracksAudio.length() > 0); }
     bool hasVideo() const { return (tracksVideo.length() > 0); }
     bool hasImage() const { return (m_type == Shared::FILE_PICTURE); }

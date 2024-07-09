@@ -175,7 +175,7 @@ Loader {
 
             ListItem { // description
                 width: parent.width
-                text: qsTr("Get detailed informations about all kind of multimedia files!")
+                text: qsTr("Get detailed information about all kind of multimedia files!")
                 source: "qrc:/assets/icons/material-symbols/info.svg"
             }
 

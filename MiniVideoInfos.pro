@@ -161,7 +161,7 @@ MOC_DIR     = build/$${QT_ARCH}/moc/
 RCC_DIR     = build/$${QT_ARCH}/rcc/
 UI_DIR      = build/$${QT_ARCH}/ui/
 
-DESTDIR = bin/
+DESTDIR     = bin/
 
 # Application deployment steps #################################################
 

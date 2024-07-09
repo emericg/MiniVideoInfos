@@ -166,7 +166,7 @@ Flickable {
             }
 
             // Framerate
-            info_vframerate.text = trackItem.framerate.toFixed(3) + " fps"
+            info_vframerate.text = trackItem.framerate.toFixed(3) + " FPS"
             info_vframeduration.text = trackItem.frameDuration.toFixed(2) + " ms"
         }
 
@@ -215,9 +215,6 @@ Flickable {
         // data
         info_bitrate.text = UtilsMedia.bitrateToString(trackItem.bitrate_avg)
         info_bitrate.text += "  (" + UtilsMedia.bitrateModeToString(trackItem.bitrateMode) + ")"
-        info_bitrate_minmax.visible = (trackItem.bitrateMode > 1)
-        info_bitrate_minmax.text1 = UtilsMedia.bitrateToString(trackItem.bitrate_min)
-        info_bitrate_minmax.text2 = UtilsMedia.bitrateToString(trackItem.bitrate_max)
         info_compression.text = trackItem.compressionRatio + ":1"
 
         info_samplecount.visible = (trackItem.sampleCount !== trackItem.frameCount)
@@ -239,24 +236,37 @@ Flickable {
         // graph (if VBR stream)
         bitrateGraphItem.visible = (trackItem.bitrateMode > 1)
         if (trackItem.bitrateMode > 1) {
+
+            // Data
             bitrateData.clear()
-            trackItem.getBitrateDataFps(bitrateData, 96);
+            bitrateMean.clear()
+            trackItem.getBitrateData(bitrateData, bitrateMean, 12)
 
             // Axis
-            axisX0.min = 0;
+            axisX0.min = 0
             axisX0.max = bitrateData.count
+
+            axisX1.min = 0
+            axisX1.max = 1
+
             var minmax_of_array = 0
             for (var i = 0; i < bitrateData.count; i++)
                 if (bitrateData.at(i).y > minmax_of_array)
                     minmax_of_array = bitrateData.at(i).y
+
             if (trackItem.type === 1) { // audio
-                axisBitrate.min = 0;
-                axisBitrate.max = minmax_of_array * 1.0;
+                axisBitrateData.min = 0
+                axisBitrateData.max = minmax_of_array
             } else {
-                axisBitrate.min = 0;
-                axisBitrate.max = minmax_of_array * 1.0;
+                axisBitrateData.min = 0
+                axisBitrateData.max = minmax_of_array
             }
         }
+
+        // data (min/max is only available after the graph is done)
+        info_bitrate_minmax.visible = (trackItem.bitrateMode > 1)
+        info_bitrate_minmax.text1 = UtilsMedia.bitrateToString(trackItem.bitrate_min)
+        info_bitrate_minmax.text2 = UtilsMedia.bitrateToString(trackItem.bitrate_max)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -680,9 +690,14 @@ Flickable {
                     }
 
                     ValueAxis { id: axisX0; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: ""}
-                    ValueAxis { id: axisBitrate; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 1; labelFormat: "" }
+                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: ""}
+                    ValueAxis { id: axisBitrateData; visible: true; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: "" }
+
+                    ValueAxis { id: axisX1; visible: false; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: ""}
+                    ValueAxis { id: axisBitrateMean; visible: false; gridVisible: false;
+                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: "" }
 
                     LineSeries {
                         id: bitrateData
@@ -693,7 +708,18 @@ Flickable {
                         visible: true
 
                         axisX: axisX0
-                        axisY: axisBitrate
+                        axisY: axisBitrateData
+                    }
+                    LineSeries {
+                        id: bitrateMean
+                        //useOpenGL: true
+
+                        color: Theme.colorRed
+                        width: 1
+                        visible: true
+
+                        axisX: axisX1
+                        axisY: axisBitrateMean
                     }
                 }
             }
