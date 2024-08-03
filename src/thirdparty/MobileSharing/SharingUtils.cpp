@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
  * Copyright (c) 2020 Emeric Grange
  *
@@ -94,14 +94,9 @@ void ShareUtils::editFile(const QString &filePath, const QString &title, const Q
     mPlatformShareUtils->editFile(filePath, title, mimeType, requestId);
 }
 
-void ShareUtils::checkPendingIntents(const QString &workingDirPath)
+void ShareUtils::checkPendingIntents(const QString workingDirPath)
 {
     mPlatformShareUtils->checkPendingIntents(workingDirPath);
-}
-
-QString ShareUtils::getPathFromURI(const QString &contentURI)
-{
-    return mPlatformShareUtils->getPathFromURI(contentURI);
 }
 
 void ShareUtils::onShareEditDone(int requestCode)

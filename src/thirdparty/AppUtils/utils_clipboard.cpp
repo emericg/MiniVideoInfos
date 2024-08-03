@@ -1,6 +1,5 @@
 /*!
- * Copyright (c) 2017 Ekkehard Gentz (ekke)
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2024 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,45 +20,43 @@
  * SOFTWARE.
  */
 
-#ifndef SHARINGAPPLICATION_H
-#define SHARINGAPPLICATION_H
-/* ************************************************************************** */
+#include "utils_clipboard.h"
 
 #include <QGuiApplication>
-
-class QQmlContext;
-class ShareUtils;
+#include <QClipboard>
+#include <QMimeData>
 
 /* ************************************************************************** */
 
-class SharingApplication : public QGuiApplication
+void UtilsClipboard::clear()
 {
-    Q_OBJECT
+    //
+}
 
-     ShareUtils *mShareUtils = nullptr;
-     bool mPendingIntentsChecked = false;
+void UtilsClipboard::setText(const QString &txt)
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString originalText = clipboard->text();
 
-     QString mAppDataFilesPath;
-     QString mDocumentsWorkPath;
+    clipboard->setText(txt);
+}
 
-public:
-    explicit SharingApplication(int &argc, char **argv);
-    ~SharingApplication();
+QString UtilsClipboard::getText()
+{
+    const QClipboard *clipboard = QGuiApplication::clipboard();
+    const QMimeData *mimeData = clipboard->mimeData();
 
-     void registerQML(QQmlContext *context);
-     //Q_INVOKABLE QString filePathDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool deleteFromDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool updateFileFromDocumentsLocation(const int requestId);
+    if (mimeData->hasText())
+    {
+        return mimeData->text();
+        // Qt::PlainText;
+    }
+    else
+    {
+        // not handled
+    }
 
-signals:
-     void noDocumentsWorkLocation();
-
-public slots:
-    void onApplicationStateChanged(Qt::ApplicationState state);
-
-protected:
-    bool event(QEvent *e);
-};
+    return QString();
+}
 
 /* ************************************************************************** */
-#endif // SHARINGAPPLICATION_H

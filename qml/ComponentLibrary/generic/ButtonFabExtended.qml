@@ -33,7 +33,7 @@ T.Button {
     property int shapeRadius: (shape === "rounded") ? 2 : 4
 
     // icon
-    property url source
+    property url source: "qrc:/assets/icons/material-symbols/add.svg"
     property int sourceSize: 32
     property int sourceRotation: 0
 
@@ -68,10 +68,9 @@ T.Button {
         }
 
         RippleThemed {
-            width: parent.width
-            height: parent.height
-
+            anchors.fill: parent
             anchor: control
+
             pressed: control.pressed
             active: control.enabled && (control.down || control.visualFocus)
             color: Qt.rgba(control.colorHighlight.r, control.colorHighlight.g, control.colorHighlight.b, 0.1)

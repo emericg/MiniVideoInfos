@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
  * Copyright (c) 2020 Emeric Grange
  *
@@ -36,7 +36,7 @@
 
 /* ************************************************************************** */
 
-SharingApplication::SharingApplication(int &argc, char **argv) : QApplication(argc, argv)
+SharingApplication::SharingApplication(int &argc, char **argv) : QGuiApplication(argc, argv)
 {
     mShareUtils = new ShareUtils(this);
 

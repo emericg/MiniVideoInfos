@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
  * Copyright (c) 2020 Emeric Grange
  *
@@ -70,9 +70,7 @@ public:
 #endif
     void onActivityResult(int requestCode, int resultCode);
 
-    void checkPendingIntents(const QString &workingDirPath) override;
-
-    QString getPathFromURI(const QString &contentURI) override;
+    void checkPendingIntents(const QString workingDirPath) override;
 
 public slots:
     void setFileUrlReceived(const QString &url);

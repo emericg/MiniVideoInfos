@@ -306,9 +306,9 @@ Item {
             isDark = false
 
             themeStatusbar = Material.Light
-            colorStatusbar = "#f1f2f3"
+            colorStatusbar = "#eeeeee"
 
-            colorHeader = "#f1f2f3"
+            colorHeader = "#eeeeee"
             colorHeaderContent = "#ff7b36"
             colorHeaderHighlight = "white"
 
@@ -320,15 +320,15 @@ Item {
             colorSidebarContent         = "#777"
             colorSidebarHighlight       = "#ddd"
 
-            colorTabletmenu = "#f0f3f6"
-            colorTabletmenuContent = "#8d8d8d"
-            colorTabletmenuHighlight = colorMaterialDeepOrange
+            colorTabletmenu = "#f3f3f3"
+            colorTabletmenuContent = "#9d9d9d"
+            colorTabletmenuHighlight = colorMaterialDeepOrange // "#ff7b36"
 
             colorBackground = colorMaterialLightGrey
-            colorForeground = "#f0f2f4"
+            colorForeground = "#f0f0f0"
 
-            colorPrimary = colorMaterialDeepOrange
-            colorSecondary = colorMaterialOrange
+            colorPrimary = colorMaterialDeepOrange // colorRed
+            colorSecondary = colorMaterialOrange // "#ff7b36"
             colorSuccess = colorGreen
             colorWarning = colorOrange
             colorError = colorRed
@@ -552,8 +552,8 @@ Item {
             colorBackground             = "#f9f8f7"
             colorForeground             = "#f3f2f1"
 
-            colorPrimary                = "#ffc900" // "#2794ff"
-            colorSecondary              = "#ffeb00" // "#69b7ff"
+            colorPrimary                = "#ffc900"
+            colorSecondary              = "#ffeb00"
             colorSuccess                = colorGreen
             colorWarning                = colorOrange
             colorError                  = colorRed

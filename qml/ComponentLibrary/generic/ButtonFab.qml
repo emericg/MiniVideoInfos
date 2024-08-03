@@ -17,6 +17,8 @@ T.Button {
     implicitWidth: implicitBackgroundWidth
     implicitHeight: implicitBackgroundHeight
 
+    flat: false
+    hoverEnabled: isDesktop
     focusPolicy: Qt.NoFocus
 
     // settings
@@ -59,10 +61,9 @@ T.Button {
         }
 
         RippleThemed {
-            width: parent.width
-            height: parent.height
-
+            anchors.fill: parent
             anchor: control
+
             pressed: control.pressed
             active: control.enabled && (control.down || control.visualFocus)
             color: Qt.rgba(control.colorHighlight.r, control.colorHighlight.g, control.colorHighlight.b, 0.1)

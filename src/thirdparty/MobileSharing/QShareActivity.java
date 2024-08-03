@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-package com.minivideo.infos;
+package io.emeric.qmlapptemplate;
 
 import io.emeric.utils.*;
 

@@ -52,7 +52,8 @@ T.Slider {
             color: control.colorForeground
         }
 
-        MultiEffect {
+        layer.enabled: control.horizontal
+        layer.effect: MultiEffect {
             maskEnabled: true
             maskInverted: false
             maskThresholdMin: 0.5
@@ -72,7 +73,7 @@ T.Slider {
 
     ////////////////
 
-    handle: Item {
+    handle: Rectangle {
         x: control.leftPadding + (control.horizontal ? control.visualPosition * (control.availableWidth - width) : (control.availableWidth - width) / 2)
         y: control.topPadding + (control.horizontal ? (control.availableHeight - height) / 2 : control.visualPosition * (control.availableHeight - height))
         implicitWidth: control.hhh
@@ -80,29 +81,9 @@ T.Slider {
 
         width: (control.horizontal && control.showvalue) ? t1.contentWidth + 16 : control.hhh
         height: control.hhh
-
-        Rectangle {
-            anchors.fill: parent
         radius: control.hhh
         color: control.colorForeground
         border.color: control.colorForeground
-
-        MultiEffect {
-            maskEnabled: true
-            maskInverted: false
-            maskThresholdMin: 0.5
-            maskSpreadAtMin: 1.0
-            maskSpreadAtMax: 0.0
-            maskSource: ShaderEffectSource {
-                sourceItem: Rectangle {
-                    x: background.x
-                    y: background.y
-                    width: background.width
-                    height: background.height
-                }
-            }
-        }
-        }
 
         Text {
             id: t1

@@ -1,6 +1,5 @@
 /*!
- * Copyright (c) 2017 Ekkehard Gentz (ekke)
- * Copyright (c) 2020 Emeric Grange
+ * Copyright (c) 2024 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,45 +20,28 @@
  * SOFTWARE.
  */
 
-#ifndef SHARINGAPPLICATION_H
-#define SHARINGAPPLICATION_H
+#ifndef UTILS_CLIPBOARD_H
+#define UTILS_CLIPBOARD_H
 /* ************************************************************************** */
 
-#include <QGuiApplication>
+#include <QObject>
+#include <QString>
 
-class QQmlContext;
-class ShareUtils;
-
-/* ************************************************************************** */
-
-class SharingApplication : public QGuiApplication
+/*!
+ * \brief Clipboard wrapper for QML
+ *
+ * https://doc.qt.io/qt-6/qclipboard.html
+ */
+class UtilsClipboard : public QObject
 {
     Q_OBJECT
 
-     ShareUtils *mShareUtils = nullptr;
-     bool mPendingIntentsChecked = false;
-
-     QString mAppDataFilesPath;
-     QString mDocumentsWorkPath;
-
 public:
-    explicit SharingApplication(int &argc, char **argv);
-    ~SharingApplication();
+    Q_INVOKABLE static void clear();
 
-     void registerQML(QQmlContext *context);
-     //Q_INVOKABLE QString filePathDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool deleteFromDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool updateFileFromDocumentsLocation(const int requestId);
-
-signals:
-     void noDocumentsWorkLocation();
-
-public slots:
-    void onApplicationStateChanged(Qt::ApplicationState state);
-
-protected:
-    bool event(QEvent *e);
+    Q_INVOKABLE static void setText(const QString &txt);
+    Q_INVOKABLE static  QString getText();
 };
 
 /* ************************************************************************** */
-#endif // SHARINGAPPLICATION_H
+#endif // UTILS_CLIPBOARD_H
