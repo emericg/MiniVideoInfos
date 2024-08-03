@@ -46,6 +46,10 @@ For macOS and iOS builds, you'll need Xcode 13+ installed.
 
 ### Building dependencies
 
+- minivideo (0.15+)
+- libexif (2.0+)
+- taglib (2.0+)
+
 You can either use the libraries from your system, or use the `contribs_builder.py` script to build necessary libraries.  
 You will probably need to use this script, because some libraries aren't widely available in package managers. Also, if you wish to cross compile for Android or iOS, the script will make your life so much easier.  
 
@@ -56,8 +60,8 @@ $ git clone https://github.com/emericg/MiniVideoInfos.git
 $ cd MiniVideoInfos/contribs/
 $ python3 contribs_builder.py # default invocation
 
-$ python3 contribs_builder.py --softwares taglib,libexif,minivideo # build only selected softwares
-$ python3 contribs_builder.py --qt-directory /home/user/DEV/Qt --android-ndk /home/user/DEV/android-sdk/ndk/22.1.7171670/ --targets=android_armv8,android_armv7,android_x86,android_x86_64 # complex Android cross compilation
+$ python3 contribs_builder.py --softwares minivideo,libexif,taglib # build only selected softwares
+$ python3 contribs_builder.py --qt-directory /path/to/Qt --android-ndk /path/to/android-sdk/ndk/26.3.11579264/ --targets=android_armv8,android_armv7,android_x86,android_x86_64 # complex Android cross compilation
 ```
 
 ### Building MiniVideo Infos
