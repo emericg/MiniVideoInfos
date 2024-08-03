@@ -41,7 +41,6 @@ Rectangle {
 
             folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
             folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-            storageIcon.source = "qrc:/assets/icons/material-symbols/hardware/smartphone.svg"
 
             updateHeaderText()
             inited = true
@@ -151,7 +150,7 @@ Rectangle {
                 height: 26
                 anchors.centerIn: parent
 
-                source: "qrc:/assets/icons/material-symbols/hardware/smartphone.svg"
+                source: "qrc:/assets/icons/material-symbols/hardware/smartphone-fill.svg"
                 color: Theme.colorIcon
             }
 
@@ -167,7 +166,7 @@ Rectangle {
                     if (storageChooser.storageIndex === 0) {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-                        storageIcon.source = "qrc:/assets/icons/material-symbols/hardware/smartphone.svg"
+                        storageIcon.source = "qrc:/assets/icons/material-symbols/hardware/smartphone-fill.svg"
                     } else {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal()
@@ -257,10 +256,10 @@ Rectangle {
         anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: mediaOnlyChooser.top
+        anchors.bottom: parent.bottom
 
-        topMargin: 4
-        bottomMargin: 4
+        topMargin: 2
+        bottomMargin: -1 + mediaOnlyChooser.height
 
         model: FolderListModel {
             id: folderListModel
@@ -294,17 +293,17 @@ Rectangle {
                             source = "qrc:/assets/icons/material-symbols/folder.svg"
                     } else {
                         if (UtilsPath.isVideoFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/media/slideshow.svg"
+                            source = "qrc:/assets/icons/material-symbols/media/slideshow-fill.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/media/album.svg"
+                            source = "qrc:/assets/icons/material-symbols/media/album-fill.svg"
                         } else if (UtilsPath.isPictureFile(fileName, )) {
-                            source = "qrc:/assets/icons/material-symbols/media/image.svg"
+                            source = "qrc:/assets/icons/material-symbols/media/image-fill.svg"
                         } else {
                             if (onlyShowMedia) {
                                 listItem.visible = false
                                 listItem.height = 0
                             } else {
-                                source = "qrc:/assets/icons/material-symbols/insert_empty.svg"
+                                source = "qrc:/assets/icons/material-symbols/file.svg"
                             }
                         }
                     }
@@ -371,8 +370,27 @@ Rectangle {
         height: 40
         visible: !selectFolder
 
-        opacity: 0.8
+        opacity: 0.95
         color: mobileMenu.color
+
+        Rectangle { // tablet separator
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 2
+
+            visible: isTablet
+            color: Theme.colorHeaderHighlight
+            opacity: 0.33
+        }
+        Rectangle { // phone separator
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 1
+
+            visible: isPhone
+            color: Theme.colorSeparator
+        }
 
         Text {
             id: rectangleErrorText

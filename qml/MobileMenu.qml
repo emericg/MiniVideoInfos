@@ -29,17 +29,17 @@ Item {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
+            height: 2
 
             visible: mainmenu_tablet.visible
-
-            height: 2
-            opacity: 0.33
             color: Theme.colorHeaderHighlight
+            opacity: 0.33
         }
         Rectangle { // phone separator
             anchors.left: parent.left
             anchors.right: parent.right
             height: 1
+
             visible: mainmenu_phone.visible
             color: Theme.colorSeparator
         }
@@ -83,7 +83,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                source: "qrc:/assets/icons/material-symbols/settings.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenSettings")
@@ -146,7 +146,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                source: "qrc:/assets/icons/material-symbols/settings.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenSettings")

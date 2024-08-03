@@ -57,7 +57,7 @@ Loader {
             ////////////////
 
             ListTitle {
-                text: qsTr("Application")
+                text: qsTr("User interface")
                 source: "qrc:/assets/icons/material-symbols/settings.svg"
             }
 

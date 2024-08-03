@@ -44,6 +44,9 @@ Loader {
             anchors.left: parent.left
             anchors.right: parent.right
 
+            topPadding: 0
+            bottomPadding: -1
+
             ////////////////
 
             Item { // header area

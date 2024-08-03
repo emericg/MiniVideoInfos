@@ -12,10 +12,10 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
-        // rfresh permissions
-        checkPermissions()
+        // Refresh permissions
+        refreshPermissions()
 
-        // change screen
+        // Change screen
         appContent.state = "ScreenAboutPermissions"
     }
 
@@ -28,17 +28,17 @@ Item {
         screenAbout.loadScreen()
     }
 
-    function checkPermissions() {
+    function refreshPermissions() {
         button_storage_filesystem_test.validperm = utilsApp.checkMobileStorageFileSystemPermission()
         button_storage_read_test.validperm = utilsApp.checkMobileStorageReadPermission()
         button_storage_write_test.validperm = utilsApp.checkMobileStorageWritePermission()
     }
 
     Timer {
-        id: refreshPermissions
+        id: retryPermissions
         interval: 333
         repeat: false
-        onTriggered: checkPermissions()
+        onTriggered: refreshPermissions()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ Item {
 
                     onClicked: {
                         utilsApp.vibrate(25)
-                        refreshPermissions.start()
+                        retryPermissions.start()
                     }
                 }
 
@@ -191,8 +191,10 @@ Item {
             ButtonWireframe {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
+                height: 38
 
                 visible: utilsApp.getAndroidSdkVersion() >= 30
+                colorBackground: Theme.colorForeground
 
                 text: qsTr("Permission info")
                 source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
@@ -236,7 +238,7 @@ Item {
 
                     onClicked: {
                         utilsApp.vibrate(25)
-                        refreshPermissions.start()
+                        retryPermissions.start()
                     }
                 }
 
@@ -308,7 +310,7 @@ Item {
 
                     onClicked: {
                         utilsApp.vibrate(25)
-                        refreshPermissions.start()
+                        retryPermissions.start()
                     }
                 }
 
@@ -392,6 +394,9 @@ Item {
             ButtonWireframe {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
+                height: 38
+
+                colorBackground: Theme.colorForeground
 
                 text: qsTr("Application info")
                 source: "qrc:/assets/icons/material-icons/duotone/tune.svg"

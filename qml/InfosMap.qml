@@ -128,7 +128,7 @@ Item {
                 enabled: map.moove && !pinchHandler.active
 
                 onActiveChanged: {
-                    console.log("dragHandler.onActiveChanged")
+                    //console.log("dragHandler.onActiveChanged")
                     if (active) {
                         mediaPages.interactive = false
                     } else {
@@ -149,7 +149,7 @@ Item {
                 target: null
 
                 onActiveChanged: {
-                    console.log("pinchHandler.onActiveChanged")
+                    //console.log("pinchHandler.onActiveChanged")
                     if (active) {
                         mediaPages.interactive = false
                     } else {
