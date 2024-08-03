@@ -35,7 +35,7 @@ print("> Make sure you consult ./contribs_builder.py --help")
 print("")
 
 targets = ['linux', 'macos', 'macos_x86_64', 'macos_arm64', 'msvc2019', 'msvc2022',
-           'android_armv8', 'android_armv7', 'android_x86_64', 'android_x86'
+           'android_armv8', 'android_armv7', 'android_x86_64', 'android_x86',
            'ios', 'ios_simulator', 'ios_armv7', 'ios_armv8']
 
 softwares = ['libexif', 'taglib', 'minivideo']
@@ -286,6 +286,7 @@ if "libexif" in softwares_selected:
 FILE_taglib_utfcpp = "utfcpp-v4.0.5.zip"
 FILE_taglib = "taglib-master.zip"
 DIR_taglib = "taglib-master"
+DIR_taglib_utfcpp = DIR_taglib + "/3rdparty/utfcpp"
 
 if "taglib" in softwares_selected:
     if not os.path.exists(src_dir + FILE_taglib):
@@ -295,7 +296,7 @@ if "taglib" in softwares_selected:
         print("> Downloading " + FILE_taglib_utfcpp + "...")
         urllib.request.urlretrieve("https://github.com/nemtrif/utfcpp/archive/refs/tags/v4.0.5.zip", src_dir + FILE_taglib_utfcpp)
 
-## minivideo (version: git) (0.14+)
+## minivideo (version: git) (0.15+)
 FILE_minivideo = "minivideo-master.zip"
 DIR_minivideo = "MiniVideo-master"
 
@@ -419,13 +420,19 @@ for TARGET in TARGETS:
             zipTL.extractall(build_dir)
             os.rmdir(build_dir + DIR_taglib + "/3rdparty/utfcpp/")
             os.makedirs(build_dir + DIR_taglib + "/build")
-        if not os.path.isdir(build_dir + DIR_taglib + "/3rdparty/utfcpp/"):
+        if not os.path.isdir(build_dir + DIR_taglib_utfcpp):
             zipUTFCPP = zipfile.ZipFile(src_dir + FILE_taglib_utfcpp)
             zipUTFCPP.extractall(build_dir+ DIR_taglib + "/3rdparty/")
-            os.rename(build_dir + DIR_taglib + "/3rdparty/utfcpp-4.0.5/", build_dir + DIR_taglib + "/3rdparty/utfcpp/")
+            os.rename(build_dir + DIR_taglib + "/3rdparty/utfcpp-4.0.5/", build_dir + DIR_taglib_utfcpp)
+            os.makedirs(build_dir + DIR_taglib_utfcpp + "/build")
+
+        print("> Building utfcpp")
+        subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib_utfcpp + "/build")
+        subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_taglib_utfcpp + "/build")
+        subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_taglib_utfcpp + "/build")
 
         print("> Building taglib")
-        subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-DCMAKE_PREFIX_PATH=" + build_dir + DIR_taglib + "/3rdparty/utfcpp/source/", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
+        subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_SHARED_LIBS:BOOL=" + build_shared, "-DBUILD_STATIC_LIBS:BOOL=" + build_static, "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE", "-Dutf8cpp_INCLUDE_DIR=" + env_dir + "/usr/include/utf8cpp", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_taglib + "/build")
         subprocess.check_call(["cmake", "--build", ".", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
         subprocess.check_call(["cmake", "--build", ".", "--target", "install", "--config", "Release"], cwd=build_dir + DIR_taglib + "/build")
 

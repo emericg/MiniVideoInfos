@@ -8,7 +8,7 @@ CONFIG += c++17
 QT     += core qml quickcontrols2 svg widgets charts location
 
 # Bundle name
-QMAKE_TARGET_BUNDLE_PREFIX = com.minivideo
+QMAKE_TARGET_BUNDLE_PREFIX = io.minivideo
 QMAKE_BUNDLE = infos
 
 # Validate Qt version
@@ -17,7 +17,7 @@ QMAKE_BUNDLE = infos
 # Project features #############################################################
 
 DEFINES += ENABLE_MINIVIDEO
-#DEFINES += ENABLE_TAGLIB
+DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
 #DEFINES += ENABLE_EXIV2
 
