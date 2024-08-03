@@ -24,7 +24,7 @@
 #define MEDIA_H
 /* ************************************************************************** */
 
-#include <minivideo.h>
+#include <minivideo/minivideo.h>
 #include "minivideo_qml.h"
 #include "minivideo_track_qml.h"
 

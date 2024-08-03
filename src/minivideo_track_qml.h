@@ -24,7 +24,7 @@
 #define MINIVIDEO_TRACK_QML_H
 /* ************************************************************************** */
 
-#include <minivideo.h>
+#include <minivideo/minivideo.h>
 
 #include <QObject>
 #include <QString>

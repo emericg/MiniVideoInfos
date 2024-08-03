@@ -24,8 +24,8 @@
 #define MINIVIDEO_QML_H
 /* ************************************************************************** */
 
-#include <minivideo.h>
-#include <minivideo_avutils.h>
+#include <minivideo/minivideo.h>
+#include <minivideo/minivideo_avutils.h>
 
 #include <QObject>
 #include <QQmlApplicationEngine>

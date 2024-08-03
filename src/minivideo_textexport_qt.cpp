@@ -23,7 +23,7 @@
 #include "minivideo_textexport_qt.h"
 
 // minivideo library
-#include <minivideo.h>
+#include <minivideo/minivideo.h>
 
 // minianalyser
 #include "minivideo_utils_qt.h"
