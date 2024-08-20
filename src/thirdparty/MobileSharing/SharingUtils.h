@@ -88,7 +88,7 @@ public:
     }
 
     virtual void checkPendingIntents(const QString workingDirPath) {
-        qDebug() << "checkPendingIntents" << workingDirPath;
+        //qDebug() << "checkPendingIntents" << workingDirPath;
     }
 };
 

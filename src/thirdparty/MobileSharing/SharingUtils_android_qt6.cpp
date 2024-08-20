@@ -563,7 +563,7 @@ void AndroidShareUtils::checkPendingIntents(const QString workingDirPath)
             return;
         }
         activity.callMethod<void>("checkPendingIntents", "(Ljava/lang/String;)V", jniWorkingDir.object<jstring>());
-        qDebug() << "checkPendingIntents: " << workingDirPath;
+        //qDebug() << "checkPendingIntents: " << workingDirPath;
         return;
     }
     qDebug() << "checkPendingIntents: Activity not valid";

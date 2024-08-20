@@ -120,9 +120,6 @@ Item {
             ctx.strokeStyle = control.arcColor
             ctx.stroke()
         }
-
-        //layer.enabled: true
-        //layer.samples: 4
     }
 
     ////////////////////////////////////////////////////////////////////////////
