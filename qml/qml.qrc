@@ -28,7 +28,6 @@
         <file alias="FileDialog_mobile.qml">components/FileDialog_mobile.qml</file>
         <file alias="FileDialog_quickdialogs6_file.qml">components/FileDialog_quickdialogs6_file.qml</file>
         <file alias="FileDialog_quickdialogs6_folder.qml">components/FileDialog_quickdialogs6_folder.qml</file>
-        <file alias="FileDialog_quickdialogs5.qml">components/FileDialog_quickdialogs5.qml</file>
 
         <file alias="PopupImage.qml">popups/PopupImage.qml</file>
         <file alias="PopupLoading.qml">popups/PopupLoading.qml</file>

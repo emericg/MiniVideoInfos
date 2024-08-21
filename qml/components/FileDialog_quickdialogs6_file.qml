@@ -4,10 +4,6 @@ import QtQuick.Dialogs
 FileDialog {
     id: fileDialogPlatformFile
 
-    // 'platform'
-    // https://doc.qt.io/qt-5/qml-qt-labs-platform-filedialog.html
-
-    // 'dialog'
     // https://doc.qt.io/qt-6/qml-qtquick-dialogs-filedialog.html
 
     // compatibility
@@ -49,4 +45,6 @@ FileDialog {
         fileDialog.rejected()
         fileDialog.close()
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

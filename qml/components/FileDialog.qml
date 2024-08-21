@@ -5,29 +5,35 @@ Loader {
     id: fileDialog
     anchors.fill: parent
 
-    property bool useMediaFilter: false
-    property bool usePlatformDialog: isDesktop
-
-    ////////
-
-    // Emulate 'quick dialogs' API
-    // https://doc.qt.io/qt-5/qml-qtquick-dialogs-filedialog.html
     property string title
+
+    property url folder
+
+    property bool useMediaFilter: false
+    property bool usePlatformDialog: (isDesktop || settingsManager.mediaNativeFilePicker)
+
+    property var fileDialogItem: null
+
+    signal accepted(url fileUrl)
+    signal rejected()
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Emulate Qt6 'platform file/folder dialogs' API
+    // https://doc.qt.io/qt-6/qml-qtquick-dialogs-filedialog.html
+    // https://doc.qt.io/qt-6/qml-qtquick-dialogs-folderdialog.html
+    //property int fileMode: FileDialog.SaveFile
+    //property url currentFolder: settingsManager.exportDirectory_url
+    //property url selectedFile: UtilsPath.makeUrl("log.txt")
+
+    // Emulate Qt5 'quick dialogs' API
+    // https://doc.qt.io/qt-5/qml-qtquick-dialogs-filedialog.html
     property bool sidebarVisible: true
     property bool selectExisting: true
     property bool selectFolder: false
     property bool selectMultiple: false
 
-    property url folder
-
-    signal accepted(url fileUrl)
-    signal rejected()
-
-    Keys.onBackPressed: back()
-
     ////////////////////////////////////////////////////////////////////////////
-
-    property var fileDialogItem: null
 
     active: true
     asynchronous: true
@@ -49,20 +55,18 @@ Loader {
                 return "FileDialog_mobile.qml"
             }
         } else {
-            if (usePlatformDialog) {
-                if (selectFolder)
-                    return "FileDialog_quickdialogs6_folder.qml"
-                else
-                    return "FileDialog_quickdialogs6_file.qml"
-             } else {
-                return "FileDialog_quickdialogs5.qml"
-            }
+            if (selectFolder)
+                return "FileDialog_quickdialogs6_folder.qml"
+            else
+                return "FileDialog_quickdialogs6_file.qml"
         }
     }
 
     onLoaded: {
         fileDialogItem = item
     }
+
+    Keys.onBackPressed: back()
 
     ////////////////////////////////////////////////////////////////////////////
 

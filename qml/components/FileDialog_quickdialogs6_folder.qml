@@ -4,10 +4,6 @@ import QtQuick.Dialogs
 FolderDialog {
     id: fileDialogPlatformFolder
 
-    // 'platform'
-    // https://doc.qt.io/qt-5/qml-qt-labs-platform-folderdialog.html
-
-    // 'dialog'
     // https://doc.qt.io/qt-6/qml-qtquick-dialogs-folderdialog.html
 
     // compatibility
@@ -38,4 +34,6 @@ FolderDialog {
         fileDialog.rejected()
         fileDialog.close()
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

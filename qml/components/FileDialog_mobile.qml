@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import Qt.labs.folderlistmodel 2.3
+import Qt.labs.folderlistmodel
 
 import ThemeEngine
 import "qrc:/utils/UtilsPath.js" as UtilsPath
@@ -15,6 +15,11 @@ Rectangle {
     visible: false
     color: Theme.colorBackground
 
+    property bool inited: false
+
+    signal accepted()
+    signal rejected()
+
     // compatibility
     property string title: "" // not supported
     property url folder: ""
@@ -22,12 +27,6 @@ Rectangle {
     property bool selectExisting: true // not supported
     property bool selectFolder: false
     property bool selectMultiple: false // not supported
-
-    property bool onlyShowMedia: settingsManager.mediaFilter
-    property bool inited: false
-
-    signal accepted()
-    signal rejected()
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -214,7 +213,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (folderListModel.folder != folderListModel.rootFolder) {
+                    if (folderListModel.folder !== folderListModel.rootFolder) {
                         folderListModel.folder = folderListModel.parentFolder
                         updateHeaderText()
                     }
@@ -251,8 +250,6 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     ListView {
-        id: list
-
         anchors.top: subheader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -270,10 +267,20 @@ Rectangle {
             showFiles: !selectFolder
         }
 
-        delegate: Item {
+        delegate: ItemDelegate {
             id: listItem
-            width: list.width
+            width: ListView.view.width
             height: 48
+
+            RippleThemed {
+                anchors.fill: listItem
+                anchor: listItem
+
+                clip: true
+                pressed: listItem.pressed
+                active: listItem.enabled && (listItem.down || listItem.hovered || listItem.visualFocus)
+                color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.08)
+            }
 
             IconSvg {
                 id: icon
@@ -296,10 +303,10 @@ Rectangle {
                             source = "qrc:/assets/icons/material-symbols/media/slideshow-fill.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
                             source = "qrc:/assets/icons/material-symbols/media/album-fill.svg"
-                        } else if (UtilsPath.isPictureFile(fileName, )) {
+                        } else if (UtilsPath.isPictureFile(fileName)) {
                             source = "qrc:/assets/icons/material-symbols/media/image-fill.svg"
                         } else {
-                            if (onlyShowMedia) {
+                            if (settingsManager.mediaFilter) {
                                 listItem.visible = false
                                 listItem.height = 0
                             } else {
@@ -342,9 +349,11 @@ Rectangle {
 
             //Rectangle { width: parent.width; height: 1; color: Theme.colorHeader; visible: index == 0; }
             Rectangle { width: parent.width; height: 1; anchors.bottom: parent.bottom; color: Theme.colorSeparator; opacity: 0.66; }
-            MouseArea { anchors.fill: parent; onClicked: fileDialogMobile.onRowClick(index, fileURL); }
+            //MouseArea { anchors.fill: parent; onClicked: fileDialogMobile.onRowClick(index, fileURL); }
 
-            ButtonWireframe {
+            onClicked: fileDialogMobile.onRowClick(index, fileURL);
+
+            ButtonClear {
                 width: 72
                 height: 28
                 anchors.right: parent.right
@@ -386,7 +395,7 @@ Rectangle {
         Rectangle { // phone separator
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 1
+            height: 2
 
             visible: isPhone
             color: Theme.colorSeparator
@@ -411,20 +420,21 @@ Rectangle {
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
-            Component.onCompleted: checked = onlyShowMedia
+            checked: settingsManager.mediaFilter
             onCheckedChanged: {
-                onlyShowMedia = checked
+                settingsManager.mediaFilter = checked
 
                 //var f = folderListModel.folder
                 //folderListModel.folder = folderListModel.parentFolder
                 //folderListModel.folder = f
 
-                if (onlyShowMedia)
+                if (settingsManager.mediaFilter) {
                     folderListModel.nameFilters = ["*.mov", "*.m4v", "*.mp4", "*.mp4v", "*.3gp", "*.3gpp", "*.mkv", "*.webm", "*.avi", "*.divx", "*.asf", "*.wmv",
                                                    "*.mp1", "*.mp2", "*.mp3", "*.m4a", "*.mp4a", "*.m4r", "*.aac", "*.mka", "*.wma", "*.amb", "*.wav", "*.wave", "*.flac", "*.ogg", "*.opus", "*.vorbis",
                                                     "*.jpg", "*.jpeg", "*.webp", "*.png", "*.gpr", "*.gif", "*.heif", "*.heic", "*.avif", "*.bmp", "*.tga", "*.tif", "*.tiff", "*.svg"]
-                else
+                } else {
                     folderListModel.nameFilters = []
+                }
             }
         }
     }
