@@ -63,16 +63,29 @@ Flickable {
             var geomismatch = ((trackItem.widthVisible + trackItem.heightVisible) > 0 &&
                                (trackItem.widthVisible !== trackItem.width || trackItem.heightVisible !== trackItem.height))
 
+            var geovisible = true
+
             info_vdefinition_display.visible = geomismatch
             info_dar.visible = geomismatch
-            item_resBox.visible = geomismatch
+            item_resBox.visible = (geomismatch || geovisible)
 
-            if (geomismatch) {
+            img_display_rotate.visible = false
+            img_display_resize.visible = false
+
+            if (geomismatch || geovisible) {
                 info_vdefinition_display.text = trackItem.widthVisible + " x " + trackItem.heightVisible
                 info_dar.text = UtilsMedia.varToString(trackItem.widthVisible, trackItem.heightVisible)
 
+                rect_display.visible = geovisible
+                rect_geo.visible = geomismatch
+
                 var maxWidth = item_resBox.width
                 var maxHeight = item_resBox.height
+
+                var rect_geo_width = 200
+                var rect_geo_height_vert = 160
+                var rect_display_width = geomismatch ? 160 : 220
+                var rect_display_height_vert = geomismatch ? 160 : 220
 
                 if (((trackItem.width / trackItem.height) > 1) &&
                     ((trackItem.widthVisible / trackItem.heightVisible) > 1)) {
@@ -86,9 +99,9 @@ Flickable {
                         rect_geo.width = rect_display.width * (trackItem.width / trackItem.widthVisible)
                         rect_geo.height = rect_display.height * (trackItem.height / trackItem.heightVisible)
                     } else {
-                        rect_geo.width = 200
+                        rect_geo.width = rect_geo_width
                         rect_geo.height = rect_geo.width / trackItem.var
-                        rect_display.width = 160
+                        rect_display.width = rect_display_width
                         rect_display.height = rect_display.width / trackItem.dar
                     }
                 } else if (((trackItem.width / trackItem.height) < 1) &&
@@ -144,12 +157,20 @@ Flickable {
             info_vscan.visible = (trackItem.scanmode > 0)
             info_vscan.text = UtilsMedia.scanmodeToString(trackItem.scanmode)
 
+            // HDR
+            if (trackItem.hdrMode) {
+                info_hdrmode.text = trackItem.hdrMode_str
+            }
+
             // Colors
             info_vcolordepth.visible = (trackItem.colorDepth > 0)
             info_vcolorrange.visible = (trackItem.colorDepth > 0)
-            info_vcolorprimaries.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
-            info_vcolortransfer.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
-            info_vcolormatrix.visible = (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0)
+            //info_vcolorprimaries.visible = (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0)
+            //info_vcolortransfer.visible = (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0)
+            //info_vcolormatrix.visible = (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0)
+
+            info_vchromasubsampling.text = trackItem.chromaSubsampling_str
+            info_vchromalocation.text = trackItem.chromaLocation_str
 
             if (trackItem.colorDepth > 0) {
                 info_vcolordepth.text = trackItem.colorDepth + " bits"
@@ -159,10 +180,10 @@ Flickable {
                 else
                     info_vcolorrange.text = qsTr("limited")
             }
-            if (trackItem.colorPrimaries.length > 0 && trackItem.colorTransfer.length > 0) {
-                info_vcolorprimaries.text = trackItem.colorPrimaries
-                info_vcolortransfer.text = trackItem.colorTransfer
-                info_vcolormatrix.text = trackItem.colorMatrix
+            if (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0) {
+                info_vcolorprimaries.text = trackItem.colorPrimaries_str
+                info_vcolortransfer.text = trackItem.colorTransfer_str
+                info_vcolormatrix.text = trackItem.colorMatrix_str
             }
 
             // Framerate
@@ -191,12 +212,14 @@ Flickable {
 
             item_speakerBox.visible = true
             speakers.visible = true
-            speakers_lfe.visible = trackItem.audioChannels > 5
+            speakers_lfe.visible = (trackItem.audioChannels > 5)
 
             if (trackItem.audioChannels === 10) {
                 speakers.source = "qrc:/assets/gfx/speakers/9_0_surround.svg"
             } else if (trackItem.audioChannels === 8) {
                 speakers.source = "qrc:/assets/gfx/speakers/7_0_surround.svg"
+            } else if (trackItem.audioChannels === 7) {
+                speakers.source = "qrc:/assets/gfx/speakers/6_0_surround.svg"
             } else if (trackItem.audioChannels === 6) {
                 speakers.source = "qrc:/assets/gfx/speakers/5_0_surround.svg"
             } else if (trackItem.audioChannels === 4) {
@@ -416,6 +439,13 @@ Flickable {
                     border.width: 2
                     border.color: Theme.colorPrimary
 
+                    Rectangle { // background
+                        anchors.fill: parent
+                        z: -1
+                        color: Theme.colorComponentBackground
+                        opacity: 0.66
+                    }
+
                     IconSvg {
                         id: img_display_rotate
                         width: 24
@@ -434,7 +464,7 @@ Flickable {
                         anchors.top: parent.top
                         anchors.topMargin: 4
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: 6
                         color: Theme.colorPrimary
                         source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
                     }
@@ -515,12 +545,25 @@ Flickable {
             Item { width: 4; height: 4; } // spacer
 
             InfoRow { ////
+                id: info_hdrmode
+                legend: qsTr("HDR mode")
+            }
+
+            InfoRow { ////
                 id: info_vcolordepth
                 legend: qsTr("color depth")
             }
             InfoRow { ////
                 id: info_vcolorrange
                 legend: qsTr("color range")
+            }
+            InfoRow { ////
+                id: info_vchromasubsampling
+                legend: qsTr("chroma subsampling")
+            }
+            InfoRow { ////
+                id: info_vchromalocation
+                legend: qsTr("chroma location")
             }
             InfoRow { ////
                 id: info_vcolorprimaries
@@ -679,14 +722,13 @@ Flickable {
 
                     Rectangle {
                         id: legend_area_under
-
                         width: bitrateGraph.plotArea.width
                         height: bitrateGraph.plotArea.height
                         x: bitrateGraph.plotArea.x
                         y: bitrateGraph.plotArea.y
                         z: -1
                         color: Theme.colorComponentBackground
-                        opacity: 0.5
+                        opacity: 0.66
                     }
 
                     ValueAxis { id: axisX0; visible: true; gridVisible: false;

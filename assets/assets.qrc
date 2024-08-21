@@ -13,6 +13,7 @@
         <file>gfx/speakers/2_0_stereo.svg</file>
         <file>gfx/speakers/4_0_quad.svg</file>
         <file>gfx/speakers/5_0_surround.svg</file>
+        <file>gfx/speakers/6_0_surround.svg</file>
         <file>gfx/speakers/7_0_surround.svg</file>
         <file>gfx/speakers/9_0_surround.svg</file>
     </qresource>
