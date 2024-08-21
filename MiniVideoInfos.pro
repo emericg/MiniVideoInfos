@@ -5,20 +5,21 @@ DEFINES += APP_NAME=\\\"$$TARGET\\\"
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
-QT     += core qml quickcontrols2 svg widgets charts location
+QT     += core qml quickcontrols2 svg widgets
+QT     += concurrent charts location
+
+# Validate Qt version
+!versionAtLeast(QT_VERSION, 6.5) : error("You need at least Qt version 6.5 for $${TARGET}")
 
 # Bundle name
 QMAKE_TARGET_BUNDLE_PREFIX = io.minivideo
 QMAKE_BUNDLE = infos
 
-# Validate Qt version
-!versionAtLeast(QT_VERSION, 6.5) : error("You need at least Qt version 6.5 for $${TARGET}")
-
 # Project features #############################################################
 
 DEFINES += ENABLE_MINIVIDEO
-DEFINES += ENABLE_TAGLIB
 DEFINES += ENABLE_LIBEXIF
+DEFINES += ENABLE_TAGLIB
 #DEFINES += ENABLE_EXIV2
 
 DEFINES += USE_CONTRIBS
