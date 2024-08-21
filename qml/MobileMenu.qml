@@ -4,11 +4,13 @@ import ThemeEngine
 
 Item {
     id: mobileMenu
+
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
 
-    height: mainmenu_tablet.height + mainmenu_phone.height + screenPaddingNavbar + screenPaddingBottom
+    height: (appWindow.screenOrientation === Qt.PortraitOrientation) ?
+                mainmenu_tablet.height + mainmenu_phone.height + screenPaddingNavbar + screenPaddingBottom : 0
 
     property color color: {
         if (appContent.state === "ScreenTutorial") return Theme.colorHeader
@@ -38,7 +40,7 @@ Item {
         Rectangle { // phone separator
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 1
+            height: 2
 
             visible: mainmenu_phone.visible
             color: Theme.colorSeparator

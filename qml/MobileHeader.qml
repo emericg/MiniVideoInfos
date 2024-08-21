@@ -30,10 +30,17 @@ Rectangle {
     property string rightMenuMode: "off" // on / off
     signal rightMenuClicked()
 
+    function rightMenuIsOpen() { return actionMenu.visible; }
+    function rightMenuClose() { actionMenu.close(); }
+
     ////////////////////////////////////////////////////////////////////////////
 
     // prevent clicks below this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
+    ActionMenu_bottom {
+        id: actionMenu
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -42,13 +49,15 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: Math.max(screenPaddingTop, screenPaddingStatusbar)
+        height: Math.max(screenPaddingStatusbar, screenPaddingTop)
         color: Theme.colorStatusbar
     }
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: Math.max(screenPaddingTop, screenPaddingStatusbar)
+        anchors.topMargin: Math.max(screenPaddingStatusbar, screenPaddingTop)
+        anchors.leftMargin: screenPaddingLeft
+        anchors.rightMargin: screenPaddingRight
 
         ////////////
 
@@ -70,9 +79,8 @@ Rectangle {
                 onClicked: leftMenuClicked()
 
                 RippleThemed {
+                    anchors.fill: parent
                     anchor: parent
-                    width: parent.width
-                    height: parent.height
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
@@ -131,7 +139,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: (appContent.state === "MobileComponents")
+                visible: false
 
                 onClicked: {
                     rightMenuClicked()
@@ -139,8 +147,8 @@ Rectangle {
                 }
 
                 RippleThemed {
-                    width: parent.width
-                    height: parent.height
+                    anchors.fill: parent
+                    anchor: parent
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress

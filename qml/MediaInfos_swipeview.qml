@@ -328,6 +328,14 @@ Item {
         color: mobileMenu.color
         visible: !(isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation) && (mediaPages.count > 1)
 
+        Rectangle { // phone separator
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 2
+
+            color: Theme.colorSeparator
+        }
+
         // prevent clicks below this area
         MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 

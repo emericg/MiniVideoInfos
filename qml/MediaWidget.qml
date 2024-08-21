@@ -40,7 +40,17 @@ Item {
         color: mediaWidget.selected ? Theme.colorSeparator : "transparent"
         Behavior on color { ColorAnimation { duration: 133 } }
 
+        RippleThemed {
+            anchors.fill: mousearea
+            anchor: mousearea
+
+            clip: true
+            pressed: mousearea.containsPress
+            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 1)
+        }
+
         MouseArea {
+            id: mousearea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
@@ -135,36 +145,7 @@ Item {
                     elide: Text.ElideMiddle
                     verticalAlignment: Text.AlignVCenter
                 }
-/*
-                Item {
-                    id: mediaFilename
-                    height: 24
-                    clip: true
-                    anchors.left: parent.left
-                    //anchors.right: parent.right
 
-                    property string text: ""
-                    property string spacing: "        "
-                    property string combined: text + spacing
-                    property string display: combined.substring(step) + combined.substring(0, step)
-                    property int step: 0
-
-                    Timer {
-                        interval: 200
-                        running: (mediaFilenameTxt.width > mediaFilename.width)
-                        repeat: true
-                        onTriggered: parent.step = (parent.step + 1) % parent.combined.length
-                    }
-
-                    Text {
-                        id: mediaFilenameTxt
-                        text: parent.display
-                        color: Theme.colorText
-                        font.pixelSize: Theme.fontSizeContent
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-*/
                 Text {
                     id: mediaPath
                     anchors.top: mediaFilename.bottom
@@ -178,27 +159,6 @@ Item {
                     elide: Text.ElideMiddle
                     verticalAlignment: Text.AlignVCenter
                 }
-/*
-                Text {
-                    id: mediaStatus
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-
-                    visible: false
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 14
-                    color: Theme.colorGreen
-
-                    SequentialAnimation on opacity {
-                        id: opa
-                        loops: Animation.Infinite
-                        onStopped: mediaStatus.opacity = 1;
-
-                        PropertyAnimation { to: 0.33; duration: 750; }
-                        PropertyAnimation { to: 1; duration: 750; }
-                    }
-                }
-*/
             }
 
             IconSvg {
@@ -230,4 +190,6 @@ Item {
         anchors.rightMargin: -6
         anchors.bottom: parent.bottom
     }
+
+    ////////////////
 }

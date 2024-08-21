@@ -42,7 +42,9 @@ Loader {
         Column {
             id: contentColumn
             anchors.left: parent.left
+            anchors.leftMargin: screenPaddingLeft
             anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight
 
             topPadding: 0
             bottomPadding: -1
@@ -102,36 +104,37 @@ Loader {
                     spacing: Theme.componentMargin
 
                     ButtonFlat {
-                        width: 160
-                        sourceSize: 28
-
-                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        width: 155
 
                         text: qsTr("WEBSITE")
                         source: "qrc:/assets/icons/material-symbols/link.svg"
+                        sourceSize: 28
+                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
                         onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos")
                     }
 
                     ButtonFlat {
-                        width: 160
-                        sourceSize: 22
-
-                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        width: 155
 
                         text: qsTr("SUPPORT")
                         source: "qrc:/assets/icons/material-symbols/support.svg"
+                        sourceSize: 22
+                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
                         onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/support.html")
                     }
 
                     ButtonFlat {
-                        visible: (appWindow.width > 800)
-                        width: 160
-                        sourceSize: 22
+                        width: 155
 
-                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        visible: (appWindow.width > 800)
 
                         text: qsTr("GitHub")
                         source: "qrc:/assets/gfx/logos/github.svg"
+                        sourceSize: 22
+                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos")
                     }
                 }
@@ -143,9 +146,9 @@ Loader {
                 height: 72
 
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                anchors.leftMargin: Theme.componentMargin
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                anchors.rightMargin: Theme.componentMargin
 
                 visible: !wideWideMode
                 spacing: Theme.componentMargin
@@ -258,9 +261,9 @@ Loader {
 
             Item { // list dependencies
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                anchors.leftMargin: Theme.componentMargin
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                anchors.rightMargin: Theme.componentMargin
 
                 height: 40 + dependenciesText.height + dependenciesColumn.height
 

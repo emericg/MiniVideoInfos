@@ -65,19 +65,17 @@ Loader {
 
             Item {
                 id: element_appTheme
-                height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_appTheme
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     color: Theme.colorIcon
                     source: "qrc:/assets/icons/material-icons/duotone/style.svg"
@@ -85,12 +83,12 @@ Loader {
 
                 Text {
                     id: text_appTheme
-                    height: 40
                     anchors.left: image_appTheme.right
                     anchors.leftMargin: 16
                     anchors.right: theme_selector.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Application theme")
                     textFormat: Text.PlainText
@@ -137,9 +135,9 @@ Loader {
                     }
                     Rectangle {
                         id: rectangleDark
+                        anchors.verticalCenter: parent.verticalCenter
                         width: 64
                         height: 32
-                        anchors.verticalCenter: parent.verticalCenter
 
                         radius: 2
                         color: (Theme.currentTheme === ThemeEngine.THEME_DARK) ? Theme.colorForeground : "#313236"
@@ -168,21 +166,19 @@ Loader {
 
             Item {
                 id: element_appThemeAuto
-                height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 visible: (settingsManager.appTheme !== "night")
 
                 IconSvg {
                     id: image_appThemeAuto
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     color: Theme.colorIcon
                     source: "qrc:/assets/icons/material-icons/duotone/brightness_4.svg"
@@ -190,12 +186,12 @@ Loader {
 
                 Text {
                     id: text_appThemeAuto
-                    height: 40
                     anchors.left: image_appThemeAuto.right
                     anchors.leftMargin: 16
                     anchors.right: switch_appThemeAuto.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Automatic dark mode")
                     textFormat: Text.PlainText
@@ -222,9 +218,10 @@ Loader {
             Text {
                 id: legend_appThemeAuto
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 56
+                anchors.leftMargin: 56
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 8
+                anchors.rightMargin: 8
+
                 topPadding: -12
                 bottomPadding: 8
 
@@ -248,19 +245,17 @@ Loader {
 
             Item {
                 id: element_mediaFilter
-                height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_mediaFilter
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                     fillMode: Image.PreserveAspectFit
@@ -270,12 +265,12 @@ Loader {
 
                 Text {
                     id: text_mediaFilter
-                    height: 40
                     anchors.left: image_mediaFilter.right
                     anchors.leftMargin: 16
                     anchors.right: switch_mediaFilter.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Filter media files")
                     textFormat: Text.PlainText
@@ -299,19 +294,17 @@ Loader {
 
             Item {
                 id: element_nativeChooser
-                height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_nativeChooser
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
                     fillMode: Image.PreserveAspectFit
@@ -321,12 +314,12 @@ Loader {
 
                 Text {
                     id: text_nativeChooser
-                    height: 40
                     anchors.left: image_nativeChooser.right
                     anchors.leftMargin: 16
                     anchors.right: switch_nativeChooser.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Use native file chooser")
                     textFormat: Text.PlainText
@@ -343,7 +336,7 @@ Loader {
                     anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
-                    Component.onCompleted: checked = settingsManager.mediaNativeFilePicker
+                    checked: settingsManager.mediaNativeFilePicker
                     onCheckedChanged: settingsManager.mediaNativeFilePicker = checked
                 }
             }
@@ -359,19 +352,17 @@ Loader {
 
             Item {
                 id: element_mediaPreview
-                height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_mediaPreview
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     color: Theme.colorIcon
                     source: "qrc:/assets/icons/material-symbols/media/image.svg"
@@ -379,12 +370,12 @@ Loader {
 
                 Text {
                     id: text_mediaPreview
-                    height: 40
                     anchors.left: image_mediaPreview.right
                     anchors.leftMargin: 16
                     anchors.right: switch_mediaPreview.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Preview media")
                     textFormat: Text.PlainText
@@ -410,19 +401,17 @@ Loader {
 
             Item {
                 id: element_mediaExport
-                height: 48
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
+                height: 48
 
                 IconSvg {
                     id: image_mediaExport
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     color: Theme.colorIcon
                     source: "qrc:/assets/icons/material-symbols/archive.svg"
@@ -462,18 +451,16 @@ Loader {
             Item {
                 id: element_unit
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
                 height: 48
 
                 IconSvg {
                     id: image_unit
-                    width: 24
-                    height: 24
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     color: Theme.colorIcon
                     source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
@@ -481,12 +468,12 @@ Loader {
 
                 Text {
                     id: text_unit
-                    height: 40
                     anchors.left: image_unit.right
                     anchors.leftMargin: 16
                     anchors.right: row_unit.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Unit system")
                     textFormat: Text.PlainText
@@ -521,18 +508,16 @@ Loader {
             Item {
                 id: element_sizes
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
                 height: 48
 
                 IconSvg {
                     id: image_sizes
-                    width: 24
-                    height: 24
                     anchors.leftMargin: 16
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
 
                     color: Theme.colorIcon
                     source: "qrc:/assets/icons/material-symbols/save.svg"
@@ -540,12 +525,12 @@ Loader {
 
                 Text {
                     id: text_sizes
-                    height: 40
                     anchors.left: image_sizes.right
                     anchors.leftMargin: 16
                     anchors.right: row_sizes.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 40
 
                     text: qsTr("Sizes unit")
                     wrapMode: Text.WordWrap
@@ -573,14 +558,13 @@ Loader {
                         settingsManager.unitSizes = index
                     }
                 }
-
             }
             Text {
                 id: legend_sizes
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 56
+                anchors.leftMargin: 56
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 8
+                anchors.rightMargin: 8
 
                 topPadding: -12
                 bottomPadding: 8
