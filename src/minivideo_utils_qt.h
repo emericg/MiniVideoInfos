@@ -174,11 +174,17 @@ QString getChannelModeQString(const ChannelMode_e channelMode);
 
 QString getStereoModeQString(const StereoMode_e stereoMode);
 
+QString getHdrModeQString(const HdrMode_e hdrMode);
+
 QString getFourccQString(const unsigned fourcc);
 
 QString getContainerQString(const Containers_e container, const bool long_description);
 
 QString getCodecQString(const StreamType_e type, const Codecs_e codec, const bool long_description);
+
+QString getChromaSubsamplingQString(const ChromaSubSampling_e subsampling);
+
+QString getChromaLocationQString(const ChromaLocation_e location);
 
 /*!
  * \brief Get a readable language string.

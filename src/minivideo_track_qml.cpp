@@ -382,6 +382,18 @@ int MediaTrackQml::getStereoMode() const
     return -1;
 }
 
+QString MediaTrackQml::getStereoMode_str() const
+{
+    QString mode;
+
+    if (mv_stream)
+    {
+        return getStereoModeString(static_cast<StereoMode_e>(mv_stream->stereo_mode));
+    }
+
+    return mode;
+}
+
 int MediaTrackQml::getOrientation() const
 {
     if (mv_stream)
@@ -396,10 +408,45 @@ int MediaTrackQml::getScanMode() const
 {
     if (mv_stream)
     {
-        //return mv_stream->scan_mode;
+        return mv_stream->scan_mode;
     }
 
     return -1;
+}
+
+QString MediaTrackQml::getScanMode_str() const
+{
+    QString mode;
+
+    if (mv_stream)
+    {
+        mode = getScanModeString(static_cast<ScanType_e>(mv_stream->scan_mode));
+    }
+
+    return mode;
+}
+
+int MediaTrackQml::getHdrMode() const
+{
+
+    if (mv_stream)
+    {
+        return mv_stream->hdr_mode;
+    }
+
+    return -1;
+}
+
+QString MediaTrackQml::getHdrMode_str() const
+{
+    QString hdr;
+
+    if (mv_stream)
+    {
+        hdr = getHdrModeString(static_cast<HdrMode_e>(mv_stream->hdr_mode));
+    }
+
+    return hdr;
 }
 
 int MediaTrackQml::getColorDepth() const
@@ -422,7 +469,61 @@ bool MediaTrackQml::getColorRange() const
     return false;
 }
 
-QString MediaTrackQml::getColorPrimaries() const
+int MediaTrackQml::getChromaSubsampling() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->color_subsampling;
+    }
+
+    return -1;
+}
+
+QString MediaTrackQml::getChromaSubsampling_str() const
+{
+    QString ss;
+
+    if (mv_stream)
+    {
+        ss = getChromaSubsamplingString(static_cast<ChromaSubSampling_e>(mv_stream->color_subsampling));
+    }
+
+    return ss;
+}
+
+int MediaTrackQml::getChromaLocation() const
+{
+    if (mv_stream)
+    {
+        //return mv_stream->color_subsampling;
+    }
+
+    return -1;
+}
+
+QString MediaTrackQml::getChromaLocation_str() const
+{
+    QString loc;
+
+    if (mv_stream)
+    {
+        //loc = getChromaLocationString(static_cast<ChromaLocation>(mv_stream->color_location));
+    }
+
+    return loc;
+}
+
+int MediaTrackQml::getColorPrimaries() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->color_primaries;
+    }
+
+    return -1;
+}
+
+QString MediaTrackQml::getColorPrimaries_str() const
 {
     QString prim;
 
@@ -434,7 +535,17 @@ QString MediaTrackQml::getColorPrimaries() const
     return prim;
 }
 
-QString MediaTrackQml::getColorTransfer() const
+int MediaTrackQml::getColorTransfer() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->color_transfer;
+    }
+
+    return -1;
+}
+
+QString MediaTrackQml::getColorTransfer_str() const
 {
     QString trans;
 
@@ -446,7 +557,17 @@ QString MediaTrackQml::getColorTransfer() const
     return trans;
 }
 
-QString MediaTrackQml::getColorMatrix() const
+int MediaTrackQml::getColorMatrix() const
+{
+    if (mv_stream)
+    {
+        return mv_stream->color_matrix;
+    }
+
+    return -1;
+}
+
+QString MediaTrackQml::getColorMatrix_str() const
 {
     QString prim;
 
@@ -662,6 +783,25 @@ Q_INVOKABLE void MediaTrackQml::getBitrateData(QLineSeries *bitrateData, QLineSe
             if (mv_stream->stream_type == 1) skip = 32; // audio
             if (mv_stream->stream_type == 2) skip = std::round(mv_stream->framerate) - 1; // video
 
+            // skip = std::round(freq);
+            // skip = std::round(mv_stream->framerate) - 1;
+            // skip = std::round(mv_stream->sample_count) * 4;
+/*
+            if (mv_stream->sample_count < 1000)
+                skip = 1;
+            else if (mv_stream->sample_count < 2000)
+                skip = 2;
+            else if (mv_stream->sample_count < 4000)
+                skip = 4;
+            else if (mv_stream->sample_count < 8000)
+                skip = 8;
+            else if (mv_stream->sample_count < 16000)
+                skip = 16;
+            else if (mv_stream->sample_count < 32000)
+                skip = 32;
+            else
+                skip = 64;
+*/
             points_bitrate_data.reserve(mv_stream->sample_count/skip);
 
             int serie_id = 0;

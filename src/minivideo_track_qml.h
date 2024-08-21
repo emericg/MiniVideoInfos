@@ -78,16 +78,27 @@ class MediaTrackQml: public QObject
     Q_PROPERTY(double var READ getVAR NOTIFY trackUpdated)
     Q_PROPERTY(double dar READ getDAR NOTIFY trackUpdated)
     Q_PROPERTY(double par READ getPAR NOTIFY trackUpdated)
+    Q_PROPERTY(int hdrMode READ getHdrMode NOTIFY trackUpdated)
+    Q_PROPERTY(QString hdrMode_str READ getHdrMode_str NOTIFY trackUpdated)
     Q_PROPERTY(int colorDepth READ getColorDepth NOTIFY trackUpdated)
     Q_PROPERTY(bool colorRange READ getColorRange NOTIFY trackUpdated)
-    Q_PROPERTY(QString colorPrimaries READ getColorPrimaries NOTIFY trackUpdated)
-    Q_PROPERTY(QString colorTransfer READ getColorTransfer NOTIFY trackUpdated)
-    Q_PROPERTY(QString colorMatrix READ getColorMatrix NOTIFY trackUpdated)
+    Q_PROPERTY(int chromaSubsampling READ getChromaSubsampling NOTIFY trackUpdated)
+    Q_PROPERTY(QString chromaSubsampling_str READ getChromaSubsampling_str NOTIFY trackUpdated)
+    Q_PROPERTY(int chromaLocation READ getChromaLocation NOTIFY trackUpdated)
+    Q_PROPERTY(QString chromaLocation_str READ getChromaLocation_str NOTIFY trackUpdated)
+    Q_PROPERTY(int colorPrimaries READ getColorPrimaries NOTIFY trackUpdated)
+    Q_PROPERTY(QString colorPrimaries_str READ getColorPrimaries_str NOTIFY trackUpdated)
+    Q_PROPERTY(int colorTransfer READ getColorTransfer NOTIFY trackUpdated)
+    Q_PROPERTY(QString colorTransfer_str READ getColorTransfer_str NOTIFY trackUpdated)
+    Q_PROPERTY(int colorMatrix READ getColorMatrix NOTIFY trackUpdated)
+    Q_PROPERTY(QString colorMatrix_str READ getColorMatrix_str NOTIFY trackUpdated)
     //Q_PROPERTY(bool alpha READ getAlpha NOTIFY trackUpdated)
     Q_PROPERTY(int orientation READ getOrientation NOTIFY trackUpdated)
     Q_PROPERTY(int projection READ getProjection NOTIFY trackUpdated)
     Q_PROPERTY(int stereoMode READ getStereoMode NOTIFY trackUpdated)
+    Q_PROPERTY(QString stereoMode_str READ getStereoMode_str NOTIFY trackUpdated)
     Q_PROPERTY(int scanMode READ getScanMode NOTIFY trackUpdated)
+    Q_PROPERTY(QString scanMode_str READ getScanMode_str NOTIFY trackUpdated)
 
     // audio
     Q_PROPERTY(int audioChannels READ getAudioChannels NOTIFY trackUpdated)
@@ -146,12 +157,23 @@ class MediaTrackQml: public QObject
     int getProjection() const;
     int getOrientation() const;
     int getScanMode() const;
+    QString getScanMode_str() const;
     int getStereoMode() const;
+    QString getStereoMode_str() const;
+    int getHdrMode() const;
+    QString getHdrMode_str() const;
     int getColorDepth() const;
     bool getColorRange() const;
-    QString getColorPrimaries() const;
-    QString getColorTransfer() const;
-    QString getColorMatrix() const;
+    int getChromaSubsampling() const;
+    QString getChromaSubsampling_str() const;
+    int getChromaLocation() const;
+    QString getChromaLocation_str() const;
+    int getColorPrimaries() const;
+    QString getColorPrimaries_str() const;
+    int getColorTransfer() const;
+    QString getColorTransfer_str() const;
+    int getColorMatrix() const;
+    QString getColorMatrix_str() const;
 
     //
     int getAudioChannels() const;
