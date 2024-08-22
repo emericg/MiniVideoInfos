@@ -104,7 +104,7 @@ Loader {
                     spacing: Theme.componentMargin
 
                     ButtonFlat {
-                        width: 155
+                        width: isPhone ? 150 : 160
 
                         text: qsTr("WEBSITE")
                         source: "qrc:/assets/icons/material-symbols/link.svg"
@@ -115,7 +115,7 @@ Loader {
                     }
 
                     ButtonFlat {
-                        width: 155
+                        width: isPhone ? 150 : 160
 
                         text: qsTr("SUPPORT")
                         source: "qrc:/assets/icons/material-symbols/support.svg"
@@ -126,8 +126,7 @@ Loader {
                     }
 
                     ButtonFlat {
-                        width: 155
-
+                        width: isPhone ? 150 : 160
                         visible: (appWindow.width > 800)
 
                         text: qsTr("GitHub")
@@ -224,9 +223,9 @@ Loader {
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/releases")
             }
 
-            ////////////////
-
             ListSeparator { }
+
+            ////////////////
 
             ListItemClickable { // tutorial
                 width: parent.width
@@ -239,9 +238,9 @@ Loader {
                 onClicked: screenTutorial.loadScreenFrom("ScreenAbout")
             }
 
-            ////////////////
+            ListSeparator { }
 
-            ListSeparator { visible: (Qt.platform.os === "android") }
+            ////////////////
 
             ListItemClickable { // permissions
                 width: parent.width
@@ -255,9 +254,9 @@ Loader {
                 onClicked: screenAboutPermissions.loadScreenFrom("ScreenAbout")
             }
 
-            ////////////////
+            ListSeparator { visible: (Qt.platform.os === "android") }
 
-            ListSeparator { }
+            ////////////////
 
             Item { // list dependencies
                 anchors.left: parent.left
@@ -265,7 +264,7 @@ Loader {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
-                height: 40 + dependenciesText.height + dependenciesColumn.height
+                height: 32 + dependenciesText.height + dependenciesColumn.height
 
                 IconSvg {
                     width: 24
@@ -328,7 +327,79 @@ Loader {
                 }
             }
 
-            ListSeparator { }
+            ////////////////
+
+            Item { // list debug infos
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.componentMargin
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMargin
+
+                height: 32 + debugColumn.height
+                visible: utilsApp.isDebug
+
+                IconSvg {
+                    anchors.top: debugColumn.top
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    width: 24
+                    height: 24
+
+                    source: "qrc:/assets/icons/material-symbols/info.svg"
+                    color: Theme.colorSubText
+                }
+
+                Column {
+                    id: debugColumn
+                    anchors.left: parent.left
+                    anchors.leftMargin: appHeader.headerPosition - parent.anchors.leftMargin
+                    anchors.right: parent.right
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    spacing: Theme.componentMargin * 0.33
+
+                    Text {
+                        color: Theme.colorSubText
+                        text: "App name: %1".arg(utilsApp.appName())
+                        textFormat: Text.PlainText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "App version: %1".arg(utilsApp.appVersion())
+                        textFormat: Text.PlainText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "Build mode: %1".arg(utilsApp.appBuildModeFull())
+                        textFormat: Text.PlainText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "Build architecture: %1".arg(utilsApp.qtArchitecture())
+                        textFormat: Text.PlainText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "Build date: %1".arg(utilsApp.appBuildDateTime())
+                        textFormat: Text.PlainText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "Qt version: %1".arg(utilsApp.qtVersion())
+                        textFormat: Text.PlainText
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                }
+            }
+
+            ListSeparator { visible: utilsApp.isDebug }
 
             ////////////////
         }

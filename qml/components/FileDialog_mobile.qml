@@ -417,7 +417,7 @@ Rectangle {
             id: switch_mediaonly
             z: 1
             anchors.right: parent.right
-            anchors.rightMargin: 8
+            anchors.rightMargin: screenPaddingRight + 8
             anchors.verticalCenter: parent.verticalCenter
 
             checked: settingsManager.mediaFilter
