@@ -19,7 +19,7 @@ FolderDialog {
     ////////////////////////////////////////////////////////////////////////////
 
     //acceptLabel : string
-    //currentFolder : url
+    currentFolder: folder
     //folder : url
     //options : flags
     //rejectLabel : string

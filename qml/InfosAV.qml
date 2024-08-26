@@ -89,7 +89,8 @@ Flickable {
 
                 if (((trackItem.width / trackItem.height) > 1) &&
                     ((trackItem.widthVisible / trackItem.heightVisible) > 1)) {
-                    //console.log("LEFT geo"); console.log("LEFT disp");
+
+                    //console.log("LEFT geo / LEFT disp");
                     img_display_rotate.visible = false
                     img_display_resize.visible = true
 
@@ -104,13 +105,16 @@ Flickable {
                         rect_display.width = rect_display_width
                         rect_display.height = rect_display.width / trackItem.dar
                     }
+
                 } else if (((trackItem.width / trackItem.height) < 1) &&
                            ((trackItem.widthVisible / trackItem.heightVisible) < 1)) {
-                    //console.log("UP geo"); console.log("UP disp");
+
+                    //console.log("UP geo / UP disp");
                     img_display_rotate.visible = false
                     img_display_resize.visible = true
 
                 } else {
+
                     //console.log("UP / LEFT")
                     img_display_rotate.visible = true
                     img_display_resize.visible = false
@@ -129,6 +133,7 @@ Flickable {
                         rect_display.width = 160
                         rect_display.height = (160 / (trackItem.widthVisible/trackItem.heightVisible))
                     }
+
                 }
 
                 item_resBox.height = Math.max(rect_geo.height, rect_display.height)

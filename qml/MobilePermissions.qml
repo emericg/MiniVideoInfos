@@ -63,69 +63,6 @@ Item {
             ////////
 
             Item {
-                id: element_network
-                height: 24
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                RoundButtonIcon {
-                    id: button_network_test
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
-                    z: 1
-
-                    property bool validperm: true
-
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-                }
-
-                Text {
-                    id: text_network
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("Network access")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 18
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-            Text {
-                id: legend_network
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-
-                text: qsTr("Network state and internet permissions are used to load GPS maps.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            ListSeparatorPadded {
-                height: 16+1
-                visible: utilsApp.getAndroidSdkVersion() >= 30
-            }
-
-            ////////
-
-            Item {
                 id: element_storage_filesystem
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -207,7 +144,7 @@ Item {
 
             ListSeparatorPadded {
                 height: 16+1
-                visible: utilsApp.getAndroidSdkVersion() <= 29
+                visible: utilsApp.getAndroidSdkVersion() >= 30
             }
 
             ////////
@@ -341,6 +278,69 @@ Item {
                 visible: utilsApp.getAndroidSdkVersion() <= 29
 
                 text: qsTr("Storage write permission is only needed to export subtitles file or metadata overview.")
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            ListSeparatorPadded {
+                height: 16+1
+                visible: utilsApp.getAndroidSdkVersion() <= 29
+            }
+
+            ////////
+
+            Item {
+                id: element_network
+                height: 24
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                RoundButtonIcon {
+                    id: button_network_test
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.componentMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
+                    z: 1
+
+                    property bool validperm: true
+
+                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
+                    backgroundVisible: true
+                }
+
+                Text {
+                    id: text_network
+                    anchors.left: parent.left
+                    anchors.leftMargin: appHeader.headerPosition
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: 16
+
+                    text: qsTr("Network access")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 18
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+            Text {
+                id: legend_network
+                anchors.left: parent.left
+                anchors.leftMargin: appHeader.headerPosition
+                anchors.right: parent.right
+                anchors.rightMargin: 16
+
+                text: qsTr("Network state and internet permissions are used to load GPS maps.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText

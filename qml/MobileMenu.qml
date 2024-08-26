@@ -62,7 +62,8 @@ Item {
         visible: isTablet &&
                  ((appContent.state === "ScreenMediaList" && !screenMediaList.dialogIsOpen) ||
                   appContent.state === "ScreenSettings" ||
-                  appContent.state === "ScreenAbout")
+                  appContent.state === "ScreenAbout" ||
+                  appContent.state === "ScreenAboutPermissions")
 
         Row { // main menu
             anchors.centerIn: parent
@@ -99,7 +100,8 @@ Item {
                 source: "qrc:/assets/icons/material-symbols/info.svg"
                 sourceSize: 24
 
-                highlighted: (appContent.state === "ScreenAbout")
+                highlighted: (appContent.state === "ScreenAbout" ||
+                              appContent.state === "ScreenAboutPermissions")
                 onClicked: screenAbout.loadScreen()
             }
         }
@@ -117,7 +119,8 @@ Item {
         visible: isPhone &&
                  ((appContent.state === "ScreenMediaList" && !screenMediaList.dialogIsOpen) ||
                   appContent.state === "ScreenSettings" ||
-                  appContent.state === "ScreenAbout")
+                  appContent.state === "ScreenAbout" ||
+                  appContent.state === "ScreenAboutPermissions")
 
         Row { // main menu
             anchors.horizontalCenter: parent.horizontalCenter
@@ -165,7 +168,8 @@ Item {
                 source: "qrc:/assets/icons/material-symbols/info.svg"
                 sourceSize: 24
 
-                highlighted: (appContent.state === "ScreenAbout")
+                highlighted: (appContent.state === "ScreenAbout" ||
+                              appContent.state === "ScreenAboutPermissions")
                 onClicked: screenAbout.loadScreen()
             }
         }

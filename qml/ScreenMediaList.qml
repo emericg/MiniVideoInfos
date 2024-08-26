@@ -103,7 +103,7 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     property bool dialogIsOpen: false
-    property string dialogHeaderSaved: appHeader.appName
+    property string dialogHeaderSaved: utilsApp.appName()
 
     FileDialog { // custom chooser
         id: fileDialog

@@ -15,6 +15,8 @@ FileDialog {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    currentFolder: folder
+
     fileMode: {
         if (!selectExisting)
             return FileDialog.SaveFile

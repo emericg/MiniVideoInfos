@@ -653,12 +653,21 @@ Flickable {
                 anchors.right: parent.right
 
                 InfoRow { ////
-                    legend: qsTr("sub. track #") + (index + 1)
+                    legend: qsTr("#") + (index + 1)
                     text: {
                         var txt = ""
-                        if (modelData.codec.length) txt += modelData.codec
-                        if (modelData.language.length) txt += modelData.language
-                        if (modelData.title.length) txt += modelData.title
+                        if (modelData.codec.length) {
+                            if (txt.length) txt += " / "
+                            txt += modelData.codec
+                        }
+                        if (modelData.language.length) {
+                            if (txt.length) txt += " / "
+                            txt += modelData.language
+                        }
+                        if (modelData.title.length) {
+                            if (txt.length) txt += " / "
+                            txt += modelData.title
+                        }
                         return txt
                     }
                 }

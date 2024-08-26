@@ -39,6 +39,9 @@ import android.content.Intent;
 import android.content.ContentResolver;
 import android.webkit.MimeTypeMap;
 
+import android.system.ErrnoException;
+import android.system.Os;
+
 public class QShareActivity extends QtActivity
 {
     // native - must be implemented in Cpp via JNI
@@ -63,6 +66,11 @@ public class QShareActivity extends QtActivity
     // more details: my blog at Qt
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        try {
+            Os.setenv("QT_ANDROID_DEBUGGER_MAIN_THREAD_SLEEP_MS", "0", true);
+        } catch (ErrnoException e) {
+            throw new RuntimeException(e);
+        }
         super.onCreate(savedInstanceState);
         Log.d("QShareActivity", " onCreate() QShareActivity");
         // now we're checking if the App was started from another Android App via Intent
