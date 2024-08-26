@@ -36,7 +36,6 @@ SettingsManager *SettingsManager::getInstance()
     if (instance == nullptr)
     {
         instance = new SettingsManager();
-        return instance;
     }
 
     return instance;
@@ -55,6 +54,11 @@ SettingsManager::~SettingsManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+void SettingsManager::reloadSettings()
+{
+    readSettings();
+}
+
 bool SettingsManager::readSettings()
 {
     bool status = false;
@@ -63,11 +67,52 @@ bool SettingsManager::readSettings()
 
     if (settings.status() == QSettings::NoError)
     {
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+        if (settings.contains("ApplicationWindow/x"))
+            m_appPosition.setWidth(settings.value("ApplicationWindow/x").toInt());
+        if (settings.contains("ApplicationWindow/y"))
+            m_appPosition.setHeight(settings.value("ApplicationWindow/y").toInt());
+        if (settings.contains("ApplicationWindow/width"))
+            m_appSize.setWidth(settings.value("ApplicationWindow/width").toInt());
+        if (settings.contains("ApplicationWindow/height"))
+            m_appSize.setHeight(settings.value("ApplicationWindow/height").toInt());
+        if (settings.contains("ApplicationWindow/visibility"))
+            m_appVisibility = settings.value("ApplicationWindow/visibility").toUInt();
+
+        if (m_appPosition.width() > 8192) m_appPosition.setWidth(100);
+        if (m_appPosition.height() > 8192) m_appPosition.setHeight(100);
+        if (m_appSize.width() > 8192) m_appSize.setWidth(1920);
+        if (m_appSize.height() > 8192) m_appSize.setHeight(1080);
+        if (m_appVisibility < 1 || m_appVisibility > 5) m_appVisibility = 1;
+#endif
+
+        ////
+
         if (settings.contains("settings/appTheme"))
             m_appTheme = settings.value("settings/appTheme").toString();
 
         if (settings.contains("settings/appThemeAuto"))
             m_appThemeAuto = settings.value("settings/appThemeAuto").toBool();
+
+        if (settings.contains("settings/appSplashScreen"))
+            m_appSplashScreen = settings.value("settings/appSplashScreen").toBool();
+
+        if (settings.contains("settings/appLanguage"))
+            m_appLanguage = settings.value("settings/appLanguage").toString();
+
+        if (settings.contains("settings/appUnits"))
+            m_appUnits = settings.value("settings/appUnits").toInt();
+        else
+        {
+            // Use this setting to check if the settings file exists
+            m_firstlaunch = true;
+
+            // If we have no measurement system saved, use system's one
+            QLocale lo;
+            m_appUnits = lo.measurementSystem();
+        }
+
+        ////
 
         if (settings.contains("settings/mediaNativeFilePicker"))
             m_mediaNativeFilePicker = settings.value("settings/mediaNativeFilePicker").toBool();
@@ -80,20 +125,6 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/exportEnabled"))
             m_exportEnabled = settings.value("settings/exportEnabled").toBool();
-
-        if (settings.contains("settings/unitSystem"))
-        {
-            m_unitSystem = settings.value("settings/unitSystem").toInt();
-
-            // Use this setting to check if the settings file exists
-            m_firstlaunch = false;
-        }
-        else
-        {
-            // If we have no measurement system saved, use system's one
-            QLocale lo;
-            m_unitSystem = lo.measurementSystem();
-        }
 
         if (settings.contains("settings/unitSizes"))
             m_unitSizes = settings.value("settings/unitSizes").toInt();
@@ -114,6 +145,8 @@ bool SettingsManager::readSettings()
     return status;
 }
 
+/* ************************************************************************** */
+
 bool SettingsManager::writeSettings()
 {
     bool status = false;
@@ -124,11 +157,14 @@ bool SettingsManager::writeSettings()
     {
         settings.setValue("settings/appTheme", m_appTheme);
         settings.setValue("settings/appThemeAuto", m_appThemeAuto);
+        settings.setValue("settings/appSplashScreen", m_appSplashScreen);
+        settings.setValue("settings/appLanguage", m_appLanguage);
+        settings.setValue("settings/appUnits", m_appUnits);
+
         settings.setValue("settings/mediaNativeFilePicker", m_mediaNativeFilePicker);
         settings.setValue("settings/mediaFilter", m_mediaFilter);
         settings.setValue("settings/mediaPreview", m_mediaPreview);
         settings.setValue("settings/exportEnabled", m_exportEnabled);
-        settings.setValue("settings/unitSystem", m_unitSystem);
         settings.setValue("settings/unitSizes", m_unitSizes);
 
         if (settings.status() == QSettings::NoError)
@@ -152,20 +188,25 @@ bool SettingsManager::writeSettings()
 
 void SettingsManager::resetSettings()
 {
-    m_appTheme = "light";
+    m_appTheme = "THEME_DESKTOP_LIGHT";
     Q_EMIT appThemeChanged();
     m_appThemeAuto = false;
     Q_EMIT appThemeAutoChanged();
+    m_appThemeCSD = false;
+    Q_EMIT appThemeCSDChanged();
+    m_appSplashScreen = true;
+    Q_EMIT appSplashScreenChanged();
+    m_appUnits = QLocale().measurementSystem();
+    Q_EMIT appUnitsChanged();
+    m_appLanguage = "auto";
+    Q_EMIT appLanguageChanged();
+
     m_mediaFilter = true;
     Q_EMIT mediaFilterChanged();
     m_mediaPreview = true;
     Q_EMIT mediaPreviewChanged();
     m_exportEnabled = false;
     Q_EMIT exportEnabledChanged();
-
-    QLocale lo;
-    m_unitSystem = lo.measurementSystem();
-    Q_EMIT unitSystemChanged();
     m_unitSizes = 0;
     Q_EMIT unitSizesChanged();
 }
@@ -192,6 +233,48 @@ void SettingsManager::setAppThemeAuto(const bool value)
         Q_EMIT appThemeAutoChanged();
     }
 }
+
+void SettingsManager::setAppThemeCSD(const bool value)
+{
+    if (m_appThemeCSD != value)
+    {
+        m_appThemeCSD = value;
+        writeSettings();
+        Q_EMIT appThemeCSDChanged();
+    }
+}
+
+void SettingsManager::setAppSplashScreen(const bool value)
+{
+    if (m_appSplashScreen != value)
+    {
+        m_appSplashScreen = value;
+        writeSettings();
+        Q_EMIT appSplashScreenChanged();
+    }
+}
+
+void SettingsManager::setAppUnits(int value)
+{
+    if (m_appUnits != value)
+    {
+        m_appUnits = value;
+        writeSettings();
+        Q_EMIT appUnitsChanged();
+    }
+}
+
+void SettingsManager::setAppLanguage(const QString &value)
+{
+    if (m_appLanguage != value)
+    {
+        m_appLanguage = value;
+        writeSettings();
+        Q_EMIT appLanguageChanged();
+    }
+}
+
+/* ************************************************************************** */
 
 void SettingsManager::setMediaNativeFilePicker(const bool value)
 {
@@ -230,16 +313,6 @@ void SettingsManager::setExportEnabled(const bool value)
         m_exportEnabled = value;
         writeSettings();
         Q_EMIT exportEnabledChanged();
-    }
-}
-
-void SettingsManager::setUnitSystem(const int value)
-{
-    if (m_unitSystem != value)
-    {
-        m_unitSystem = value;
-        writeSettings();
-        Q_EMIT unitSystemChanged();
     }
 }
 

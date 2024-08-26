@@ -5,8 +5,6 @@ import QtQuick.Window
 import ThemeEngine
 import MobileUI
 
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-
 ApplicationWindow {
     id: appWindow
 
@@ -149,7 +147,7 @@ ApplicationWindow {
             appContent.state === "ScreenAboutPermissions") ? 5 : 0
 
         height: 2
-        opacity: 0.66
+        opacity: 1
         color: Theme.colorSeparator
 
         Rectangle { // fake shadow
@@ -157,6 +155,7 @@ ApplicationWindow {
             anchors.left: parent.left
             anchors.right: parent.right
 
+            z: -1
             height: 8
             opacity: 0.66
 
@@ -372,7 +371,7 @@ ApplicationWindow {
             },
             State {
                 name: "ScreenMediaList"
-                PropertyChanges { target: appHeader; headerTitle: appHeader.appName; }
+                PropertyChanges { target: appHeader; headerTitle: utilsApp.appName(); }
                 PropertyChanges { target: screenTutorial; enabled: false; visible: false; }
                 PropertyChanges { target: screenMediaList; enabled: true; visible: true; }
                 PropertyChanges { target: screenMediaInfos; enabled: false; visible: false; }
@@ -420,88 +419,6 @@ ApplicationWindow {
                 PropertyChanges { target: screenAboutPermissions; visible: true; enabled: true; }
             }
         ]
-    }
-
-    ////////////////
-
-    DropArea {
-        id: dropArea
-        anchors.fill: parent
-
-        enabled: isDesktop
-        //keys: ["text/plain"]
-
-        onEntered: (drag) => {
-            if (drag.hasUrls) {
-                dropAreaIndicator.color = Theme.colorWarning
-                dropAreaImage.source = "qrc:/assets/icons/material-symbols/media/broken_image.svg"
-                dropAreaIndicator.opacity = 1
-
-                for (var i = 0; i < drag.urls.length; i++) {
-                    if (UtilsPath.isMediaFile(drag.urls[i])) {
-                        dropAreaImage.source = "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
-                        dropAreaIndicator.color = Theme.colorGreen
-                        break
-                    }
-                }
-            }
-        }
-        onExited: {
-            dropAreaIndicator.opacity = 0
-        }
-        onDropped: (drop) => {
-            dropAreaIndicator.opacity = 0
-
-            if (drop.hasUrls) {
-                for (var i = 0; i < drop.urls.length; i++) {
-                    //console.log("dropped URL: " + drop.urls[i])
-                    var fp = UtilsPath.cleanUrl(drop.urls[i])
-
-                    if (UtilsPath.isMediaFile(fp)) {
-                        screenMediaList.loadMedia(fp)
-                        break
-                    }
-                }
-            }
-        }
-
-        Rectangle {
-            id: dropAreaIndicator
-            width: 320
-            height: 320
-            radius: 320
-            anchors.centerIn: parent
-
-            color: Theme.colorForeground
-            opacity: 0
-            Behavior on opacity { OpacityAnimator { duration: 200 } }
-
-            IconSvg {
-                id: dropAreaImage
-                anchors.fill: parent
-                anchors.margins: 48
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                fillMode: Image.PreserveAspectFit
-                color: "white"
-                smooth: true
-            }
-        }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-
-        enabled: isDesktop
-        acceptedButtons: Qt.BackButton | Qt.ForwardButton
-        onClicked: (mouse) => {
-            if (mouse.button === Qt.BackButton) {
-                backAction()
-            } else if (mouse.button === Qt.ForwardButton) {
-                forwardAction()
-            }
-        }
     }
 
     ////////////////

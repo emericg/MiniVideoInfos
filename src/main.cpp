@@ -27,6 +27,7 @@
 #include "minivideo_qml.h"
 #include "utils_app.h"
 #include "utils_screen.h"
+#include "utils_sysinfo.h"
 #include "utils_language.h"
 
 #include <MobileUI/MobileUI.h>
@@ -36,6 +37,7 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QIcon>
+#include <QFile>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
@@ -44,6 +46,34 @@
 
 int main(int argc, char *argv[])
 {
+    // Arguments parsing ///////////////////////////////////////////////////////
+
+    bool cli_enabled = false;
+    bool cli_details_enabled = false;
+
+    QStringList files;
+
+    for (int i = 1; i < argc; i++)
+    {
+        if (argv[i])
+        {
+            //std::cout << "> " << argv[i] << std::endl;
+
+            if (QString::fromUtf8(argv[i]) == "--cli")
+                cli_enabled = true;
+            else if (QString::fromUtf8(argv[i]) == "--details")
+                cli_details_enabled = true;
+            else
+            {
+                QString fileAsArgument = QFile::decodeName(argv[i]);
+                if (QFile::exists(fileAsArgument))
+                    files << fileAsArgument;
+            }
+        }
+    }
+
+    // TODO
+
     // Hacks ///////////////////////////////////////////////////////////////////
 
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
@@ -60,18 +90,22 @@ int main(int argc, char *argv[])
 
     // GUI application /////////////////////////////////////////////////////////
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     SharingApplication app(argc, argv);
+#else
+    QApplication app(argc, argv);
+
+    QIcon appIcon(":/assets/gfx/logos/logo.svg");
+    app.setWindowIcon(appIcon);
+
+    //MenubarManager *mb = MenubarManager::getInstance();
+#endif
 
     // Application name
     app.setApplicationName("MiniVideo Infos");
     app.setApplicationDisplayName("MiniVideo Infos");
     app.setOrganizationName("MiniVideo");
     app.setOrganizationDomain("MiniVideo");
-
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    QIcon appIcon(":/assets/gfx/logos/logo.svg");
-    app.setWindowIcon(appIcon);
-#endif
 
     // Init MiniVideoInfos components
     SettingsManager *sm = SettingsManager::getInstance();
@@ -96,11 +130,12 @@ int main(int argc, char *argv[])
     // ThemeEngine
     qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
 
-    MobileUI::registerQML();
+    MiniVideoQML::registerQML();
 
     // Then we start the UI
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
+
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("mediaManager", mm);
     engine_context->setContextProperty("mediaUtils", mediaUtils);
@@ -108,17 +143,37 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
 
-    MiniVideoQML::registerQML();
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    MobileUI::registerQML();
     app.registerQML(engine_context);
-
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
-    if (engine.rootObjects().isEmpty()) return EXIT_FAILURE;
+#else
+    UtilsSysInfo *utilsSysInfo = UtilsSysInfo::getInstance();
+    if (!utilsSysInfo) return EXIT_FAILURE;
+    engine_context->setContextProperty("utilsSysInfo", utilsSysInfo);
+
+    //engine_context->setContextProperty("menubarManager", mb);
+    engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopApplication.qml")));
+#endif
+
+    if (engine.rootObjects().isEmpty())
+    {
+        qWarning() << "Cannot init QmlApplicationEngine!";
+        return EXIT_FAILURE;
+    }
 
     // For i18n retranslate
     utilsLanguage->setQmlEngine(&engine);
 
 #if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);
+#endif
+
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    // QQuickWindow must be valid at this point
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
+    utilsApp->setQuickWindow(window); // to get additional infos
+    //mb->setupMenubar(window);
 #endif
 
     return app.exec();

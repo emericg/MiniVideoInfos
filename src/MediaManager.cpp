@@ -88,3 +88,15 @@ void MediaManager::closeMedia(const QString &path)
         }
     }
 }
+
+/* ************************************************************************** */
+
+void MediaManager::detach(const QString &path)
+{
+    QString exe = QCoreApplication::applicationFilePath();
+    QStringList args(path);
+
+    QProcess::startDetached(exe, args);
+}
+
+/* ************************************************************************** */

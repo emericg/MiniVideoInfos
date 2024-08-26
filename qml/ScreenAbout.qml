@@ -51,11 +51,12 @@ Loader {
 
             ////////////////
 
-            Item { // header area
+            Item { // header area (tablet?)
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 height: 96
+                visible: !isPhone
 
                 Row {
                     anchors.left: parent.left
@@ -135,6 +136,59 @@ Loader {
                         color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos")
+                    }
+                }
+            }
+
+            Item { // header area (mobile)
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.componentMargin
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMargin
+                height: 112
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    height: 88
+                    radius: 6
+                    color: Theme.colorForeground
+
+                    Row {
+                        anchors.left: parent.left
+                        anchors.leftMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        z: 2
+                        height: 72
+                        spacing: Theme.componentMargin
+
+                        Image { // logo
+                            width: 72
+                            height: 72
+
+                            source: "qrc:/assets/gfx/logos/logo.svg"
+                            sourceSize: Qt.size(width, height)
+                        }
+
+                        Column { // title
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenterOffset: 0
+
+                            Text {
+                                text: utilsApp.appName()
+                                textFormat: Text.PlainText
+                                color: Theme.colorText
+                                font.pixelSize: Theme.fontSizeTitle
+                            }
+                            Text {
+                                color: Theme.colorSubText
+                                text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
+                                textFormat: Text.PlainText
+                                font.pixelSize: Theme.fontSizeContentBig
+                            }
+                        }
                     }
                 }
             }
@@ -311,7 +365,7 @@ Loader {
                             "libexif (LGPL v2.1)",
                             "MobileUI (MIT)",
                             "MobileSharing (MIT)",
-                            "SingleApplication (MIT)",
+                            "Bootstrap Icons (MIT)",
                             "Google Material Icons (MIT)",
                             "FontAwesome Icons (CC BY 4.0)"
                         ]
@@ -326,6 +380,8 @@ Loader {
                     }
                 }
             }
+
+            ListSeparator { }
 
             ////////////////
 

@@ -1,3 +1,4 @@
+import QtCore
 import QtQuick
 import QtQuick.Controls
 
@@ -131,6 +132,9 @@ Item {
                 appHeader.headerTitle = qsTr("Media file selection")
                 appHeader.leftMenuMode = "back"
                 dialogIsOpen = true
+            }
+            if (isDesktop) {
+                fileDialog.folder = StandardPaths.writableLocation(StandardPaths.HomeLocation)
             }
             fileDialog.open()
         }

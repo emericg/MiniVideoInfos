@@ -46,9 +46,21 @@ class MediaManager: public QObject
 
     bool m_scanning = false;
 
-    QList<QObject*> m_media;
+    QList <QObject*> m_media;
 
     bool isScanning() const;
+
+Q_SIGNALS:
+    void mediaUpdated();
+    void newMedia(Media *);
+
+public slots:
+    bool openMedia(const QString &path);
+    void closeMedia(const QString &path);
+
+    bool onNewMedia(Media *media);
+
+    void detach(const QString &path);
 
 public:
     MediaManager();
@@ -57,16 +69,6 @@ public:
     Q_INVOKABLE bool areMediaAvailable() const { return !m_media.empty(); }
 
     QVariant getMedia() const { return QVariant::fromValue(m_media); }
-
-public slots:
-    bool openMedia(const QString &path);
-    void closeMedia(const QString &path);
-
-private slots:
-    //
-
-Q_SIGNALS:
-    void mediaUpdated();
 };
 
 /* ************************************************************************** */

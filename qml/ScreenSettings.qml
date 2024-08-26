@@ -495,10 +495,10 @@ Loader {
                         ListElement { idx: 1; txt: qsTr("Imperial"); src: ""; sz: 16; }
                     }
 
-                    currentSelection: settingsManager.unitSystem
+                    currentSelection: settingsManager.appUnit
                     onMenuSelected: (index) => {
                         currentSelection = index
-                        settingsManager.unitSystem = index
+                        settingsManager.appUnit = index
                     }
                 }
             }
@@ -532,7 +532,7 @@ Loader {
                     anchors.verticalCenter: parent.verticalCenter
                     height: 40
 
-                    text: qsTr("Sizes unit")
+                    text: qsTr("Size units")
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -568,7 +568,6 @@ Loader {
 
                 topPadding: -12
                 bottomPadding: 8
-                visible: (element_sizes.visible)
 
                 text: qsTr("1 KB = 1000 bytes.\nUses powers of 10 (10^3) in decimal number system. SI unit.\n" +
                            "1 KiB = 1024 bytes.\nUses powers of 2 (2^10) in binary number system.")

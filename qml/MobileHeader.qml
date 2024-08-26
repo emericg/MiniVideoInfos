@@ -20,8 +20,6 @@ Rectangle {
 
     property string headerTitle: "MiniVideo Infos"
 
-    property string appName: "MiniVideo Infos"
-
     ////////////////////////////////////////////////////////////////////////////
 
     property string leftMenuMode: "drawer" // drawer / back / close
