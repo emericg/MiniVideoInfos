@@ -44,5 +44,9 @@
         <file alias="InfoRow.qml">components/InfoRow.qml</file>
         <file alias="InfoTitle.qml">components/InfoTitle.qml</file>
         <file alias="TextEditMVI.qml">components/TextEditMVI.qml</file>
+
+        <file alias="GeometryWidget.qml">components/GeometryWidget.qml</file>
+        <file alias="ChromaFormatWidget.qml">components/ChromaFormatWidget.qml</file>
+        <file alias="PixelFormatWidget.qml">components/PixelFormatWidget.qml</file>
     </qresource>
 </RCC>

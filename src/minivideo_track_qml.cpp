@@ -473,7 +473,7 @@ int MediaTrackQml::getChromaSubsampling() const
 {
     if (mv_stream)
     {
-        return mv_stream->color_subsampling;
+        return mv_stream->chroma_subsampling;
     }
 
     return -1;
@@ -485,7 +485,7 @@ QString MediaTrackQml::getChromaSubsampling_str() const
 
     if (mv_stream)
     {
-        ss = getChromaSubsamplingString(static_cast<ChromaSubSampling_e>(mv_stream->color_subsampling));
+        ss = getChromaSubsamplingString(static_cast<ChromaSubSampling_e>(mv_stream->chroma_subsampling));
     }
 
     return ss;
@@ -507,7 +507,7 @@ QString MediaTrackQml::getChromaLocation_str() const
 
     if (mv_stream)
     {
-        //loc = getChromaLocationString(static_cast<ChromaLocation>(mv_stream->color_location));
+        loc = getChromaLocationString(static_cast<ChromaLocation_e>(mv_stream->chroma_location));
     }
 
     return loc;
@@ -689,7 +689,7 @@ int MediaTrackQml::getCompressionRatio() const
     {
         if (mv_stream->stream_type == stream_AUDIO)
         {
-            uint64_t rawsize = mv_stream->sampling_rate * mv_stream->channel_count * (mv_stream->bit_per_sample / 8);
+            uint64_t rawsize = mv_stream->sampling_rate * mv_stream->channel_count * (mv_stream->bit_per_sample / 8.0);
             rawsize *= mv_stream->stream_duration_ms;
             rawsize /= 1024.0;
 
@@ -702,7 +702,12 @@ int MediaTrackQml::getCompressionRatio() const
 
         if (mv_stream->stream_type == stream_VIDEO)
         {
-            uint64_t rawsize = mv_stream->width * mv_stream->height * (mv_stream->color_depth / 8);
+            unsigned color_planes = mv_stream->color_planes;
+            unsigned color_depth = mv_stream->color_depth;
+            if (color_planes == 0) color_planes = 3;
+            if (color_depth == 0) color_depth = 8;
+
+            uint64_t rawsize = mv_stream->width * mv_stream->height * (color_depth / 8.0) * color_planes;
             rawsize *= mv_stream->sample_count;
 
             uint64_t ratio = 1;

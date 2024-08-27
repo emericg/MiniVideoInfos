@@ -60,7 +60,6 @@ public:
     Q_ENUM(ColorModel_e)
     Q_ENUM(ColorsRec_e)
     Q_ENUM(ColorMatrix_e)
-
     Q_ENUM(ColorPrimaries_e)
     Q_ENUM(ColorTransferCharacteristic_e)
     Q_ENUM(ColorSpace_e)

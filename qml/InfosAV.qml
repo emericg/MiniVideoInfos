@@ -21,7 +21,6 @@ Flickable {
         if (typeof trackItem === "undefined" || !trackItem) return
 
         // track
-        //titleTrackText.text = (trackItem.type === 1 ? qsTr("AUDIO") : qsTr("VIDEO")) + " " + qsTr("TRACK")
         titleTrack.text = (trackItem.type === 1 ? qsTr("AUDIO") : qsTr("VIDEO")) + " " + qsTr("TRACK")
         info_id.text = trackItem.id
         info_size.text = UtilsString.bytesToString_short(trackItem.size, settingsManager.unitSizes)
@@ -69,82 +68,11 @@ Flickable {
             info_dar.visible = geomismatch
             item_resBox.visible = (geomismatch || geovisible)
 
-            img_display_rotate.visible = false
-            img_display_resize.visible = false
-
             if (geomismatch || geovisible) {
                 info_vdefinition_display.text = trackItem.widthVisible + " x " + trackItem.heightVisible
                 info_dar.text = UtilsMedia.varToString(trackItem.widthVisible, trackItem.heightVisible)
-
-                rect_display.visible = geovisible
-                rect_geo.visible = geomismatch
-
-                var maxWidth = item_resBox.width
-                var maxHeight = item_resBox.height
-
-                var rect_geo_width = 200
-                var rect_geo_height_vert = 160
-                var rect_display_width = geomismatch ? 160 : 220
-                var rect_display_height_vert = geomismatch ? 160 : 220
-
-                if (((trackItem.width / trackItem.height) > 1) &&
-                    ((trackItem.widthVisible / trackItem.heightVisible) > 1)) {
-
-                    //console.log("LEFT geo / LEFT disp");
-                    img_display_rotate.visible = false
-                    img_display_resize.visible = true
-
-                    if (trackItem.widthVisible > trackItem.width) {
-                        rect_display.width = maxWidth
-                        rect_display.height = rect_display.width / trackItem.dar
-                        rect_geo.width = rect_display.width * (trackItem.width / trackItem.widthVisible)
-                        rect_geo.height = rect_display.height * (trackItem.height / trackItem.heightVisible)
-                    } else {
-                        rect_geo.width = rect_geo_width
-                        rect_geo.height = rect_geo.width / trackItem.var
-                        rect_display.width = rect_display_width
-                        rect_display.height = rect_display.width / trackItem.dar
-                    }
-
-                } else if (((trackItem.width / trackItem.height) < 1) &&
-                           ((trackItem.widthVisible / trackItem.heightVisible) < 1)) {
-
-                    //console.log("UP geo / UP disp");
-                    img_display_rotate.visible = false
-                    img_display_resize.visible = true
-
-                } else {
-
-                    //console.log("UP / LEFT")
-                    img_display_rotate.visible = true
-                    img_display_resize.visible = false
-
-                    if ((trackItem.width / trackItem.height) < 1) {
-                        rect_geo.width = (160 * (trackItem.width/trackItem.height))
-                        rect_geo.height = 160
-                    } else {
-                        rect_geo.width = 160
-                        rect_geo.height = (160 / (trackItem.width/trackItem.height))
-                    }
-                    if ((trackItem.widthVisible / trackItem.heightVisible) < 1) {
-                        rect_display.width = (160 * (trackItem.widthVisible/trackItem.heightVisible))
-                        rect_display.height = 160
-                    } else {
-                        rect_display.width = 160
-                        rect_display.height = (160 / (trackItem.widthVisible/trackItem.heightVisible))
-                    }
-
-                }
-
-                item_resBox.height = Math.max(rect_geo.height, rect_display.height)
             }
-
-            // Geometry // crop
-            if (trackItem.cropTop || trackItem.cropBottom || trackItem.cropLeft || trackItem.cropRight) {
-                rect_crop.visible = true
-            } else {
-                rect_crop.visible = false
-            }
+            item_resBox.compute(trackItem)
 
             // Geometry // PAR
             info_par.visible = (trackItem.par != 1.0)
@@ -170,12 +98,12 @@ Flickable {
             // Colors
             info_vcolordepth.visible = (trackItem.colorDepth > 0)
             info_vcolorrange.visible = (trackItem.colorDepth > 0)
-            //info_vcolorprimaries.visible = (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0)
-            //info_vcolortransfer.visible = (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0)
-            //info_vcolormatrix.visible = (trackItem.colorPrimaries > 0 && trackItem.colorTransfer > 0)
 
             info_vchromasubsampling.text = trackItem.chromaSubsampling_str
             info_vchromalocation.text = trackItem.chromaLocation_str
+
+            info_vchromaformat.chromaSubsampling_str = trackItem.chromaSubsampling_str
+            info_vchromaformat.chromaLocation_str = trackItem.chromaLocation_str
 
             if (trackItem.colorDepth > 0) {
                 info_vcolordepth.text = trackItem.colorDepth + " bits"
@@ -416,86 +344,12 @@ Flickable {
                 legend: qsTr("display aspect ratio")
             }
 
-            Item { ////
+            GeometryWidget {
                 id: item_resBox
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 24
-                height: 160
-
-                Rectangle {
-                    id: rect_geo
-                    anchors.left: parent.left
-                    anchors.bottom: parent.bottom
-                    height: 160/(16/9)
-                    width: 160
-                    color: "#22999999"
-                    border.width: 2
-                    border.color: Theme.colorIcon
-                }
-                Rectangle {
-                    id: rect_display
-                    anchors.left: parent.left
-                    anchors.bottom: parent.bottom
-                    height: 160
-                    width: 160/(16/9)
-                    color: "transparent"
-                    border.width: 2
-                    border.color: Theme.colorPrimary
-
-                    Rectangle { // background
-                        anchors.fill: parent
-                        z: -1
-                        color: Theme.colorComponentBackground
-                        opacity: 0.66
-                    }
-
-                    IconSvg {
-                        id: img_display_rotate
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: 4
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 4
-                        color: Theme.colorPrimary
-                        source: "qrc:/assets/icons/material-icons/duotone/rotate_90_degrees_ccw.svg"
-                    }
-                    IconSvg {
-                        id: img_display_resize
-                        width: 24
-                        height: 24
-                        anchors.top: parent.top
-                        anchors.topMargin: 4
-                        anchors.right: parent.right
-                        anchors.rightMargin: 6
-                        color: Theme.colorPrimary
-                        source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
-                    }
-                }
-                Rectangle {
-                    id: rect_crop
-                    anchors.left: parent.left
-                    anchors.bottom: parent.bottom
-                    height: 160
-                    width: 160
-                    color: "transparent"
-                    border.width: 2
-                    border.color: Theme.colorWarning
-
-                    IconSvg {
-                        id: img_crop
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: 4
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 4
-                        color: Theme.colorWarning
-                        source: "qrc:/assets/icons/material-icons/duotone/settings_overscan.svg"
-                    }
-                }
             }
 
             InfoRow { ////
@@ -503,30 +357,12 @@ Flickable {
                 legend: qsTr("pixel aspect ratio")
             }
 
-            Grid { ////
+            PixelFormatWidget {
                 id: item_parBox
                 anchors.left: parent.left
                 anchors.leftMargin: 56
                 anchors.right: parent.right
                 anchors.rightMargin: 24
-
-                height: 96
-                rows: 3
-                columns: 3
-
-                property int www: 1 * (item_parBox.height/3)
-                property int hhh: 1 * (item_parBox.height/3)
-
-                Rectangle { width: parent.www; height: parent.hhh; color: "#9377a6"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#dda1be"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#ffa6ca"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#707cad"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#9593b5";
-                            border.width: 2; border.color: "white"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#c99fc7"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#6f77a4"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#7784ad"; }
-                Rectangle { width: parent.www; height: parent.hhh; color: "#8e97c1"; }
             }
 
             //Item { width: 4; height: 4; } // spacer
@@ -570,6 +406,12 @@ Flickable {
                 id: info_vchromalocation
                 legend: qsTr("chroma location")
             }
+
+            ChromaFormatWidget {
+                id: info_vchromaformat
+            }
+            Item { width: 4; height: 4; } // spacer
+
             InfoRow { ////
                 id: info_vcolorprimaries
                 legend: qsTr("color primaries")
@@ -737,12 +579,12 @@ Flickable {
                     }
 
                     ValueAxis { id: axisX0; visible: true; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: ""}
+                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: "" }
                     ValueAxis { id: axisBitrateData; visible: true; gridVisible: false;
                         labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: "" }
 
                     ValueAxis { id: axisX1; visible: false; gridVisible: false;
-                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: ""}
+                        labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: "" }
                     ValueAxis { id: axisBitrateMean; visible: false; gridVisible: false;
                         labelsVisible: false; labelsFont.pixelSize: 0; labelFormat: "" }
 
