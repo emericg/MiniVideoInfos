@@ -58,8 +58,6 @@ public slots:
     bool openMedia(const QString &path);
     void closeMedia(const QString &path);
 
-    bool onNewMedia(Media *media);
-
     void detach(const QString &path);
 
 public:

@@ -13,7 +13,10 @@ Flickable {
     contentWidth: width
     contentHeight: columnMain.height
 
-    ScrollBar.vertical: ScrollBar { visible: isDesktop }
+    ScrollBar.vertical: ScrollBar {
+        visible: isDesktop
+        policy: ScrollBar.AsNeeded
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -144,28 +147,8 @@ Flickable {
             info_asampleperframe.text = trackItem.audioSamplePerFrame
 
             item_speakerBox.visible = true
-            speakers.visible = true
-            speakers_lfe.visible = (trackItem.audioChannels > 5)
-
-            if (trackItem.audioChannels === 10) {
-                speakers.source = "qrc:/assets/gfx/speakers/9_0_surround.svg"
-            } else if (trackItem.audioChannels === 8) {
-                speakers.source = "qrc:/assets/gfx/speakers/7_0_surround.svg"
-            } else if (trackItem.audioChannels === 7) {
-                speakers.source = "qrc:/assets/gfx/speakers/6_0_surround.svg"
-            } else if (trackItem.audioChannels === 6) {
-                speakers.source = "qrc:/assets/gfx/speakers/5_0_surround.svg"
-            } else if (trackItem.audioChannels === 4) {
-                speakers.source = "qrc:/assets/gfx/speakers/4_0_quad.svg"
-            } else if (trackItem.audioChannels === 2) {
-                speakers.source = "qrc:/assets/gfx/speakers/2_0_stereo.svg"
-            } else if (trackItem.audioChannels === 1) {
-                speakers.source = "qrc:/assets/gfx/speakers/1_0.svg"
-            } else {
-                item_speakerBox.visible = false
-                speakers.visible = false
-                speakers_lfe.visible = false
-            }
+            item_speakerBox.channelCount = trackItem.audioChannels
+            item_speakerBox.channelMode = trackItem.audioChannelsMode
         }
 
         // data
@@ -481,24 +464,10 @@ Flickable {
                 id: info_achannels
                 legend: qsTr("channels")
             }
-            Item { ////
+            SpeakerWidget { ////
                 id: item_speakerBox
                 anchors.left: parent.left
                 anchors.leftMargin: 56
-                width: 160
-                height: 160
-
-                IconSvg {
-                    id: speakers_lfe
-                    anchors.fill: parent
-                    source: "qrc:/assets/gfx/speakers/LFE.svg"
-                    color: Theme.colorIcon
-                }
-                IconSvg {
-                    id: speakers
-                    anchors.fill: parent
-                    color: Theme.colorIcon
-                }
             }
         }
 

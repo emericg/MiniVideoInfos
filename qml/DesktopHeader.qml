@@ -12,7 +12,7 @@ Item {
     height: headerHeight
     z: 10
 
-    property int headerHeight: isHdpi ? 48 : 52
+    property int headerHeight: isHdpi ? 40 : 48
 
     property int headerPosition: 0
 
@@ -34,7 +34,7 @@ Item {
         anchors.right: parent.right
         height: headerHeight
 
-        color: "white" // Theme.colorHeader
+        color: Theme.colorHeader
 
         Row { // left area
             anchors.left: parent.left
@@ -46,14 +46,16 @@ Item {
 
             ////
 
-            ButtonDesktop { // open
+            ButtonFlat { // open
+                height: 34
                 //colorHighlight: Theme.colorGreen
                 text: wideWideMode ? qsTr("Open") : ""
                 source: "qrc:/assets/icons/material-symbols/add_circle.svg"
                 onClicked: screenMediaList.openDialog()
             }
 
-            ButtonDesktop { // reload
+            ButtonFlat { // reload
+                height: 34
                 //colorHighlight: Theme.colorYellow
                 text: wideWideMode ? qsTr("Reload") : ""
                 source: "qrc:/assets/icons/material-symbols/refresh.svg"
@@ -62,7 +64,8 @@ Item {
                 }
             }
 
-            ButtonDesktop { // close
+            ButtonFlat { // close
+                height: 34
                 //colorHighlight: Theme.colorRed
                 text: wideWideMode ? qsTr("Close") : ""
                 source: "qrc:/assets/icons/material-symbols/cancel_circle.svg"
@@ -74,7 +77,8 @@ Item {
 
             ////
 
-            ButtonDesktop { // open externaly
+            ButtonFlat { // open externaly
+                height: 34
                 //colorHighlight: Theme.colorRed
                 text: wideWideMode ? qsTr("Open in new instance") : ""
                 source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
@@ -97,6 +101,24 @@ Item {
             height: headerHeight
             spacing: isHdpi ? 4 : 12
 
+            DesktopHeaderItem { // menuMedia
+                height: headerHeight
+
+                text: wideWideMode ? qsTr("Media") : ""
+                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                colorContent: Theme.colorHeaderContent
+                colorHighlight: Theme.colorHeaderHighlight
+
+                highlighted: (appContent.state === "ScreenMediaList" ||
+                              appContent.state === "ScreenMediaInfos")
+                onClicked: {
+                    if (mediaManager.mediaList.length) appContent.state = "ScreenMediaInfos"
+                    else appContent.state = "ScreenMediaList"
+
+                    if (appContent.state !== "ScreenMediaInfos")
+                        appContent.state = "ScreenMediaList"
+                }
+            }
             DesktopHeaderItem { // menuSettings
                 height: headerHeight
 
@@ -107,10 +129,9 @@ Item {
 
                 highlighted: (appContent.state === "ScreenSettings")
                 onClicked: {
-                    if (appContent.state === "ScreenSettings")
-                        backAction()
-                    else
-                        screenSettings.loadScreen()
+                    //if (appContent.state === "ScreenSettings") backAction()
+                    //else screenSettings.loadScreen()
+                    screenSettings.loadScreen()
                 }
             }
 
@@ -120,7 +141,8 @@ Item {
                 text: wideWideMode ? qsTr("Exit") : ""
                 source: "qrc:/assets/icons/material-icons/duotone/exit_to_app.svg"
                 colorContent: Theme.colorHeaderContent
-                colorHighlight: Theme.colorRed
+                colorHighlight: Theme.colorHeaderHighlight
+                //colorHighlight: Theme.colorRed
 
                 onClicked: Qt.quit()
             }

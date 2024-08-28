@@ -48,5 +48,6 @@
         <file alias="GeometryWidget.qml">components/GeometryWidget.qml</file>
         <file alias="ChromaFormatWidget.qml">components/ChromaFormatWidget.qml</file>
         <file alias="PixelFormatWidget.qml">components/PixelFormatWidget.qml</file>
+        <file alias="SpeakerWidget.qml">components/SpeakerWidget.qml</file>
     </qresource>
 </RCC>

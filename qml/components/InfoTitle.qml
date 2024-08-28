@@ -5,6 +5,8 @@ import QtQuick.Controls
 import ThemeEngine
 
 RowLayout {
+    id: control
+
     anchors.left: parent.left
     anchors.leftMargin: 12
     anchors.right: parent.right
@@ -18,6 +20,8 @@ RowLayout {
 
     property alias text: t.text
 
+    property color color: isDesktop ? Theme.colorGrey : Theme.colorPrimary
+
     Item {
         Layout.preferredWidth: 32
         Layout.preferredHeight: 32
@@ -26,9 +30,9 @@ RowLayout {
         IconSvg {
             id: i
             anchors.centerIn: parent
-            width: sourceSize
-            height: sourceSize
-            color: Theme.colorPrimary
+            width: control.sourceSize
+            height: control.sourceSize
+            color: control.color
         }
     }
 
@@ -39,7 +43,7 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter
 
         textFormat: Text.PlainText
-        color: Theme.colorPrimary
+        color: control.color
         font.pixelSize: 18
         font.bold: true
     }

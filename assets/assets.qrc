@@ -2,19 +2,11 @@
     <qresource prefix="/assets">
         <file>gfx/logos/logo.svg</file>
         <file>gfx/logos/github.svg</file>
+        <file>gfx/logos/AmbisonicLogo.svg</file>
 
         <file>gfx/maps/gps_marker.svg</file>
         <file>gfx/maps/gps_marker_bearing.svg</file>
         <file>gfx/maps/compass_top.svg</file>
         <file>gfx/maps/compass_bottom.svg</file>
-
-        <file>gfx/speakers/LFE.svg</file>
-        <file>gfx/speakers/1_0.svg</file>
-        <file>gfx/speakers/2_0_stereo.svg</file>
-        <file>gfx/speakers/4_0_quad.svg</file>
-        <file>gfx/speakers/5_0_surround.svg</file>
-        <file>gfx/speakers/6_0_surround.svg</file>
-        <file>gfx/speakers/7_0_surround.svg</file>
-        <file>gfx/speakers/9_0_surround.svg</file>
     </qresource>
 </RCC>
