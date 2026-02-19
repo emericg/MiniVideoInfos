@@ -36,13 +36,13 @@ PICTURE file formats:
 
 ### Dependencies
 
-You will need a C++17 compiler and Qt 6.5+ with the following 'additional librairies':  
+You will need a C++17 compiler and Qt 6.8+ with the following 'additional librairies':  
 - Qt Positioning
 - Qt Location
 - Qt Charts
 
-For Android builds, you'll need the appropriates JDK (17) SDK (24+) and NDK (26+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
-For macOS and iOS builds, you'll need Xcode 13+ installed.  
+For macOS and iOS builds, you'll need Xcode (15+) installed.  
+For Android builds, you'll need the appropriates JDK (17) SDK (28+) and NDK (28+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
 
 ### Building dependencies
 
@@ -61,7 +61,7 @@ $ cd MiniVideoInfos/contribs/
 $ python3 contribs_builder.py # default invocation
 
 $ python3 contribs_builder.py --softwares minivideo,libexif,taglib # build only selected softwares
-$ python3 contribs_builder.py --qt-directory /path/to/Qt --android-ndk /path/to/android-sdk/ndk/26.3.11579264/ --targets=android_armv8,android_armv7,android_x86,android_x86_64 # complex Android cross compilation
+$ python3 contribs_builder.py --qt-directory /path/to/Qt --android-ndk /path/to/android-sdk/ndk/28.2.13676358/ --targets=android_armv8,android_armv7,android_x86,android_x86_64 # Android cross compilation
 ```
 
 ### Building MiniVideo Infos

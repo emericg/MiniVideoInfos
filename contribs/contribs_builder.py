@@ -4,12 +4,12 @@ import os
 import sys
 import platform
 
-if sys.version_info < (3, 0):
-    print("This script NEEDS Python 3. Run it with 'python3 contribs.py'")
+if sys.version_info < (3, 6):
+    print("This script NEEDS Python 3.6. Run it with 'python3 contribs.py'")
     sys.exit()
 
 if os.path.basename(os.getcwd()) != "contribs":
-    print("This script MUST be run from the contribs/ directory")
+    print("This script SHOULD be run from the contribs/ directory")
     sys.exit()
 
 if platform.system() != "Windows":
@@ -34,9 +34,11 @@ print("> MiniVideoInfos contribs builder script")
 print("> Make sure you consult ./contribs_builder.py --help")
 print("")
 
-targets = ['linux', 'macos', 'macos_x86_64', 'macos_arm64', 'msvc2019', 'msvc2022',
+targets = ['linux', 'linux_x86_64', 'linux_arm64',
+           'macos', 'macos_x86_64', 'macos_arm64',
+           'msvc2019', 'msvc2022',
            'android_armv8', 'android_armv7', 'android_x86_64', 'android_x86',
-           'ios', 'ios_simulator', 'ios_armv7', 'ios_armv8']
+           'ios', 'ios_simulator']
 
 softwares = ['libexif', 'taglib', 'minivideo']
 
@@ -77,16 +79,18 @@ print(str(softwares))
 # Cross compilation (from Linux or macOS):
 # - Android (armv7, armv8, x86, x86_64)
 # Cross compilation (from macOS):
-# - iOS (simulator, armv7, armv8)
+# - iOS (unified, simulator)
 
+OS_NAME = os.name
 OS_HOST = platform.system()
+OS_HOST_VERSION = platform.release()
 ARCH_HOST = platform.machine()
 CPU_COUNT = multiprocessing.cpu_count()
 
 print("")
-print("HOST SYSTEM : " + platform.system() + " (" + platform.release() + ") [" + os.name + "]")
-print("HOST ARCH   : " + ARCH_HOST)
-print("HOST CPUs   : " + str(CPU_COUNT) + " cores")
+print(f"HOST SYSTEM : {OS_HOST} ({OS_HOST_VERSION}) [{OS_NAME}]")
+print(f"HOST ARCH   : {ARCH_HOST}")
+print(f"HOST CPUs   : {CPU_COUNT} cores")
 print("")
 
 ## UTILS #######################################################################
@@ -119,11 +123,13 @@ clean = False
 rebuild = False
 targets_selected = []
 softwares_selected = []
-QT_VERSION = "6.7.2"
-QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
+
+QT_VERSION = "6.9.2"
+#QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
+QT_DIRECTORY = os.getenv('QT_ROOT_DIR', '') + "/../../" # from GitHub jurplel/install-qt-action
+MSVC_GEN_VER = ""
 ANDROID_SDK_ROOT = os.getenv('ANDROID_SDK_ROOT', '')
 ANDROID_NDK_ROOT = os.getenv('ANDROID_NDK_ROOT', '')
-MSVC_GEN_VER = ""
 
 ## ARGUMENTS ###################################################################
 
@@ -136,7 +142,7 @@ parser.add_argument('-r', '--rebuild', help="rebuild the contribs even if alread
 parser.add_argument('--targets', dest='targets', help="specify target(s) platforms")
 parser.add_argument('--softwares', dest='softwares', help="specify software(s) to build")
 parser.add_argument('--qt-version', dest='qtversion', help="specify a Qt version to use")
-parser.add_argument('--qt-directory', dest='qtdirectory', help="specify a custom path to the Qt install root dir (if QT_DIRECTORY environment variable isn't set)")
+parser.add_argument('--qt-directory', dest='qtdirectory', help="specify a custom path to the Qt install root dir (if QT_DIRECTORY or QT_ROOT_DIR environment variables aren't set)")
 parser.add_argument('--android-sdk', dest='androidsdk', help="specify a custom path to the android-sdk (if ANDROID_SDK_ROOT environment variable isn't set)")
 parser.add_argument('--android-ndk', dest='androidndk', help="specify a custom path to the android-ndk (if ANDROID_NDK_ROOT environment variable isn't set)")
 
@@ -192,6 +198,8 @@ if len(targets_selected):
     print("TARGETS from script arguments")
 
     if "linux" in targets_selected: TARGETS.append(["linux", "x86_64", "gcc_64"])
+    if "linux_x86_64" in targets_selected: TARGETS.append(["linux", "x86_64", "gcc_64"])
+    if "linux_arm64" in targets_selected: TARGETS.append(["linux", "arm64", "gcc_arm64"])
     if "macos" in targets_selected: TARGETS.append(["macOS", "unified", "macOS"])
     if "macos_x86_64" in targets_selected: TARGETS.append(["macOS", "x86_64", "macOS"])
     if "macos_arm64" in targets_selected: TARGETS.append(["macOS", "arm64", "macOS"])
@@ -200,16 +208,16 @@ if len(targets_selected):
         TARGETS.append(["windows", "x86_64", "msvc2019_64"])
     if "msvc2022" in targets_selected:
         MSVC_GEN_VER = "Visual Studio 17 2022"
-        TARGETS.append(["windows", "x86_64", "msvc2019_64"])
+        TARGETS.append(["windows", "x86_64", "msvc2022_64"])
 
     if "android_armv8" in targets_selected: TARGETS.append(["android", "armv8", "android_arm64_v8a"])
     if "android_armv7" in targets_selected: TARGETS.append(["android", "armv7", "android_armv7"])
     if "android_x86_64" in targets_selected: TARGETS.append(["android", "x86_64", "android_x86_64"])
     if "android_x86" in targets_selected: TARGETS.append(["android", "x86", "android_x86"])
     if "ios" in targets_selected: TARGETS.append(["iOS", "unified", "iOS"])
-    if "ios_simulator" in targets_selected: TARGETS.append(["iOS", "simulator", "iOS"])
     if "ios_armv7" in targets_selected: TARGETS.append(["iOS", "armv7", "iOS"])
     if "ios_armv8" in targets_selected: TARGETS.append(["iOS", "armv8", "iOS"])
+    if "ios_simulator" in targets_selected: TARGETS.append(["iOS", "simulator", "iOS"])
 
 # > using auto-selection
 if len(TARGETS) == 0:
@@ -224,12 +232,12 @@ if len(TARGETS) == 0:
         TARGETS.append(["iOS", "unified", "iOS"])
 
     if OS_HOST == "Windows":
-        if "17.0" in os.getenv('VisualStudioVersion', ''):
-            MSVC_GEN_VER = "Visual Studio 17 2022"
-            TARGETS.append(["windows", "x86_64", "msvc2019_64"])
-        else: # if "16.0" in os.getenv('VisualStudioVersion', ''):
+        if "16.0" in os.getenv('VisualStudioVersion', ''):
             MSVC_GEN_VER = "Visual Studio 16 2019"
             TARGETS.append(["windows", "x86_64", "msvc2019_64"])
+        else: # if "17.0" in os.getenv('VisualStudioVersion', ''):
+            MSVC_GEN_VER = "Visual Studio 17 2022"
+            TARGETS.append(["windows", "x86_64", "msvc2022_64"])
 
     if ANDROID_NDK_ROOT: # Android cross compilation
         TARGETS.append(["android", "armv8", "android_arm64_v8a"])
@@ -316,7 +324,8 @@ for TARGET in TARGETS:
 
     build_dir = contribs_dir + "/build/" + OS_TARGET + "_" + ARCH_TARGET + "/"
     env_dir = contribs_dir + "/env/" + OS_TARGET + "_" + ARCH_TARGET + "/"
-    qt6_dir = QT_DIRECTORY + "/" + QT_VERSION + "/" + QT_TARGET + "/bin/"
+    qt6_dir = QT_DIRECTORY + "/" + QT_VERSION + "/" + QT_TARGET + "/"
+    qt6_bin_dir = QT_DIRECTORY + "/" + QT_VERSION + "/" + QT_TARGET + "/bin/"
 
     try:
         os.makedirs(build_dir)
@@ -328,14 +337,19 @@ for TARGET in TARGETS:
     print("- build_dir : " + build_dir)
     print("- env_dir : " + env_dir)
     print("- qt6_dir : " + qt6_dir)
+    print("- qt6_bin_dir : " + qt6_bin_dir)
 
     ## PREPARE Qt module build
     if OS_HOST == "Windows":
-        QT_CONF_MODULE_cmd = qt6_dir + "qt-configure-module.bat"
-        #VCVARS_cmd = "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/" + "vcvarsall.bat"
-        #subprocess.check_call([VCVARS_cmd, "x86_amd64"], cwd="C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/")
+        QT_CONF_MODULE_cmd = qt6_bin_dir + "qt-configure-module.bat"
+        CMAKE_qt_cmd = [qt6_bin_dir + "qt-cmake.bat"]
+        #VCVARS_cwd = "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/"
+        #VCVARS_cwd = "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/"
+        #VCVARS_cmd = VCVARS_cwd + "vcvarsall.bat"
+        #subprocess.check_call([VCVARS_cmd, "x86_amd64"], cwd=VCVARS_cwd)
     else:
-        QT_CONF_MODULE_cmd = qt6_dir + "qt-configure-module"
+        QT_CONF_MODULE_cmd = qt6_bin_dir + "qt-configure-module"
+        CMAKE_qt_cmd = [qt6_bin_dir + "qt-cmake"]
         if OS_TARGET == "android" or OS_TARGET == "iOS":
             # HACK # GitHub CI + aqt + Qt cross compilation
             if (OS_HOST == "Linux"): os.environ["QT_HOST_PATH"] = str(QT_DIRECTORY + "/" + QT_VERSION + "/gcc_64/")
@@ -399,6 +413,10 @@ for TARGET in TARGETS:
             CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=armeabi-v7a", "-DANDROID_PLATFORM=android-23"]
         else: # ARCH_TARGET == "armv8":
             CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
+
+    print("- CMAKE_cmd : " + str(CMAKE_cmd))
+    print("- CMAKE_qt_cmd : " + str(CMAKE_qt_cmd))
+    print("")
 
     #### EXTRACT, BUILD & INSTALL ####
 

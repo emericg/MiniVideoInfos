@@ -59,7 +59,7 @@ public class QShareUtils
     }
 
     public static boolean checkMimeTypeView(String mimeType) {
-        final Context context = null; // QtNative.activity()
+        final Context context = null; // QtNative.activity();
         if (context == null) return false;
 
         Intent myIntent = new Intent();

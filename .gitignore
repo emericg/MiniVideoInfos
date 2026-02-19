@@ -4,11 +4,8 @@ bin/*
 contribs/*
 appdir/*
 
-# Private signatures
-assets/ios/ios_signature.pri
-assets/macos/macos_signature.pri
-
 # QtCreator temporary project files
+.qtcreator/*
 MiniVideoInfos.config
 MiniVideoInfos.creator*
 MiniVideoInfos.files
@@ -23,6 +20,9 @@ qml_*qml.cpp
 # QMake temporary project files
 Makefile
 .qmake.stash
+
+# CMake temporary project files
+CMakeLists.txt.user
 
 # XCode related
 Debug/*
