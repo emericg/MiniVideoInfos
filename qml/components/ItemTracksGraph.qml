@@ -2,11 +2,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
 
 Item {
     id: elementTracks

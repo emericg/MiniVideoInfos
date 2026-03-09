@@ -127,15 +127,11 @@ int main(int argc, char *argv[])
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
     if (!utilsLanguage) return EXIT_FAILURE;
 
-    // ThemeEngine
-    qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
-
     MiniVideoQML::registerQML();
 
     // Then we start the UI
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
-
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("mediaManager", mm);
     engine_context->setContextProperty("mediaUtils", mediaUtils);
@@ -146,14 +142,15 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     MobileUI::registerQML();
     app.registerQML(engine_context);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
+    engine.loadFromModule("MiniVideoInfos", "MobileApplication");
+
 #else
     UtilsSysInfo *utilsSysInfo = UtilsSysInfo::getInstance();
     if (!utilsSysInfo) return EXIT_FAILURE;
     engine_context->setContextProperty("utilsSysInfo", utilsSysInfo);
 
     //engine_context->setContextProperty("menubarManager", mb);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopApplication.qml")));
+    engine.loadFromModule("MiniVideoInfos", "DesktopApplication");
 #endif
 
     if (engine.rootObjects().isEmpty())

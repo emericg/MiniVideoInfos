@@ -5,8 +5,8 @@ import QtLocation
 import QtPositioning
 import Qt.labs.animation
 
-import ThemeEngine
-import "qrc:/utils/UtilsString.js" as UtilsString
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: infosMap
@@ -219,7 +219,7 @@ Item {
                 width: controlsArea.controlSize
                 height: controlsArea.controlSize
 
-                source: "qrc:/assets/icons/material-symbols/open_with.svg"
+                source: "qrc:/IconLibrary/material-symbols/open_with.svg"
                 iconColor: map.moove ? Theme.colorHeaderContent : Theme.colorText
 
                 onClicked: {
@@ -236,7 +236,7 @@ Item {
                 opacity: (map.center !== QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)) ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: 200 } }
 
-                source: "qrc:/assets/icons/material-symbols/location/my_location-fill.svg"
+                source: "qrc:/IconLibrary/material-symbols/location/my_location-fill.svg"
 
                 onClicked: map.center = QtPositioning.coordinate(mediaItem.latitude, mediaItem.longitude)
             }
@@ -300,7 +300,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: Theme.colorPrimary
-                    source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                 }
 
                 Column {

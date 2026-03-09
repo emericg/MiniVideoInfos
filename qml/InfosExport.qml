@@ -1,11 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: infos_export
@@ -34,7 +31,7 @@ Item {
         height: 32
 
         InfoTitle { ////
-            source: "qrc:/assets/icons/material-symbols/archive.svg"
+            source: "qrc:/IconLibrary/material-symbols/archive.svg"
             text: qsTr("EXPORT")
         }
 

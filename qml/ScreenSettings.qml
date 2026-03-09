@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
 
 Loader {
     id: settingsScreen
@@ -58,7 +58,7 @@ Loader {
 
             ListTitle {
                 text: qsTr("User interface")
-                source: "qrc:/assets/icons/material-symbols/settings.svg"
+                source: "qrc:/IconLibrary/material-symbols/settings.svg"
             }
 
             ////////////////
@@ -78,7 +78,7 @@ Loader {
                     height: 24
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons/material-icons/duotone/style.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/style.svg"
                 }
 
                 Text {
@@ -181,7 +181,7 @@ Loader {
                     height: 24
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons/material-icons/duotone/brightness_4.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
                 }
 
                 Text {
@@ -201,7 +201,7 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedDesktop {
+                SwitchThemed {
                     id: switch_appThemeAuto
                     z: 1
                     anchors.right: parent.right
@@ -238,7 +238,7 @@ Loader {
 
             ListTitle {
                 text: qsTr("File chooser")
-                source: "qrc:/assets/icons/material-symbols/folder_open.svg"
+                source: "qrc:/IconLibrary/material-symbols/folder_open.svg"
             }
 
             ////////////////
@@ -257,7 +257,7 @@ Loader {
                     width: 24
                     height: 24
 
-                    source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                    source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
                     smooth: true
@@ -280,7 +280,7 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedDesktop {
+                SwitchThemed {
                     id: switch_mediaFilter
                     z: 1
                     anchors.right: parent.right
@@ -306,7 +306,7 @@ Loader {
                     width: 24
                     height: 24
 
-                    source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                    source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorIcon
                     smooth: true
@@ -329,7 +329,7 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedDesktop {
+                SwitchThemed {
                     id: switch_nativeChooser
                     z: 1
                     anchors.right: parent.right
@@ -345,7 +345,7 @@ Loader {
 
             ListTitle {
                 text: qsTr("Media")
-                source: "qrc:/assets/icons/material-symbols/media/photo_camera.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/photo_camera.svg"
             }
 
             ////////////////
@@ -365,7 +365,7 @@ Loader {
                     height: 24
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                    source: "qrc:/IconLibrary/material-symbols/media/image.svg"
                 }
 
                 Text {
@@ -385,7 +385,7 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedDesktop {
+                SwitchThemed {
                     id: switch_mediaPreview
                     z: 1
                     anchors.right: parent.right
@@ -414,7 +414,7 @@ Loader {
                     height: 24
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons/material-symbols/archive.svg"
+                    source: "qrc:/IconLibrary/material-symbols/archive.svg"
                 }
 
                 Text {
@@ -434,7 +434,7 @@ Loader {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedDesktop {
+                SwitchThemed {
                     id: switch_mediaExport
                     z: 1
                     anchors.right: parent.right
@@ -463,7 +463,7 @@ Loader {
                     height: 24
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                 }
 
                 Text {
@@ -520,7 +520,7 @@ Loader {
                     height: 24
 
                     color: Theme.colorIcon
-                    source: "qrc:/assets/icons/material-symbols/save.svg"
+                    source: "qrc:/IconLibrary/material-symbols/save.svg"
                 }
 
                 Text {

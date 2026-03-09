@@ -1,6 +1,7 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: mobileMenu
@@ -75,7 +76,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Media")
-                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenMediaList")
@@ -86,7 +87,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenSettings")
@@ -97,7 +98,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("About")
-                source: "qrc:/assets/icons/material-symbols/info.svg"
+                source: "qrc:/IconLibrary/material-symbols/info.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenAbout" ||
@@ -137,7 +138,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Media")
-                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenMediaList")
@@ -151,7 +152,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("Settings")
-                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenSettings")
@@ -165,7 +166,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 text: qsTr("About")
-                source: "qrc:/assets/icons/material-symbols/info.svg"
+                source: "qrc:/IconLibrary/material-symbols/info.svg"
                 sourceSize: 24
 
                 highlighted: (appContent.state === "ScreenAbout" ||

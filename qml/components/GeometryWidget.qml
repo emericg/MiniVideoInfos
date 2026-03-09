@@ -1,7 +1,6 @@
 import QtQuick
 
-import ThemeEngine
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
+import ComponentLibrary
 
 Item { ////
     id: item_resBox
@@ -136,7 +135,7 @@ Item { ////
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 4
             color: Theme.colorPrimary
-            source: "qrc:/assets/icons/material-icons/duotone/rotate_90_degrees_ccw.svg"
+            source: "qrc:/IconLibrary/material-icons/duotone/rotate_90_degrees_ccw.svg"
         }
         IconSvg {
             id: img_display_resize
@@ -147,7 +146,7 @@ Item { ////
             anchors.right: parent.right
             anchors.rightMargin: 6
             color: Theme.colorPrimary
-            source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
+            source: "qrc:/IconLibrary/material-icons/duotone/aspect_ratio.svg"
         }
     }
     Rectangle {
@@ -169,7 +168,7 @@ Item { ////
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 4
             color: Theme.colorWarning
-            source: "qrc:/assets/icons/material-icons/duotone/settings_overscan.svg"
+            source: "qrc:/IconLibrary/material-icons/duotone/settings_overscan.svg"
         }
     }
 

@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import MiniVideoInfos
 
 DrawerThemed {
     contentItem: Item {
@@ -91,7 +92,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenMediaList" && screenMediaList.dialogIsOpen)
                     text: qsTr("Open media")
-                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                    source: "qrc:/IconLibrary/material-symbols/media/image.svg"
 
                     onClicked: {
                         appContent.state = "ScreenMediaList"
@@ -103,7 +104,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenMediaList" && !screenMediaList.dialogIsOpen)
                     text: qsTr("Media")
-                    source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                    source: "qrc:/IconLibrary/material-symbols/media/image.svg"
 
                     onClicked: {
                         appContent.state = "ScreenMediaList"
@@ -131,7 +132,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenSettings")
                     text: qsTr("Settings")
-                    source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -142,7 +143,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
                     text: qsTr("About")
-                    source: "qrc:/assets/icons/material-icons/duotone/info.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()

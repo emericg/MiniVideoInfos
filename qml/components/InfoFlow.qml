@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import MiniVideoInfos
 
 Flow {
     anchors.left: parent.left

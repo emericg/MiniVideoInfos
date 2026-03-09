@@ -1,11 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import MiniVideoInfos
 
 Flickable {
     contentWidth: width
@@ -53,7 +50,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                 text: qsTr("TAGS")
             }
 
@@ -96,7 +93,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/image.svg"
                 text: qsTr("TUMBNAIL")
             }
 

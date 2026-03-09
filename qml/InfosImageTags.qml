@@ -1,11 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import MiniVideoInfos
 
 Flickable {
     contentWidth: width
@@ -68,7 +65,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/photo_camera.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/photo_camera.svg"
                 text: qsTr("CAMERA")
             }
             InfoRow { ////
@@ -94,7 +91,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/exposure.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/exposure.svg"
                 text: qsTr("IMAGE")
             }
             InfoRow { ////
@@ -141,7 +138,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                 text: qsTr("GPS")
             }
 
@@ -185,7 +182,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/image.svg"
                 text: qsTr("TUMBNAIL")
             }
 

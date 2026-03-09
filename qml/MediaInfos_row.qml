@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsString.js" as UtilsString
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: screenMediaInfos_row
@@ -160,7 +160,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons/material-icons/duotone/av_timer.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/av_timer.svg"
                         }
                         Text {
                             id: textDuration
@@ -186,7 +186,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons/material-icons/duotone/data_usage.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/data_usage.svg"
                         }
                         Text {
                             id: textSize
@@ -213,7 +213,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/aspect_ratio.svg"
                         }
                         Text {
                             id: textGeometry
@@ -239,7 +239,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons/material-icons/duotone/speaker.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/speaker.svg"
                         }
                         Text {
                             id: textChannels
@@ -265,7 +265,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                         }
                         Text {
                             id: textGPS

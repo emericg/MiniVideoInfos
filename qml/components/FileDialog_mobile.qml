@@ -3,9 +3,7 @@ import QtQuick.Controls
 
 import Qt.labs.folderlistmodel
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
+import ComponentLibrary
 
 Rectangle {
     id: fileDialogMobile
@@ -149,7 +147,7 @@ Rectangle {
                 height: 26
                 anchors.centerIn: parent
 
-                source: "qrc:/assets/icons/material-symbols/hardware/smartphone-fill.svg"
+                source: "qrc:/IconLibrary/material-symbols/hardware/smartphone-fill.svg"
                 color: Theme.colorIcon
             }
 
@@ -165,11 +163,11 @@ Rectangle {
                     if (storageChooser.storageIndex === 0) {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageInternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageInternal()
-                        storageIcon.source = "qrc:/assets/icons/material-symbols/hardware/smartphone-fill.svg"
+                        storageIcon.source = "qrc:/IconLibrary/material-symbols/hardware/smartphone-fill.svg"
                     } else {
                         folderListModel.folder = "file://" + utilsApp.getMobileStorageExternal()
                         folderListModel.rootFolder = "file://" + utilsApp.getMobileStorageExternal()
-                        storageIcon.source = "qrc:/assets/icons/material-icons/duotone/sd_card.svg"
+                        storageIcon.source = "qrc:/IconLibrary/material-icons/duotone/sd_card.svg"
                     }
 
                     updateHeaderText()
@@ -207,7 +205,7 @@ Rectangle {
                 height: 24
 
                 color: Theme.colorIcon
-                source: "qrc:/assets/icons/material-symbols/subdirectory_arrow_left.svg"
+                source: "qrc:/IconLibrary/material-symbols/subdirectory_arrow_left.svg"
             }
 
             MouseArea {
@@ -295,22 +293,22 @@ Rectangle {
                     if (fileIsDir) {
                         if (fileName === "DCIM" || fileName === "Download" ||
                             fileName === "Movies" || fileName === "Pictures" || fileName === "Music")
-                            source = "qrc:/assets/icons/material-symbols/folder-fill.svg"
+                            source = "qrc:/IconLibrary/material-symbols/folder-fill.svg"
                         else
-                            source = "qrc:/assets/icons/material-symbols/folder.svg"
+                            source = "qrc:/IconLibrary/material-symbols/folder.svg"
                     } else {
                         if (UtilsPath.isVideoFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/media/slideshow-fill.svg"
+                            source = "qrc:/IconLibrary/material-symbols/media/slideshow-fill.svg"
                         } else if (UtilsPath.isAudioFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/media/album-fill.svg"
+                            source = "qrc:/IconLibrary/material-symbols/media/album-fill.svg"
                         } else if (UtilsPath.isPictureFile(fileName)) {
-                            source = "qrc:/assets/icons/material-symbols/media/image-fill.svg"
+                            source = "qrc:/IconLibrary/material-symbols/media/image-fill.svg"
                         } else {
                             if (settingsManager.mediaFilter) {
                                 listItem.visible = false
                                 listItem.height = 0
                             } else {
-                                source = "qrc:/assets/icons/material-symbols/file.svg"
+                                source = "qrc:/IconLibrary/material-symbols/file.svg"
                             }
                         }
                     }
@@ -413,7 +411,7 @@ Rectangle {
             font.pixelSize: Theme.fontSizeContentSmall
         }
 
-        SwitchThemedDesktop {
+        SwitchThemed {
             id: switch_mediaonly
             z: 1
             anchors.right: parent.right

@@ -2,8 +2,8 @@ import QtCore
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: screenMediaList
@@ -186,7 +186,7 @@ Item {
                     color: Theme.colorActionbarHighlight
                     text: qsTr("Update")
                     onClicked: updateSelectedMedia()
-                    source: "qrc:/assets/icons/material-symbols/refresh.svg"
+                    source: "qrc:/IconLibrary/material-symbols/refresh.svg"
                 }
 
                 ButtonFlat {
@@ -197,7 +197,7 @@ Item {
                     color: Theme.colorActionbarHighlight
                     text: qsTr("Close")
                     onClicked: removeSelectedMedia()
-                    source: "qrc:/assets/icons/material-symbols/close.svg"
+                    source: "qrc:/IconLibrary/material-symbols/close.svg"
                 }
             }
 
@@ -225,7 +225,7 @@ Item {
                     height: 36
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons/material-symbols/subdirectory_arrow_left.svg"
+                    source: "qrc:/IconLibrary/material-symbols/subdirectory_arrow_left.svg"
                     iconColor: Theme.colorActionbarContent
                     backgroundColor: Theme.colorActionbarHighlight
                     onClicked: screenMediaList.exitSelectionMode()
@@ -255,7 +255,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorActionbarContent
-                source: "qrc:/assets/icons/material-symbols/warning.svg"
+                source: "qrc:/IconLibrary/material-symbols/warning.svg"
             }
 
             Text {
@@ -325,7 +325,7 @@ Item {
         z: 10
 
         visible: mediaManager.mediaAvailable && !screenMediaList.dialogIsOpen
-        source: "qrc:/assets/icons/material-symbols/add.svg"
+        source: "qrc:/IconLibrary/material-symbols/add.svg"
 
         onClicked: {
             openDialog()

@@ -1,6 +1,7 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: desktopHeader
@@ -12,7 +13,7 @@ Item {
     height: headerHeight
     z: 10
 
-    property int headerHeight: isHdpi ? 40 : 48
+    property int headerHeight: isHdpi ? 48 : 56
 
     property int headerPosition: 0
 
@@ -50,7 +51,7 @@ Item {
                 height: 34
                 //colorHighlight: Theme.colorGreen
                 text: wideWideMode ? qsTr("Open") : ""
-                source: "qrc:/assets/icons/material-symbols/add_circle.svg"
+                source: "qrc:/IconLibrary/material-symbols/add_circle.svg"
                 onClicked: screenMediaList.openDialog()
             }
 
@@ -58,7 +59,7 @@ Item {
                 height: 34
                 //colorHighlight: Theme.colorYellow
                 text: wideWideMode ? qsTr("Reload") : ""
-                source: "qrc:/assets/icons/material-symbols/refresh.svg"
+                source: "qrc:/IconLibrary/material-symbols/refresh.svg"
                 onClicked: {
                     mediaManager.openMedia(screenMediaInfos.mediaItem.fullpath)
                 }
@@ -68,7 +69,7 @@ Item {
                 height: 34
                 //colorHighlight: Theme.colorRed
                 text: wideWideMode ? qsTr("Close") : ""
-                source: "qrc:/assets/icons/material-symbols/cancel_circle.svg"
+                source: "qrc:/IconLibrary/material-symbols/cancel_circle.svg"
                 onClicked: {
                     mediaManager.closeMedia(screenMediaInfos.mediaItem.fullpath)
                     appContent.state = "ScreenMediaList"
@@ -81,7 +82,7 @@ Item {
                 height: 34
                 //colorHighlight: Theme.colorRed
                 text: wideWideMode ? qsTr("Open in new instance") : ""
-                source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                 onClicked: {
                     mediaManager.detach(screenMediaInfos.mediaItem.fullpath)
                     mediaManager.closeMedia(screenMediaInfos.mediaItem.fullpath)
@@ -105,7 +106,7 @@ Item {
                 height: headerHeight
 
                 text: wideWideMode ? qsTr("Media") : ""
-                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
@@ -123,7 +124,7 @@ Item {
                 height: headerHeight
 
                 text: wideWideMode ? qsTr("Settings") : ""
-                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
@@ -139,7 +140,7 @@ Item {
                 height: headerHeight
 
                 text: wideWideMode ? qsTr("Exit") : ""
-                source: "qrc:/assets/icons/material-icons/duotone/exit_to_app.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/exit_to_app.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
                 //colorHighlight: Theme.colorRed

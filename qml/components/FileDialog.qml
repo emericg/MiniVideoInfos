@@ -1,5 +1,6 @@
 import QtQuick
-import "qrc:/utils/UtilsPath.js" as UtilsPath
+
+import ComponentLibrary
 
 Loader {
     id: fileDialog
@@ -42,23 +43,23 @@ Loader {
         if (Qt.platform.os === "ios") {
             usePlatformDialog = true
             if (selectFolder)
-                return "FileDialog_platformfolder.qml"
+                return "components/FileDialog_platformfolder.qml"
             else
-                return "FileDialog_platformfile.qml"
+                return "components/FileDialog_platformfile.qml"
         } else if (Qt.platform.os === "android") {
             if (usePlatformDialog) {
                 if (selectFolder)
-                    return "FileDialog_quickdialogs6_folder.qml"
+                    return "components/FileDialog_quickdialogs6_folder.qml"
                 else
-                    return "FileDialog_quickdialogs6_file.qml"
+                    return "components/FileDialog_quickdialogs6_file.qml"
             } else {
-                return "FileDialog_mobile.qml"
+                return "components/FileDialog_mobile.qml"
             }
         } else {
             if (selectFolder)
-                return "FileDialog_quickdialogs6_folder.qml"
+                return "components/FileDialog_quickdialogs6_folder.qml"
             else
-                return "FileDialog_quickdialogs6_file.qml"
+                return "components/FileDialog_quickdialogs6_file.qml"
         }
     }
 

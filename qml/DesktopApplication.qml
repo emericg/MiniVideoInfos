@@ -2,9 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
 
-import ThemeEngine
-
-import "qrc:/utils/UtilsPath.js" as UtilsPath
+import ComponentLibrary
+import MiniVideoInfos
 
 ApplicationWindow {
     id: appWindow
@@ -180,12 +179,12 @@ ApplicationWindow {
         onEntered: (drag) => {
             if (drag.hasUrls) {
                 dropAreaIndicator.color = Theme.colorWarning
-                dropAreaImage.source = "qrc:/assets/icons/material-symbols/media/broken_image.svg"
+                dropAreaImage.source = "qrc:/IconLibrary/material-symbols/media/broken_image.svg"
                 dropAreaIndicator.opacity = 1
 
                 for (var i = 0; i < drag.urls.length; i++) {
                     if (UtilsPath.isMediaFile(drag.urls[i])) {
-                        dropAreaImage.source = "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                        dropAreaImage.source = "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                         dropAreaIndicator.color = Theme.colorGreen
                         break
                     }

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
 
 Popup {
     id: popupLoading
@@ -32,7 +32,7 @@ Popup {
                 height: 128
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                source: "qrc:/assets/icons/material-icons/outlined/hourglass_empty.svg"
+                source: "qrc:/IconLibrary/material-icons/outlined/hourglass_empty.svg"
                 color: Theme.colorIcon
             }
 

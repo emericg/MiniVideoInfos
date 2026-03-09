@@ -3,11 +3,8 @@ import QtQuick.Controls
 
 import QtCharts
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import MiniVideoInfos
 
 Flickable {
     contentWidth: width
@@ -229,7 +226,7 @@ Flickable {
 
             InfoTitle { ////
                 id: titleTrack
-                source: "qrc:/assets/icons/material-icons/duotone/list.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/list.svg"
                 text: qsTr("TAGS")
             }
 
@@ -276,7 +273,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/movie.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/movie.svg"
                 text: qsTr("VIDEO")
             }
 
@@ -366,7 +363,12 @@ Flickable {
                 legend: qsTr("frame duration")
             }
 
-            Item { width: 4; height: 4; } // spacer
+            //Item { width: 4; height: 4; } // spacer
+
+            InfoTitle { ////
+                source: "qrc:/IconLibrary/material-symbols/media/invert_colors.svg"
+                text: qsTr("COLORS")
+            }
 
             InfoRow { ////
                 id: info_hdrmode
@@ -418,7 +420,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
                 text: qsTr("AUDIO")
             }
 
@@ -480,7 +482,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-icons/duotone/sd_card.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/sd_card.svg"
                 text: qsTr("DATA")
             }
 

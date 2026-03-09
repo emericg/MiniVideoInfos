@@ -3,7 +3,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 
-import ThemeEngine
+import ComponentLibrary
+import MiniVideoInfos
 
 Loader {
     id: screenSettings
@@ -154,7 +155,7 @@ Loader {
 
                                     text: qsTr("WEBSITE")
                                     sourceSize: 28
-                                    source: "qrc:/assets/icons/material-symbols/link.svg"
+                                    source: "qrc:/IconLibrary/material-symbols/link.svg"
                                     onClicked: Qt.openUrlExternally("https://emeric.io/MiniVideoInfos/")
                                 }
 
@@ -178,7 +179,7 @@ Loader {
                                     font.bold: true
 
                                     text: qsTr("SUPPORT")
-                                    source: "qrc:/assets/icons/material-symbols/support.svg"
+                                    source: "qrc:/IconLibrary/material-symbols/support.svg"
                                     onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/issues")
                                 }
 
@@ -189,7 +190,7 @@ Loader {
                                     font.bold: true
 
                                     text: qsTr("RELEASE NOTES")
-                                    source: "qrc:/assets/icons/material-symbols/new_releases.svg"
+                                    source: "qrc:/IconLibrary/material-symbols/new_releases.svg"
                                     onClicked: Qt.openUrlExternally("https://github.com/emericg/MiniVideoInfos/releases")
                                 }
                             }
@@ -248,7 +249,7 @@ Loader {
                                 anchors.rightMargin: Theme.componentMarginL
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                                 color: Theme.colorIcon
                             }
                         }
@@ -435,7 +436,7 @@ Loader {
                                 anchors.rightMargin: Theme.componentMarginL
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                                source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                                 color: Theme.colorIcon
                             }
                         }
@@ -462,7 +463,7 @@ Loader {
                                 verticalAlignment: Text.AlignVCenter
                             }
 
-                            SwitchThemedDesktop {
+                            SwitchThemed {
                                 anchors.right: parent.right
                                 anchors.rightMargin: 8
                                 anchors.verticalCenter: parent.verticalCenter
@@ -494,7 +495,7 @@ Loader {
                                 verticalAlignment: Text.AlignVCenter
                             }
 
-                            SwitchThemedDesktop {
+                            SwitchThemed {
                                 anchors.right: parent.right
                                 anchors.rightMargin: 8
                                 anchors.verticalCenter: parent.verticalCenter
@@ -602,7 +603,7 @@ Loader {
                                 anchors.rightMargin: Theme.componentMarginL
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                source: "qrc:/assets/icons/material-icons/duotone/microwave.svg"
+                                source: "qrc:/IconLibrary/material-icons/duotone/microwave.svg"
                                 color: Theme.colorIcon
                             }
                         }
@@ -730,7 +731,7 @@ Loader {
                                             width: 20
                                             height: 20
 
-                                            source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                                            source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                                             color: parent.containsMouse ? Theme.colorPrimary : Theme.colorText
                                             Behavior on color { ColorAnimation { duration: 133 } }
                                         }

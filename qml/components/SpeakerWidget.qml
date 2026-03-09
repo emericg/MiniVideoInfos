@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Shapes
 
-import ThemeEngine
+import ComponentLibrary
 
 Item {
     id: speakerWidget

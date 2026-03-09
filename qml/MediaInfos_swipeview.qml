@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsString.js" as UtilsString
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: screenMediaInfos_swipeview
@@ -352,7 +352,7 @@ Item {
                 height: 56
 
                 text: qsTr("file")
-                source: "qrc:/assets/icons/material-symbols/file.svg"
+                source: "qrc:/IconLibrary/material-symbols/file.svg"
 
                 property int index: 0
                 highlighted: (mediaPages.currentIndex === index)
@@ -364,7 +364,7 @@ Item {
                 height: 56
 
                 text: qsTr("video")
-                source: "qrc:/assets/icons/material-symbols/media/movie.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/movie.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -377,7 +377,7 @@ Item {
                 height: 56
 
                 text: qsTr("video")
-                source: "qrc:/assets/icons/material-symbols/media/movie.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/movie.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -390,7 +390,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -403,7 +403,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -416,7 +416,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -429,7 +429,7 @@ Item {
                 height: 56
 
                 text: qsTr("audio")
-                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -442,7 +442,7 @@ Item {
                 height: 56
 
                 text: qsTr("subtitles")
-                source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/closed_caption.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -455,7 +455,7 @@ Item {
                 height: 56
 
                 text: qsTr("tags")
-                source: "qrc:/assets/icons/material-symbols/media/album.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/album.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -468,7 +468,7 @@ Item {
                 height: 56
 
                 text: qsTr("tags")
-                source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/image.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -481,7 +481,7 @@ Item {
                 height: 56
 
                 text: qsTr("map")
-                source: "qrc:/assets/icons/material-symbols/location/map-fill.svg"
+                source: "qrc:/IconLibrary/material-symbols/location/map-fill.svg"
 
                 property int index: -1
                 visible: (index !== -1)
@@ -494,7 +494,7 @@ Item {
                 height: 56
 
                 text: qsTr("export")
-                source: "qrc:/assets/icons/material-symbols/archive.svg"
+                source: "qrc:/IconLibrary/material-symbols/archive.svg"
 
                 property int index: -1
                 visible: (index !== -1)

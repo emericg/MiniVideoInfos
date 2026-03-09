@@ -48,8 +48,6 @@
 #endif
 
 #include <cstdint>
-#include <cstring>
-#include <cmath>
 
 #include <QDir>
 #include <QUrl>
@@ -884,10 +882,10 @@ bool Media::getMetadataFromVideo()
                 if (t->stream_type == stream_TMCD && vtimecode.isEmpty())
                 {
                     vtimecode += QString("%1:%2:%3-%4")\
-                                    .arg(t->time_reference[0], 2, 'u', 0, '0')\
-                                    .arg(t->time_reference[1], 2, 'u', 0, '0')\
-                                    .arg(t->time_reference[2], 2, 'u', 0, '0')\
-                                    .arg(t->time_reference[3], 2, 'u', 0, '0');
+                                     .arg(t->time_reference[0], 2, 10, QChar('0'))
+                                     .arg(t->time_reference[1], 2, 10, QChar('0'))
+                                     .arg(t->time_reference[2], 2, 10, QChar('0'))
+                                     .arg(t->time_reference[3], 2, 10, QChar('0'));
                 }
                 else if (t->stream_fcc == fourcc_be("gpmd"))
                 {

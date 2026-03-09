@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
 
 Item {
     id: itemNoFile
@@ -19,7 +19,7 @@ Item {
             height: 200
             anchors.horizontalCenter: parent.horizontalCenter
 
-            source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+            source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
             color: Theme.colorIcon
         }
 

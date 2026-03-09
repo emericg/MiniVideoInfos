@@ -1,6 +1,7 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import MiniVideoInfos
 
 Rectangle {
     id: appHeader
@@ -91,9 +92,9 @@ Rectangle {
                     height: (headerHeight / 2)
 
                     source: {
-                        if (leftMenuMode === "drawer") return "qrc:/assets/icons/material-symbols/menu.svg"
-                        if (leftMenuMode === "close") return "qrc:/assets/icons/material-symbols/close.svg"
-                        return "qrc:/assets/icons/material-symbols/arrow_back.svg"
+                        if (leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
+                        if (leftMenuMode === "close") return "qrc:/IconLibrary/material-symbols/close.svg"
+                        return "qrc:/IconLibrary/material-symbols/arrow_back.svg"
                     }
                     color: Theme.colorHeaderContent
                 }
@@ -158,7 +159,7 @@ Rectangle {
                     width: (headerHeight / 2)
                     height: (headerHeight / 2)
 
-                    source: "qrc:/assets/icons/material-symbols/more_vert.svg"
+                    source: "qrc:/IconLibrary/material-symbols/more_vert.svg"
                     color: Theme.colorHeaderContent
                 }
             }

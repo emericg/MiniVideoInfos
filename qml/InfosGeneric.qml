@@ -1,11 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsPath.js" as UtilsPath
-import "qrc:/utils/UtilsString.js" as UtilsString
-import "qrc:/utils/UtilsMedia.js" as UtilsMedia
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import MiniVideoInfos
 
 Flickable {
     contentWidth: width
@@ -36,9 +33,9 @@ Flickable {
         info_containerprofile.text = mediaItem.containerProfile
 
         if (mediaItem.projection > 0)
-            imgGeometry.source = "qrc:/assets/icons/material-icons/duotone/spherical.svg"
+            imgGeometry.source = "qrc:/IconLibrary/material-icons/duotone/spherical.svg"
         else
-            imgGeometry.source = "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
+            imgGeometry.source = "qrc:/IconLibrary/material-icons/duotone/aspect_ratio.svg"
 
         if (mediaItem.fileType === 3) { //// IMAGE
             columnImage.visible = true
@@ -197,7 +194,7 @@ Flickable {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/av_timer.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/av_timer.svg"
                     }
                     Text {
                         id: textDuration
@@ -223,7 +220,7 @@ Flickable {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/data_usage.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/data_usage.svg"
                     }
                     Text {
                         id: textSize
@@ -250,7 +247,7 @@ Flickable {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/aspect_ratio.svg"
                     }
                     Text {
                         id: textGeometry
@@ -276,7 +273,7 @@ Flickable {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/speaker.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/speaker.svg"
                     }
                     Text {
                         id: textChannels
@@ -302,7 +299,7 @@ Flickable {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                     }
                     Text {
                         id: textGPS
@@ -330,7 +327,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/file.svg"
+                source: "qrc:/IconLibrary/material-symbols/file.svg"
                 text: qsTr("FILE")
             }
 
@@ -363,7 +360,7 @@ Flickable {
                     height: 24
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 4
-                    source: "qrc:/assets/icons/material-symbols/warning.svg"
+                    source: "qrc:/IconLibrary/material-symbols/warning.svg"
                     color: Theme.colorWarning
                 }
                 TextEditMVI {
@@ -430,7 +427,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/image.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/image.svg"
                 text: qsTr("IMAGE")
             }
 
@@ -537,7 +534,7 @@ Flickable {
                 spacing: 2
 
                 InfoTitle { ////
-                    source: "qrc:/assets/icons/material-symbols/media/movie.svg"
+                    source: "qrc:/IconLibrary/material-symbols/media/movie.svg"
                     text: qsTr("VIDEO")
                 }
 
@@ -605,7 +602,7 @@ Flickable {
                 spacing: 2
 
                 InfoTitle { ////
-                    source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                    source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
                     text: {
                         if (columnAudio.model.length > 1)
                             return qsTr("AUDIO") + " #" + (index + 1)
@@ -643,7 +640,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/media/closed_caption.svg"
+                source: "qrc:/IconLibrary/material-symbols/media/closed_caption.svg"
                 text: qsTr("SUBTITLES")
             }
 
@@ -683,7 +680,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-icons/duotone/list.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/list.svg"
                 text: qsTr("OTHER")
             }
 
@@ -725,7 +722,7 @@ Flickable {
             spacing: 2
 
             InfoTitle { ////
-                source: "qrc:/assets/icons/material-symbols/label_important.svg"
+                source: "qrc:/IconLibrary/material-symbols/label_important.svg"
                 text: qsTr("CHAPTERS")
             }
 

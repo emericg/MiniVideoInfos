@@ -1,7 +1,7 @@
 import QtQuick
 
-import ThemeEngine
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import MiniVideoInfos
 
 Item {
     id: mediaWidget
@@ -19,13 +19,13 @@ Item {
 
     function initBoxData() {
         if (mediaItem.fileType === 1)
-            imageMedia.source = "qrc:/assets/icons/material-symbols/media/album.svg"
+            imageMedia.source = "qrc:/IconLibrary/material-symbols/media/album.svg"
         else if (mediaItem.fileType === 2)
-            imageMedia.source = "qrc:/assets/icons/material-symbols/media/movie.svg"
+            imageMedia.source = "qrc:/IconLibrary/material-symbols/media/movie.svg"
         else if (mediaItem.fileType === 3)
-            imageMedia.source = "qrc:/assets/icons/material-symbols/media/image.svg"
+            imageMedia.source = "qrc:/IconLibrary/material-symbols/media/image.svg"
         else
-            imageMedia.source = "qrc:/assets/icons/material-symbols/media/broken_image.svg"
+            imageMedia.source = "qrc:/IconLibrary/material-symbols/media/broken_image.svg"
 
         mediaFilename.text = mediaItem.name + "." + mediaItem.ext
         mediaPath.text = mediaItem.path
@@ -169,7 +169,7 @@ Item {
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
 
-                source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+                source: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
                 color: Theme.colorIcon
                 fillMode: Image.PreserveAspectFit
             }

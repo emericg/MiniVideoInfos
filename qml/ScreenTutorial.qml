@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
 
 Rectangle {
     anchors.fill: parent
@@ -95,7 +95,7 @@ Rectangle {
                             height: width*0.666
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/icons/fontawesome/photo-video-duotone.svg"
+                            source: "qrc:/IconLibrary/fontawesome5/duotone/photo-video.svg"
                             fillMode: Image.PreserveAspectFit
                             color: Theme.colorIcon
                             smooth: true
@@ -143,7 +143,7 @@ Rectangle {
                             height: width*0.666
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/icons/material-icons/duotone/library_add.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/library_add.svg"
                             color: Theme.colorIcon
                             smooth: true
                         }
@@ -194,7 +194,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons/material-symbols/media/4k.svg"
+                                source: "qrc:/IconLibrary/material-symbols/media/4k.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -215,7 +215,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons/material-icons/duotone/aspect_ratio.svg"
+                                source: "qrc:/IconLibrary/material-icons/duotone/aspect_ratio.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -236,7 +236,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons/material-icons/duotone/insert_chart.svg"
+                                source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -257,7 +257,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons/material-symbols/media/speaker.svg"
+                                source: "qrc:/IconLibrary/material-symbols/media/speaker.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -278,7 +278,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons/material-symbols/media/audio_file.svg"
+                                source: "qrc:/IconLibrary/material-symbols/media/audio_file.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -299,7 +299,7 @@ Rectangle {
                             IconSvg {
                                 width: 32
                                 height: width
-                                source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                                source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
