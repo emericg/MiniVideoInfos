@@ -113,10 +113,37 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    ComboBoxMedia {
+        id: mediaCombobox
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.margins: Theme.componentMargin
+
+        visible: mediaManager.mediaAvailable
+
+        model: mediaManager.mediaList
+        displayText: mediaManager.mediaList[currentIndex].fullpath
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     ScrollView {
         id: scrollView
         anchors.fill: parent
+        anchors.topMargin: 64
+
         contentHeight: -1
+
+        ScrollBar.horizontal: ScrollBarThemed {
+            parent: scrollView
+            policy: ScrollBar.AlwaysOn
+            x: scrollView.leftPadding
+            y: scrollView.height - height
+            width: scrollView.availableWidth
+            active: scrollView.ScrollBar.vertical.active
+        }
 
         Row {
             id: row
