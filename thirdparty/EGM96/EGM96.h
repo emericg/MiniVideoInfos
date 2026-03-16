@@ -21,15 +21,25 @@
 
 #ifndef EGM96_H
 #define EGM96_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* ************************************************************************** */
 
 /*!
  * \brief Compute the geoid undulation from the EGM96 potential coefficient model, for a given latitude and longitude.
- * \param latitude: Latitude in degrees.
- * \param longitude: Longitude in degrees.
+ * \param latitude: Latitude (in degrees).
+ * \param longitude: Longitude (in degrees).
  * \return The geoid undulation / altitude offset (in meters).
  */
-double egm96_compute_altitude_offset(double lat, double lon);
+double egm96_compute_altitude_offset(double latitude, double longitude);
 
 /* ************************************************************************** */
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif // EGM96_H

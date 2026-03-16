@@ -57,8 +57,9 @@ print(str(softwares))
 ## macOS:
 # brew install python cmake automake ninja
 # brew install libtool pkg-config
-# brew install gettext iconv libudev utf8cpp
-# brew link --force gettext
+# brew install libudev utf8cpp (for libusb)
+# brew install iconv gettext (for libexif)
+# brew link --force gettext (for libexif)
 # xcode (13+)
 
 ## Windows:
@@ -124,12 +125,21 @@ rebuild = False
 targets_selected = []
 softwares_selected = []
 
-QT_VERSION = "6.9.2"
-#QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
-QT_DIRECTORY = os.getenv('QT_ROOT_DIR', '') + "/../../" # from GitHub jurplel/install-qt-action
-MSVC_GEN_VER = ""
+QT_VERSION = "6.11.0"
+QT_DIRECTORY = ""
+
+if os.getenv('QT_DIRECTORY', ''):
+    # try autodetection
+    QT_DIRECTORY = os.getenv('QT_DIRECTORY', '')
+elif os.getenv('QT_ROOT_DIR', ''):
+    # HACK # from GitHub jurplel/install-qt-action
+    QT_DIRECTORY = os.getenv('QT_ROOT_DIR', '') + "/../../"
+
+# try autodetection
 ANDROID_SDK_ROOT = os.getenv('ANDROID_SDK_ROOT', '')
 ANDROID_NDK_ROOT = os.getenv('ANDROID_NDK_ROOT', '')
+
+MSVC_GEN_VER = ""
 
 ## ARGUMENTS ###################################################################
 
@@ -200,9 +210,11 @@ if len(targets_selected):
     if "linux" in targets_selected: TARGETS.append(["linux", "x86_64", "gcc_64"])
     if "linux_x86_64" in targets_selected: TARGETS.append(["linux", "x86_64", "gcc_64"])
     if "linux_arm64" in targets_selected: TARGETS.append(["linux", "arm64", "gcc_arm64"])
-    if "macos" in targets_selected: TARGETS.append(["macOS", "unified", "macOS"])
-    if "macos_x86_64" in targets_selected: TARGETS.append(["macOS", "x86_64", "macOS"])
-    if "macos_arm64" in targets_selected: TARGETS.append(["macOS", "arm64", "macOS"])
+
+    if "macos" in targets_selected: TARGETS.append(["macOS", "unified", "macos"])
+    if "macos_x86_64" in targets_selected: TARGETS.append(["macOS", "x86_64", "macos"])
+    if "macos_arm64" in targets_selected: TARGETS.append(["macOS", "arm64", "macos"])
+
     if "msvc2019" in targets_selected:
         MSVC_GEN_VER = "Visual Studio 16 2019"
         TARGETS.append(["windows", "x86_64", "msvc2019_64"])
@@ -214,10 +226,11 @@ if len(targets_selected):
     if "android_armv7" in targets_selected: TARGETS.append(["android", "armv7", "android_armv7"])
     if "android_x86_64" in targets_selected: TARGETS.append(["android", "x86_64", "android_x86_64"])
     if "android_x86" in targets_selected: TARGETS.append(["android", "x86", "android_x86"])
-    if "ios" in targets_selected: TARGETS.append(["iOS", "unified", "iOS"])
-    if "ios_armv7" in targets_selected: TARGETS.append(["iOS", "armv7", "iOS"])
-    if "ios_armv8" in targets_selected: TARGETS.append(["iOS", "armv8", "iOS"])
-    if "ios_simulator" in targets_selected: TARGETS.append(["iOS", "simulator", "iOS"])
+
+    if "ios" in targets_selected: TARGETS.append(["iOS", "unified", "ios"])
+    if "ios_armv7" in targets_selected: TARGETS.append(["iOS", "armv7", "ios"])
+    if "ios_armv8" in targets_selected: TARGETS.append(["iOS", "armv8", "ios"])
+    if "ios_simulator" in targets_selected: TARGETS.append(["iOS", "simulator", "ios"])
 
 # > using auto-selection
 if len(TARGETS) == 0:
@@ -228,8 +241,8 @@ if len(TARGETS) == 0:
         #TARGETS.append(["windows", "x86_64", ""]) # Windows cross compilation
 
     if OS_HOST == "Darwin":
-        TARGETS.append(["macOS", "unified", "macOS"])
-        TARGETS.append(["iOS", "unified", "iOS"])
+        TARGETS.append(["macOS", "unified", "macos"])
+        TARGETS.append(["iOS", "unified", "ios"])
 
     if OS_HOST == "Windows":
         if "16.0" in os.getenv('VisualStudioVersion', ''):
@@ -281,7 +294,33 @@ for TARGET in TARGETS:
 
 ## DOWNLOAD SOFTWARES ##########################################################
 
-## libexif (version: git) (0.6.22+)
+## mbedTLS (version: 3.6.4)
+NAME_mbedtls = "mbedTLS"
+VERSION_mbedtls = "3.6.4"
+FILE_mbedtls = "mbedtls-" + VERSION_mbedtls + "-easy-make-lib.tar.bz2"
+DIR_mbedtls = "mbedtls-" + VERSION_mbedtls
+
+if "mbedtls" in softwares_selected:
+    if not os.path.exists(src_dir + FILE_mbedtls):
+        print("> Downloading " + FILE_mbedtls + "...")
+        urllib.request.urlretrieve("https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-" + VERSION_mbedtls + "/" + FILE_mbedtls, src_dir + FILE_mbedtls)
+
+## libUSB (version: git) (1.0.29+)
+FILE_libusb = "libusb-master.tar.gz"
+DIR_libusb = "libusb-master"
+## libMTP (version: git) (1.1.22+)
+FILE_libmtp = "libmtp-master.tar.gz"
+DIR_libmtp = "libmtp-master"
+
+if OS_HOST != "Windows":
+    if not os.path.exists(src_dir + FILE_libusb):
+        print("> Downloading " + FILE_libusb)
+        urllib.request.urlretrieve("https://github.com/libusb/libusb/archive/master.zip", src_dir + FILE_libusb)
+    if not os.path.exists(src_dir + FILE_libmtp):
+        print("> Downloading " + FILE_libmtp)
+        urllib.request.urlretrieve("https://github.com/libmtp/libmtp/archive/master.zip", src_dir + FILE_libmtp)
+
+## libexif (custom) (version: git) (0.6.22+)
 FILE_libexif = "libexif-master.zip"
 DIR_libexif = "libexif-master"
 
@@ -290,9 +329,9 @@ if "libexif" in softwares_selected:
         print("> Downloading " + FILE_libexif + "...")
         urllib.request.urlretrieve("https://github.com/emericg/libexif/archive/master.zip", src_dir + FILE_libexif)
 
-## taglib (version: git) (2.0+)
-FILE_taglib_utfcpp = "utfcpp-v4.0.5.zip"
+## taglib (version: git) (2.1+)
 FILE_taglib = "taglib-master.zip"
+FILE_taglib_utfcpp = "utfcpp-v4.0.8.zip"
 DIR_taglib = "taglib-master"
 DIR_taglib_utfcpp = DIR_taglib + "/3rdparty/utfcpp"
 
@@ -302,7 +341,7 @@ if "taglib" in softwares_selected:
         urllib.request.urlretrieve("https://github.com/taglib/taglib/archive/master.zip", src_dir + FILE_taglib)
     if not os.path.exists(src_dir + FILE_taglib_utfcpp):
         print("> Downloading " + FILE_taglib_utfcpp + "...")
-        urllib.request.urlretrieve("https://github.com/nemtrif/utfcpp/archive/refs/tags/v4.0.5.zip", src_dir + FILE_taglib_utfcpp)
+        urllib.request.urlretrieve("https://github.com/nemtrif/utfcpp/archive/refs/tags/v4.0.8.zip", src_dir + FILE_taglib_utfcpp)
 
 ## minivideo (version: git) (0.15+)
 FILE_minivideo = "minivideo-master.zip"
@@ -338,22 +377,6 @@ for TARGET in TARGETS:
     print("- env_dir : " + env_dir)
     print("- qt6_dir : " + qt6_dir)
     print("- qt6_bin_dir : " + qt6_bin_dir)
-
-    ## PREPARE Qt module build
-    if OS_HOST == "Windows":
-        QT_CONF_MODULE_cmd = qt6_bin_dir + "qt-configure-module.bat"
-        CMAKE_qt_cmd = [qt6_bin_dir + "qt-cmake.bat"]
-        #VCVARS_cwd = "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/"
-        #VCVARS_cwd = "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/"
-        #VCVARS_cmd = VCVARS_cwd + "vcvarsall.bat"
-        #subprocess.check_call([VCVARS_cmd, "x86_amd64"], cwd=VCVARS_cwd)
-    else:
-        QT_CONF_MODULE_cmd = qt6_bin_dir + "qt-configure-module"
-        CMAKE_qt_cmd = [qt6_bin_dir + "qt-cmake"]
-        if OS_TARGET == "android" or OS_TARGET == "iOS":
-            # HACK # GitHub CI + aqt + Qt cross compilation
-            if (OS_HOST == "Linux"): os.environ["QT_HOST_PATH"] = str(QT_DIRECTORY + "/" + QT_VERSION + "/gcc_64/")
-            if (OS_HOST == "Darwin"): os.environ["QT_HOST_PATH"] = str(QT_DIRECTORY + "/" + QT_VERSION + "/macOS/")
 
     ## CMAKE command selection
     CMAKE_cmd = ["cmake"]
@@ -415,10 +438,51 @@ for TARGET in TARGETS:
             CMAKE_cmd = ["cmake", "-DCMAKE_TOOLCHAIN_FILE=" + ANDROID_NDK_ROOT + "/build/cmake/android.toolchain.cmake", "-DANDROID_ABI=arm64-v8a", "-DANDROID_PLATFORM=android-23"]
 
     print("- CMAKE_cmd : " + str(CMAKE_cmd))
-    print("- CMAKE_qt_cmd : " + str(CMAKE_qt_cmd))
+    #print("- CMAKE_qt_cmd : " + str(CMAKE_qt_cmd))
     print("")
 
     #### EXTRACT, BUILD & INSTALL ####
+
+    ## mbedTLS
+    if "mbedtls" in softwares_selected:
+        if not os.path.isdir(build_dir + DIR_mbedtls):
+            zipMBTLS = tarfile.open(src_dir + FILE_mbedtls)
+            zipMBTLS.extractall(build_dir)
+
+        try: os.makedirs(build_dir + DIR_mbedtls + "/build")
+        except: print() # who cares
+
+        print("> Building mbedTLS")
+        subprocess.check_call(CMAKE_cmd + ["-G", CMAKE_gen, "-DCMAKE_BUILD_TYPE=Release", "-DUSE_SHARED_MBEDTLS_LIBRARY=On", "-DENABLE_TESTING=Off", "-DCMAKE_INSTALL_PREFIX=" + env_dir + "/usr", ".."], cwd=build_dir + DIR_mbedtls + "/build")
+        subprocess.check_call(["cmake", "--build", ".", "--target", "all"], cwd=build_dir + DIR_mbedtls + "/build")
+        #subprocess.check_call(["cmake", "--install", "."], cwd=build_dir + DIR_mbedtls + "/build")
+        subprocess.check_call(["ninja", "install"], cwd=build_dir + DIR_mbedtls + "/build") # Qt BUG 91647
+
+    ## libusb & libmtp
+    if OS_HOST != "Windows":
+        if not os.path.isdir(build_dir + DIR_libusb):
+            zipUSB = zipfile.ZipFile(src_dir + FILE_libusb)
+            zipUSB.extractall(build_dir)
+        if not os.path.isdir(build_dir + DIR_libmtp):
+            zipMTP = zipfile.ZipFile(src_dir + FILE_libmtp)
+            zipMTP.extractall(build_dir)
+
+        # libUSB
+        print("> Building libUSB")
+        os.chdir(build_dir + DIR_libusb)
+        os.chmod("bootstrap.sh", 509)
+        os.system("./bootstrap.sh")
+        os.system("./configure --prefix=" + env_dir + "/usr")
+        os.system("make -j" + str(CPU_COUNT))
+        os.system("make install")
+        # libMTP
+        print("> Building libMTP")
+        os.chdir(build_dir + DIR_libmtp)
+        os.chmod("autogen.sh", 509)
+        os.system("./autogen.sh << \"y\"")
+        os.system("./configure --disable-mtpz --prefix=" + env_dir + "/usr --with-udev=" + env_dir + "/usr/lib/udev")
+        os.system("make -j" + str(CPU_COUNT))
+        os.system("make install")
 
     ## libexif
     if "libexif" in softwares_selected:
@@ -441,7 +505,7 @@ for TARGET in TARGETS:
         if not os.path.isdir(build_dir + DIR_taglib_utfcpp):
             zipUTFCPP = zipfile.ZipFile(src_dir + FILE_taglib_utfcpp)
             zipUTFCPP.extractall(build_dir+ DIR_taglib + "/3rdparty/")
-            os.rename(build_dir + DIR_taglib + "/3rdparty/utfcpp-4.0.5/", build_dir + DIR_taglib_utfcpp)
+            os.rename(build_dir + DIR_taglib + "/3rdparty/utfcpp-4.0.8/", build_dir + DIR_taglib_utfcpp)
             os.makedirs(build_dir + DIR_taglib_utfcpp + "/build")
 
         print("> Building utfcpp")

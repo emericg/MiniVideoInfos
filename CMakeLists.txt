@@ -154,7 +154,7 @@ add_subdirectory(thirdparty/EGM96)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE EGM96)
 
 # minivideo
-#add_subdirectory(../MiniVideo/minivideo)
+#add_subdirectory(thirdparty/minivideo)
 add_subdirectory(contribs/build/linux_x86_64/MiniVideo-master/minivideo)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE minivideo)
 
