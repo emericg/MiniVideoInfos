@@ -45,7 +45,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
-          modules: qtimageformats qtcharts qtpositioning qtlocation
+          modules: qtimageformats qtcharts qtpositioning qtlocation qtmultimedia
 
       # Setup env
       - name: Setup env
